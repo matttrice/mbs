@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../hsu-pptx"
+		},
+		{
+			"path": "../hsu-extractor"
+		},
+		{
+			"path": "../hsu-svelte"
+		},
+		{
+			"path": "../hsu-slidev"
+		}
+	],
+	"settings": {}
+}
