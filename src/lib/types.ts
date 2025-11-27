@@ -30,7 +30,7 @@ export interface PresentationDefinition {
 // Fragment props for the Fragment component
 export interface FragmentProps {
 	step: number;
-	transition?: 'fade' | 'fly' | 'scale' | 'slide';
-	duration?: number;
-	drillTo?: string; // Format: "presentation/slide" or just "presentation"
+	withPrev?: boolean;
+	afterPrev?: boolean;
+	drillTo?: string;
 }

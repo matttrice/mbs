@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { navigation, currentFragment, stackDepth, canReturn } from '$lib/stores/navigation';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import { fade, fly, scale } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
 	// Initialize this custom show
@@ -19,8 +20,8 @@
 	</header>
 
 	<div class="content">
-		<Fragment step={1} transition="fade">
-			<blockquote class="scripture">
+		<Fragment step={1}>
+			<blockquote class="scripture" transition:fade>
 				<p>
 					Now may the God of peace Himself sanctify you entirely; and may your
 					<span class="highlight">spirit</span>
@@ -33,8 +34,8 @@
 			</blockquote>
 		</Fragment>
 
-		<Fragment step={2} transition="fly">
-			<div class="breakdown">
+		<Fragment step={2}>
+			<div class="breakdown" transition:fly={{ y: 20 }}>
 				<div class="part spirit">
 					<h3>Spirit</h3>
 					<p>πνεῦμα (pneuma)</p>
@@ -53,12 +54,12 @@
 			</div>
 		</Fragment>
 
-		<Fragment step={3} transition="scale">
-			<div class="insight">
+		<Fragment step={3}>
+			<div class="insight" transition:scale={{ start: 0.9 }}>
 				<h2>Key Insight</h2>
 				<p>Man is <strong>tripartite</strong> — spirit, soul, and body.</p>
 				<p>This distinguishes man from animals who have only body and spirit.</p>
-				<p class="action">Click Return or press Esc to continue building the main diagram.</p>
+				<p class="action">Click to return to main diagram.</p>
 			</div>
 		</Fragment>
 	</div>

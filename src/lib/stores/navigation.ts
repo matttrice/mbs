@@ -1,6 +1,6 @@
 import { writable, derived, get } from 'svelte/store';
 import { goto } from '$app/navigation';
-import type { NavigationState, NavigationContext } from '$lib/types';
+import type { NavigationContext } from '$lib/types';
 
 // Create the navigation store with initial state
 function createNavigationStore() {

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { navigation, currentFragment, stackDepth, canReturn } from '$lib/stores/navigation';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import { fade, scale } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
 	// Initialize this custom show
@@ -19,8 +20,8 @@
 	</header>
 
 	<div class="content">
-		<Fragment step={1} transition="fade">
-			<blockquote class="scripture">
+		<Fragment step={1}>
+			<blockquote class="scripture" transition:fade>
 				<p>
 					<sup>19</sup> For the fate of the sons of men and the fate of beasts is the same.
 					As one dies so dies the other; indeed, they all have the
@@ -30,16 +31,16 @@
 			</blockquote>
 		</Fragment>
 
-		<Fragment step={2} transition="fade">
-			<blockquote class="scripture">
+		<Fragment step={2}>
+			<blockquote class="scripture" transition:fade>
 				<p>
 					<sup>20</sup> All go to the same place. All came from the dust and all return to the dust.
 				</p>
 			</blockquote>
 		</Fragment>
 
-		<Fragment step={3} transition="fade">
-			<blockquote class="scripture">
+		<Fragment step={3}>
+			<blockquote class="scripture" transition:fade>
 				<p>
 					<sup>21</sup> Who knows that the
 					<span class="highlight">breath of man</span>
@@ -50,11 +51,11 @@
 			</blockquote>
 		</Fragment>
 
-		<Fragment step={4} transition="scale">
-			<div class="insight">
+		<Fragment step={4}>
+			<div class="insight" transition:scale={{ start: 0.9 }}>
 				<h2>Key Insight</h2>
 				<p>Both man and animals have <strong>spirit (breath)</strong> — but their destinations differ.</p>
-				<p class="action">Click Return or press Esc to continue building the main diagram.</p>
+				<p class="action">Click to return to main diagram.</p>
 			</div>
 		</Fragment>
 	</div>

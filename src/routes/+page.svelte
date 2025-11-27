@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { navigation, currentFragment, stackDepth } from '$lib/stores/navigation';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import { fade, fly, scale } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
 	// Initialize the presentation with max fragment count
-	// 9 "clicks" since some items use withPrevious
+	// 9 "clicks" since some items use withPrev
 	onMount(() => {
 		navigation.init('life', 9);
 	});
@@ -24,7 +25,7 @@
 	<div class="content">
 		<!-- Header bar -->
 		<Fragment step={1}>
-			<div class="header-bar">
+			<div class="header-bar" transition:fade>
 				<span class="left-label">LEAST COMPLEX</span>
 				<span class="center-label">MORE COMPLEX</span>
 				<span class="right-label">MOST COMPLEX</span>
@@ -32,30 +33,30 @@
 		</Fragment>
 
 		<!-- Body = Visible section -->
-		<Fragment step={2} transition="fly">
-			<div class="body-header">Body = Visible</div>
+		<Fragment step={1}>
+			<div class="body-header" transition:fly>Body = Visible</div>
 		</Fragment>
 
 		<!-- Three columns: Plants, Animals, Man -->
 		<div class="columns">
-			<Fragment step={3} transition="fly">
-				<div class="column gray">
+			<Fragment step={3}>
+				<div class="column gray" transition:fly={{ y: 20 }}>
 					<div class="column-title">Plants</div>
 					<div class="column-subtitle">Body</div>
 				</div>
 			</Fragment>
 
-			<!-- withPrevious: appears at same time as Plants (step 3), with slight delay -->
-			<Fragment step={4} trigger="withPrevious" transition="fly" delay={100}>
-				<div class="column gray">
+			<!-- withPrev: appears at same time as Plants (step 3) -->
+			<Fragment step={4} withPrev>
+				<div class="column gray" transition:fly={{ y: 20, delay: 100 }}>
 					<div class="column-title">Animals</div>
 					<div class="column-subtitle">Body</div>
 				</div>
 			</Fragment>
 
-			<!-- withPrevious: appears at same time as Plants (step 3), with more delay -->
-			<Fragment step={5} trigger="withPrevious" transition="fly" delay={200}>
-				<div class="column gray">
+			<!-- withPrev: appears at same time as Plants (step 3) -->
+			<Fragment step={5} withPrev>
+				<div class="column gray" transition:fly={{ y: 20, delay: 200 }}>
 					<div class="column-title">Man</div>
 					<div class="column-subtitle">Body</div>
 				</div>
@@ -63,28 +64,28 @@
 		</div>
 
 		<!-- Spirit = Invisible section -->
-		<Fragment step={4} transition="fade">
-			<div class="spirit-header">Spirit = Invisible</div>
+		<Fragment step={4}>
+			<div class="spirit-header" transition:fade>Spirit = Invisible</div>
 		</Fragment>
 
 		<div class="spirit-columns">
-			<Fragment step={5} transition="fly">
+			<Fragment step={5}>
 				<div class="spirit-box" style="visibility: hidden;">
 					<!-- Placeholder for alignment -->
 				</div>
 			</Fragment>
 
 			<!-- Animals Spirit - DRILLABLE -->
-			<Fragment step={5} trigger="withPrevious" transition="fly" drillTo="ecclesiastes">
-				<div class="spirit-box drillable-box">
+			<Fragment step={5} withPrev drillTo="ecclesiastes">
+				<div class="spirit-box drillable-box" transition:fly={{ y: 20 }}>
 					<div class="spirit-title">Spirit</div>
 					<div class="scripture-ref">Ecclesiastes 3:19-21</div>
 				</div>
 			</Fragment>
 
 			<!-- Man Spirit - DRILLABLE (separate click) -->
-			<Fragment step={6} transition="fly" drillTo="thessalonians">
-				<div class="spirit-box">
+			<Fragment step={6} drillTo="thessalonians">
+				<div class="spirit-box" transition:fly={{ y: 20 }}>
 					<div class="spirit-title">Spirit</div>
 					<div class="scripture-ref">1 Thess. 5:23</div>
 				</div>
@@ -92,15 +93,15 @@
 		</div>
 
 		<!-- Soul section -->
-		<Fragment step={7} transition="scale">
-			<div class="soul-section">
+		<Fragment step={7}>
+			<div class="soul-section" transition:scale={{ start: 0.9 }}>
 				<div class="soul-box">Soul</div>
 			</div>
 		</Fragment>
 
 		<!-- Blood = Spirit equation -->
-		<Fragment step={8} transition="fade">
-			<div class="equation-section">
+		<Fragment step={8}>
+			<div class="equation-section" transition:fade>
 				<div class="equation">
 					<span class="black">Blood</span> = <span class="red">Spirit</span>
 				</div>
@@ -108,8 +109,8 @@
 		</Fragment>
 
 		<!-- Final question -->
-		<Fragment step={9} transition="fly">
-			<div class="question-box">Do plants have blood?</div>
+		<Fragment step={9}>
+			<div class="question-box" transition:fly={{ y: 20 }}>Do plants have blood?</div>
 		</Fragment>
 	</div>
 </div>
