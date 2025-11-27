@@ -63,22 +63,26 @@ function createNavigationStore() {
 		},
 
 		/**
-		 * Advance to the next fragment, or next slide if at end
+		 * Advance to the next fragment, or auto-return if at end of a drill
 		 */
 		next() {
-			update((ctx) => {
-				if (ctx.current.fragment < ctx.maxFragment) {
-					return {
-						...ctx,
-						current: {
-							...ctx.current,
-							fragment: ctx.current.fragment + 1
-						}
-					};
-				}
-				// At end of fragments - could advance to next slide here
-				return ctx;
-			});
+			const ctx = get({ subscribe });
+			
+			if (ctx.current.fragment < ctx.maxFragment) {
+				// Still have fragments to show
+				update((c) => ({
+					...c,
+					current: {
+						...c.current,
+						fragment: c.current.fragment + 1
+					}
+				}));
+			} else if (ctx.stack.length > 0) {
+				// At end of fragments AND we're in a drill - auto return
+				console.log('[Navigation] End of drill sequence - auto returning');
+				this.returnFromDrill();
+			}
+			// else: At end of main presentation - do nothing (or could go to next slide)
 		},
 
 		/**
