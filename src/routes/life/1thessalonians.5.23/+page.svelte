@@ -4,7 +4,7 @@
 	import { fade, fly, scale } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
-	// Initialize this custom show
+	// Initialize this drill
 	onMount(() => {
 		navigation.setMaxFragment(3);
 	});
@@ -15,7 +15,7 @@
 		<h1>1 Thessalonians 5:23</h1>
 		<div class="debug">
 			Fragment: {$currentFragment} / 3 | Stack: {$stackDepth}
-			{#if $canReturn}<span class="return-hint">Press Esc to return</span>{/if}
+			{#if $canReturn}<span class="return-hint">Press → to return</span>{/if}
 		</div>
 	</header>
 
@@ -59,7 +59,7 @@
 				<h2>Key Insight</h2>
 				<p>Man is <strong>tripartite</strong> — spirit, soul, and body.</p>
 				<p>This distinguishes man from animals who have only body and spirit.</p>
-				<p class="action">Click to return to main diagram.</p>
+				<p class="action">Press → to return to Life presentation.</p>
 			</div>
 		</Fragment>
 	</div>
