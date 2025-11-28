@@ -1,12 +1,16 @@
 <script lang="ts">
 	import Fragment from '$lib/components/Fragment.svelte';
+	import Slide from '$lib/components/Slide.svelte';
 	import { fade, fly, scale } from 'svelte/transition';
 
-	// This slide has 9 fragments
-	// Export so parent can know fragment count
-	export const fragmentCount = 9;
+	interface Props {
+		onMaxStep?: (maxStep: number) => void;
+	}
+
+	let { onMaxStep }: Props = $props();
 </script>
 
+<Slide {onMaxStep}>
 <div class="slide-content">
 	<!-- Header bar -->
 	<Fragment step={1}>
@@ -18,7 +22,7 @@
 	</Fragment>
 
 	<!-- Body = Visible section -->
-	<Fragment step={1}>
+	<Fragment step={2}>
 		<div class="body-header" transition:fly>Body = Visible</div>
 	</Fragment>
 
@@ -32,7 +36,7 @@
 		</Fragment>
 
 		<!-- withPrev: appears at same time as Plants (step 3) -->
-		<Fragment step={4} withPrev>
+		<Fragment step={4}>
 			<div class="column gray" transition:fly={{ y: 20, delay: 100 }}>
 				<div class="column-title">Animals</div>
 				<div class="column-subtitle">Body</div>
@@ -40,7 +44,7 @@
 		</Fragment>
 
 		<!-- withPrev: appears at same time as Plants (step 3) -->
-		<Fragment step={5} withPrev>
+		<Fragment step={5}>
 			<div class="column gray" transition:fly={{ y: 20, delay: 200 }}>
 				<div class="column-title">Man</div>
 				<div class="column-subtitle">Body</div>
@@ -49,19 +53,19 @@
 	</div>
 
 	<!-- Spirit = Invisible section -->
-	<Fragment step={4}>
+	<Fragment step={6}>
 		<div class="spirit-header" transition:fade>Spirit = Invisible</div>
 	</Fragment>
 
 	<div class="spirit-columns">
-		<Fragment step={5}>
+		<Fragment step={7}>
 			<div class="spirit-box" style="visibility: hidden;">
 				<!-- Placeholder for alignment -->
 			</div>
 		</Fragment>
 
 		<!-- Animals Spirit - DRILLABLE -->
-		<Fragment step={5} withPrev drillTo="life/ecclesiastes.3.19">
+		<Fragment step={8} drillTo="life/ecclesiastes.3.19">
 			<div class="spirit-box drillable-box" transition:fly={{ y: 20 }}>
 				<div class="spirit-title">Spirit</div>
 				<div class="scripture-ref">Ecclesiastes 3:19-21</div>
@@ -69,7 +73,7 @@
 		</Fragment>
 
 		<!-- Man Spirit - DRILLABLE (separate click) -->
-		<Fragment step={6} drillTo="life/1thessalonians.5.23">
+		<Fragment step={9} drillTo="life/1thessalonians.5.23">
 			<div class="spirit-box" transition:fly={{ y: 20 }}>
 				<div class="spirit-title">Spirit</div>
 				<div class="scripture-ref">1 Thess. 5:23</div>
@@ -78,14 +82,14 @@
 	</div>
 
 	<!-- Soul section -->
-	<Fragment step={7}>
+	<Fragment step={10}>
 		<div class="soul-section" transition:scale={{ start: 0.9 }}>
 			<div class="soul-box">Soul</div>
 		</div>
 	</Fragment>
 
 	<!-- Blood = Spirit equation -->
-	<Fragment step={8}>
+	<Fragment step={11}>
 		<div class="equation-section" transition:fade>
 			<div class="equation">
 				<span class="black">Blood</span> = <span class="red">Spirit</span>
@@ -94,10 +98,11 @@
 	</Fragment>
 
 	<!-- Final question -->
-	<Fragment step={9}>
+	<Fragment step={12}>
 		<div class="question-box" transition:fly={{ y: 20 }}>Do plants have blood?</div>
 	</Fragment>
 </div>
+</Slide>
 
 <style>
 	.slide-content {

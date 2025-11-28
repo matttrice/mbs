@@ -7,9 +7,9 @@
 	import Slide2Mankind from './slides/Slide2Mankind.svelte';
 	import Slide3ManGod from './slides/Slide3ManGod.svelte';
 
-	// Define slide fragment counts
-	// Each number represents total fragments in that slide
-	const slideFragmentCounts = [9, 15, 12]; // Slide1: 9, Slide2: 15, Slide3: 12
+	// Slides report their maxStep via callback - collected here
+	// Using $state to track slide maxSteps as they register
+	let slideMaxSteps = $state<number[]>([0, 0, 0]);
 	
 	// Slide titles for display
 	const slideTitles = [
@@ -18,9 +18,41 @@
 		'Man & God - Hebrews 4:12'
 	];
 
-	// Initialize the presentation
+	// Callbacks for slides to report their maxStep
+	function handleSlide1MaxStep(maxStep: number) {
+		slideMaxSteps[0] = maxStep;
+		updateNavigation();
+	}
+	
+	function handleSlide2MaxStep(maxStep: number) {
+		slideMaxSteps[1] = maxStep;
+		updateNavigation();
+	}
+	
+	function handleSlide3MaxStep(maxStep: number) {
+		slideMaxSteps[2] = maxStep;
+		updateNavigation();
+	}
+
+	// Update navigation when all slides have reported
+	function updateNavigation() {
+		// Only init once all slides have reported non-zero maxSteps
+		if (slideMaxSteps.every(s => s > 0)) {
+			navigation.init('life', slideMaxSteps);
+		}
+	}
+
+	// Fallback: if slides haven't reported in time, use defaults
 	onMount(() => {
-		navigation.init('life', slideFragmentCounts);
+		// Give slides a moment to register, then fall back
+		setTimeout(() => {
+			if (!slideMaxSteps.every(s => s > 0)) {
+				// Slides haven't all reported - use fallback
+				// This shouldn't happen with proper Slide wrapper usage
+				console.warn('[Life] Some slides did not report maxStep, using fallback');
+				navigation.init('life', slideMaxSteps.map(s => s || 10));
+			}
+		}, 100);
 	});
 </script>
 
@@ -46,18 +78,21 @@
 	</header>
 
 	<div class="slide-container">
-		{#if $currentSlide === 0}
-			<Slide1Life />
-		{:else if $currentSlide === 1}
-			<Slide2Mankind />
-		{:else if $currentSlide === 2}
-			<Slide3ManGod />
-		{/if}
+		<!-- All slides render to register maxSteps, only active one visible -->
+		<div class="slide-wrapper" class:active={$currentSlide === 0}>
+			<Slide1Life onMaxStep={handleSlide1MaxStep} />
+		</div>
+		<div class="slide-wrapper" class:active={$currentSlide === 1}>
+			<Slide2Mankind onMaxStep={handleSlide2MaxStep} />
+		</div>
+		<div class="slide-wrapper" class:active={$currentSlide === 2}>
+			<Slide3ManGod onMaxStep={handleSlide3MaxStep} />
+		</div>
 	</div>
 
 	<!-- Slide indicator dots -->
 	<div class="slide-indicators">
-		{#each slideFragmentCounts as _, index}
+		{#each slideMaxSteps as _, index}
 			<button 
 				class="indicator-dot"
 				class:active={$currentSlide === index}
@@ -116,6 +151,22 @@
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
+		position: relative;
+	}
+
+	.slide-wrapper {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		flex-direction: column;
+		visibility: hidden;
+		pointer-events: none;
+	}
+
+	.slide-wrapper.active {
+		position: relative;
+		visibility: visible;
+		pointer-events: auto;
 	}
 
 	.slide-indicators {

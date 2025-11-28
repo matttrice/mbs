@@ -1,0 +1,62 @@
+<script lang="ts" module>
+	import { writable, type Writable } from 'svelte/store';
+	import { getContext, setContext } from 'svelte';
+
+	const SLIDE_CONTEXT_KEY = 'slide-step-tracker';
+
+	export interface SlideContext {
+		registerStep: (step: number) => void;
+		maxStep: Writable<number>;
+	}
+
+	export function getSlideContext(): SlideContext | undefined {
+		return getContext(SLIDE_CONTEXT_KEY);
+	}
+</script>
+
+<script lang="ts">
+	import { onMount } from 'svelte';
+
+	interface Props {
+		onMaxStep?: (maxStep: number) => void;
+		children: import('svelte').Snippet;
+	}
+
+	let { onMaxStep, children }: Props = $props();
+
+	// Track the highest step number seen
+	const maxStep = writable(0);
+	const registeredSteps = new Set<number>();
+
+	function registerStep(step: number) {
+		if (!registeredSteps.has(step)) {
+			registeredSteps.add(step);
+			maxStep.update(current => Math.max(current, step));
+		}
+	}
+
+	// Set up context for child Fragment components
+	setContext<SlideContext>(SLIDE_CONTEXT_KEY, {
+		registerStep,
+		maxStep
+	});
+
+	// Report maxStep to parent when it changes
+	$effect(() => {
+		if (onMaxStep && $maxStep > 0) {
+			onMaxStep($maxStep);
+		}
+	});
+</script>
+
+<div class="slide">
+	{@render children()}
+</div>
+
+<style>
+	.slide {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+</style>

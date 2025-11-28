@@ -2,6 +2,7 @@
 	import { currentFragment, navigation } from '$lib/stores/navigation';
 	import { fade } from 'svelte/transition';
 	import type { TransitionConfig } from 'svelte/transition';
+	import { getSlideContext } from './Slide.svelte';
 
 	interface Props {
 		step: number;
@@ -19,11 +20,17 @@
 		children
 	}: Props = $props();
 
+	// Register this step with the slide context (if within a Slide)
+	const slideContext = getSlideContext();
+	if (slideContext) {
+		slideContext.registerStep(step);
+	}
+
 	// withPrev and afterPrev appear with the previous step
 	let effectiveStep = $derived(withPrev || afterPrev ? step - 1 : step);
 
 	// afterPrev gets a default delay (applied via CSS or inline style)
-	let autoDelay = $derived(afterPrev ? 300 : 0);
+	let autoDelay = $derived(afterPrev ? 500 : 0);
 
 	let visible = $derived($currentFragment >= effectiveStep);
 

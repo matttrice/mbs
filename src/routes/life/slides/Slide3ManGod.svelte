@@ -1,11 +1,16 @@
 <script lang="ts">
 	import Fragment from '$lib/components/Fragment.svelte';
+	import Slide from '$lib/components/Slide.svelte';
 	import { fade, fly, scale } from 'svelte/transition';
 
-	// This slide has 12 fragments (simplified for demo)
-	export const fragmentCount = 12;
+	interface Props {
+		onMaxStep?: (maxStep: number) => void;
+	}
+
+	let { onMaxStep }: Props = $props();
 </script>
 
+<Slide {onMaxStep}>
 <div class="slide-content">
 	<!-- Headers -->
 	<div class="header-row">
@@ -133,6 +138,7 @@
 		</Fragment>
 	</div>
 </div>
+</Slide>
 
 <style>
 	.slide-content {

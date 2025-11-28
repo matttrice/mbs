@@ -36,7 +36,8 @@ Open [http://localhost:5173](http://localhost:5173)
 src/
 ├── lib/
 │   ├── components/
-│   │   └── Fragment.svelte      # Controls fragment visibility & drills
+│   │   ├── Fragment.svelte      # Controls fragment visibility & drills
+│   │   └── Slide.svelte         # Wrapper that auto-registers maxStep
 │   ├── stores/
 │   │   └── navigation.ts        # Core navigation state machine
 │   └── types.ts
@@ -62,63 +63,85 @@ src/
 
 ### 1. Multi-Slide Presentation
 
-Create a presentation controller that registers slides:
+Create a presentation page that collects maxStep from each slide:
 
 ```svelte
 <!-- routes/lesson/+page.svelte -->
 <script lang="ts">
   import { navigation, currentSlide } from '$lib/stores/navigation';
-  import { onMount } from 'svelte';
   import Slide1 from './slides/Slide1.svelte';
   import Slide2 from './slides/Slide2.svelte';
 
-  // Define fragment counts for each slide
-  const slideFragmentCounts = [9, 15]; // Slide1 has 9, Slide2 has 15
+  // Slides report their maxStep via callback
+  let slideMaxSteps = $state<number[]>([0, 0]);
 
-  onMount(() => {
-    navigation.init('lesson', slideFragmentCounts);
-  });
+  function handleSlide1MaxStep(maxStep: number) {
+    slideMaxSteps[0] = maxStep;
+    if (slideMaxSteps.every(s => s > 0)) {
+      navigation.init('lesson', slideMaxSteps);
+    }
+  }
+
+  function handleSlide2MaxStep(maxStep: number) {
+    slideMaxSteps[1] = maxStep;
+    if (slideMaxSteps.every(s => s > 0)) {
+      navigation.init('lesson', slideMaxSteps);
+    }
+  }
 </script>
 
-{#if $currentSlide === 0}
-  <Slide1 />
-{:else}
-  <Slide2 />
-{/if}
+<!-- Render all slides, show only active one -->
+<div class="slide-wrapper" class:active={$currentSlide === 0}>
+  <Slide1 onMaxStep={handleSlide1MaxStep} />
+</div>
+<div class="slide-wrapper" class:active={$currentSlide === 1}>
+  <Slide2 onMaxStep={handleSlide2MaxStep} />
+</div>
+
+<style>
+  .slide-wrapper { visibility: hidden; position: absolute; }
+  .slide-wrapper.active { visibility: visible; position: relative; }
+</style>
 ```
 
 ### 2. Slide Components
 
-Each slide uses `Fragment` components to control reveal order:
+Wrap slide content in the `Slide` component. Each `Fragment` automatically registers its step:
 
 ```svelte
 <!-- routes/lesson/slides/Slide1.svelte -->
 <script lang="ts">
   import Fragment from '$lib/components/Fragment.svelte';
+  import Slide from '$lib/components/Slide.svelte';
 
-  // IMPORTANT: Export fragmentCount so parent knows total
-  // This is documentation only - the actual count comes from slideFragmentCounts
-  export const fragmentCount = 9;
+  interface Props {
+    onMaxStep?: (maxStep: number) => void;
+  }
+  let { onMaxStep }: Props = $props();
 </script>
 
-<Fragment step={1}>
-  <h1>First thing revealed</h1>
-</Fragment>
+<Slide {onMaxStep}>
+  <Fragment step={1}>
+    <h1>First thing revealed</h1>
+  </Fragment>
 
-<Fragment step={2}>
-  <p>Second thing</p>
-</Fragment>
+  <Fragment step={2}>
+    <p>Second thing</p>
+  </Fragment>
 
-<!-- Appears with step 2 (no separate click needed) -->
-<Fragment step={3} withPrev>
-  <p>Also appears at step 2</p>
-</Fragment>
+  <!-- Appears with step 2 (no separate click needed) -->
+  <Fragment step={3} withPrev>
+    <p>Also appears at step 2</p>
+  </Fragment>
 
-<!-- Drillable - clicking navigates to the drill route -->
-<Fragment step={4} drillTo="lesson/scripture-ref">
-  <span class="drillable">Click to drill</span>
-</Fragment>
+  <!-- Drillable - clicking navigates to the drill route -->
+  <Fragment step={4} drillTo="lesson/scripture-ref">
+    <span>Click to drill into scripture</span>
+  </Fragment>
+</Slide>
 ```
+
+**How it works:** The `Slide` component creates a context. Each `Fragment` registers its `step` value with that context. The `Slide` tracks the highest step seen and reports it via `onMaxStep` callback.
 
 ### 3. Drill Routes (Custom Shows)
 
@@ -127,11 +150,11 @@ Drills are single-slide presentations that auto-return when complete:
 ```svelte
 <!-- routes/lesson/scripture-ref/+page.svelte -->
 <script lang="ts">
-  import { navigation, currentFragment } from '$lib/stores/navigation';
+  import { navigation } from '$lib/stores/navigation';
   import Fragment from '$lib/components/Fragment.svelte';
   import { onMount } from 'svelte';
 
-  // IMPORTANT: Drills use setMaxFragment, not init()
+  // Drills use setMaxFragment (no Slide wrapper needed)
   onMount(() => {
     navigation.setMaxFragment(4);
   });
@@ -149,21 +172,26 @@ Drills are single-slide presentations that auto-return when complete:
 
 | Method | Use Case |
 |--------|----------|
-| `navigation.init('id', [9, 15, 12])` | Multi-slide presentations with slide fragment counts array |
-| `navigation.setMaxFragment(4)` | Single-slide drills - simpler, just the fragment count |
+| `navigation.init('id', [9, 15])` | Multi-slide presentations - array of max steps per slide |
+| `navigation.setMaxFragment(4)` | Single-slide drills - just the max step number |
+
+### `Slide` + `Fragment` Auto-Registration
+
+The `Slide` component uses Svelte context to collect step values from child `Fragment` components:
+
+1. `Slide` creates a context with `registerStep()` function
+2. Each `Fragment` calls `registerStep(step)` when it mounts
+3. `Slide` tracks the max and reports via `onMaxStep` callback
+4. Presentation page collects all maxSteps and calls `navigation.init()`
 
 ### Fragment Props
 
 | Prop | Type | Description |
 |------|------|-------------|
-| `step` | `number` | Fragment number (1-indexed) when this appears |
-| `withPrev` | `boolean` | Appear with previous fragment (no extra click) |
+| `step` | `number` | Step number (1-indexed) when this content appears |
+| `withPrev` | `boolean` | Appear with previous step (no extra click) |
 | `afterPrev` | `boolean` | Same as withPrev but with 300ms animation delay |
-| `drillTo` | `string` | Route to navigate to on click (e.g., `"life/ecclesiastes.3.19"`) |
-
-### Why `export const fragmentCount`?
-
-The `fragmentCount` export in slide components is **documentation only**. The actual fragment count must be specified in the parent's `slideFragmentCounts` array passed to `init()`. Keep them in sync manually.
+| `drillTo` | `string` | Route to drill into on click (e.g., `"life/ecclesiastes.3.19"`) |
 
 ### Keyboard Controls
 
@@ -219,12 +247,14 @@ The menu's Reset button clears this state.
 
 ## Common Gotchas
 
-1. **Fragment counts must match** - The `slideFragmentCounts` array in the parent must match the actual highest fragment step in each slide component.
+1. **Wrap slides in `<Slide>`** - Without the Slide wrapper, Fragments won't register their steps and maxStep won't be reported.
 
-2. **Drills use `setMaxFragment()`** - Don't call `init()` in drill routes; it's for multi-slide presentations only.
+2. **Render all slides** - Use `visibility: hidden` not `display: none` for inactive slides. They need to mount to register their steps.
 
-3. **Fragment steps are 1-indexed** - Start with `step={1}`, not `step={0}`.
+3. **Drills use `setMaxFragment()`** - Don't use the Slide wrapper in drill routes; just call `navigation.setMaxFragment(n)` in onMount.
 
-4. **`drillTo` routes are relative** - Use `"life/ecclesiastes.3.19"` not `"/life/ecclesiastes.3.19"`.
+4. **Fragment steps are 1-indexed** - Start with `step={1}`, not `step={0}`.
 
-5. **Auto-return happens at end** - When `next()` is called on the last fragment of the last slide and there's a stack, it auto-returns.
+5. **`drillTo` routes are relative** - Use `"life/ecclesiastes.3.19"` not `"/life/ecclesiastes.3.19"`.
+
+6. **Auto-return at end of drill** - When `next()` is called on the last step and there's a stack, it auto-returns.
