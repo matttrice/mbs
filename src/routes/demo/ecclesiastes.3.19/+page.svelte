@@ -2,15 +2,15 @@
 	import { currentFragment, stackDepth, canReturn } from '$lib/stores/navigation';
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-	import { fade, fly, scale } from 'svelte/transition';
+	import { fade, scale } from 'svelte/transition';
 </script>
 
 <Slide>
 <div class="drill-content">
 	<header>
-		<h1>Hebrews 9:27</h1>
+		<h1>Ecclesiastes 3:19-21</h1>
 		<div class="debug">
-			Fragment: {$currentFragment} / 3 | Stack: {$stackDepth}
+			Fragment: {$currentFragment} / 5 | Stack: {$stackDepth}
 			{#if $canReturn}<span class="return-hint">Press → to return</span>{/if}
 		</div>
 	</header>
@@ -19,33 +19,44 @@
 		<Fragment step={1}>
 			<blockquote class="scripture" transition:fade>
 				<p>
-					And just as it is destined for people to die once, 
-					and after this comes <span class="highlight">judgment</span>,
+					<sup>19</sup> For the fate of the sons of men and the fate of beasts is the same.
+					As one dies so dies the other; indeed, they all have the
+					<span class="highlight">same breath</span>
+					and there is no advantage for man over beast, for all is vanity.
 				</p>
 			</blockquote>
 		</Fragment>
 
 		<Fragment step={2}>
-			<div class="breakdown" transition:fly={{ y: 20 }}>
-				<div class="point">
-					<h3>Death</h3>
-					<p>Appointed once for all humans</p>
-					<p>The body returns to dust</p>
-				</div>
-				<div class="point">
-					<h3>Judgment</h3>
-					<p>Follows death inevitably</p>
-					<p>The soul faces accountability</p>
-				</div>
-			</div>
+			<blockquote class="scripture" transition:fade>
+				<p>
+					<sup>20</sup> All go to the same place. All came from the dust and all return to the dust.
+				</p>
+			</blockquote>
 		</Fragment>
 
 		<Fragment step={3}>
+			<blockquote class="scripture" transition:fade>
+				<p>
+					<sup>21</sup> Who knows that the
+					<span class="highlight">breath of man</span>
+					ascends upward and the
+					<span class="highlight">breath of the beast</span>
+					descends downward to the earth?
+				</p>
+			</blockquote>
+		</Fragment>
+
+		<Fragment step={4}>
 			<div class="insight" transition:scale={{ start: 0.9 }}>
 				<h2>Key Insight</h2>
-				<p>The soul's destination is not automatic — it is <strong>judged</strong>.</p>
-				<p>Unlike the body (→ Earth) or spirit (→ God), the soul faces judgment.</p>
+				<p>Both man and animals have <strong>spirit (breath)</strong> — but their destinations differ.</p>
 				<p class="action">Press → to return to Life presentation.</p>
+			</div>
+		</Fragment>
+		<Fragment step={5} drillTo="demo/1thessalonians.5.23">
+			<div class="insight" transition:scale={{ start: 0.9 }}>
+				<h2>Drill deeper test. Next should be 1 Thessalonians 5:23</h2>
 			</div>
 		</Fragment>
 	</div>
@@ -56,7 +67,7 @@
 	.drill-content {
 		width: 100%;
 		height: 100%;
-		background: linear-gradient(135deg, #2d1b1b 0%, #1a1a2e 100%);
+		background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
 		display: flex;
 		flex-direction: column;
 		padding: 40px;
@@ -104,9 +115,9 @@
 	.scripture {
 		background: rgba(255, 255, 255, 0.1);
 		border-left: 4px solid #ffd700;
-		padding: 24px 30px;
+		padding: 20px 30px;
 		margin: 0;
-		font-size: 28px;
+		font-size: 24px;
 		line-height: 1.6;
 		border-radius: 0 8px 8px 0;
 	}
@@ -115,39 +126,19 @@
 		margin: 0;
 	}
 
+	.scripture sup {
+		color: #888;
+		font-size: 14px;
+		margin-right: 4px;
+	}
+
 	.highlight {
-		color: #ff4444;
+		color: #00d4ff;
 		font-weight: bold;
 	}
 
-	.breakdown {
-		display: flex;
-		gap: 30px;
-		justify-content: center;
-	}
-
-	.point {
-		flex: 1;
-		padding: 24px;
-		background: rgba(255, 255, 255, 0.1);
-		border-radius: 12px;
-		text-align: center;
-	}
-
-	.point h3 {
-		margin: 0 0 16px 0;
-		color: #ffd700;
-		font-size: 28px;
-	}
-
-	.point p {
-		margin: 8px 0;
-		font-size: 18px;
-		color: #ddd;
-	}
-
 	.insight {
-		background: linear-gradient(135deg, #cc2200 0%, #990000 100%);
+		background: linear-gradient(135deg, #0066cc 0%, #0044aa 100%);
 		padding: 30px;
 		border-radius: 12px;
 		text-align: center;

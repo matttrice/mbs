@@ -63,7 +63,7 @@
 		<Fragment step={10}>
 			<div class="data-cell spirit-cell" transition:fly={{ x: -20 }}>God</div>
 		</Fragment>
-		<Fragment step={11} drillTo="life/hebrews.9.27">
+		<Fragment step={11} drillTo="demo/hebrews.9.27">
 			<div class="data-cell soul-cell judgment" transition:fly={{ x: -20 }}>
 				Judgment
 				<div class="scripture-ref">Hebrews 9:27</div>

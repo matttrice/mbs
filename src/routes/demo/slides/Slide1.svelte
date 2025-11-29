@@ -64,8 +64,8 @@
 			</div>
 		</Fragment>
 
-		<!-- Animals Spirit - DRILLABLE -->
-		<Fragment step={8} drillTo="life/ecclesiastes.3.19">
+		<!-- Animals Spirit - DRILLABLE (separate click) -->
+		<Fragment step={8} drillTo="demo/ecclesiastes.3.19">
 			<div class="spirit-box drillable-box" transition:fly={{ y: 20 }}>
 				<div class="spirit-title">Spirit</div>
 				<div class="scripture-ref">Ecclesiastes 3:19-21</div>
@@ -73,8 +73,8 @@
 		</Fragment>
 
 		<!-- Man Spirit - DRILLABLE (separate click) -->
-		<Fragment step={9} drillTo="life/1thessalonians.5.23">
-			<div class="spirit-box" transition:fly={{ y: 20 }}>
+		<Fragment step={9} drillTo="demo/1thessalonians.5.23">
+			<div class="spirit-box drillable-box" transition:fly={{ y: 20 }}>
 				<div class="spirit-title">Spirit</div>
 				<div class="scripture-ref">1 Thess. 5:23</div>
 			</div>

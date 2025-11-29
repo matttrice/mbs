@@ -46,7 +46,7 @@
 </script>
 
 <svelte:head>
-	<title>MBS Teaching Tool</title>
+	<title>MBS - Master Bible Study</title>
 </svelte:head>
 
 <div class="presentation-container">

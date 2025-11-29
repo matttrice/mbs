@@ -11,20 +11,20 @@
 
 <div class="menu">
 	<header>
-		<h1>Bible Study Presentations</h1>
-		<p class="subtitle">Select a presentation to begin</p>
+		<h1>Master Bible Study</h1>
+		<p class="subtitle">Select a lesson</p>
 	</header>
 
 	<nav class="models">
 		<div class="model-card-wrapper">
-			<a href="/life" class="model-card">
-				<h2>Life</h2>
+			<a href="/demo" class="model-card">
+				<h2>Demo</h2>
 				<p>How many "kinds" of life did God create?</p>
 				<span class="arrow">→</span>
 			</a>
 			<button 
 				class="reset-btn" 
-				onclick={() => startFresh('life', '/life')}
+				onclick={() => startFresh('demo', '/demo')}
 				title="Reset progress and start fresh"
 			>
 				Reset

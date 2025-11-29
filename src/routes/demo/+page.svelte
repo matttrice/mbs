@@ -3,9 +3,9 @@
 	import { onMount } from 'svelte';
 	
 	// Import slide components
-	import Slide1Life from './slides/Slide1Life.svelte';
-	import Slide2Mankind from './slides/Slide2Mankind.svelte';
-	import Slide3ManGod from './slides/Slide3ManGod.svelte';
+	import Slide1 from './slides/Slide1.svelte';
+	import Slide2 from './slides/Slide2.svelte';
+	import Slide3 from './slides/Slide3.svelte';
 
 	// Slides report their maxStep via callback - collected here
 	// Using $state to track slide maxSteps as they register
@@ -38,7 +38,7 @@
 	function updateNavigation() {
 		// Only init once all slides have reported non-zero maxSteps
 		if (slideMaxSteps.every(s => s > 0)) {
-			navigation.init('life', slideMaxSteps);
+			navigation.init('demo', slideMaxSteps);
 		}
 	}
 
@@ -79,13 +79,13 @@
 	<div class="slide-container">
 		<!-- All slides render to register maxSteps, only active one visible -->
 		<div class="slide-wrapper" class:active={$currentSlide === 0}>
-			<Slide1Life onMaxStep={handleSlide1MaxStep} />
+			<Slide1 onMaxStep={handleSlide1MaxStep} />
 		</div>
 		<div class="slide-wrapper" class:active={$currentSlide === 1}>
-			<Slide2Mankind onMaxStep={handleSlide2MaxStep} />
+			<Slide2 onMaxStep={handleSlide2MaxStep} />
 		</div>
 		<div class="slide-wrapper" class:active={$currentSlide === 2}>
-			<Slide3ManGod onMaxStep={handleSlide3MaxStep} />
+			<Slide3 onMaxStep={handleSlide3MaxStep} />
 		</div>
 	</div>
 

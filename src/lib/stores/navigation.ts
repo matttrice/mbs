@@ -428,13 +428,6 @@ function createNavigationStore() {
 		 * Get the route path for a presentation ID
 		 */
 		getRouteForPresentation(presentation: string): string {
-			// Main presentations map to their own routes
-			// Drills are nested under their parent presentation
-			if (presentation === 'life') {
-				return '/life';
-			}
-			// For drills, they should be at /life/ecclesiastes.3.19 etc.
-			// But we need to know the parent - for now assume life is parent
 			return `/${presentation}`;
 		},
 

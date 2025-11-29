@@ -50,12 +50,10 @@
 			</div>
 		</Fragment>
 
-		<Fragment step={3} drillTo="life/hebrews.9.27">
+		<Fragment step={3} drillTo="demo/hebrews.9.27">
 			<div class="insight" transition:scale={{ start: 0.9 }}>
 				<h2>Key Insight</h2>
-				<p>Man is <strong>tripartite</strong> — spirit, soul, and body.</p>
-				<p>This distinguishes man from animals who have only body and spirit.</p>
-				<p class="action">Press → to return to Life presentation.</p>
+				<p>Drill within a drill test. Next should be Hebrews 9:27</p>
 			</div>
 		</Fragment>
 	</div>

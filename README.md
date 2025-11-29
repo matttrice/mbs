@@ -44,12 +44,12 @@ src/
 ├── routes/
 │   ├── +layout.svelte           # Global keyboard handling
 │   ├── +page.svelte             # Main menu
-│   └── life/                    # "Life" presentation
+│   └── demo/                    # "Demo" presentation
 │       ├── +page.svelte         # Presentation controller
 │       ├── slides/              # Slide components
-│       │   ├── Slide1Life.svelte
-│       │   ├── Slide2Mankind.svelte
-│       │   └── Slide3ManGod.svelte
+│       │   ├── Slide1.svelte
+│       │   ├── Slide2.svelte
+│       │   └── Slide3.svelte
 │       ├── ecclesiastes.3.19/   # Drill route
 │       │   └── +page.svelte
 │       └── 1thessalonians.5.23/ # Drill route
@@ -232,7 +232,7 @@ The `Slide` component uses Svelte context to collect step values from child `Fra
 | `step` | `number` | Step number (1-indexed) when this content appears |
 | `withPrev` | `boolean` | Appear with previous step (no extra click) |
 | `afterPrev` | `boolean` | Same as withPrev but with 300ms animation delay |
-| `drillTo` | `string` | Route to drill into on click (e.g., `"life/ecclesiastes.3.19"`) |
+| `drillTo` | `string` | Route to drill into on click (e.g., `"demo/ecclesiastes.3.19"`) |
 
 ### Keyboard Controls
 
@@ -246,7 +246,7 @@ The `Slide` component uses Svelte context to collect step values from child `Fra
 
 ```typescript
 // Initialize multi-slide presentation (called by parent after collecting maxSteps)
-navigation.init('life', [9, 15, 12]);
+navigation.init('demo', [9, 15, 12]);
 
 // Navigation
 navigation.next();           // Advance fragment, slide, auto-drill, or auto-return
@@ -255,11 +255,11 @@ navigation.goToSlide(1);     // Jump to slide (preserves fragment position)
 navigation.goToFragment(5);  // Jump to fragment in current slide
 
 // Drill operations (usually triggered automatically via Fragment drillTo)
-navigation.drillInto('life/ecclesiastes.3.19');  // Push state, navigate
+navigation.drillInto('demo/ecclesiastes.3.19');  // Push state, navigate
 navigation.returnFromDrill();                     // Pop all states, return to origin
 
 // State management
-navigation.clearPresentation('life');  // Clear localStorage for presentation
+navigation.clearPresentation('demo');  // Clear localStorage for presentation
 navigation.reset();                    // Reset everything
 ```
 
