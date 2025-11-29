@@ -1,16 +1,12 @@
 <script lang="ts">
-	import { navigation, currentFragment, stackDepth, canReturn } from '$lib/stores/navigation';
+	import { currentFragment, stackDepth, canReturn } from '$lib/stores/navigation';
+	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
 	import { fade, fly, scale } from 'svelte/transition';
-	import { onMount } from 'svelte';
-
-	// Initialize this drill
-	onMount(() => {
-		navigation.setMaxFragment(3);
-	});
 </script>
 
-<div class="slide">
+<Slide>
+<div class="drill-content">
 	<header>
 		<h1>1 Thessalonians 5:23</h1>
 		<div class="debug">
@@ -54,7 +50,7 @@
 			</div>
 		</Fragment>
 
-		<Fragment step={3}>
+		<Fragment step={3} drillTo="life/hebrews.9.27">
 			<div class="insight" transition:scale={{ start: 0.9 }}>
 				<h2>Key Insight</h2>
 				<p>Man is <strong>tripartite</strong> — spirit, soul, and body.</p>
@@ -64,12 +60,9 @@
 		</Fragment>
 	</div>
 </div>
-
+</Slide>
 <style>
-	.slide {
-		width: 100%;
-		height: 100%;
-		background: linear-gradient(135deg, #2d1b4e 0%, #1a1a2e 100%);
+	.drill-content {
 		display: flex;
 		flex-direction: column;
 		padding: 40px;

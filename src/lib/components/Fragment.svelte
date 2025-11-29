@@ -1,13 +1,37 @@
 <script lang="ts">
 	import { currentFragment, navigation } from '$lib/stores/navigation';
-	import { fade } from 'svelte/transition';
-	import type { TransitionConfig } from 'svelte/transition';
 	import { getSlideContext } from './Slide.svelte';
+	import { onMount, onDestroy } from 'svelte';
 
+	/**
+	 * Controls visibility of content based on the current fragment step.
+	 * Must be used inside a `<Slide>` wrapper for step auto-registration.
+	 *
+	 * ```svelte
+	 * <Fragment step={1}>First content</Fragment>
+	 * <Fragment step={2}>Second content</Fragment>
+	 * <Fragment step={3} drillTo="lesson/details">Click to drill</Fragment>
+	 * ```
+	 *
+	 * Apply transitions on child elements:
+	 * ```svelte
+	 * <Fragment step={2}>
+	 *   <div transition:fade>Fades in at step 2</div>
+	 * </Fragment>
+	 * ```
+	 */
 	interface Props {
+		/** Step number (1-indexed) when this content becomes visible */
 		step: number;
+		/** Appear with the previous step (no separate click needed) */
 		withPrev?: boolean;
+		/** Like withPrev but with 500ms animation delay */
 		afterPrev?: boolean;
+		/**
+		 * Route to drill into when clicked (e.g., `"life/ecclesiastes.3.19"`).
+		 * Also enables auto-drill: if this is the last fragment and → is pressed,
+		 * navigation automatically drills into this route.
+		 */
 		drillTo?: string;
 		children: import('svelte').Snippet;
 	}
@@ -25,6 +49,20 @@
 	if (slideContext) {
 		slideContext.registerStep(step);
 	}
+
+	// Register drillTo target with navigation store
+	// This allows auto-drill when next() is called at this step
+	onMount(() => {
+		if (drillTo) {
+			navigation.registerDrillTarget(step, drillTo);
+		}
+	});
+
+	onDestroy(() => {
+		if (drillTo) {
+			navigation.unregisterDrillTarget(step);
+		}
+	});
 
 	// withPrev and afterPrev appear with the previous step
 	let effectiveStep = $derived(withPrev || afterPrev ? step - 1 : step);

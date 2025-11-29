@@ -434,3 +434,197 @@ describe('Navigation Store - Route Mapping', () => {
 		expect(route).toBe('/life/ecclesiastes.3.19');
 	});
 });
+
+describe('Navigation Store - Auto-Drill Functionality', () => {
+	/**
+	 * Tests for auto-drill behavior:
+	 * When at the last fragment of a drill and that fragment has a registered drillTo,
+	 * pressing next() should automatically navigate to the target drill
+	 * instead of requiring a click.
+	 */
+	
+	beforeEach(() => {
+		navigation.init('life', [9, 15, 12]);
+	});
+
+	it('registers drill target when registerDrillTarget is called', () => {
+		navigation.registerDrillTarget(5, 'life/1thessalonians.5.23');
+		
+		const state = get(navigation);
+		expect(state.drillTargets[5]).toBe('life/1thessalonians.5.23');
+	});
+
+	it('unregisters drill target when unregisterDrillTarget is called', () => {
+		navigation.registerDrillTarget(5, 'life/1thessalonians.5.23');
+		navigation.unregisterDrillTarget(5);
+		
+		const state = get(navigation);
+		expect(state.drillTargets[5]).toBeUndefined();
+	});
+
+	it('auto-drills when next() is called at maxFragment with registered drillTarget', () => {
+		// Simulate being in a drill (ecclesiastes) with fragment 5 having a drillTo
+		navigation.drillInto('life/ecclesiastes.3.19');
+		navigation.setMaxFragment(5);
+		navigation.registerDrillTarget(5, 'life/1thessalonians.5.23');
+		
+		// Advance to the last fragment
+		for (let i = 0; i < 5; i++) navigation.next();
+		expect(get(navigation).current.fragment).toBe(5);
+		
+		// Next should auto-drill to the target
+		navigation.next();
+		
+		expect(goto).toHaveBeenCalledWith('/life/1thessalonians.5.23');
+		expect(get(navigation).current.presentation).toBe('life/1thessalonians.5.23');
+		expect(get(navigation).stack.length).toBe(2); // Original + ecclesiastes
+	});
+
+	it('clears drillTargets when drilling into new target', () => {
+		navigation.registerDrillTarget(5, 'life/1thessalonians.5.23');
+		navigation.drillInto('life/test');
+		
+		const state = get(navigation);
+		expect(state.drillTargets).toEqual({});
+	});
+
+	it('clears drillTargets when advancing to next slide', () => {
+		navigation.init('life', [3, 5]);
+		navigation.registerDrillTarget(3, 'life/test');
+		
+		// Advance through all fragments of slide 0
+		for (let i = 0; i < 3; i++) navigation.next();
+		
+		// Advance to next slide (since no drillTarget at step 3 for slide)
+		// Wait - step 3 IS registered, so it should auto-drill
+		// Let's adjust the test: register at a step that's NOT the max
+		navigation.init('life', [5, 5]);
+		navigation.registerDrillTarget(3, 'life/test'); // Not at max (5)
+		
+		// Advance past the registered step
+		for (let i = 0; i < 5; i++) navigation.next();
+		
+		// Advance to next slide - should clear drillTargets
+		navigation.next();
+		
+		const state = get(navigation);
+		expect(state.drillTargets).toEqual({});
+	});
+});
+
+describe('Navigation Store - Return to Origin', () => {
+	/**
+	 * Tests for nested drill return behavior:
+	 * When at the end of a drill chain, the return should go all the way back
+	 * to the original presentation, not to intermediate drills.
+	 */
+	
+	beforeEach(() => {
+		navigation.init('life', [9, 15, 12]);
+	});
+
+	it('returns to origin when in nested drill and next() is called at end', () => {
+		// Set up: life -> ecclesiastes -> thessalonians
+		// Fragment 8 drills to ecclesiastes
+		for (let i = 0; i < 8; i++) navigation.next();
+		navigation.drillInto('life/ecclesiastes.3.19');
+		
+		// In ecclesiastes, set up with auto-drill to thessalonians
+		navigation.setMaxFragment(5);
+		navigation.registerDrillTarget(5, 'life/1thessalonians.5.23');
+		for (let i = 0; i < 5; i++) navigation.next();
+		
+		// Auto-drill to thessalonians
+		navigation.next();
+		expect(get(navigation).stack.length).toBe(2);
+		
+		// In thessalonians, no drillTo on last fragment
+		navigation.setMaxFragment(3);
+		for (let i = 0; i < 3; i++) navigation.next();
+		
+		// Next should return all the way to 'life', not to 'ecclesiastes'
+		navigation.next();
+		
+		const state = get(navigation);
+		expect(state.current.presentation).toBe('life');
+		expect(state.current.fragment).toBe(8); // Where we drilled from originally
+		expect(state.stack.length).toBe(0);
+		expect(goto).toHaveBeenLastCalledWith('/life');
+	});
+
+	it('returnFromDrill with returnToOrigin=true pops all states', () => {
+		// Create a 3-level deep drill stack
+		navigation.drillInto('life/level1');
+		navigation.drillInto('life/level2');
+		navigation.drillInto('life/level3');
+		
+		expect(get(navigation).stack.length).toBe(3);
+		
+		// Return to origin should pop all 3
+		navigation.returnFromDrill(true);
+		
+		const state = get(navigation);
+		expect(state.stack.length).toBe(0);
+		expect(state.current.presentation).toBe('life');
+	});
+
+	it('returnFromDrill with returnToOrigin=false pops only one state', () => {
+		// Create a 3-level deep drill stack
+		navigation.drillInto('life/level1');
+		navigation.drillInto('life/level2');
+		navigation.drillInto('life/level3');
+		
+		expect(get(navigation).stack.length).toBe(3);
+		
+		// Normal return should pop only one
+		navigation.returnFromDrill(false);
+		
+		const state = get(navigation);
+		expect(state.stack.length).toBe(2);
+		expect(state.current.presentation).toBe('life/level2');
+	});
+
+	it('preserves original position through nested drill chain', () => {
+		// Navigate to a specific position
+		for (let i = 0; i < 5; i++) navigation.next();
+		navigation.goToSlide(1);
+		for (let i = 0; i < 7; i++) navigation.next();
+		
+		// Save expected return position
+		const expectedSlide = get(navigation).current.slide;
+		const expectedFragment = get(navigation).current.fragment;
+		
+		// Drill through multiple levels
+		navigation.drillInto('life/drill1');
+		navigation.setMaxFragment(3);
+		navigation.drillInto('life/drill2');
+		navigation.setMaxFragment(2);
+		
+		// Return to origin
+		navigation.returnFromDrill(true);
+		
+		// Simulate page re-init
+		navigation.init('life', [9, 15, 12]);
+		
+		const state = get(navigation);
+		expect(state.current.slide).toBe(expectedSlide);
+		expect(state.current.fragment).toBe(expectedFragment);
+	});
+
+	it('always returns to origin from any drill depth via next()', () => {
+		// Even a single-level drill should return to origin
+		navigation.drillInto('life/drill1');
+		navigation.setMaxFragment(2);
+		
+		// Advance to end
+		navigation.next();
+		navigation.next();
+		
+		// Next should return to origin
+		navigation.next();
+		
+		const state = get(navigation);
+		expect(state.current.presentation).toBe('life');
+		expect(state.stack.length).toBe(0);
+	});
+});

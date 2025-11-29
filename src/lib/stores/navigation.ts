@@ -18,7 +18,8 @@ function createNavigationStore() {
 		maxFragment: 0,
 		slideFragmentCounts: [],
 		slideFragments: [],              // Track fragment position per slide
-		isReturningFromDrill: false  // Flag to prevent init() from resetting state
+		isReturningFromDrill: false,     // Flag to prevent init() from resetting state
+		drillTargets: {}                 // Map of step -> drillTo target for current slide/drill
 	};
 
 	// Load persisted state from localStorage
@@ -158,11 +159,50 @@ function createNavigationStore() {
 				maxFragment: max,
 				maxSlide: 0,
 				slideFragmentCounts: [max]
+				// Note: drillTargets are registered by Fragment components, not cleared here
+			}));
+		},
+
+		/**
+		 * Register a drill target for a specific step
+		 * Called by Fragment components that have a drillTo prop
+		 */
+		registerDrillTarget(step: number, target: string) {
+			update((ctx) => ({
+				...ctx,
+				drillTargets: {
+					...ctx.drillTargets,
+					[step]: target
+				}
+			}));
+		},
+
+		/**
+		 * Unregister a drill target (called when Fragment unmounts)
+		 */
+		unregisterDrillTarget(step: number) {
+			update((ctx) => {
+				const { [step]: _, ...rest } = ctx.drillTargets;
+				return {
+					...ctx,
+					drillTargets: rest
+				};
+			});
+		},
+
+		/**
+		 * Clear all drill targets (called when navigating away)
+		 */
+		clearDrillTargets() {
+			update((ctx) => ({
+				...ctx,
+				drillTargets: {}
 			}));
 		},
 
 		/**
 		 * Advance to the next fragment, slide, or auto-return if at end of a drill
+		 * If at the last fragment and it has a registered drillTo, auto-drill into it
 		 */
 		next() {
 			const ctx = get({ subscribe });
@@ -183,7 +223,7 @@ function createNavigationStore() {
 					};
 				});
 			} else if (ctx.current.slide < ctx.maxSlide) {
-				// Advance to next slide, start at its saved fragment position (or 0)
+				// Advance to next slide, start at fragment 0
 				console.log('[Navigation] Advancing to next slide:', ctx.current.slide + 1);
 				updateAndPersist((c) => {
 					const nextSlide = c.current.slide + 1;
@@ -194,15 +234,25 @@ function createNavigationStore() {
 							slide: nextSlide,
 							fragment: 0  // When advancing naturally, start fresh
 						},
-						maxFragment: c.slideFragmentCounts[nextSlide] || 0
+						maxFragment: c.slideFragmentCounts[nextSlide] || 0,
+						drillTargets: {}  // Clear drill targets when changing slides
 					};
 				});
-			} else if (ctx.stack.length > 0) {
-				// At end of fragments AND slides, and we're in a drill - auto return
-				console.log('[Navigation] End of drill sequence - auto returning');
-				this.returnFromDrill();
+			} else {
+				// At end of current slide/drill - check for auto-drill or auto-return
+				const drillTarget = ctx.drillTargets[ctx.maxFragment];
+				
+				if (drillTarget) {
+					// Last fragment has a drillTo - auto drill into it
+					console.log('[Navigation] Auto-drilling to:', drillTarget);
+					this.drillInto(drillTarget);
+				} else if (ctx.stack.length > 0) {
+					// We're in a drill with no more drillTos - return to origin
+					console.log('[Navigation] End of drill sequence - returning to origin');
+					this.returnFromDrill(true);  // Always return to origin
+				}
+				// else: At end of main presentation - do nothing
 			}
-			// else: At end of main presentation - do nothing
 		},
 
 		/**
@@ -303,8 +353,9 @@ function createNavigationStore() {
 						fragment: startFragment
 					},
 					maxSlide: 0,
-					maxFragment: 0, // Will be set by the drill's setMaxFragment
-					slideFragmentCounts: []
+					maxFragment: 0, // Will be set by the drill's setMaxFragment or init
+					slideFragmentCounts: [],
+					drillTargets: {}  // Clear - new drill will register its own
 				};
 			});
 
@@ -315,8 +366,9 @@ function createNavigationStore() {
 		/**
 		 * Return from a drill - POP state from stack and restore
 		 * Returns to EXACT same position (slide + fragment) like PowerPoint Custom Shows
+		 * If returnToOrigin is true, pops all the way back to the original presentation
 		 */
-		returnFromDrill() {
+		returnFromDrill(returnToOrigin: boolean = false) {
 			const ctx = get({ subscribe });
 			
 			if (ctx.stack.length === 0) {
@@ -324,13 +376,18 @@ function createNavigationStore() {
 				return;
 			}
 
-			// Pop the last state from the stack
-			const newStack = [...ctx.stack];
-			const returnState = newStack.pop()!;
+			// Determine how many states to pop
+			// If returnToOrigin, pop all the way to the first state (the original presentation)
+			const popCount = returnToOrigin ? ctx.stack.length : 1;
+			const newStack = ctx.stack.slice(0, ctx.stack.length - popCount);
+			const returnState = ctx.stack[ctx.stack.length - popCount]; // Get the state we're returning to
 
 			console.log('[Navigation] Returning from drill');
 			console.log('[Navigation] Restoring state:', returnState);
 			console.log('[Navigation] Stack depth now:', newStack.length);
+			if (returnToOrigin) {
+				console.log('[Navigation] Returning to origin - popped', popCount, 'states');
+			}
 
 			// Determine the route based on presentation
 			// life -> /life, ecclesiastes.3.19 -> /life/ecclesiastes.3.19, etc.
@@ -346,6 +403,7 @@ function createNavigationStore() {
 				current: currentState,
 				slideFragments: savedSlideFragments || c.slideFragments,  // Restore per-slide positions
 				isReturningFromDrill: true,  // Flag to prevent init() from resetting
+				drillTargets: {},  // Clear drill targets - origin will re-register
 				// These will be properly set by the presentation's init()
 				maxSlide: 0,
 				maxFragment: 0,

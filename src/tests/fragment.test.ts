@@ -24,17 +24,23 @@ const mockDrillIntoFn = vi.fn();
 vi.mock('$lib/stores/navigation', () => {
 	const fragmentStore = writable(0);
 	const drillFn = vi.fn();
+	const registerDrillTargetFn = vi.fn();
+	const unregisterDrillTargetFn = vi.fn();
 	return {
 		currentFragment: fragmentStore,
 		navigation: {
 			drillInto: drillFn,
+			registerDrillTarget: registerDrillTargetFn,
+			unregisterDrillTarget: unregisterDrillTargetFn,
 			subscribe: vi.fn(),
 			next: vi.fn(),
 			prev: vi.fn()
 		},
 		// Export these so tests can access them
 		__mockFragment: fragmentStore,
-		__mockDrillInto: drillFn
+		__mockDrillInto: drillFn,
+		__mockRegisterDrillTarget: registerDrillTargetFn,
+		__mockUnregisterDrillTarget: unregisterDrillTargetFn
 	};
 });
 
@@ -182,7 +188,7 @@ describe('Fragment Component - Animation Delay', () => {
 		
 		const div = container.querySelector('div');
 		if (div) {
-			expect(div.style.animationDelay).toBe('300ms');
+			expect(div.style.animationDelay).toBe('500ms');
 		}
 	});
 

@@ -42,15 +42,14 @@
 		}
 	}
 
-	// Fallback: if slides haven't reported in time, use defaults
+	// Validate all slides registered properly
 	onMount(() => {
-		// Give slides a moment to register, then fall back
 		setTimeout(() => {
 			if (!slideMaxSteps.every(s => s > 0)) {
-				// Slides haven't all reported - use fallback
-				// This shouldn't happen with proper Slide wrapper usage
-				console.warn('[Life] Some slides did not report maxStep, using fallback');
-				navigation.init('life', slideMaxSteps.map(s => s || 10));
+				const missing = slideMaxSteps
+					.map((s, i) => s === 0 ? i + 1 : null)
+					.filter(Boolean);
+				throw new Error(`Slides ${missing.join(', ')} did not report maxStep. Wrap content in <Slide>.`);
 			}
 		}, 100);
 	});

@@ -1,16 +1,12 @@
 <script lang="ts">
-	import { navigation, currentFragment, stackDepth, canReturn } from '$lib/stores/navigation';
+	import { currentFragment, stackDepth, canReturn } from '$lib/stores/navigation';
+	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
 	import { fade, fly, scale } from 'svelte/transition';
-	import { onMount } from 'svelte';
-
-	// Initialize this drill
-	onMount(() => {
-		navigation.setMaxFragment(3);
-	});
 </script>
 
-<div class="slide">
+<Slide>
+<div class="drill-content">
 	<header>
 		<h1>Hebrews 9:27</h1>
 		<div class="debug">
@@ -54,9 +50,10 @@
 		</Fragment>
 	</div>
 </div>
+</Slide>
 
 <style>
-	.slide {
+	.drill-content {
 		width: 100%;
 		height: 100%;
 		background: linear-gradient(135deg, #2d1b1b 0%, #1a1a2e 100%);

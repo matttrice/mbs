@@ -1,20 +1,16 @@
 <script lang="ts">
-	import { navigation, currentFragment, stackDepth, canReturn } from '$lib/stores/navigation';
+	import { currentFragment, stackDepth, canReturn } from '$lib/stores/navigation';
+	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
 	import { fade, scale } from 'svelte/transition';
-	import { onMount } from 'svelte';
-
-	// Initialize this drill (single slide)
-	onMount(() => {
-		navigation.setMaxFragment(4);
-	});
 </script>
 
-<div class="slide">
+<Slide>
+<div class="drill-content">
 	<header>
 		<h1>Ecclesiastes 3:19-21</h1>
 		<div class="debug">
-			Fragment: {$currentFragment} / 4 | Stack: {$stackDepth}
+			Fragment: {$currentFragment} / 5 | Stack: {$stackDepth}
 			{#if $canReturn}<span class="return-hint">Press → to return</span>{/if}
 		</div>
 	</header>
@@ -58,11 +54,17 @@
 				<p class="action">Press → to return to Life presentation.</p>
 			</div>
 		</Fragment>
+		<Fragment step={5} drillTo="life/1thessalonians.5.23">
+			<div class="insight" transition:scale={{ start: 0.9 }}>
+				<h2>Drill and return Test</h2>
+			</div>
+		</Fragment>
 	</div>
 </div>
+</Slide>
 
 <style>
-	.slide {
+	.drill-content {
 		width: 100%;
 		height: 100%;
 		background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);

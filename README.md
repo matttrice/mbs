@@ -69,25 +69,41 @@ Create a presentation page that collects maxStep from each slide:
 <!-- routes/lesson/+page.svelte -->
 <script lang="ts">
   import { navigation, currentSlide } from '$lib/stores/navigation';
+  import { onMount } from 'svelte';
   import Slide1 from './slides/Slide1.svelte';
   import Slide2 from './slides/Slide2.svelte';
 
   // Slides report their maxStep via callback
   let slideMaxSteps = $state<number[]>([0, 0]);
 
-  function handleSlide1MaxStep(maxStep: number) {
-    slideMaxSteps[0] = maxStep;
+  // Update navigation when all slides have reported
+  function updateNavigation() {
     if (slideMaxSteps.every(s => s > 0)) {
       navigation.init('lesson', slideMaxSteps);
     }
   }
 
+  function handleSlide1MaxStep(maxStep: number) {
+    slideMaxSteps[0] = maxStep;
+    updateNavigation();
+  }
+
   function handleSlide2MaxStep(maxStep: number) {
     slideMaxSteps[1] = maxStep;
-    if (slideMaxSteps.every(s => s > 0)) {
-      navigation.init('lesson', slideMaxSteps);
-    }
+    updateNavigation();
   }
+
+  // Validate all slides registered properly
+  onMount(() => {
+    setTimeout(() => {
+      if (!slideMaxSteps.every(s => s > 0)) {
+        const missing = slideMaxSteps
+          .map((s, i) => s === 0 ? i + 1 : null)
+          .filter(Boolean);
+        throw new Error(`Slides ${missing.join(', ')} did not report maxStep. Wrap content in <Slide>.`);
+      }
+    }, 100);
+  });
 </script>
 
 <!-- Render all slides, show only active one -->
@@ -145,44 +161,69 @@ Wrap slide content in the `Slide` component. Each `Fragment` automatically regis
 
 ### 3. Drill Routes (Custom Shows)
 
-Drills are single-slide presentations that auto-return when complete:
+Drills are single-slide presentations. Wrap content in `<Slide>` without an `onMaxStep` callback — the Slide will auto-register maxFragment:
 
 ```svelte
 <!-- routes/lesson/scripture-ref/+page.svelte -->
 <script lang="ts">
-  import { navigation } from '$lib/stores/navigation';
+  import Slide from '$lib/components/Slide.svelte';
   import Fragment from '$lib/components/Fragment.svelte';
-  import { onMount } from 'svelte';
-
-  // Drills use setMaxFragment (no Slide wrapper needed)
-  onMount(() => {
-    navigation.setMaxFragment(4);
-  });
 </script>
 
-<Fragment step={1}>Verse 1</Fragment>
-<Fragment step={2}>Verse 2</Fragment>
-<Fragment step={3}>Verse 3</Fragment>
-<Fragment step={4}>Key insight - press → to return</Fragment>
+<Slide>
+  <Fragment step={1}>Verse 1</Fragment>
+  <Fragment step={2}>Verse 2</Fragment>
+  <Fragment step={3}>Verse 3</Fragment>
+  <Fragment step={4}>Key insight - press → to return</Fragment>
+</Slide>
 ```
+
+For **nested drills** (drill within drill), the last Fragment can include a `drillTo`:
+
+```svelte
+<!-- Drill that chains to another drill -->
+<script lang="ts">
+  import Slide from '$lib/components/Slide.svelte';
+  import Fragment from '$lib/components/Fragment.svelte';
+</script>
+
+<Slide>
+  <Fragment step={1}>First point</Fragment>
+  <Fragment step={2}>Second point</Fragment>
+  <!-- Last fragment with drillTo - auto-advances when → is pressed at step 3 -->
+  <Fragment step={3} drillTo="lesson/related-scripture">
+    <span>Related scripture →</span>
+  </Fragment>
+</Slide>
+```
+
+The `drillTo` prop on any Fragment automatically enables:
+- **Click navigation**: Clicking a visible drillTo fragment navigates to that route
+- **Auto-advance**: When at the last fragment and it has a `drillTo`, pressing → auto-navigates
+- **Return to origin**: When returning from nested drills, you go **directly back to the original presentation**, preserving the exact fragment position
 
 ## Key Concepts
 
-### `init()` vs `setMaxFragment()`
+### `<Slide>` Component
 
-| Method | Use Case |
-|--------|----------|
-| `navigation.init('id', [9, 15])` | Multi-slide presentations - array of max steps per slide |
-| `navigation.setMaxFragment(4)` | Single-slide drills - just the max step number |
+The `<Slide>` component is the foundation for both presentations and drills:
 
-### `Slide` + `Fragment` Auto-Registration
+| Usage | Behavior |
+|-------|----------|
+| `<Slide onMaxStep={callback}>` | Multi-slide: reports maxStep to parent for `navigation.init()` |
+| `<Slide>` (no callback) | Single-slide drill: auto-registers with navigation. Can chain to other drills via `drillTo` on the last Fragment, returning to the original presentation when complete. |
+
+**Note:** You don't need to declare drillTo targets separately - just use `drillTo` on your Fragment components. They auto-register with the navigation store.
+
+### `Slide` Auto-Registration
 
 The `Slide` component uses Svelte context to collect step values from child `Fragment` components:
 
 1. `Slide` creates a context with `registerStep()` function
 2. Each `Fragment` calls `registerStep(step)` when it mounts
-3. `Slide` tracks the max and reports via `onMaxStep` callback
-4. Presentation page collects all maxSteps and calls `navigation.init()`
+3. `Slide` tracks the max step seen
+4. **With callback**: Reports to parent → parent calls `navigation.init()`
+5. **Without callback**: Directly calls `navigation.setMaxFragment()`
 
 ### Fragment Props
 
@@ -204,21 +245,18 @@ The `Slide` component uses Svelte context to collect step values from child `Fra
 ## Navigation Store API
 
 ```typescript
-// Initialize presentation with slide fragment counts
+// Initialize multi-slide presentation (called by parent after collecting maxSteps)
 navigation.init('life', [9, 15, 12]);
 
-// For single-slide drills
-navigation.setMaxFragment(4);
-
 // Navigation
-navigation.next();           // Advance fragment, slide, or auto-return
+navigation.next();           // Advance fragment, slide, auto-drill, or auto-return
 navigation.prev();           // Go back
 navigation.goToSlide(1);     // Jump to slide (preserves fragment position)
 navigation.goToFragment(5);  // Jump to fragment in current slide
 
-// Drill operations
+// Drill operations (usually triggered automatically via Fragment drillTo)
 navigation.drillInto('life/ecclesiastes.3.19');  // Push state, navigate
-navigation.returnFromDrill();                     // Pop state, navigate back
+navigation.returnFromDrill();                     // Pop all states, return to origin
 
 // State management
 navigation.clearPresentation('life');  // Clear localStorage for presentation
@@ -251,10 +289,10 @@ The menu's Reset button clears this state.
 
 2. **Render all slides** - Use `visibility: hidden` not `display: none` for inactive slides. They need to mount to register their steps.
 
-3. **Drills use `setMaxFragment()`** - Don't use the Slide wrapper in drill routes; just call `navigation.setMaxFragment(n)` in onMount.
+3. **Drills use `<Slide>` too** - Wrap drill content in `<Slide>` without an `onMaxStep` callback. The Slide will auto-call `setMaxFragment()`.
 
 4. **Fragment steps are 1-indexed** - Start with `step={1}`, not `step={0}`.
 
 5. **`drillTo` routes are relative** - Use `"life/ecclesiastes.3.19"` not `"/life/ecclesiastes.3.19"`.
 
-6. **Auto-return at end of drill** - When `next()` is called on the last step and there's a stack, it auto-returns.
+6. **Auto-return at end of drill** - When `next()` is called on the last step and there's a stack, it auto-returns to origin.
