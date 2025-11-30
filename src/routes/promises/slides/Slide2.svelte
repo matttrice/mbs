@@ -13,12 +13,6 @@
 
 <Slide {onMaxStep}>
 <div class="slide-content">
-	<!-- Title -->
-	<div class="title-bar">
-		<Fragment step={1} drillTo="promises/galatians-4-21">
-			<span class="title-link" transition:fade>Galatians 4:21-31</span>
-		</Fragment>
-	</div>
 
 	<!-- Main two-column layout -->
 	<div class="main-layout">

@@ -11,10 +11,10 @@
 	</header>
 
 	<div class="content">
-		<Fragment step={1}>
+		<Fragment>
 			<blockquote class="scripture" transition:fade>
 				<p>
-					<sup>2</sup> For the law of the Spirit of life in Christ Jesus has set me free from the law of sin and death. <sup>3</sup> For God has done what the law, weakened by the flesh, could not do: sending his own Son in the likeness of sinful flesh and for sin, he condemned sin in the flesh,
+					For the law of the Spirit of life in Christ Jesus has set me free from the law of sin and death. <sup>3</sup> For God has done what the law, weakened by the flesh, could not do: sending his own Son in the likeness of sinful flesh and for sin, he condemned sin in the flesh,
 				</p>
 			</blockquote>
 		</Fragment>

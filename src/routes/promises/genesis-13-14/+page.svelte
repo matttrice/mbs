@@ -11,7 +11,7 @@
 	</header>
 
 	<div class="content">
-		<Fragment step={1}>
+		<Fragment>
 			<blockquote class="scripture" transition:fade>
 				<p>
 					<sup>14</sup> The LORD said to Abram, after Lot had separated from him, "Lift up your eyes, and look from the place where you are, northward and southward and eastward and westward; <sup>15</sup> for all the land which you see I will give to you and to your descendants <strong>forever</strong>.
@@ -19,7 +19,7 @@
 			</blockquote>
 		</Fragment>
 
-		<Fragment step={2}>
+		<Fragment step={1}>
 			<div class="question" transition:fade>
 				What kinds of things are forever?
 			</div>

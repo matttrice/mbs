@@ -1,23 +1,8 @@
-<script lang="ts">
-	import Fragment from '$lib/components/Fragment.svelte';
-	import Slide from '$lib/components/Slide.svelte';
-
-	interface Props {
-		onMaxStep?: (maxStep: number) => void;
-	}
-
-	let { onMaxStep }: Props = $props();
-</script>
-
-<Slide {onMaxStep}>
 <div class="slide-content">
-	<Fragment step={1}>
 		<div class="end-box">
 			End of lesson
 		</div>
-	</Fragment>
 </div>
-</Slide>
 
 <style>
 	.slide-content {

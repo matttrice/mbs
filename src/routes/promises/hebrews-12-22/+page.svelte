@@ -11,10 +11,10 @@
 	</header>
 
 	<div class="content">
-		<Fragment step={1}>
+		<Fragment>
 			<blockquote class="scripture" transition:fade>
 				<p>
-					<sup>22</sup> But you have come to Mount Zion and to the city of the living God, the heavenly Jerusalem, and to innumerable angels in festal gathering, <sup>23</sup> and to the assembly of the first-born who are enrolled in heaven, and to a judge who is God of all, and to the spirits of just men made perfect, <sup>24</sup> and to Jesus, the mediator of a new covenant, and to the sprinkled blood that speaks more graciously than the blood of Abel.
+					But you have come to Mount Zion and to the city of the living God, the heavenly Jerusalem, and to innumerable angels in festal gathering, <sup>23</sup> and to the assembly of the first-born who are enrolled in heaven, and to a judge who is God of all, and to the spirits of just men made perfect, <sup>24</sup> and to Jesus, the mediator of a new covenant, and to the sprinkled blood that speaks more graciously than the blood of Abel.
 				</p>
 			</blockquote>
 		</Fragment>
