@@ -11,7 +11,7 @@
 	</header>
 
 	<div class="content">
-		<Fragment step={1}>
+		<Fragment>
 			<blockquote class="scripture" transition:fade>
 				<p>
 					<sup>9</sup> But you are a chosen race, a royal priesthood, a holy nation, God's own people, that you may declare the wonderful deeds of him who called you out of darkness into his marvelous light.

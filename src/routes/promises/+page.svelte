@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { navigation, currentFragment, currentSlide, stackDepth, maxFragment, maxSlide } from '$lib/stores/navigation';
 	import { onMount } from 'svelte';
+	import Fragment from '$lib/components/Fragment.svelte';
 	import './theme.css';
 	
 	// Import slide components
@@ -14,7 +15,7 @@
 	// Slide titles for display
 	const slideTitles = [
 		'The Promises',
-		'Galatians 4:21-31',
+		'',
 		'End of lesson'
 	];
 
@@ -59,7 +60,14 @@
 	<header>
 		<div class="title-row">
 			{#if $currentSlide === 0}
-				<span class="scripture-ref">Genesis 12:1-3</span>
+				<Fragment drillTo="promises/genesis-12-1">
+					<span class="scripture-ref">Genesis 12:1-3</span>
+				</Fragment>
+			{/if}
+            {#if $currentSlide === 1}
+				<Fragment drillTo="promises/galatians-4-21">
+					<span class="scripture-ref">Galatians 4:21-31</span>
+				</Fragment>
 			{/if}
 			<h1>{slideTitles[$currentSlide]}</h1>
 		</div>
@@ -122,7 +130,12 @@
 	}
 
 	.scripture-ref {
-		font-size: 18px;
+		font-size: 32px;
+		color: #000;
+		cursor: pointer;
+	}
+
+	.scripture-ref:hover {
 		color: var(--color-scripture-ref, #0000cc);
 		text-decoration: underline;
 	}

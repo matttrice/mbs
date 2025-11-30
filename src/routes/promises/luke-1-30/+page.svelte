@@ -11,10 +11,10 @@
 	</header>
 
 	<div class="content">
-		<Fragment step={1}>
+		<Fragment>
 			<blockquote class="scripture" transition:fade>
 				<p>
-					<sup>30</sup> And the angel said to her, "Do not be afraid, Mary, for you have found favor with God. <sup>31</sup> And behold, you will conceive in your womb and bear a son, and you shall call his name Jesus. <sup>32</sup> He will be great, and will be called the Son of the Most High; and the Lord God will give to him the throne of his father David, <sup>33</sup> and he will reign over the house of Jacob forever; and of his kingdom there will be no end."
+					And the angel said to her, "Do not be afraid, Mary, for you have found favor with God. <sup>31</sup> And behold, you will conceive in your womb and bear a son, and you shall call his name Jesus. <sup>32</sup> He will be great, and will be called the Son of the Most High; and the Lord God will give to him the throne of his father David, <sup>33</sup> and he will reign over the house of Jacob forever; and of his kingdom there will be no end."
 				</p>
 			</blockquote>
 		</Fragment>

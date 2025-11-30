@@ -11,7 +11,7 @@
 
 <Slide {onMaxStep}>
 <div class="slide-content">
-	<Fragment step={1}>
+	<Fragment step={1} withPrev>
 		<div class="end-box">
 			End of lesson
 		</div>

@@ -11,7 +11,7 @@
 	</header>
 
 	<div class="content">
-		<Fragment step={1}>
+		<Fragment>
 			<blockquote class="scripture" transition:fade>
 				<p>
 					<sup>1</sup> Now the LORD said to Abram, "Go from your country and your kindred and your father's house to the land that I will show you. <sup>2</sup> And I will make of you a great nation, and I will bless you, and make your name great, so that you will be a blessing. <sup>3</sup> I will bless those who bless you, and him who curses you I will curse; and by you all the families of the earth shall bless themselves."
