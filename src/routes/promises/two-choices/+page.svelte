@@ -7,8 +7,8 @@
 <Slide>
 <div class="drill-content">
 	<header>
-		<Fragment step={1} drillTo="promises/1corinthians-15-40">
-			<h1 class="title-link" transition:fade>1 Corinthians 15:40-45</h1>
+		<Fragment drillTo="promises/1corinthians-15-40" returnHere>
+			<h1 class="title-link">1 Corinthians 15:40-45</h1>
 		</Fragment>
 	</header>
 
@@ -23,13 +23,13 @@
 				<div class="item">Spiritual Body</div>
 				<div class="item">2nd Adam - Heaven</div>
 				
-				<Fragment step={2}>
+				<Fragment step={1}>
 					<div class="item animated" transition:fade>Invisible</div>
 				</Fragment>
-				<Fragment step={3}>
+				<Fragment step={2}>
 					<div class="item animated" transition:fade>Eternal</div>
 				</Fragment>
-				<Fragment step={5}>
+				<Fragment step={4}>
 					<div class="item animated large" transition:fade>True & Real</div>
 				</Fragment>
 			</div>
@@ -46,13 +46,13 @@
 				<div class="item">Physical Body</div>
 				<div class="item">1st Adam - Earth</div>
 				
-				<Fragment step={4}>
+				<Fragment step={3}>
 					<div class="item animated" transition:fade>Visible</div>
 				</Fragment>
-				<Fragment step={4}>
+				<Fragment step={3}>
 					<div class="item animated" transition:fade>Temporary</div>
 				</Fragment>
-				<Fragment step={6}>
+				<Fragment step={5}>
 					<div class="item animated large" transition:fade>Shadow & Copy</div>
 				</Fragment>
 			</div>

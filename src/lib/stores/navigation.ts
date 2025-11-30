@@ -19,7 +19,8 @@ function createNavigationStore() {
 		slideFragmentCounts: [],
 		slideFragments: [],              // Track fragment position per slide
 		isReturningFromDrill: false,     // Flag to prevent init() from resetting state
-		drillTargets: {}                 // Map of step -> drillTo target for current slide/drill
+		drillTargets: {},                // Map of step -> drillTo target for current slide/drill
+		returnHere: false                // If true, return here (to parent) instead of origin
 	};
 
 	// Load persisted state from localStorage
@@ -166,13 +167,14 @@ function createNavigationStore() {
 		/**
 		 * Register a drill target for a specific step
 		 * Called by Fragment components that have a drillTo prop
+		 * @param returnHere - if true, this drill returns to its immediate caller, not origin
 		 */
-		registerDrillTarget(step: number, target: string) {
+		registerDrillTarget(step: number, target: string, returnHere: boolean = false) {
 			update((ctx) => ({
 				...ctx,
 				drillTargets: {
 					...ctx.drillTargets,
-					[step]: target
+					[step]: { target, returnHere }
 				}
 			}));
 		},
@@ -240,16 +242,22 @@ function createNavigationStore() {
 				});
 			} else {
 				// At end of current slide/drill - check for auto-drill or auto-return
-				const drillTarget = ctx.drillTargets[ctx.maxFragment];
+				const drillInfo = ctx.drillTargets[ctx.maxFragment];
 				
-				if (drillTarget) {
+				if (drillInfo) {
 					// Last fragment has a drillTo - auto drill into it
-					console.log('[Navigation] Auto-drilling to:', drillTarget);
-					this.drillInto(drillTarget);
+					const { target, returnHere } = drillInfo;
+					console.log('[Navigation] Auto-drilling to:', target, returnHere ? '(returnHere)' : '');
+					this.drillInto(target, 0, returnHere);
 				} else if (ctx.stack.length > 0) {
-					// We're in a drill with no more drillTos - return to origin
-					console.log('[Navigation] End of drill sequence - returning to origin');
-					this.returnFromDrill(true);  // Always return to origin
+					// We're in a drill with no more drillTos - check returnHere flag
+					if (ctx.returnHere) {
+						console.log('[Navigation] End of nested drill - returning to parent');
+						this.returnFromDrill(false);  // Pop just one level
+					} else {
+						console.log('[Navigation] End of drill sequence - returning to origin');
+						this.returnFromDrill(true);  // Return to origin
+					}
 				}
 				// else: At end of main presentation - do nothing
 			}
@@ -329,8 +337,9 @@ function createNavigationStore() {
 
 		/**
 		 * Drill into a custom show - PUSH current state to stack, then navigate
+		 * @param returnHere - if true, this drill returns to caller, not origin
 		 */
-		drillInto(target: string, startFragment: number = 0) {
+		drillInto(target: string, startFragment: number = 0, returnHere: boolean = false) {
 			updateAndPersist((ctx) => {
 				// Push current state onto the stack BEFORE navigating
 				// Include slideFragments so we can restore per-slide positions on return
@@ -340,7 +349,7 @@ function createNavigationStore() {
 				};
 				const newStack = [...ctx.stack, stateToSave];
 
-				console.log('[Navigation] Drilling into:', target);
+				console.log('[Navigation] Drilling into:', target, returnHere ? '(returnHere)' : '');
 				console.log('[Navigation] Saving state to stack:', stateToSave);
 				console.log('[Navigation] Stack depth now:', newStack.length);
 
@@ -355,7 +364,8 @@ function createNavigationStore() {
 					maxSlide: 0,
 					maxFragment: 0, // Will be set by the drill's setMaxFragment or init
 					slideFragmentCounts: [],
-					drillTargets: {}  // Clear - new drill will register its own
+					drillTargets: {},  // Clear - new drill will register its own
+					returnHere        // Store flag for when this drill ends
 				};
 			});
 

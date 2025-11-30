@@ -15,7 +15,14 @@ export interface NavigationContext {
 	slideFragmentCounts: number[];      // Fragment count per slide
 	slideFragments: number[];           // Current fragment position for each slide (preserved when jumping)
 	isReturningFromDrill: boolean;      // Flag to prevent init() from resetting state
-	drillTargets: Record<number, string>;  // Map of step -> drillTo target for current slide/drill
+	drillTargets: Record<number, DrillTargetInfo>;  // Map of step -> drillTo info for current slide/drill
+	returnHere: boolean;                // If true, this drill returns to its caller, not origin
+}
+
+// Drill target info registered by Fragment components
+export interface DrillTargetInfo {
+	target: string;         // The route to drill into
+	returnHere: boolean;     // If true, the drilled content returns to this drill, not origin
 }
 
 // Slide definition for a presentation

@@ -451,7 +451,7 @@ describe('Navigation Store - Auto-Drill Functionality', () => {
 		navigation.registerDrillTarget(5, 'life/1thessalonians.5.23');
 		
 		const state = get(navigation);
-		expect(state.drillTargets[5]).toBe('life/1thessalonians.5.23');
+		expect(state.drillTargets[5]).toEqual({ target: 'life/1thessalonians.5.23', returnHere: false });
 	});
 
 	it('unregisters drill target when unregisterDrillTarget is called', () => {
@@ -621,6 +621,67 @@ describe('Navigation Store - Return to Origin', () => {
 		navigation.next();
 		
 		// Next should return to origin
+		navigation.next();
+		
+		const state = get(navigation);
+		expect(state.current.presentation).toBe('life');
+		expect(state.stack.length).toBe(0);
+	});
+});
+
+describe('Navigation Store - Return to Parent Functionality', () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		localStorage.clear();
+		navigation.init('life', [9, 15, 12]);
+	});
+
+	it('stores returnHere flag when registering drill target', () => {
+		navigation.registerDrillTarget(5, 'life/nested', true);
+		
+		const state = get(navigation);
+		expect(state.drillTargets[5]).toEqual({ target: 'life/nested', returnHere: true });
+	});
+
+	it('returns here instead of origin when returnHere is true', () => {
+		// First drill into a parent route
+		navigation.drillInto('life/parent-drill');
+		navigation.setMaxFragment(3);
+		
+		// From parent, drill into nested with returnHere=true
+		// This means: when nested ends, return here (not origin)
+		navigation.drillInto('life/nested-drill', 0, true);
+		navigation.setMaxFragment(2);
+		
+		// Advance through nested drill
+		navigation.next();
+		navigation.next();
+		
+		// next() at end of nested should return to parent (not origin)
+		navigation.next();
+		
+		const state = get(navigation);
+		expect(state.current.presentation).toBe('life/parent-drill');
+		expect(state.stack.length).toBe(1); // Origin still on stack
+	});
+
+	it('returns all the way to origin when returnHere is false (default)', () => {
+		// First drill into a parent route
+		navigation.drillInto('life/parent-drill');
+		navigation.setMaxFragment(3);
+		
+		// From parent, drill into nested with returnHere=false (default)
+		navigation.registerDrillTarget(3, 'life/nested-drill', false);
+		navigation.next();
+		navigation.next();
+		navigation.next(); // This triggers auto-drill
+		
+		// Now in nested-drill
+		navigation.setMaxFragment(2);
+		navigation.next();
+		navigation.next();
+		
+		// next() should return to origin
 		navigation.next();
 		
 		const state = get(navigation);

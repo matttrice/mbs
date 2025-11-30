@@ -11,6 +11,14 @@
 	 * <Fragment step={1}>First content</Fragment>
 	 * <Fragment step={2}>Second content</Fragment>
 	 * <Fragment step={3} drillTo="lesson/details">Click to drill</Fragment>
+	 * <Fragment step={4} drillTo="lesson/nested" returnHere>Nested drill returns here</Fragment>
+	 * ```
+	 *
+	 * For static drillable links (always visible, no step):
+	 * ```svelte
+	 * <Fragment drillTo="lesson/reference" returnHere>
+	 *   <span class="link">Click me</span>
+	 * </Fragment>
 	 * ```
 	 *
 	 * Apply transitions on child elements:
@@ -21,8 +29,8 @@
 	 * ```
 	 */
 	interface Props {
-		/** Step number (1-indexed) when this content becomes visible */
-		step: number;
+		/** Step number (1-indexed) when this content becomes visible. Omit for always-visible content that includes a drillTo prop*/
+		step?: number;
 		/** Appear with the previous step (no separate click needed) */
 		withPrev?: boolean;
 		/** Like withPrev but with 500ms animation delay */
@@ -33,6 +41,12 @@
 		 * navigation automatically drills into this route.
 		 */
 		drillTo?: string;
+		/**
+		 * If true, the drilled content returns here (to this drill),
+		 * instead of all the way back to the origin presentation.
+		 * Use for nested drills that should return to their caller.
+		 */
+		returnHere?: boolean;
 		children: import('svelte').Snippet;
 	}
 
@@ -41,40 +55,47 @@
 		withPrev = false,
 		afterPrev = false,
 		drillTo,
+		returnHere = false,
 		children
 	}: Props = $props();
 
 	// Register this step with the slide context (if within a Slide)
+	// Only register if step is defined
 	const slideContext = getSlideContext();
-	if (slideContext) {
+	if (slideContext && step !== undefined) {
 		slideContext.registerStep(step);
 	}
 
 	// Register drillTo target with navigation store
 	// This allows auto-drill when next() is called at this step
+	// Only register if both drillTo AND step are defined (auto-drill needs a step)
 	onMount(() => {
-		if (drillTo) {
-			navigation.registerDrillTarget(step, drillTo);
+		if (drillTo && step !== undefined) {
+			navigation.registerDrillTarget(step, drillTo, returnHere);
 		}
 	});
 
 	onDestroy(() => {
-		if (drillTo) {
+		if (drillTo && step !== undefined) {
 			navigation.unregisterDrillTarget(step);
 		}
 	});
 
 	// withPrev and afterPrev appear with the previous step
-	let effectiveStep = $derived(withPrev || afterPrev ? step - 1 : step);
+	// If no step defined, these don't apply
+	let effectiveStep = $derived(
+		step !== undefined ? (withPrev || afterPrev ? step - 1 : step) : 0
+	);
 
 	// afterPrev gets a default delay (applied via CSS or inline style)
-	let autoDelay = $derived(afterPrev ? 500 : 0);
+	let autoDelay = $derived(afterPrev && step !== undefined ? 500 : 0);
 
-	let visible = $derived($currentFragment >= effectiveStep);
+	// Always visible if no step defined, otherwise visibility depends on currentFragment
+	let visible = $derived(step === undefined || $currentFragment >= effectiveStep);
 
 	function handleClick() {
 		if (drillTo && visible) {
-			navigation.drillInto(drillTo);
+			navigation.drillInto(drillTo, 0, returnHere);
 		}
 	}
 </script>

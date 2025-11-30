@@ -150,7 +150,7 @@ describe('Fragment Component - Drill Functionality', () => {
 		const drillable = container.querySelector('.drillable');
 		if (drillable) {
 			await fireEvent.click(drillable);
-			expect(getMockDrillInto()).toHaveBeenCalledWith('life/ecclesiastes.3.19');
+			expect(getMockDrillInto()).toHaveBeenCalledWith('life/ecclesiastes.3.19', 0, false);
 		}
 	});
 
@@ -204,5 +204,89 @@ describe('Fragment Component - Animation Delay', () => {
 		if (div) {
 			expect(div.style.animationDelay).toBe('0ms');
 		}
+	});
+});
+
+describe('Fragment Component - Optional Step (Static Drillable Links)', () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		getMockFragment().set(0); // Start at fragment 0
+	});
+
+	it('is always visible when step is omitted', () => {
+		// Even at fragment 0, a stepless Fragment should be visible
+		getMockFragment().set(0);
+		
+		const { container } = render(Fragment, {
+			props: {
+				drillTo: 'life/test',
+				children: mockChildren
+			}
+		});
+		
+		// Should render and be drillable
+		const drillable = container.querySelector('.drillable');
+		expect(drillable).not.toBeNull();
+	});
+
+	it('supports drillTo without step', async () => {
+		const { container } = render(Fragment, {
+			props: {
+				drillTo: 'life/ecclesiastes.3.19',
+				returnHere: true,
+				children: mockChildren
+			}
+		});
+		
+		const drillable = container.querySelector('.drillable');
+		expect(drillable).not.toBeNull();
+		
+		if (drillable) {
+			await fireEvent.click(drillable);
+			expect(getMockDrillInto()).toHaveBeenCalledWith('life/ecclesiastes.3.19', 0, true);
+		}
+	});
+
+	it('has no animation-delay when step is omitted', () => {
+		const { container } = render(Fragment, {
+			props: {
+				drillTo: 'life/test',
+				children: mockChildren
+			}
+		});
+		
+		const div = container.querySelector('div');
+		if (div) {
+			expect(div.style.animationDelay).toBe('0ms');
+		}
+	});
+
+	it('does not register drill target when step is omitted', () => {
+		const mockRegister = (navMock as any).__mockRegisterDrillTarget;
+		
+		render(Fragment, {
+			props: {
+				drillTo: 'life/test',
+				children: mockChildren
+			}
+		});
+		
+		// Should NOT register since there's no step for auto-drill
+		expect(mockRegister).not.toHaveBeenCalled();
+	});
+
+	it('registers drill target when step is provided', () => {
+		const mockRegister = (navMock as any).__mockRegisterDrillTarget;
+		
+		render(Fragment, {
+			props: {
+				step: 5,
+				drillTo: 'life/test',
+				children: mockChildren
+			}
+		});
+		
+		// Should register for auto-drill at step 5
+		expect(mockRegister).toHaveBeenCalledWith(5, 'life/test', false);
 	});
 });
