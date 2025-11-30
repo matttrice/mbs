@@ -31,19 +31,20 @@
 			</button>
 		</div>
 
-		<!-- Future presentations can be added here -->
-		<!--
 		<div class="model-card-wrapper">
-			<a href="/salvation" class="model-card">
-				<h2>Salvation</h2>
-				<p>Coming soon...</p>
+			<a href="/promises" class="model-card">
+				<h2>The Promises</h2>
+				<p>What did God promise Abraham?</p>
 				<span class="arrow">→</span>
 			</a>
-			<button class="reset-btn" onclick={() => startFresh('salvation', '/salvation')}>
+			<button 
+				class="reset-btn" 
+				onclick={() => startFresh('promises', '/promises')}
+				title="Reset progress and start fresh"
+			>
 				Reset
 			</button>
 		</div>
-		-->
 	</nav>
 </div>
 

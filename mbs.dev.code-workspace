@@ -4,10 +4,10 @@
 			"path": "."
 		},
 		{
-			"path": "../hsu-pptx"
+			"path": "../hsu-extractor"
 		},
 		{
-			"path": "../hsu-extractor"
+			"path": "../hsu-pptx"
 		}
 	],
 	"settings": {}

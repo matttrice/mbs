@@ -1,0 +1,23 @@
+/* Promises Lesson Theme - Shared color variables */
+
+:root {
+	/* Background colors */
+	--color-physical-bg: #808080;
+	--color-spiritual-bg: #00aaff;
+	--color-bg-light: #e8e8e8;
+	--color-bg-dark: #1a1a2e;
+	
+	/* Text colors */
+	--color-physical-text: #000000;
+	--color-spiritual-text: #0000cc;
+	--color-scripture-ref: #0000cc;
+	--color-title: #000000;
+	
+	/* Accent colors */
+	--color-highlight: #ffd700;
+	--color-arrow: #000000;
+	
+	/* Box/container colors */
+	--color-box-border: #000000;
+	--color-box-shadow: rgba(0, 0, 0, 0.1);
+}
