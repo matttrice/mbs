@@ -1,15 +1,11 @@
 <script lang="ts">
-	import { navigation, currentFragment, currentSlide, stackDepth, maxFragment, maxSlide } from '$lib/stores/navigation';
-	import { onMount } from 'svelte';
+	import { currentFragment, currentSlide, stackDepth, maxFragment, maxSlide } from '$lib/stores/navigation';
+	import PresentationProvider from '$lib/components/PresentationProvider.svelte';
 	
 	// Import slide components
 	import Slide1 from './slides/Slide1.svelte';
 	import Slide2 from './slides/Slide2.svelte';
 	import Slide3 from './slides/Slide3.svelte';
-
-	// Slides report their maxStep via callback - collected here
-	// Using $state to track slide maxSteps as they register
-	let slideMaxSteps = $state<number[]>([0, 0, 0]);
 	
 	// Slide titles for display
 	const slideTitles = [
@@ -17,92 +13,58 @@
 		'Mankind - Origins & Destinations',
 		'Man & God - Hebrews 4:12'
 	];
-
-	// Callbacks for slides to report their maxStep
-	function handleSlide1MaxStep(maxStep: number) {
-		slideMaxSteps[0] = maxStep;
-		updateNavigation();
-	}
-	
-	function handleSlide2MaxStep(maxStep: number) {
-		slideMaxSteps[1] = maxStep;
-		updateNavigation();
-	}
-	
-	function handleSlide3MaxStep(maxStep: number) {
-		slideMaxSteps[2] = maxStep;
-		updateNavigation();
-	}
-
-	// Update navigation when all slides have reported
-	function updateNavigation() {
-		// Only init once all slides have reported non-zero maxSteps
-		if (slideMaxSteps.every(s => s > 0)) {
-			navigation.init('demo', slideMaxSteps);
-		}
-	}
-
-	// Validate all slides registered properly
-	onMount(() => {
-		setTimeout(() => {
-			if (!slideMaxSteps.every(s => s > 0)) {
-				const missing = slideMaxSteps
-					.map((s, i) => s === 0 ? i + 1 : null)
-					.filter(Boolean);
-				throw new Error(`Slides ${missing.join(', ')} did not report maxStep. Wrap content in <Slide>.`);
-			}
-		}, 100);
-	});
 </script>
 
-<div class="presentation">
-	<header>
-		<h1>
-			{#if $currentSlide === 0}
-				Life
-			{:else if $currentSlide === 1}
-				Mankind
-			{:else}
-				Man / God
-			{/if}
-		</h1>
-		<div class="subtitle">
-			{slideTitles[$currentSlide]}
-		</div>
-		<div class="debug">
-			Slide: {$currentSlide + 1}/{$maxSlide + 1} | 
-			Fragment: {$currentFragment}/{$maxFragment} | 
-			Stack: {$stackDepth}
-		</div>
-	</header>
+<PresentationProvider name="demo" slideCount={3}>
+	<div class="presentation">
+		<header>
+			<h1>
+				{#if $currentSlide === 0}
+					Life
+				{:else if $currentSlide === 1}
+					Mankind
+				{:else}
+					Man / God
+				{/if}
+			</h1>
+			<div class="subtitle">
+				{slideTitles[$currentSlide]}
+			</div>
+			<div class="debug">
+				Slide: {$currentSlide + 1}/{$maxSlide + 1} | 
+				Fragment: {$currentFragment}/{$maxFragment} | 
+				Stack: {$stackDepth}
+			</div>
+		</header>
 
-	<div class="slide-container">
-		<!-- All slides render to register maxSteps, only active one visible -->
-		<div class="slide-wrapper" class:active={$currentSlide === 0}>
-			<Slide1 onMaxStep={handleSlide1MaxStep} />
+		<div class="slide-container">
+			<!-- All slides render to register maxSteps, only active one visible -->
+			<div class="slide-wrapper" class:active={$currentSlide === 0}>
+				<Slide1 slideIndex={0} />
+			</div>
+			<div class="slide-wrapper" class:active={$currentSlide === 1}>
+				<Slide2 slideIndex={1} />
+			</div>
+			<div class="slide-wrapper" class:active={$currentSlide === 2}>
+				<Slide3 slideIndex={2} />
+			</div>
 		</div>
-		<div class="slide-wrapper" class:active={$currentSlide === 1}>
-			<Slide2 onMaxStep={handleSlide2MaxStep} />
-		</div>
-		<div class="slide-wrapper" class:active={$currentSlide === 2}>
-			<Slide3 onMaxStep={handleSlide3MaxStep} />
+
+		<!-- Slide indicator dots -->
+		<div class="slide-indicators">
+			{#each {length: 3} as _, index}
+				<button 
+					class="indicator-dot"
+					class:active={$currentSlide === index}
+					onclick={() => import('$lib/stores/navigation').then(m => m.navigation.goToSlide(index))}
+					aria-label="Go to slide {index + 1}"
+				>
+					{index + 1}
+				</button>
+			{/each}
 		</div>
 	</div>
-
-	<!-- Slide indicator dots -->
-	<div class="slide-indicators">
-		{#each slideMaxSteps as _, index}
-			<button 
-				class="indicator-dot"
-				class:active={$currentSlide === index}
-				onclick={() => navigation.goToSlide(index)}
-				aria-label="Go to slide {index + 1}"
-			>
-				{index + 1}
-			</button>
-		{/each}
-	</div>
-</div>
+</PresentationProvider>
 
 <style>
 	.presentation {

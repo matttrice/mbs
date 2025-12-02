@@ -5,13 +5,13 @@
 	import { fade } from 'svelte/transition';
 
 	interface Props {
-		onMaxStep?: (maxStep: number) => void;
+		slideIndex: number;
 	}
 
-	let { onMaxStep }: Props = $props();
+	let { slideIndex }: Props = $props();
 </script>
 
-<Slide {onMaxStep}>
+<Slide {slideIndex}>
 <div class="slide-content">
 
 	<!-- Main two-column layout -->

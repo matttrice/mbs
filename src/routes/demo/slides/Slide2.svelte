@@ -4,13 +4,13 @@
 	import { fade, fly, scale } from 'svelte/transition';
 
 	interface Props {
-		onMaxStep?: (maxStep: number) => void;
+		slideIndex: number;
 	}
 
-	let { onMaxStep }: Props = $props();
+	let { slideIndex }: Props = $props();
 </script>
 
-<Slide {onMaxStep}>
+<Slide {slideIndex}>
 <div class="slide-content">
 	<!-- Body / Spirit / Soul headers -->
 	<div class="header-row">

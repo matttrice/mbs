@@ -5,13 +5,13 @@
 	import { fade, fly } from 'svelte/transition';
 
 	interface Props {
-		onMaxStep?: (maxStep: number) => void;
+		slideIndex: number;
 	}
 
-	let { onMaxStep }: Props = $props();
+	let { slideIndex }: Props = $props();
 </script>
 
-<Slide {onMaxStep}>
+<Slide {slideIndex}>
 <div class="slide-content">
 	<!-- Main three-column layout -->
 	<div class="main-layout">
@@ -49,7 +49,7 @@
 				</div>
 			</Fragment>
 			
-			<Fragment step={3}>
+			<Fragment step={1}>
 				<div class="item" transition:fade>Families Blessed</div>
 			</Fragment>
 			

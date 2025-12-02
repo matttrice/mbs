@@ -3,13 +3,13 @@
 	import Slide from '$lib/components/Slide.svelte';
 
 	interface Props {
-		onMaxStep?: (maxStep: number) => void;
+		slideIndex: number;
 	}
 
-	let { onMaxStep }: Props = $props();
+	let { slideIndex }: Props = $props();
 </script>
 
-<Slide {onMaxStep}>
+<Slide {slideIndex}>
 <div class="slide-content">
 	<Fragment step={1} withPrev>
 		<div class="end-box">
