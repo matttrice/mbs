@@ -121,12 +121,12 @@
 
 	<!-- Scripture references for drills -->
 	<div class="drill-refs">
-		<Fragment step={10} drillTo="1-cor-5">
+		<Fragment step={10} drillTo="demo/1-cor-5">
 			<div class="drill-ref" transition:fade>
 				1 Corinthians 5:5 "spirit may be saved"
 			</div>
 		</Fragment>
-		<Fragment step={11} drillTo="john-4">
+		<Fragment step={11} drillTo="demo/john-4">
 			<div class="drill-ref" transition:fade>
 				John 4:24 "God is spirit"
 			</div>

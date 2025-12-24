@@ -21,6 +21,7 @@
 		"@testing-library/svelte": "^5.2.9",
 		"@testing-library/user-event": "^14.6.1",
 		"@types/node": "^24.10.1",
+		"fast-glob": "^3.3.3",
 		"jsdom": "^27.2.0",
 		"svelte": "^5.43.8",
 		"svelte-check": "^4.3.4",

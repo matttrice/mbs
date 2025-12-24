@@ -1,3 +1,50 @@
+// ============================================
+// Layout Types (from PowerPoint extraction)
+// ============================================
+
+/**
+ * Position and dimensions for absolute placement within a slide.
+ * Coordinates are in pixels relative to the 960×540 slide canvas.
+ */
+export interface BoxLayout {
+	x: number;
+	y: number;
+	width: number;
+	height: number;
+	rotation?: number;
+}
+
+/**
+ * Font styling extracted from PowerPoint shapes.
+ */
+export interface BoxFont {
+	font_name?: string;
+	font_size?: number;
+	bold?: boolean;
+	italic?: boolean;
+	color?: string;
+	theme_color?: string;
+	alignment?: 'left' | 'center' | 'right';
+}
+
+/**
+ * Border/outline styling for positioned boxes.
+ */
+export interface BoxLine {
+	color?: string;
+	width?: number;
+}
+
+/**
+ * Animation types for fragment entrance effects.
+ * CSS keyframe animations triggered when fragment becomes visible.
+ */
+export type AnimationType = 'fade' | 'fly-up' | 'fly-down' | 'fly-left' | 'fly-right' | 'scale' | 'none';
+
+// ============================================
+// Navigation Types
+// ============================================
+
 // Navigation state for a single position in the presentation
 export interface NavigationState {
 	presentation: string;

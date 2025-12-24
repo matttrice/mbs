@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { currentFragment, currentSlide, stackDepth, maxFragment, maxSlide } from '$lib/stores/navigation';
-	import Fragment from '$lib/components/Fragment.svelte';
 	import PresentationProvider from '$lib/components/PresentationProvider.svelte';
 	import './theme.css';
 	
@@ -8,37 +7,16 @@
 	import Slide1 from './slides/Slide1.svelte';
 	import Slide2 from './slides/Slide2.svelte';
 	import Slide3 from './slides/Slide3.svelte';
-	
-	// Slide titles for display
-	const slideTitles = [
-		'The Promises',
-		'',
-		'End of lesson'
-	];
 </script>
 
 <PresentationProvider name="promises" slideCount={3}>
 	<div class="presentation">
-		<header>
-			<div class="title-row">
-				{#if $currentSlide === 0}
-					<Fragment drillTo="promises/genesis-12-1">
-						<span class="scripture-ref">Genesis 12:1-3</span>
-					</Fragment>
-				{/if}
-				{#if $currentSlide === 1}
-					<Fragment drillTo="promises/galatians-4-21">
-						<span class="scripture-ref">Galatians 4:21-31</span>
-					</Fragment>
-				{/if}
-				<h1>{slideTitles[$currentSlide]}</h1>
-			</div>
-			<div class="debug">
-				Slide: {$currentSlide + 1}/{$maxSlide + 1} | 
-				Fragment: {$currentFragment}/{$maxFragment} | 
-				Stack: {$stackDepth}
-			</div>
-		</header>
+		<!-- Debug overlay -->
+		<div class="debug">
+			Slide: {$currentSlide + 1}/{$maxSlide + 1} | 
+			Fragment: {$currentFragment}/{$maxFragment} | 
+			Stack: {$stackDepth}
+		</div>
 
 		<div class="slide-container">
 			<!-- All slides render to register maxSteps, only active one visible -->
@@ -71,43 +49,15 @@
 
 <style>
 	.presentation {
-		width: 100%;
-		height: 100%;
-		background: var(--color-bg-light, #e8e8e8);
+		width: 100vw;
+		height: 100vh;
+		background: #000;
 		display: flex;
 		flex-direction: column;
-		padding: 10px 20px 20px;
-		box-sizing: border-box;
-	}
-
-	header {
-		text-align: center;
-		margin-bottom: 8px;
-	}
-
-	.title-row {
-		display: flex;
-		align-items: baseline;
+		align-items: center;
 		justify-content: center;
-		gap: 24px;
-	}
-
-	.scripture-ref {
-		font-size: 32px;
-		color: #000;
-		cursor: pointer;
-	}
-
-	.scripture-ref:hover {
-		color: var(--color-scripture-ref, #0000cc);
-		text-decoration: underline;
-	}
-
-	header h1 {
-		font-size: 42px;
-		margin: 0;
-		color: var(--color-title, #000);
-		font-weight: bold;
+		box-sizing: border-box;
+		overflow: hidden;
 	}
 
 	.debug {
@@ -126,53 +76,63 @@
 	.slide-container {
 		flex: 1;
 		display: flex;
-		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 		overflow: hidden;
 		position: relative;
+		width: 100%;
 	}
 
 	.slide-wrapper {
 		position: absolute;
 		inset: 0;
 		display: flex;
-		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 		visibility: hidden;
 		pointer-events: none;
 	}
 
 	.slide-wrapper.active {
-		position: relative;
 		visibility: visible;
 		pointer-events: auto;
 	}
 
 	.slide-indicators {
+		position: fixed;
+		bottom: 10px;
+		left: 50%;
+		transform: translateX(-50%);
 		display: flex;
 		justify-content: center;
 		gap: 8px;
-		padding: 12px 0 0;
+		padding: 8px 16px;
+		background: rgba(0, 0, 0, 0.5);
+		border-radius: 20px;
+		z-index: 1000;
 	}
 
 	.indicator-dot {
-		width: 32px;
-		height: 32px;
+		width: 28px;
+		height: 28px;
 		border-radius: 50%;
-		border: 2px solid #666;
-		background: #fff;
-		color: #666;
-		font-size: 14px;
+		border: 2px solid #888;
+		background: #333;
+		color: #888;
+		font-size: 12px;
 		font-weight: bold;
 		cursor: pointer;
 		transition: all 0.2s;
 	}
 
 	.indicator-dot:hover {
-		background: #e0e0e0;
+		background: #555;
+		border-color: #aaa;
 	}
 
 	.indicator-dot.active {
-		background: var(--color-scripture-ref, #0066cc);
-		border-color: var(--color-scripture-ref, #0066cc);
+		background: #0066cc;
+		border-color: #0066cc;
 		color: #fff;
 	}
 </style>

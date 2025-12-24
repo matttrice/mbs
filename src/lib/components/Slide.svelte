@@ -13,10 +13,15 @@
 	 * Props type for Slide component.
 	 * - In PresentationProvider: pass `slideIndex` (0-based)
 	 * - In drill pages: no props needed
+	 * - Pass `width` and `height` to enable fixed-canvas scaling (pixel-perfect mode)
 	 */
 	export interface SlideProps {
 		/** 0-based slide index within a PresentationProvider */
 		slideIndex?: number;
+		/** Canvas width in pixels for fixed scaling (default: 960) */
+		width?: number;
+		/** Canvas height in pixels for fixed scaling (default: 540) */
+		height?: number;
 	}
 
 	export function getSlideContext(): SlideContext | undefined {
@@ -27,9 +32,14 @@
 <script lang="ts">
 	import { navigation } from '$lib/stores/navigation';
 	import { getPresentationContext } from './PresentationProvider.svelte';
+	import { onMount } from 'svelte';
 
 	/**
 	 * Wrapper component for slide content that auto-registers Fragment steps.
+	 * 
+	 * Implements a fixed-canvas scaling system for pixel-perfect PowerPoint reproduction.
+	 * The slide renders at a fixed resolution (default 960×540) and scales via CSS transform
+	 * to fit the viewport while maintaining 16:9 aspect ratio.
 	 *
 	 * **Inside PresentationProvider:** Pass `slideIndex` to register with the provider.
 	 *
@@ -51,10 +61,14 @@
 	interface Props {
 		/** 0-based slide index when inside a PresentationProvider */
 		slideIndex?: number;
+		/** Canvas width in pixels for fixed scaling (default: 960) */
+		width?: number;
+		/** Canvas height in pixels for fixed scaling (default: 540) */
+		height?: number;
 		children: import('svelte').Snippet;
 	}
 
-	let { slideIndex, children }: Props = $props();
+	let { slideIndex, width = 960, height = 540, children }: Props = $props();
 
 	// Check if we're inside a PresentationProvider
 	const presentationContext = getPresentationContext();
@@ -88,16 +102,61 @@
 			}
 		}
 	});
+
+	// Scaling state for fixed-canvas mode
+	let scale = $state(1);
+	let viewportRef: HTMLDivElement | undefined = $state();
+
+	function updateScale() {
+		if (!viewportRef) return;
+		
+		// Use the actual container dimensions, not window
+		const rect = viewportRef.getBoundingClientRect();
+		const containerWidth = rect.width;
+		const containerHeight = rect.height;
+		
+		// Calculate scale to fit container while maintaining aspect ratio
+		// Use 0.95 factor to leave a small margin
+		const scaleX = (containerWidth * 0.95) / width;
+		const scaleY = (containerHeight * 0.95) / height;
+		scale = Math.min(scaleX, scaleY);
+	}
+
+	onMount(() => {
+		// Initial scale after mount
+		setTimeout(updateScale, 0);
+		window.addEventListener('resize', updateScale);
+		return () => window.removeEventListener('resize', updateScale);
+	});
 </script>
 
-<div class="slide">
-	{@render children()}
+<div class="slide-viewport" bind:this={viewportRef}>
+	<div 
+		class="slide-canvas"
+		style:width="{width}px"
+		style:height="{height}px"
+		style:transform="scale({scale})"
+	>
+		{@render children()}
+	</div>
 </div>
 
 <style>
-	.slide {
-		flex: 1;
+	.slide-viewport {
+		width: 100%;
+		height: 100%;
 		display: flex;
-		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+		background: inherit;
+	}
+
+	.slide-canvas {
+		position: relative;
+		transform-origin: center center;
+		overflow: hidden;
+		/* Transparent - let slide content control background */
+		background: transparent;
 	}
 </style>

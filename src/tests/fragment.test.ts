@@ -6,6 +6,8 @@
  * 2. withPrev - appears with previous fragment  
  * 3. afterPrev - appears with previous fragment (with delay styling)
  * 4. drillTo - clickable to drill into a sub-presentation
+ * 5. layout/font/fill/line - absolute positioning and styling
+ * 6. animate - CSS entrance animations
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
@@ -288,5 +290,272 @@ describe('Fragment Component - Optional Step (Static Drillable Links)', () => {
 		
 		// Should register for auto-drill at step 5
 		expect(mockRegister).toHaveBeenCalledWith(5, 'life/test', false);
+	});
+});
+
+describe('Fragment Component - Layout Positioning', () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		getMockFragment().set(5); // Ensure visible
+	});
+
+	it('applies absolute positioning styles when layout is provided', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 100, y: 50, width: 200, height: 40 },
+				children: mockChildren
+			}
+		});
+
+		const div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		expect(div).not.toBeNull();
+		if (div) {
+			expect(div.style.position).toBe('absolute');
+			expect(div.style.left).toBe('100px');
+			expect(div.style.top).toBe('50px');
+			expect(div.style.width).toBe('200px');
+			expect(div.style.height).toBe('40px');
+		}
+	});
+
+	it('applies z-index when provided', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 0, y: 0, width: 100, height: 100 },
+				zIndex: 25,
+				children: mockChildren
+			}
+		});
+
+		const div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		if (div) {
+			expect(div.style.zIndex).toBe('25');
+		}
+	});
+
+	it('applies rotation transform when provided', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 0, y: 0, width: 100, height: 100, rotation: 45 },
+				children: mockChildren
+			}
+		});
+
+		const div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		if (div) {
+			expect(div.style.transform).toContain('rotate(45deg)');
+		}
+	});
+
+	it('does not add fragment-positioned class without layout', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				children: mockChildren
+			}
+		});
+
+		const div = container.querySelector('.fragment-positioned');
+		expect(div).toBeNull();
+	});
+});
+
+describe('Fragment Component - Font Styling', () => {
+	beforeEach(() => {
+		getMockFragment().set(5);
+	});
+
+	it('applies font-size when provided', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 0, y: 0, width: 100, height: 40 },
+				font: { font_size: 24 },
+				children: mockChildren
+			}
+		});
+
+		const div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		if (div) {
+			expect(div.style.fontSize).toBe('24px');
+		}
+	});
+
+	it('applies bold and italic', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 0, y: 0, width: 100, height: 40 },
+				font: { bold: true, italic: true },
+				children: mockChildren
+			}
+		});
+
+		const div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		if (div) {
+			expect(div.style.fontWeight).toBe('bold');
+			expect(div.style.fontStyle).toBe('italic');
+		}
+	});
+
+	it('applies color and alignment', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 0, y: 0, width: 100, height: 40 },
+				font: { color: '#FF0000', alignment: 'left' },
+				children: mockChildren
+			}
+		});
+
+		const div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		if (div) {
+			expect(div.style.color).toBe('rgb(255, 0, 0)');
+			expect(div.style.textAlign).toBe('left');
+		}
+	});
+});
+
+describe('Fragment Component - Fill and Line Styling', () => {
+	beforeEach(() => {
+		getMockFragment().set(5);
+	});
+
+	it('applies background fill color', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 0, y: 0, width: 100, height: 40 },
+				fill: '#CCCCCC',
+				children: mockChildren
+			}
+		});
+
+		const div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		if (div) {
+			expect(div.style.backgroundColor).toBe('rgb(204, 204, 204)');
+		}
+	});
+
+	it('applies border styling', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 0, y: 0, width: 100, height: 40 },
+				line: { color: '#000000', width: 2 },
+				children: mockChildren
+			}
+		});
+
+		const div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		if (div) {
+			expect(div.style.borderColor).toBe('rgb(0, 0, 0)');
+			expect(div.style.borderWidth).toBe('2px');
+			expect(div.style.borderStyle).toBe('solid');
+		}
+	});
+});
+
+describe('Fragment Component - Animations', () => {
+	beforeEach(() => {
+		getMockFragment().set(5);
+	});
+
+	it('adds animate-fade class when animate="fade"', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 0, y: 0, width: 100, height: 40 },
+				animate: 'fade',
+				children: mockChildren
+			}
+		});
+
+		const div = container.querySelector('.animate-fade');
+		expect(div).not.toBeNull();
+	});
+
+	it('adds animate-fly-up class when animate="fly-up"', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 0, y: 0, width: 100, height: 40 },
+				animate: 'fly-up',
+				children: mockChildren
+			}
+		});
+
+		const div = container.querySelector('.animate-fly-up');
+		expect(div).not.toBeNull();
+	});
+
+	it('adds animate-scale class when animate="scale"', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 0, y: 0, width: 100, height: 40 },
+				animate: 'scale',
+				children: mockChildren
+			}
+		});
+
+		const div = container.querySelector('.animate-scale');
+		expect(div).not.toBeNull();
+	});
+
+	it('does not add animation class when animate is not provided', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 0, y: 0, width: 100, height: 40 },
+				children: mockChildren
+			}
+		});
+
+		const div = container.querySelector('.fragment-positioned');
+		expect(div).not.toBeNull();
+		expect(div?.classList.contains('animate-fade')).toBe(false);
+		expect(div?.classList.contains('animate-fly-up')).toBe(false);
+		expect(div?.classList.contains('animate-scale')).toBe(false);
+	});
+});
+
+describe('Fragment Component - Static Positioned Content', () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		getMockFragment().set(0); // Start at fragment 0
+	});
+
+	it('is visible at fragment 0 when step is omitted with layout', () => {
+		const { container } = render(Fragment, {
+			props: {
+				layout: { x: 321, y: 3, width: 316, height: 42 },
+				font: { font_size: 43 },
+				children: mockChildren
+			}
+		});
+
+		const div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		expect(div).not.toBeNull();
+		if (div) {
+			expect(div.style.left).toBe('321px');
+			expect(div.style.fontSize).toBe('43px');
+		}
+	});
+
+	it('combines layout and drillTo for static drillable positioned content', () => {
+		const { container } = render(Fragment, {
+			props: {
+				layout: { x: 100, y: 100, width: 200, height: 50 },
+				drillTo: 'promises/genesis-12-1',
+				children: mockChildren
+			}
+		});
+
+		const div = container.querySelector('.fragment-positioned.drillable');
+		expect(div).not.toBeNull();
 	});
 });

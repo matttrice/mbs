@@ -4,11 +4,13 @@ A SvelteKit-based presentation system replicating PowerPoint's **Custom Show** "
 
 ## Features
 
+- **Pixel-perfect** - 960×540 fixed canvas with absolute positioning
 - **Multi-slide presentations** with per-slide fragment tracking
 - **Drill-and-return** - click scripture references to explore, auto-return when complete
 - **Stack-based navigation** - supports nested drills
 - **State persistence** - survives page refresh via localStorage
 - **Keyboard navigation** - Arrow keys, Space, Escape
+- **CSS entrance animations** - fade, fly, scale (opt-in via `animate` prop)
 
 ## Quick Start
 
@@ -229,10 +231,17 @@ The `Slide` component uses Svelte context to collect step values from child `Fra
 
 | Prop | Type | Description |
 |------|------|-------------|
-| `step` | `number` | Step number (1-indexed) when this content appears |
+| `step` | `number` | Step number (1-indexed) when this content appears. Omit for static content. |
 | `withPrev` | `boolean` | Appear with previous step (no extra click) |
-| `afterPrev` | `boolean` | Same as withPrev but with 300ms animation delay |
+| `afterPrev` | `boolean` | Like withPrev but with 500ms animation delay |
 | `drillTo` | `string` | Route to drill into on click (e.g., `"demo/ecclesiastes.3.19"`) |
+| `returnHere` | `boolean` | Return to this drill (not origin) after nested drill completes |
+| `layout` | `BoxLayout` | Absolute positioning: `{ x, y, width, height, rotation? }` |
+| `font` | `BoxFont` | Typography: `{ font_name?, font_size?, bold?, italic?, color?, alignment? }` |
+| `fill` | `string` | Background color (e.g., `"#FFFFFF"`) |
+| `line` | `BoxLine` | Border: `{ color?, width? }` |
+| `zIndex` | `number` | Stacking order |
+| `animate` | `AnimationType` | Entrance animation: `'fade'`, `'fly-up'`, `'fly-down'`, `'fly-left'`, `'fly-right'`, `'scale'` |
 
 ### Keyboard Controls
 
@@ -282,6 +291,10 @@ Navigation state is saved to `localStorage` under key `mbs-nav-state`. This pres
 - Drill stack (for nested drills)
 
 The menu's Reset button clears this state.
+
+## Future Roadmap
+
+- **Motion paths** - Support for multi-stage animations where fragments move to new positions at later steps (PowerPoint-style motion paths). Will use a `motions` prop: `motions={[{ atStep: 3, to: { x: 500 }, duration: 500 }]}`
 
 ## Common Gotchas
 
