@@ -87,7 +87,7 @@
 		fill,
 		line,
 		zIndex = 0,
-		animate,
+		animate = 'fade',
 		children
 	}: Props = $props();
 
