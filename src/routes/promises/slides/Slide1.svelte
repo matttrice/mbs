@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-	import { onMount } from 'svelte';
+	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
 
 	/**
 	 * Slide 1: The Promises - Pixel-perfect layout from PowerPoint extraction
@@ -16,33 +16,18 @@
 	}
 
 	let { slideIndex }: Props = $props();
-
-	// Reference overlay toggle (press 'O' to toggle)
-	let showOverlay = $state(false);
-
-	onMount(() => {
-		function handleKeydown(e: KeyboardEvent) {
-			if (e.key === 'o' || e.key === 'O') {
-				showOverlay = !showOverlay;
-			}
-		}
-		window.addEventListener('keydown', handleKeydown);
-		return () => window.removeEventListener('keydown', handleKeydown);
-	});
 </script>
 
 <Slide {slideIndex}>
 	<!-- Slide background -->
 	<div class="slide-bg"></div>
 	<!-- Reference overlay for development (press O to toggle) -->
-	{#if showOverlay}
-		<img src="/export/09-The_Promises/Slide1.png" class="reference-overlay" alt="" />
-	{/if}
+	<ReferenceOverlay src="/export/09-The_Promises/Slide1.png" />
 
 	<!-- ===== STATIC CONTENT (Always visible) ===== -->
 	<Fragment
 		layout={{ x: 321.6, y: 3.1, width: 316.8, height: 42 }}
-		font={{ font_size: 43.2 }}
+		font={{ font_size: 43.2, bold: true }}
 		zIndex={100}
 	>
 		The Promises
@@ -526,44 +511,6 @@
 </Slide>
 
 <style>
-	/* Slide background */
-	.slide-bg {
-		position: absolute;
-		inset: 0;
-		background: #E8E8E8;
-	}
-
-	/* Development overlay for alignment checking (press O to toggle) */
-	.reference-overlay {
-		position: absolute;
-		inset: 0;
-		width: 100%;
-		height: 100%;
-		object-fit: contain;
-		opacity: 0.5;
-		pointer-events: none;
-		z-index: 9999;
-	}
-
-	/* Horizontal lines for major connectors */
-	.horizontal-line {
-		position: absolute;
-		background: #000000;
-	}
-
-	/* Connector lines (smaller) */
-	.connector-line {
-		position: absolute;
-		background: #000000;
-	}
-
-	/* Text wrapping for multi-line content */
-	.wrap-text {
-		white-space: normal;
-		text-align: center;
-		line-height: 1.2;
-	}
-
 	/* Angled connectors - diagonal line effect */
 	.connector-line.angled {
 		background: linear-gradient(

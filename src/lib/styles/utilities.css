@@ -1,0 +1,78 @@
+/* Slide Utility Classes
+ * Common utilities for main presentation slides
+ */
+
+/* Text utilities */
+.wrap-text {
+	white-space: normal;
+	text-align: center;
+	line-height: 1.2;
+}
+
+/* Level-based background colors */
+.bg-level1 {
+	background-color: var(--color-level1);
+}
+
+.bg-level2 {
+	background-color: var(--color-level2);
+}
+
+.bg-level3 {
+	background-color: var(--color-level3);
+}
+
+.bg-light {
+	background-color: var(--color-bg-light);
+}
+
+/* Level-based text colors */
+.text-level1 {
+	color: var(--color-level1);
+}
+
+.text-level2 {
+	color: var(--color-level2);
+}
+
+.text-level3 {
+	color: var(--color-level3);
+}
+
+/* Connector lines for diagrams */
+.connector-line {
+	position: absolute;
+	background: var(--color-border);
+}
+
+.horizontal-line {
+	position: absolute;
+	background: var(--color-border);
+}
+
+/* Slide background */
+.slide-bg {
+	position: absolute;
+	inset: 0;
+	background: var(--color-bg-light);
+}
+
+/* Scripture reference links (drillable) */
+.scripture-link {
+	color: var(--color-level3);
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+/* Column headers */
+.column-header {
+	font-size: var(--font-size-heading);
+	font-weight: bold;
+	text-align: center;
+}
+
+/* Highlight text */
+.highlight {
+	color: var(--color-highlight);
+	font-weight: bold;
+}

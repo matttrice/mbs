@@ -1,0 +1,44 @@
+/* MBS Global Theme
+ * Level-based color palette for teaching progression:
+ *   level1 = gray (#808080)    - physical/earthly concepts
+ *   level2 = light blue (#00aaff) - spiritual concepts
+ *   level3 = blue (#0000cc)    - eternal/heavenly concepts
+ */
+
+:root {
+	/* Level-based color palette */
+	--color-level1: #808080;
+	--color-level2: #00aaff;
+	--color-level3: #0000cc;
+
+	/* Neutral colors */
+	--color-bg-light: #e8e8e8;
+	--color-bg-white: #ffffff;
+	--color-text-primary: #000000;
+	--color-text-muted: #666666;
+
+	/* Accent colors */
+	--color-highlight: #ffd700;
+
+	--color-danger: #cc0000;
+	--color-success: #00aa00;
+
+	/* UI colors */
+	--color-border: #000000;
+	--color-shadow: rgba(0, 0, 0, 0.1);
+
+	/* Typography */
+	--font-size-title: 36px;
+	--font-size-heading: 28px;
+	--font-size-scripture: 20px;
+	--font-size-body: 18px;
+	--font-size-verse: 12px;
+
+	/* Spacing */
+	--spacing-page: 40px;
+	--spacing-section: 30px;
+	--spacing-element: 24px;
+
+	/* Borders */
+	--radius-card: 4px;
+}

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-	import { fade } from 'svelte/transition';
 </script>
 
 <Slide>
@@ -16,21 +15,21 @@
 		<div class="two-columns">
 			<!-- Spiritual Column (Left) -->
 			<div class="column spiritual">
-				<div class="column-header">SPIRITUAL</div>
-				<div class="item">Imperishable</div>
-				<div class="item">Glory</div>
-				<div class="item">Power</div>
-				<div class="item">Spiritual Body</div>
-				<div class="item">2nd Adam - Heaven</div>
+				<div class="column-header text-level3">SPIRITUAL</div>
+				<div class="item text-level3">Imperishable</div>
+				<div class="item text-level3">Glory</div>
+				<div class="item text-level3">Power</div>
+				<div class="item text-level3">Spiritual Body</div>
+				<div class="item text-level3">2nd Adam - Heaven</div>
 				
 				<Fragment step={1}>
-					<div class="item animated" transition:fade>Invisible</div>
+					<div class="item text-level3 animated">Invisible</div>
 				</Fragment>
 				<Fragment step={2}>
-					<div class="item animated" transition:fade>Eternal</div>
+					<div class="item text-level3 animated">Eternal</div>
 				</Fragment>
 				<Fragment step={4}>
-					<div class="item animated large" transition:fade>True & Real</div>
+					<div class="item text-level3 animated large">True & Real</div>
 				</Fragment>
 			</div>
 
@@ -47,13 +46,13 @@
 				<div class="item">1st Adam - Earth</div>
 				
 				<Fragment step={3}>
-					<div class="item animated" transition:fade>Visible</div>
+					<div class="item animated">Visible</div>
 				</Fragment>
 				<Fragment step={3}>
-					<div class="item animated" transition:fade>Temporary</div>
+					<div class="item animated">Temporary</div>
 				</Fragment>
 				<Fragment step={5}>
-					<div class="item animated large" transition:fade>Shadow & Copy</div>
+					<div class="item animated large">Shadow & Copy</div>
 				</Fragment>
 			</div>
 		</div>
@@ -62,28 +61,6 @@
 </Slide>
 
 <style>
-	.drill-content {
-		width: 100%;
-		height: 100%;
-		background: var(--color-bg-light, #e8e8e8);
-		display: flex;
-		flex-direction: column;
-		padding: 30px;
-		box-sizing: border-box;
-	}
-
-	header {
-		text-align: center;
-		margin-bottom: 20px;
-	}
-
-	header h1 {
-		font-size: 32px;
-		margin: 0;
-		color: #000;
-		font-weight: bold;
-	}
-
 	.title-link {
 		text-decoration: underline;
 		cursor: pointer;
@@ -117,25 +94,9 @@
 		margin-bottom: 8px;
 	}
 
-	.spiritual .column-header {
-		color: var(--color-spiritual-text, #0000cc);
-	}
-
-	.physical .column-header {
-		color: #000;
-	}
-
 	.item {
 		font-size: 18px;
 		text-align: center;
-	}
-
-	.spiritual .item {
-		color: var(--color-spiritual-text, #0000cc);
-	}
-
-	.physical .item {
-		color: #000;
 	}
 
 	.item.animated {

@@ -17,21 +17,6 @@
 
 	<nav class="models">
 		<div class="model-card-wrapper">
-			<a href="/demo" class="model-card">
-				<h2>Demo</h2>
-				<p>How many "kinds" of life did God create?</p>
-				<span class="arrow">→</span>
-			</a>
-			<button 
-				class="reset-btn" 
-				onclick={() => startFresh('demo', '/demo')}
-				title="Reset progress and start fresh"
-			>
-				Reset
-			</button>
-		</div>
-
-		<div class="model-card-wrapper">
 			<a href="/promises" class="model-card">
 				<h2>The Promises</h2>
 				<p>What did God promise Abraham?</p>

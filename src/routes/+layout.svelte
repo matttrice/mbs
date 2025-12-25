@@ -1,4 +1,9 @@
 <script lang="ts">
+	import '$lib/styles/theme.css';
+	import '$lib/styles/scripture.css';
+	import '$lib/styles/utilities.css';
+	import '$lib/styles/presentation.css';
+
 	import { navigation, canReturn } from '$lib/stores/navigation';
 	import ReturnButton from '$lib/components/ReturnButton.svelte';
 	import { onMount } from 'svelte';

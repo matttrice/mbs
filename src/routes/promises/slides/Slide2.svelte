@@ -140,17 +140,6 @@
 		gap: 8px;
 	}
 
-	.title-bar {
-		text-align: left;
-		padding: 0 8px;
-	}
-
-	.title-link {
-		font-size: 20px;
-		color: #000;
-		cursor: pointer;
-	}
-
 	.main-layout {
 		flex: 1;
 		display: grid;
@@ -168,11 +157,11 @@
 	}
 
 	.physical-column {
-		background: var(--color-physical-bg, #808080);
+		background: var(--color-level1);
 	}
 
 	.spiritual-column {
-		background: var(--color-spiritual-bg, #00aaff);
+		background: var(--color-level2);
 	}
 
 	.center-area {
@@ -187,8 +176,8 @@
 	}
 
 	.abraham-box {
-		background: #e8e8e8;
-		border: 3px solid #000;
+		background: var(--color-bg-light);
+		border: 3px solid var(--color-border);
 		padding: 12px 24px;
 		font-size: 24px;
 		font-weight: bold;
@@ -199,15 +188,15 @@
 		font-weight: bold;
 		text-align: center;
 		margin-bottom: 8px;
-		margin-top: 60px; /* Space for Abraham box */
+		margin-top: 60px;
 	}
 
 	.physical-column .column-header {
-		color: #000;
+		color: var(--color-text-primary);
 	}
 
 	.spiritual-column .column-header {
-		color: var(--color-spiritual-text, #0000cc);
+		color: var(--color-level3);
 	}
 
 	.person-name {
@@ -234,11 +223,11 @@
 
 	.item.quote {
 		font-style: italic;
-		color: var(--color-spiritual-text, #0000cc);
+		color: var(--color-level3);
 	}
 
 	.scripture-link {
-		color: var(--color-scripture-ref, #0000cc);
+		color: var(--color-level3);
 		text-decoration: underline;
 		cursor: pointer;
 		font-size: 16px;
@@ -259,12 +248,12 @@
 
 	.physical-summary {
 		background: #a0a0a0;
-		border: 2px solid #000;
+		border: 2px solid var(--color-border);
 	}
 
 	.spiritual-summary {
 		background: #66ccff;
-		border: 2px solid var(--color-spiritual-text, #0000cc);
+		border: 2px solid var(--color-level3);
 	}
 
 	.summary-text {
@@ -273,7 +262,7 @@
 	}
 
 	.summary-text .highlight {
-		color: var(--color-spiritual-text, #0000cc);
+		color: var(--color-level3);
 		font-weight: bold;
 	}
 
@@ -293,11 +282,11 @@
 	}
 
 	.type-label.physical {
-		background: var(--color-physical-bg, #808080);
+		background: var(--color-level1);
 	}
 
 	.type-label.spiritual {
-		background: var(--color-spiritual-bg, #00aaff);
-		color: var(--color-spiritual-text, #0000cc);
+		background: var(--color-level2);
+		color: var(--color-level3);
 	}
 </style>
