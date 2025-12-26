@@ -59,9 +59,7 @@ The `Fragment` component handles all slide content - from simple text to fully-p
 
 | Prop | Type | Description |
 |------|------|-------------|
-| `step` | `number` | Animation sequence (1-indexed). Omit for static content. |
-| `withPrev` | `boolean` | Appear simultaneously with previous step |
-| `afterPrev` | `boolean` | Like withPrev but with 500ms animation delay |
+| `step` | `number` | Animation sequence. Integer = click number, decimal = delay (e.g., `2.1` = step 2 with 500ms delay). Omit for static content. |
 | `drillTo` | `string` | Route to drill into on click (e.g., `"promises/genesis-12-1"`) |
 | `layout` | `BoxLayout` | Absolute positioning: `{ x, y, width, height, rotation? }` |
 | `font` | `BoxFont` | Typography: `{ font_name?, font_size?, bold?, italic?, color?, alignment? }` |
@@ -130,8 +128,7 @@ The `FragmentArrow` component draws animated arrows/lines with a "wipe" reveal a
 
 | Prop | Type | Description |
 |------|------|-------------|
-| `step` | `number` | Animation sequence (1-indexed) when arrow becomes visible |
-| `withPrev` | `boolean` | Appear simultaneously with previous step |
+| `step` | `number` | Animation sequence. Integer = click number, decimal = delay (e.g., `2.1` = step 2 with 500ms delay). |
 | `path` | `ArrowPathPoints` | Start and end coordinates: `{ start: {x, y}, end: {x, y} }` |
 | `line` | `ArrowLineStyle` | Styling: `{ color?, width? }` |
 | `arrowhead` | `boolean` | Show arrowhead at end (default: true) |
@@ -169,11 +166,10 @@ The `FragmentArrow` component draws animated arrows/lines with a "wipe" reveal a
 />
 ```
 
-**Appearing with previous step:**
+**Delayed appearance (same click, 500ms delay):**
 ```svelte
 <FragmentArrow 
-  step={10}
-  withPrev
+  step={10.1}
   path={{ start: { x: 200, y: 250 }, end: { x: 400, y: 250 } }}
   line={{ width: 20 }}
 />
@@ -240,7 +236,7 @@ npm run check        # TypeScript type checking
 
 ### From PowerPoint JSON
 
-The [hsu-extractor](../hsu-extractor/) parses `.pptx` files into JSON. See [hsu-extractor/README.md](../hsu-extractor/README.md) for full JSON structure reference.
+The [hsu-extractor](../../hsu-extractor/) parses `.pptx` files into JSON. See [hsu-extractor/README.md](../../hsu-extractor/README.md) for full JSON structure reference.
 
 #### Font Size Conversion
 PowerPoint uses points (72 DPI), CSS uses pixels (96 DPI):
@@ -248,6 +244,38 @@ PowerPoint uses points (72 DPI), CSS uses pixels (96 DPI):
 CSS pixels = PowerPoint points × 1.333
 ```
 The extractor outputs font sizes already converted to pixels.
+
+#### Animation Timing (With Previous / After Previous)
+
+PowerPoint has three animation timing modes that map to MBS decimal step notation:
+
+| PowerPoint Timing | XML `nodeType` | MBS Step | Behavior |
+|-------------------|----------------|----------|----------|
+| **On Click** | `clickEffect` | `step={n}` | New step number, requires click |
+| **With Previous** | `withEffect` | `step={n}` (same as previous) | Same integer = appears together |
+| **After Previous** | `afterEffect` | `step={n.1}` | Decimal = delayed (e.g., `.1` = 500ms, `.2` = 1000ms) |
+
+**Step numbering convention:**
+- Elements with the same integer step value appear together on the same click
+- Use decimal notation for cascading animations (e.g., `step={1.1}` = 500ms after step 1)
+
+**Example - cascading animation:**
+```svelte
+<!-- Click 1: Arrow appears -->
+<FragmentArrow step={1} path={{ start: { x: 100, y: 200 }, end: { x: 300, y: 200 } }} />
+
+<!-- Still click 1: Box appears 500ms after arrow -->
+<Fragment step={1.1} layout={{ x: 310, y: 185, width: 100, height: 30 }}>
+  Result
+</Fragment>
+```
+
+**Example - simultaneous appearance:**
+```svelte
+<!-- Click 2: Both appear at the same time -->
+<Fragment step={2} layout={{ x: 100, y: 100, width: 80, height: 30 }}>First</Fragment>
+<Fragment step={2} layout={{ x: 200, y: 100, width: 80, height: 30 }}>Second</Fragment>
+```
 
 #### Mapping JSON to Svelte Components
 
@@ -257,16 +285,26 @@ The extractor outputs font sizes already converted to pixels.
   "slide_number": 1,
   "animation_sequence": [
     { 
-      "sequence": 1, 
+      "sequence": 1,
+      "timing": "click",
       "text": "Genesis 12:1-3",
       "layout": { "x": 100, "y": 50, "width": 200, "height": 30 },
       "font": { "font_size": 24, "bold": true, "color": "#0000CC" },
       "hyperlink": { "type": "customshow", "id": 2 }
     },
     { 
-      "sequence": 2, 
+      "sequence": 2,
+      "timing": "with",
       "text": "Great Nation",
       "layout": { "x": 100, "y": 100, "width": 180, "height": 30 },
+      "font": { "font_size": 18 }
+    },
+    { 
+      "sequence": 3,
+      "timing": "after",
+      "delay": 500,
+      "text": "Land of Canaan",
+      "layout": { "x": 100, "y": 130, "width": 180, "height": 30 },
       "font": { "font_size": 18 }
     }
   ],
@@ -290,7 +328,7 @@ Becomes:
     The Promises
   </Fragment>
   
-  <!-- hyperlink.type: "customshow" becomes drillTo -->
+  <!-- timing: "click" + hyperlink.type: "customshow" becomes step + drillTo -->
   <Fragment
     step={1}
     drillTo="promises/genesis-12-1"
@@ -300,13 +338,22 @@ Becomes:
     Genesis 12:1-3
   </Fragment>
   
-  <!-- no hyperlink = plain fragment -->
+  <!-- timing: "with" = same step as previous click -->
   <Fragment
-    step={2}
+    step={1}
     layout={{ x: 100, y: 100, width: 180, height: 30 }}
     font={{ font_size: 18 }}
   >
     Great Nation
+  </Fragment>
+  
+  <!-- timing: "after" + delay: 500 = decimal step (500ms = 0.1) -->
+  <Fragment
+    step={1.1}
+    layout={{ x: 100, y: 130, width: 180, height: 30 }}
+    font={{ font_size: 18 }}
+  >
+    Land of Canaan
   </Fragment>
 </Slide>
 ```

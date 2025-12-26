@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { currentFragment, navigation } from '$lib/stores/navigation';
+	import { currentFragment, currentSlide, navigation } from '$lib/stores/navigation';
 	import { getSlideContext } from './Slide.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import type { BoxLayout, BoxFont, BoxLine, AnimationType } from '$lib/types';
@@ -7,7 +7,11 @@
 		getEffectiveStep, 
 		getAnimationDelay, 
 		shouldBeVisible, 
-		registerStepWithContext 
+		registerStepWithContext,
+		getNormalizedStep,
+		checkIsActiveSlide,
+		wasAlreadyRevealed,
+		ANIMATION_COMPLETE_DELAY
 	} from './stepUtils';
 
 	/**
@@ -50,6 +54,7 @@
 	interface Props {
 		/** 
 		 * Step number when this content becomes visible. Omit for always-visible content.
+		 * Identical step numbers will appear on the same click.
 		 * Use decimals for animation delay: 14.1 = click 14, 500ms delay
 		 */
 		step?: number;
@@ -102,30 +107,83 @@
 	const slideContext = getSlideContext();
 	registerStepWithContext(step, slideContext);
 
-	// Register drillTo target with navigation store
-	// This allows auto-drill when next() is called at this step
-	// Only register if both drillTo AND step are defined (auto-drill needs a step)
-	onMount(() => {
-		if (drillTo && step !== undefined) {
-			navigation.registerDrillTarget(getEffectiveStep(step), drillTo, returnHere);
-		}
-	});
+	// Get normalized step for visibility and drill registration
+	// This maps author steps with gaps to consecutive integers
+	let normalizedStep = $derived(getNormalizedStep(step, slideContext));
+	
+	// Track drill registration state
+	let registeredNormalizedStep: number | undefined = undefined;
 
 	onDestroy(() => {
-		if (drillTo && step !== undefined) {
-			navigation.unregisterDrillTarget(getEffectiveStep(step));
+		if (registeredNormalizedStep !== undefined) {
+			navigation.unregisterDrillTarget(registeredNormalizedStep);
 		}
 	});
 
 	// Calculate animation delay from decimal part or explicit delay prop
 	let animationDelay = $derived(
-		step !== undefined ? getAnimationDelay(step, delay) : 0
+		normalizedStep !== undefined ? getAnimationDelay(normalizedStep, delay) : 0
 	);
 
 	// Always visible if no step defined, otherwise visibility depends on currentFragment
-	let visible = $derived(shouldBeVisible(step, $currentFragment));
+	let visible = $derived(shouldBeVisible(normalizedStep, $currentFragment));
 
-	// Build inline styles when layout is provided
+	// Check if this fragment's slide is the currently active slide
+	let isActiveSlide = $derived(checkIsActiveSlide(slideContext?.slideIndex, $currentSlide));
+
+	// ========== ANIMATION LOGIC ==========
+	// 
+	// A fragment animates exactly ONCE - the first time it becomes visible.
+	// After that, it stays visible without animation (drill return, slide nav, page reload).
+	//
+	// Two states:
+	// - hasAnimated: Once true, never animate again (per component instance)
+	// - animationReady: True after mount check completes (handles step normalization timing)
+
+	let hasAnimated = $state(false);
+	let animationReady = $state(false);
+	
+	onMount(() => {
+		// Handle drill registration (needs setTimeout for step normalization)
+		if (drillTo && step !== undefined) {
+			setTimeout(() => {
+				const normalized = getNormalizedStep(step, slideContext);
+				if (normalized !== undefined) {
+					const effectiveNormalized = getEffectiveStep(normalized);
+					navigation.registerDrillTarget(effectiveNormalized, drillTo, returnHere);
+					registeredNormalizedStep = effectiveNormalized;
+				}
+			}, 0);
+		}
+		
+		// Check if fragment was already revealed before this mount
+		setTimeout(() => {
+			if (step !== undefined) {
+				const normalized = getNormalizedStep(step, slideContext) ?? step;
+				const effectiveStep = getEffectiveStep(normalized);
+				hasAnimated = wasAlreadyRevealed(effectiveStep, slideContext?.slideIndex, visible);
+			} else {
+				// Static content (no step) - never animate
+				hasAnimated = true;
+			}
+			animationReady = true;
+		}, 0);
+	});
+	
+	// Determine if we should show animation classes
+	// Animate if: ready, visible, on active slide, not yet animated
+	let showAnimation = $derived(animationReady && visible && isActiveSlide && !hasAnimated);
+	
+	// When animation starts, mark as animated (after animation completes)
+	$effect(() => {
+		if (showAnimation) {
+			const timer = setTimeout(() => {
+				hasAnimated = true;
+			}, ANIMATION_COMPLETE_DELAY);
+			
+			return () => clearTimeout(timer);
+		}
+	});
 	const computedStyle = $derived(() => {
 		if (!layout) return '';
 
@@ -179,12 +237,12 @@
 	<div
 		class:fragment-positioned={layout}
 		class:drillable={drillTo}
-		class:animate-fade={animate === 'fade'}
-		class:animate-fly-up={animate === 'fly-up'}
-		class:animate-fly-down={animate === 'fly-down'}
-		class:animate-fly-left={animate === 'fly-left'}
-		class:animate-fly-right={animate === 'fly-right'}
-		class:animate-scale={animate === 'scale'}
+		class:animate-fade={showAnimation && animate === 'fade'}
+		class:animate-fly-up={showAnimation && animate === 'fly-up'}
+		class:animate-fly-down={showAnimation && animate === 'fly-down'}
+		class:animate-fly-left={showAnimation && animate === 'fly-left'}
+		class:animate-fly-right={showAnimation && animate === 'fly-right'}
+		class:animate-scale={showAnimation && animate === 'scale'}
 		style="{computedStyle()}animation-delay: {animationDelay}ms;"
 		onclick={drillTo ? handleClick : undefined}
 	>

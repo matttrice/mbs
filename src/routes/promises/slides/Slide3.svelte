@@ -11,11 +11,9 @@
 
 <Slide {slideIndex}>
 <div class="slide-content">
-	<Fragment step={1} withPrev>
 		<div class="end-box">
 			End of lesson
 		</div>
-	</Fragment>
 </div>
 </Slide>
 

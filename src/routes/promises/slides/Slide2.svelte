@@ -122,10 +122,9 @@
 		zIndex={21}
 	/>
 
-	<!-- Step 10: Hagar (bold) -->
+	<!-- Step 10: Hagar (bold) - appears with arrow at step 9, slightly delayed -->
 	<Fragment
-		withPrev
-		step={10}
+		step={9.1}
 		layout={{ x: 195.3, y: 154.3, width: 141.1, height: 61.1 }}
 		font={{ font_size: 43.2, bold: true, alignment: 'left' }}
 		zIndex={8}
@@ -154,10 +153,9 @@
 		zIndex={20}
 	/>
 
-	<!-- Step 13: Sarah (bold, blue) -->
+	<!-- Step 13: Sarah (bold, blue) - appears with arrow at step 12, slightly delayed -->
 	<Fragment
-		withPrev
-		step={13}
+		step={12.1}
 		layout={{ x: 616.5, y: 158.2, width: 138.7, height: 61.1 }}
 		font={{ font_size: 43.2, bold: true, alignment: 'left', color: 'var(--color-level3)' }}
 		zIndex={5}
@@ -180,12 +178,13 @@
 		step={15}
 		path={{ start: { x: 265, y: 244 }, end: { x: 265, y: 292 } }}
 		line={{ width: 24 }}
+		headSize={1}
 		zIndex={23}
 	/>
 
 	<!-- Step 16: Mt. Sinai (bold) -->
 	<Fragment
-		step={16}
+		step={15.1}
 		layout={{ x: 177.5, y: 282.2, width: 176.9, height: 55.3 }}
 		font={{ font_size: 38.4, bold: true, alignment: 'left' }}
 		zIndex={9}
@@ -249,12 +248,13 @@
 		step={22}
 		path={{ start: { x: 685, y: 244 }, end: { x: 685, y: 292 } }}
 		line={{ width: 24 }}
+		headSize={1}
 		zIndex={24}
 	/>
 
 	<!-- Step 23: "Jerusalem above is free" (blue, italic) -->
 	<Fragment
-		step={23}
+		step={22.1}
 		layout={{ x: 543.4, y: 278.5, width: 283.4, height: 97.9 }}
 		font={{ font_size: 38.4, italic: true, color: 'var(--color-level3)' }}
 		zIndex={6}

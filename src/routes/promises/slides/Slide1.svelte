@@ -36,7 +36,7 @@
 
 	<!-- ========== ANIMATION SEQUENCE (49 Steps) ========== -->
 
-	<!-- Step 1: Genesis 12:1-3 (hyperlink) -->
+	<!-- Step 1: Genesis 12:1-3 -->
 	<Fragment
 		step={1}
 		drillTo="promises/genesis-12-1"
@@ -93,7 +93,7 @@
 
 	<!-- Step 7: Deuteronomy 7:6-8 (hyperlink) -->
 	<Fragment
-		step={6}
+		step={6.2}
 		drillTo="promises/deuteronomy-7-6"
 		layout={{ x: 105.6, y: 145.5, width: 223.2, height: 34.9 }}
 		font={{ font_size: 24, alignment: 'left' }}

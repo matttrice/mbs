@@ -147,9 +147,9 @@ Wrap slide content in the `Slide` component. Each `Fragment` automatically regis
     <p>Second thing</p>
   </Fragment>
 
-  <!-- Appears with step 2 (no separate click needed) -->
-  <Fragment step={3} withPrev>
-    <p>Also appears at step 2</p>
+  <!-- Appears with step 2 (same integer = same click) -->
+  <Fragment step={2.1}>
+    <p>Also appears at step 2 (with 500ms delay)</p>
   </Fragment>
 
   <!-- Drillable - clicking navigates to the drill route -->
@@ -231,9 +231,7 @@ The `Slide` component uses Svelte context to collect step values from child `Fra
 
 | Prop | Type | Description |
 |------|------|-------------|
-| `step` | `number` | Step number (1-indexed) when this content appears. Omit for static content. |
-| `withPrev` | `boolean` | Appear with previous step (no extra click) |
-| `afterPrev` | `boolean` | Like withPrev but with 500ms animation delay |
+| `step` | `number` | Step number when content appears. Integer = click number, decimal = delay (e.g., 2.1 = step 2 with 500ms delay). Omit for static content. |
 | `drillTo` | `string` | Route to drill into on click (e.g., `"demo/ecclesiastes.3.19"`) |
 | `returnHere` | `boolean` | Return to this drill (not origin) after nested drill completes |
 | `layout` | `BoxLayout` | Absolute positioning: `{ x, y, width, height, rotation? }` |
@@ -295,6 +293,7 @@ The menu's Reset button clears this state.
 ## Future Roadmap
 
 - **Motion paths** - Support for multi-stage animations where fragments move to new positions at later steps (PowerPoint-style motion paths). Will use a `motions` prop: `motions={[{ atStep: 3, to: { x: 500 }, duration: 500 }]}`
+- **Hide on step*** - Support removing an already visible step.
 
 ## Common Gotchas
 

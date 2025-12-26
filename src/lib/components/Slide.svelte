@@ -7,6 +7,14 @@
 	export interface SlideContext {
 		registerStep: (step: number) => void;
 		maxStep: Writable<number>;
+		/**
+		 * Get the normalized step number for an author step.
+		 * Maps author steps with gaps (1, 5, 10) to consecutive integers (1, 2, 3).
+		 * Preserves decimal part for animation delay (19.1 → 3.1 if 19 normalizes to 3).
+		 */
+		getNormalizedStep: (authorStep: number) => number;
+		/** The 0-based slide index, or undefined for standalone drill slides */
+		slideIndex: number | undefined;
 	}
 
 	/**
@@ -76,25 +84,65 @@
 	// Track the highest step number seen
 	const maxStep = writable(0);
 	const registeredSteps = new Set<number>();
+	
+	// Map author steps to normalized consecutive integers
+	// Rebuilds automatically when registeredSteps changes
+	let stepMap = $state(new Map<number, number>());
+
+	function rebuildStepMap() {
+		const sortedSteps = [...registeredSteps].sort((a, b) => a - b);
+		const newMap = new Map<number, number>();
+		sortedSteps.forEach((step, index) => {
+			newMap.set(step, index + 1); // 1-indexed normalized steps
+		});
+		stepMap = newMap;
+		// maxStep is now simply the count of unique steps
+		maxStep.set(sortedSteps.length);
+	}
 
 	function registerStep(step: number) {
 		if (!registeredSteps.has(step)) {
 			registeredSteps.add(step);
-			maxStep.update(current => Math.max(current, step));
+			rebuildStepMap();
 		}
+	}
+
+	/**
+	 * Get the normalized step for an author step.
+	 * Normalizes integer part and preserves decimal for animation delay.
+	 * e.g., if steps are [1, 5, 19] → [1, 2, 3], then 19.1 → 3.1
+	 */
+	function getNormalizedStep(authorStep: number): number {
+		const intPart = Math.floor(authorStep);
+		const decimalPart = authorStep - intPart;
+		const normalizedInt = stepMap.get(intPart) ?? intPart;
+		return normalizedInt + decimalPart;
 	}
 
 	// Set up context for child Fragment components
 	setContext<SlideContext>(SLIDE_CONTEXT_KEY, {
 		registerStep,
-		maxStep
+		maxStep,
+		getNormalizedStep,
+		slideIndex
 	});
 
 	// Report maxStep based on context
+	// For PresentationProvider: always register (even with 0 steps) using onMount
+	// For standalone drill: use effect to set maxFragment when > 0
+	onMount(() => {
+		if (presentationContext && slideIndex !== undefined) {
+			// Inside PresentationProvider: register immediately with current maxStep
+			// This ensures slides with no animated fragments still register
+			presentationContext.registerSlide(slideIndex, $maxStep);
+		}
+	});
+
+	// Also update when maxStep changes (for dynamic content or delayed registration)
 	$effect(() => {
 		if ($maxStep > 0) {
 			if (presentationContext && slideIndex !== undefined) {
-				// Inside PresentationProvider: register with provider
+				// Update registration with new maxStep
 				presentationContext.registerSlide(slideIndex, $maxStep);
 			} else {
 				// Standalone drillTo and return: set maxFragment directly

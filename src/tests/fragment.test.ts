@@ -3,11 +3,10 @@
  * 
  * Tests the Fragment component which handles:
  * 1. Visibility based on currentFragment from navigation store
- * 2. withPrev - appears with previous fragment  
- * 3. afterPrev - appears with previous fragment (with delay styling)
- * 4. drillTo - clickable to drill into a sub-presentation
- * 5. layout/font/fill/line - absolute positioning and styling
- * 6. animate - CSS entrance animations
+ * 2. Decimal steps for animation sequencing (e.g., 1.1 = step 1 with 500ms delay)
+ * 3. drillTo - clickable to drill into a sub-presentation
+ * 4. layout/font/fill/line - absolute positioning and styling
+ * 5. animate - CSS entrance animations
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
@@ -25,11 +24,13 @@ const mockDrillIntoFn = vi.fn();
 // Mock must be hoisted - use factory function with no external references
 vi.mock('$lib/stores/navigation', () => {
 	const fragmentStore = writable(0);
+	const slideStore = writable(0);
 	const drillFn = vi.fn();
 	const registerDrillTargetFn = vi.fn();
 	const unregisterDrillTargetFn = vi.fn();
 	return {
 		currentFragment: fragmentStore,
+		currentSlide: slideStore,
 		navigation: {
 			drillInto: drillFn,
 			registerDrillTarget: registerDrillTargetFn,
@@ -40,6 +41,7 @@ vi.mock('$lib/stores/navigation', () => {
 		},
 		// Export these so tests can access them
 		__mockFragment: fragmentStore,
+		__mockSlide: slideStore,
 		__mockDrillInto: drillFn,
 		__mockRegisterDrillTarget: registerDrillTargetFn,
 		__mockUnregisterDrillTarget: unregisterDrillTargetFn
@@ -89,34 +91,18 @@ describe('Fragment Component - Visibility', () => {
 		expect(container).toBeDefined();
 	});
 
-	it('shows with withPrev at step - 1', () => {
-		// withPrev means: show when currentFragment >= (step - 1)
-		getMockFragment().set(2);
+	it('shows decimal step at same fragment as integer step', () => {
+		// 3.1 should show at same time as 3 (both visible at fragment 3)
+		getMockFragment().set(3);
 		
 		const { container } = render(Fragment, {
 			props: {
-				step: 3,
-				withPrev: true,
+				step: 3.1,
 				children: mockChildren
 			}
 		});
 		
-		// Step 3 with withPrev shows at fragment 2
-		expect(container).toBeDefined();
-	});
-
-	it('shows with afterPrev at step - 1', () => {
-		// afterPrev works same as withPrev for visibility
-		getMockFragment().set(2);
-		
-		const { container } = render(Fragment, {
-			props: {
-				step: 3,
-				afterPrev: true,
-				children: mockChildren
-			}
-		});
-		
+		// Step 3.1 shows at fragment 3 (same click, just delayed animation)
 		expect(container).toBeDefined();
 	});
 });
@@ -305,7 +291,7 @@ describe('Fragment Component - Optional Step (Static Drillable Links)', () => {
 		expect(mockRegister).not.toHaveBeenCalled();
 	});
 
-	it('registers drill target when step is provided', () => {
+	it('registers drill target when step is provided', async () => {
 		const mockRegister = (navMock as any).__mockRegisterDrillTarget;
 		
 		render(Fragment, {
@@ -315,6 +301,9 @@ describe('Fragment Component - Optional Step (Static Drillable Links)', () => {
 				children: mockChildren
 			}
 		});
+		
+		// Wait for tick() in Fragment's $effect to complete
+		await new Promise(resolve => setTimeout(resolve, 0));
 		
 		// Should register for auto-drill at step 5
 		expect(mockRegister).toHaveBeenCalledWith(5, 'life/test', false);
@@ -489,10 +478,11 @@ describe('Fragment Component - Fill and Line Styling', () => {
 
 describe('Fragment Component - Animations', () => {
 	beforeEach(() => {
-		getMockFragment().set(5);
+		// Start with fragment 0 so fragments are NOT visible at mount
+		getMockFragment().set(0);
 	});
 
-	it('adds animate-fade class when animate="fade"', () => {
+	it('adds animate-fade class when animate="fade"', async () => {
 		const { container } = render(Fragment, {
 			props: {
 				step: 1,
@@ -502,11 +492,18 @@ describe('Fragment Component - Animations', () => {
 			}
 		});
 
+		// Wait for onMount setTimeout to complete
+		await new Promise(resolve => setTimeout(resolve, 10));
+		
+		// Now make fragment visible - this should trigger animation
+		getMockFragment().set(1);
+		await new Promise(resolve => setTimeout(resolve, 10));
+		
 		const div = container.querySelector('.animate-fade');
 		expect(div).not.toBeNull();
 	});
 
-	it('adds animate-fly-up class when animate="fly-up"', () => {
+	it('adds animate-fly-up class when animate="fly-up"', async () => {
 		const { container } = render(Fragment, {
 			props: {
 				step: 1,
@@ -516,11 +513,18 @@ describe('Fragment Component - Animations', () => {
 			}
 		});
 
+		// Wait for onMount setTimeout to complete
+		await new Promise(resolve => setTimeout(resolve, 10));
+		
+		// Now make fragment visible - this should trigger animation
+		getMockFragment().set(1);
+		await new Promise(resolve => setTimeout(resolve, 10));
+		
 		const div = container.querySelector('.animate-fly-up');
 		expect(div).not.toBeNull();
 	});
 
-	it('adds animate-scale class when animate="scale"', () => {
+	it('adds animate-scale class when animate="scale"', async () => {
 		const { container } = render(Fragment, {
 			props: {
 				step: 1,
@@ -530,11 +534,18 @@ describe('Fragment Component - Animations', () => {
 			}
 		});
 
+		// Wait for onMount setTimeout to complete
+		await new Promise(resolve => setTimeout(resolve, 10));
+		
+		// Now make fragment visible - this should trigger animation
+		getMockFragment().set(1);
+		await new Promise(resolve => setTimeout(resolve, 10));
+		
 		const div = container.querySelector('.animate-scale');
 		expect(div).not.toBeNull();
 	});
 
-	it('does not add animation class when animate="none"', () => {
+	it('does not add animation class when animate="none"', async () => {
 		const { container } = render(Fragment, {
 			props: {
 				step: 1,
@@ -544,6 +555,13 @@ describe('Fragment Component - Animations', () => {
 			}
 		});
 
+		// Wait for onMount setTimeout to complete
+		await new Promise(resolve => setTimeout(resolve, 10));
+		
+		// Make fragment visible
+		getMockFragment().set(1);
+		await new Promise(resolve => setTimeout(resolve, 10));
+		await new Promise(resolve => setTimeout(resolve, 10));
 		const div = container.querySelector('.fragment-positioned');
 		expect(div).not.toBeNull();
 		expect(div?.classList.contains('animate-fade')).toBe(false);

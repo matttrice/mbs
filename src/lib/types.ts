@@ -90,8 +90,6 @@ export interface PresentationDefinition {
 // Fragment props for the Fragment component
 export interface FragmentProps {
 	step: number;
-	withPrev?: boolean;
-	afterPrev?: boolean;
 	drillTo?: string;
 }
 

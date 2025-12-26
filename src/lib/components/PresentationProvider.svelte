@@ -48,11 +48,14 @@
 
 	// Track maxSteps for each slide
 	let slideMaxSteps = $state<number[]>(Array(slideCount).fill(0));
+	// Track which slides have registered (separate from maxStep value)
+	let slideRegistered = $state<boolean[]>(Array(slideCount).fill(false));
 	let initialized = $state(false);
 
 	function registerSlide(slideIndex: number, maxStep: number) {
 		if (slideIndex >= 0 && slideIndex < slideCount) {
 			slideMaxSteps[slideIndex] = maxStep;
+			slideRegistered[slideIndex] = true;
 			checkAndInit();
 		} else {
 			console.warn(`[PresentationProvider] Invalid slide index: ${slideIndex}. Expected 0-${slideCount - 1}`);
@@ -60,8 +63,8 @@
 	}
 
 	function checkAndInit() {
-		// Only init once all slides have reported non-zero maxSteps
-		if (!initialized && slideMaxSteps.every(s => s > 0)) {
+		// Init once all slides have registered (even those with 0 steps)
+		if (!initialized && slideRegistered.every(registered => registered)) {
 			initialized = true;
 			navigation.init(name, slideMaxSteps);
 		}
@@ -76,9 +79,9 @@
 	// Validate all slides registered properly
 	onMount(() => {
 		setTimeout(() => {
-			if (!slideMaxSteps.every(s => s > 0)) {
-				const missing = slideMaxSteps
-					.map((s, i) => s === 0 ? i + 1 : null)
+			if (!slideRegistered.every(registered => registered)) {
+				const missing = slideRegistered
+					.map((registered, i) => !registered ? i + 1 : null)
 					.filter(Boolean);
 				console.error(`[PresentationProvider] Slides ${missing.join(', ')} did not register. Ensure each uses <Slide slideIndex={n}>.`);
 			}

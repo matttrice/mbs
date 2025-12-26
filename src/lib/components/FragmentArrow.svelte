@@ -18,13 +18,18 @@
 </script>
 
 <script lang="ts">
-	import { currentFragment } from '$lib/stores/navigation';
+	import { currentFragment, currentSlide } from '$lib/stores/navigation';
 	import { getSlideContext } from './Slide.svelte';
+	import { onMount } from 'svelte';
 	import { 
 		getEffectiveStep, 
 		getAnimationDelay, 
 		shouldBeVisible, 
-		registerStepWithContext 
+		registerStepWithContext,
+		getNormalizedStep,
+		checkIsActiveSlide,
+		wasAlreadyRevealed,
+		ANIMATION_COMPLETE_DELAY
 	} from './stepUtils';
 
 	/**
@@ -55,6 +60,7 @@
 	interface Props {
 		/** 
 		 * Step number when this arrow becomes visible.
+		 * Identical step numbers will appear on the same click.
 		 * Use decimals for animation delay: 14.1 = click 14, 500ms delay
 		 */
 		step: number;
@@ -91,30 +97,45 @@
 	const slideContext = getSlideContext();
 	registerStepWithContext(step, slideContext);
 
-	// Get effective step (integer part) for visibility
-	const effectiveStep = getEffectiveStep(step);
-	
-	// Calculate animation delay from decimal part or explicit delay prop
-	const animationDelay = getAnimationDelay(step, delay);
+	// Get normalized step for visibility calculations
+	let normalizedStep = $derived(getNormalizedStep(step, slideContext) ?? step);
 
-	// Visibility depends on currentFragment
-	let visible = $derived(shouldBeVisible(step, $currentFragment));
+	// Calculate animation delay from decimal part or explicit delay prop
+	const animationDelay = $derived(getAnimationDelay(normalizedStep, delay));
+
+	// Visibility depends on currentFragment using normalized step
+	let visible = $derived(shouldBeVisible(normalizedStep, $currentFragment));
+
+	// Check if this arrow's slide is the currently active slide
+	let isActiveSlide = $derived(checkIsActiveSlide(slideContext?.slideIndex, $currentSlide));
 	
-	// Check if arrow was already visible on mount (returning from drill)
-	// In that case, skip animation and show fully revealed
-	// Capture initial fragment value at mount time
-	const initialFragment = $currentFragment;
-	const wasVisibleOnMount = initialFragment >= effectiveStep;
+	// ========== ANIMATION LOGIC ==========
+	// Same pattern as Fragment.svelte - uses shared utilities from stepUtils
 	
-	// Track animation state
-	let shouldAnimate = $state(false);
+	let hasAnimated = $state(false);
+	let animationReady = $state(false);
 	
+	onMount(() => {
+		// Check if arrow was already revealed before this mount
+		setTimeout(() => {
+			const normalized = getNormalizedStep(step, slideContext) ?? step;
+			const effectiveStep = getEffectiveStep(normalized);
+			hasAnimated = wasAlreadyRevealed(effectiveStep, slideContext?.slideIndex, visible);
+			animationReady = true;
+		}, 0);
+	});
+	
+	// Determine if we should show animation
+	let showAnimation = $derived(animationReady && visible && isActiveSlide && !hasAnimated);
+	
+	// When animation starts, mark as animated (after animation completes)
 	$effect(() => {
-		if (visible && !wasVisibleOnMount && !shouldAnimate) {
-			// Only animate if becoming visible for the first time during this session
-			requestAnimationFrame(() => {
-				shouldAnimate = true;
-			});
+		if (showAnimation) {
+			const timer = setTimeout(() => {
+				hasAnimated = true;
+			}, ANIMATION_COMPLETE_DELAY);
+			
+			return () => clearTimeout(timer);
 		}
 	});
 
@@ -168,8 +189,8 @@
 {#if visible}
 	<svg
 		class="fragment-arrow"
-		class:animate={shouldAnimate}
-		class:revealed={wasVisibleOnMount}
+		class:animate={showAnimation}
+		class:revealed={animationReady && !showAnimation}
 		style={svgStyle}
 		style:--duration="{duration}s"
 		style:--delay="{animationDelay}ms"
