@@ -20,6 +20,36 @@ JSON (hsu-pptx/) → extractor.py → Slide components → navigation store → 
 ### Fixed Canvas System
 All presentations use a **960×540 pixel fixed canvas** (16:9 aspect ratio). The canvas scales to fit the viewport via CSS `transform: scale()`. All layout coordinates are absolute pixel positions within this canvas.
 
+## Theme Colors
+
+Use CSS custom properties for semantic colors instead of hardcoded hex values. This ensures consistency across all presentations and enables future theming.
+
+| Variable | Value | Use For |
+|----------|-------|---------|
+| `var(--color-level1)` | `#808080` | Physical/earthly concepts, gray column backgrounds |
+| `var(--color-level2)` | `#00aaff` | Spiritual concepts, blue column backgrounds |
+| `var(--color-level3)` | `#0000cc` | Eternal/heavenly concepts, blue text |
+| `var(--color-highlight)` | `#ffd700` | Gold accent, emphasis |
+| `var(--color-bg-light)` | `#e8e8e8` | Light gray backgrounds |
+
+**Example - Column backgrounds:**
+```svelte
+<!-- Physical column (gray) -->
+<Fragment fill="var(--color-level1)" layout={{ x: 75, y: 48, width: 275, height: 464 }}>
+  <span></span>
+</Fragment>
+
+<!-- Spiritual column (blue) -->
+<Fragment fill="var(--color-level2)" layout={{ x: 610, y: 48, width: 266, height: 464 }}>
+  <span></span>
+</Fragment>
+```
+
+**When converting from PowerPoint JSON:**
+- `fill: "#B3B3B3"` or similar grays → `fill="var(--color-level1)"`
+- `fill: "#33CCFF"` or `#00AAFF` → `fill="var(--color-level2)"`
+- `color: "#0000FF"` or `#0000CC"` in font → `color: '#0000FF'` (keep for text, or use `var(--color-level3)`)
+
 ## Fragment Component
 
 The `Fragment` component handles all slide content - from simple text to fully-positioned PowerPoint boxes.

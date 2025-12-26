@@ -2,6 +2,7 @@
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
 	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
+	import ArrowPath from '$lib/components/ArrowPath.svelte';
 
 	/**
 	 * Slide 1: The Promises - Pixel-perfect layout from PowerPoint extraction
@@ -50,8 +51,8 @@
 	<Fragment
 		step={2}
 		layout={{ x: 75.6, y: 48, width: 274.8, height: 464.4 }}
-		fill="#B3B3B3"
-		zIndex={4}
+		fill="var(--color-level1)"
+		zIndex={0}
 	>
 		<span></span>
 	</Fragment>
@@ -141,7 +142,7 @@
 	<Fragment
 		step={11}
 		layout={{ x: 607.8, y: 54, width: 268.2, height: 50.5 }}
-		font={{ font_size: 52.8, bold: true, color: '#0000FF' }}
+		font={{ font_size: 52.8, bold: true, color: 'var(--color-level3)' }}
 		zIndex={15}
 	>
 		Spiritual
@@ -151,8 +152,8 @@
 	<Fragment
 		step={12}
 		layout={{ x: 609.9, y: 48, width: 266.1, height: 464.4 }}
-		fill="#33CCFF"
-		zIndex={2}
+		fill="var(--color-level2)"
+		zIndex={0}
 	>
 		<span></span>
 	</Fragment>
@@ -178,16 +179,23 @@
 		1Peter 2:9
 	</Fragment>
 
-	<!-- Step 15: Line 70 (horizontal connector Israel-Church) -->
+	<!-- Step 15: Right arrow (Israel to Church) -->
 	<Fragment step={15}>
-		<div class="horizontal-line" style="left: 307.2px; top: 197.4px; width: 358.5px; height: 6.7px; z-index: 34;"></div>
+		<ArrowPath 
+			direction="right"
+			x={307.2}
+			y={188}
+			width={358.5}
+			height={20}
+			zIndex={34}
+		/>
 	</Fragment>
 
 	<!-- Step 16: Church (blue boxed) -->
 	<Fragment
 		step={16}
 		layout={{ x: 679.8, y: 175.4, width: 138.6, height: 43.9 }}
-		font={{ font_size: 33.6, bold: true, color: '#0000FF' }}
+		font={{ font_size: 33.6, bold: true, color: 'var(--color-level3)' }}
 		fill="#FFFFFF"
 		line={{ color: '#000000', width: 1.3 }}
 		zIndex={12}
@@ -224,7 +232,7 @@
 		font={{ font_size: 16.8 }}
 		zIndex={49}
 	>
-		Is physical Israel a great nation today?<br />In possession of Canaan?
+		<span class="wrap-text">Is physical Israel a great nation today?<br />In possession of Canaan?</span>
 	</Fragment>
 
 	<!-- Step 20: Hebrews 11:8-16 (hyperlink) -->
@@ -238,16 +246,23 @@
 		Hebrews 11:8-16
 	</Fragment>
 
-	<!-- Step 21: Line 71 (horizontal connector Canaan-Heaven) -->
+	<!-- Step 21: Right arrow (Canaan to Heaven) -->
 	<Fragment step={21}>
-		<div class="horizontal-line" style="left: 307.2px; top: 302.3px; width: 367.2px; height: 6.7px; z-index: 35;"></div>
+		<ArrowPath 
+			direction="right"
+			x={307.2}
+			y={293}
+			width={367.2}
+			height={20}
+			zIndex={35}
+		/>
 	</Fragment>
 
 	<!-- Step 22: Heaven (blue boxed) -->
 	<Fragment
 		step={22}
 		layout={{ x: 681.6, y: 280.3, width: 140.6, height: 43.9 }}
-		font={{ font_size: 33.6, bold: true, color: '#0000FF' }}
+		font={{ font_size: 33.6, bold: true, color: 'var(--color-level3)' }}
 		fill="#FFFFFF"
 		line={{ color: '#000000', width: 1.3 }}
 		zIndex={20}
@@ -260,7 +275,7 @@
 		step={23}
 		drillTo="promises/hebrews-3-14"
 		layout={{ x: 364.8, y: 142.2, width: 230.4, height: 60.3 }}
-		font={{ font_size: 13.3 }}
+		font={{ font_size: 13.3, bold: true, alignment: 'center' }}
 		zIndex={37}
 	>
 		What if this point is missed?<br />Hebrews 3:11 - 4:11
@@ -269,7 +284,7 @@
 	<!-- Step 24: Joshua…Savior…Israel…Canaan -->
 	<Fragment
 		step={24}
-		layout={{ x: 380.7, y: 237.3, width: 210.6, height: 68.5 }}
+		layout={{ x: 380.7, y: 237.3, width: 211, height: 68.5 }}
 		font={{ font_size: 24, bold: true }}
 		fill="#FFFFFF"
 		zIndex={36}
@@ -280,8 +295,8 @@
 	<!-- Step 25: Jesus…Savior…Church…Heaven (blue) -->
 	<Fragment
 		step={25}
-		layout={{ x: 381.9, y: 302.3, width: 209.4, height: 66 }}
-		font={{ font_size: 24, bold: true, color: '#0000FF' }}
+		layout={{ x: 380.7, y: 302.3, width: 211, height: 66 }}
+		font={{ font_size: 24, bold: true, color: 'var(--color-level3)' }}
 		fill="#FFFFFF"
 		zIndex={51}
 	>
@@ -303,7 +318,7 @@
 	<Fragment
 		step={27}
 		layout={{ x: 681.6, y: 400.1, width: 144, height: 43.9 }}
-		font={{ font_size: 33.6, bold: true, color: '#0000FF' }}
+		font={{ font_size: 33.6, bold: true, color: 'var(--color-level3)' }}
 		fill="#FFFFFF"
 		line={{ color: '#000000', width: 1.3 }}
 		zIndex={22}

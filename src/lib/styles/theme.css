@@ -1,13 +1,13 @@
 /* MBS Global Theme
  * Level-based color palette for teaching progression:
- *   level1 = gray (#808080)    - physical/earthly concepts
+ *   level1 = gray (#B3B3B3)    - physical/earthly concepts
  *   level2 = light blue (#00aaff) - spiritual concepts
  *   level3 = blue (#0000cc)    - eternal/heavenly concepts
  */
 
 :root {
 	/* Level-based color palette */
-	--color-level1: #808080;
+	--color-level1: #B3B3B3;
 	--color-level2: #00aaff;
 	--color-level3: #0000cc;
 
