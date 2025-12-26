@@ -3,12 +3,22 @@
 	import { getSlideContext } from './Slide.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import type { BoxLayout, BoxFont, BoxLine, AnimationType } from '$lib/types';
+	import { 
+		getEffectiveStep, 
+		getAnimationDelay, 
+		shouldBeVisible, 
+		registerStepWithContext 
+	} from './stepUtils';
 
 	/**
 	 * Fragment: The unified component for all slide content.
 	 * Handles visibility, positioning, styling, and drill navigation.
 	 *
 	 * Every element on a slide is a Fragment - whether static or animated.
+	 *
+	 * Step numbers support decimal notation for animation sequencing:
+	 * - Integer part = click number when content becomes visible
+	 * - Decimal part = animation delay (e.g., .1 = 500ms, .2 = 1000ms)
 	 *
 	 * @example Static positioned content (always visible):
 	 * ```svelte
@@ -30,25 +40,23 @@
 	 * </Fragment>
 	 * ```
 	 *
-	 * @example Lines/shapes (inline-styled child):
+	 * @example Multiple items on same click with staggered animation:
 	 * ```svelte
-	 * <Fragment step={3}>
-	 *   <div class="horizontal-line" style="left: 74px; top: 46px; ..."></div>
-	 * </Fragment>
+	 * <Fragment step={14}>Arrow appears first</Fragment>
+	 * <Fragment step={14.1}>Box appears 500ms later</Fragment>
+	 * <Fragment step={14.2}>Text appears 1000ms later</Fragment>
 	 * ```
 	 */
 	interface Props {
-		/** Step number (1-indexed) when this content becomes visible. Omit for always-visible content. */
-		step?: number;
-		/** Appear with the previous step (no separate click needed) */
-		/*** 
-		 * TODO withPrev animates correctly but not removed from count and still requires a click
-		 * Ideally solve by removing and allowing steps with same index.
-		 * With that, allow steps with decimal indices to insert in between without reordering
+		/** 
+		 * Step number when this content becomes visible. Omit for always-visible content.
+		 * Use decimals for animation delay: 14.1 = click 14, 500ms delay
 		 */
-		withPrev?: boolean;
-		/** Like withPrev but with 500ms animation delay */
-		afterPrev?: boolean;
+		step?: number;
+		/** 
+		 * Animation delay in milliseconds. Overrides the decimal-based delay calculation.
+		 */
+		delay?: number;
 		/**
 		 * Route to drill into when clicked (e.g., `"promises/genesis-12-1"`).
 		 * Also enables auto-drill: if this is the last fragment and → is pressed,
@@ -78,8 +86,7 @@
 
 	let {
 		step,
-		withPrev = false,
-		afterPrev = false,
+		delay,
 		drillTo,
 		returnHere = false,
 		layout,
@@ -91,39 +98,32 @@
 		children
 	}: Props = $props();
 
-	// Register this step with the slide context (if within a Slide)
-	// Only register if step is defined
+	// Register this step with the slide context (integer part only)
 	const slideContext = getSlideContext();
-	if (slideContext && step !== undefined) {
-		slideContext.registerStep(step);
-	}
+	registerStepWithContext(step, slideContext);
 
 	// Register drillTo target with navigation store
 	// This allows auto-drill when next() is called at this step
 	// Only register if both drillTo AND step are defined (auto-drill needs a step)
 	onMount(() => {
 		if (drillTo && step !== undefined) {
-			navigation.registerDrillTarget(step, drillTo, returnHere);
+			navigation.registerDrillTarget(getEffectiveStep(step), drillTo, returnHere);
 		}
 	});
 
 	onDestroy(() => {
 		if (drillTo && step !== undefined) {
-			navigation.unregisterDrillTarget(step);
+			navigation.unregisterDrillTarget(getEffectiveStep(step));
 		}
 	});
 
-	// withPrev and afterPrev appear with the previous step
-	// If no step defined, these don't apply
-	let effectiveStep = $derived(
-		step !== undefined ? (withPrev || afterPrev ? step - 1 : step) : 0
+	// Calculate animation delay from decimal part or explicit delay prop
+	let animationDelay = $derived(
+		step !== undefined ? getAnimationDelay(step, delay) : 0
 	);
 
-	// afterPrev gets a default delay (applied via CSS or inline style)
-	let autoDelay = $derived(afterPrev && step !== undefined ? 500 : 0);
-
 	// Always visible if no step defined, otherwise visibility depends on currentFragment
-	let visible = $derived(step === undefined || $currentFragment >= effectiveStep);
+	let visible = $derived(shouldBeVisible(step, $currentFragment));
 
 	// Build inline styles when layout is provided
 	const computedStyle = $derived(() => {
@@ -185,7 +185,7 @@
 		class:animate-fly-left={animate === 'fly-left'}
 		class:animate-fly-right={animate === 'fly-right'}
 		class:animate-scale={animate === 'scale'}
-		style="{computedStyle()}animation-delay: {autoDelay}ms;"
+		style="{computedStyle()}animation-delay: {animationDelay}ms;"
 		onclick={drillTo ? handleClick : undefined}
 	>
 		{@render children()}

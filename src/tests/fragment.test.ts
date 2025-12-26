@@ -179,11 +179,10 @@ describe('Fragment Component - Animation Delay', () => {
 		getMockFragment().set(5);
 	});
 
-	it('sets animation-delay for afterPrev', () => {
+	it('sets animation-delay for decimal step (e.g., 3.1 = 500ms)', () => {
 		const { container } = render(Fragment, {
 			props: {
-				step: 3,
-				afterPrev: true,
+				step: 3.1,
 				children: mockChildren
 			}
 		});
@@ -194,7 +193,21 @@ describe('Fragment Component - Animation Delay', () => {
 		}
 	});
 
-	it('has no animation-delay without afterPrev', () => {
+	it('sets animation-delay proportional to decimal (e.g., 3.2 = 1000ms)', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 3.2,
+				children: mockChildren
+			}
+		});
+		
+		const div = container.querySelector('div');
+		if (div) {
+			expect(div.style.animationDelay).toBe('1000ms');
+		}
+	});
+
+	it('has no animation-delay for integer step', () => {
 		const { container } = render(Fragment, {
 			props: {
 				step: 3,
@@ -205,6 +218,21 @@ describe('Fragment Component - Animation Delay', () => {
 		const div = container.querySelector('div');
 		if (div) {
 			expect(div.style.animationDelay).toBe('0ms');
+		}
+	});
+
+	it('allows explicit delay prop to override calculated delay', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 3.1,
+				delay: 200,
+				children: mockChildren
+			}
+		});
+		
+		const div = container.querySelector('div');
+		if (div) {
+			expect(div.style.animationDelay).toBe('200ms');
 		}
 	});
 });

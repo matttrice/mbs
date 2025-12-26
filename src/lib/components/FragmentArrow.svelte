@@ -20,12 +20,22 @@
 <script lang="ts">
 	import { currentFragment } from '$lib/stores/navigation';
 	import { getSlideContext } from './Slide.svelte';
+	import { 
+		getEffectiveStep, 
+		getAnimationDelay, 
+		shouldBeVisible, 
+		registerStepWithContext 
+	} from './stepUtils';
 
 	/**
 	 * FragmentArrow: Animated arrow that integrates with slide fragment system.
 	 * 
 	 * Combines Fragment step registration with ArrowPath wipe animation.
 	 * Direction is automatically inferred from path start/end points.
+	 * 
+	 * Step numbers support decimal notation for animation sequencing:
+	 * - Integer part = click number when arrow becomes visible
+	 * - Decimal part = animation delay (e.g., .1 = 500ms, .2 = 1000ms)
 	 * 
 	 * @example Horizontal arrow (right):
 	 * ```svelte
@@ -36,20 +46,22 @@
 	 * />
 	 * ```
 	 * 
-	 * @example Vertical arrow (down):
+	 * @example Staggered with other fragments:
 	 * ```svelte
-	 * <FragmentArrow 
-	 *   step={5}
-	 *   path={{ start: { x: 250, y: 100 }, end: { x: 250, y: 200 } }}
-	 *   line={{ width: 30 }}
-	 * />
+	 * <FragmentArrow step={14} ... />
+	 * <Fragment step={14.1}>Appears after arrow</Fragment>
 	 * ```
 	 */
 	interface Props {
-		/** Step number (1-indexed) when this arrow becomes visible */
+		/** 
+		 * Step number when this arrow becomes visible.
+		 * Use decimals for animation delay: 14.1 = click 14, 500ms delay
+		 */
 		step: number;
-		/** Appear with the previous step */
-		withPrev?: boolean;
+		/** 
+		 * Animation delay in milliseconds. Overrides the decimal-based delay calculation.
+		 */
+		delay?: number;
 		/** Start and end points - direction is inferred */
 		path: ArrowPathPoints;
 		/** Line/arrow styling */
@@ -66,26 +78,27 @@
 
 	let { 
 		step,
-		withPrev = false,
+		delay,
 		path, 
 		line,
 		arrowhead = true, 
-		headSize = 1.5,
+		headSize = 3,
 		duration = 0.5, 
 		zIndex = 0
 	}: Props = $props();
 
-	// Register this step with the slide context
+	// Register this step with the slide context (integer part only)
 	const slideContext = getSlideContext();
-	if (slideContext) {
-		slideContext.registerStep(step);
-	}
+	registerStepWithContext(step, slideContext);
 
-	// withPrev appears with the previous step
-	const effectiveStep = withPrev ? step - 1 : step;
+	// Get effective step (integer part) for visibility
+	const effectiveStep = getEffectiveStep(step);
+	
+	// Calculate animation delay from decimal part or explicit delay prop
+	const animationDelay = getAnimationDelay(step, delay);
 
 	// Visibility depends on currentFragment
-	let visible = $derived($currentFragment >= effectiveStep);
+	let visible = $derived(shouldBeVisible(step, $currentFragment));
 	
 	// Check if arrow was already visible on mount (returning from drill)
 	// In that case, skip animation and show fully revealed
@@ -159,6 +172,7 @@
 		class:revealed={wasVisibleOnMount}
 		style={svgStyle}
 		style:--duration="{duration}s"
+		style:--delay="{animationDelay}ms"
 		viewBox="0 0 {viewWidth} {viewHeight}"
 		preserveAspectRatio="none"
 	>
@@ -187,7 +201,7 @@
 
 	/* Animate when becoming visible for the first time */
 	.fragment-arrow.animate polygon {
-		animation: wipeReveal var(--duration) ease-out forwards;
+		animation: wipeReveal var(--duration) ease-out var(--delay) forwards;
 	}
 
 	@keyframes wipeReveal {
