@@ -16,6 +16,7 @@ JSON (hsu-pptx/) → extractor.py → Slide components → navigation store → 
 | [navigation.ts](src/lib/stores/navigation.ts) | State machine managing slides, fragments, drill stack, and localStorage persistence |
 | [Slide.svelte](src/lib/components/Slide.svelte) | Context provider that collects `maxStep` from child Fragments |
 | [Fragment.svelte](src/lib/components/Fragment.svelte) | Unified component for visibility, positioning, styling, drills, and animations |
+| [FragmentArrow.svelte](src/lib/components/FragmentArrow.svelte) | Animated arrows/lines with wipe animation and step integration |
 
 ### Fixed Canvas System
 All presentations use a **960×540 pixel fixed canvas** (16:9 aspect ratio). The canvas scales to fit the viewport via CSS `transform: scale()`. All layout coordinates are absolute pixel positions within this canvas.
@@ -120,6 +121,70 @@ The `Fragment` component handles all slide content - from simple text to fully-p
   <div class="connector-line" style="left: 200px; top: 300px; width: 100px; height: 4px;"></div>
 </Fragment>
 ```
+
+## FragmentArrow Component
+
+The `FragmentArrow` component draws animated arrows/lines with a "wipe" reveal animation (like PowerPoint). It integrates with the slide fragment system for step-based visibility.
+
+### FragmentArrow Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `step` | `number` | Animation sequence (1-indexed) when arrow becomes visible |
+| `withPrev` | `boolean` | Appear simultaneously with previous step |
+| `path` | `ArrowPathPoints` | Start and end coordinates: `{ start: {x, y}, end: {x, y} }` |
+| `line` | `ArrowLineStyle` | Styling: `{ color?, width? }` |
+| `arrowhead` | `boolean` | Show arrowhead at end (default: true) |
+| `headSize` | `number` | Arrowhead size relative to width (default: 1.5) |
+| `duration` | `number` | Animation duration in seconds (default: 0.5) |
+| `zIndex` | `number` | Stacking order |
+
+### Usage Patterns
+
+**Horizontal arrow (pointing right):**
+```svelte
+<FragmentArrow 
+  step={15}
+  path={{ start: { x: 100, y: 200 }, end: { x: 400, y: 200 } }}
+  line={{ width: 20 }}
+/>
+```
+
+**Vertical arrow (pointing down):**
+```svelte
+<FragmentArrow 
+  step={5}
+  path={{ start: { x: 250, y: 100 }, end: { x: 250, y: 300 } }}
+  line={{ width: 30, color: '#333333' }}
+/>
+```
+
+**Line without arrowhead:**
+```svelte
+<FragmentArrow 
+  step={3}
+  path={{ start: { x: 100, y: 150 }, end: { x: 300, y: 150 } }}
+  line={{ width: 4 }}
+  arrowhead={false}
+/>
+```
+
+**Appearing with previous step:**
+```svelte
+<FragmentArrow 
+  step={10}
+  withPrev
+  path={{ start: { x: 200, y: 250 }, end: { x: 400, y: 250 } }}
+  line={{ width: 20 }}
+/>
+```
+
+### Key Features
+
+- **Direction inference**: Arrow direction is calculated from `path.start` to `path.end`
+- **Wipe animation**: Reveals from start to end using CSS clip-path animation
+- **Drill return handling**: Skips animation when returning from drill (shows fully revealed)
+- **Step registration**: Automatically registers with slide context like Fragment
 
 ## Critical Patterns
 

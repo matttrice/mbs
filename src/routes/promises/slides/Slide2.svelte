@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import FragmentArrow from '$lib/components/FragmentArrow.svelte';
 	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
-	import ArrowPath from '$lib/components/ArrowPath.svelte';
 
 	/**
 	 * Slide 2: Galatians 4:21-31 - Physical vs Spiritual (Hagar/Sarah allegory)
@@ -111,18 +111,16 @@
 	</Fragment>
 
 	<!-- Step 9: Vertical stem from Abraham + Arrow to Hagar -->
-	<Fragment step={9}>
+	<Fragment step={9} animate="none">
 		<!-- Vertical stem centered under Abraham -->
 		<div class="connector-stem" style="left: 450px; top: 154px; width: 20px; height: 41px; z-index: 21;"></div>
-		<ArrowPath 
-			direction="left"
-			x={335.5}
-			y={170}
-			width={122.4}
-			height={32}
-			zIndex={21}
-		/>
 	</Fragment>
+	<FragmentArrow 
+		step={9}
+		path={{ start: { x: 450, y: 186 }, end: { x: 336, y: 186 } }}
+		line={{ width: 16 }}
+		zIndex={21}
+	/>
 
 	<!-- Step 10: Hagar (bold) -->
 	<Fragment
@@ -146,17 +144,15 @@
 	</Fragment>
 
 	<!-- Step 12: Arrow from Abraham to Sarah (right arrow shape) -->
-	<Fragment step={12}>
+	<Fragment step={12} animate="none">
 		<div class="connector-stem" style="left: 485px; top: 154px; width: 20px; height: 41px; z-index: 21;"></div>
-		<ArrowPath 
-			direction="right"
-			x={496.3}
-			y={170}
-			width={130}
-			height={32}
-			zIndex={20}
-		/>
 	</Fragment>
+	<FragmentArrow 
+		step={12}
+		path={{ start: { x: 505, y: 186 }, end: { x: 617, y: 186 } }}
+		line={{ width: 16 }}
+		zIndex={20}
+	/>
 
 	<!-- Step 13: Sarah (bold, blue) -->
 	<Fragment
@@ -180,16 +176,12 @@
 	</Fragment>
 
 	<!-- Step 15: Down arrow (left side) -->
-	<Fragment step={15}>
-		<ArrowPath 
-			direction="down"
-			x={240}
-			y={244.3}
-			width={50.4}
-			height={48}
-			zIndex={23}
-		/>
-	</Fragment>
+	<FragmentArrow 
+		step={15}
+		path={{ start: { x: 265, y: 244 }, end: { x: 265, y: 292 } }}
+		line={{ width: 24 }}
+		zIndex={23}
+	/>
 
 	<!-- Step 16: Mt. Sinai (bold) -->
 	<Fragment
@@ -253,16 +245,12 @@
 	</Fragment>
 
 	<!-- Step 22: Down arrow (right side) -->
-	<Fragment step={22}>
-		<ArrowPath 
-			direction="down"
-			x={660}
-			y={244.3}
-			width={50.4}
-			height={48}
-			zIndex={24}
-		/>
-	</Fragment>
+	<FragmentArrow 
+		step={22}
+		path={{ start: { x: 685, y: 244 }, end: { x: 685, y: 292 } }}
+		line={{ width: 24 }}
+		zIndex={24}
+	/>
 
 	<!-- Step 23: "Jerusalem above is free" (blue, italic) -->
 	<Fragment

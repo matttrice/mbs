@@ -506,11 +506,12 @@ describe('Fragment Component - Animations', () => {
 		expect(div).not.toBeNull();
 	});
 
-	it('does not add animation class when animate is not provided', () => {
+	it('does not add animation class when animate="none"', () => {
 		const { container } = render(Fragment, {
 			props: {
 				step: 1,
 				layout: { x: 0, y: 0, width: 100, height: 40 },
+				animate: 'none',
 				children: mockChildren
 			}
 		});

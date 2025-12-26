@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import FragmentArrow from '$lib/components/FragmentArrow.svelte';
 	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
-	import ArrowPath from '$lib/components/ArrowPath.svelte';
 
 	/**
 	 * Slide 1: The Promises - Pixel-perfect layout from PowerPoint extraction
@@ -50,16 +50,15 @@
 	<!-- Step 2: Rectangle 59 (grey background column) -->
 	<Fragment
 		step={2}
-		layout={{ x: 75.6, y: 48, width: 274.8, height: 464.4 }}
+		layout={{ x: 75.6, y: 50, width: 274.8, height: 462.4 }}
 		fill="var(--color-level1)"
-		zIndex={0}
 	>
 		<span></span>
 	</Fragment>
 
 	<!-- Step 3: Line 62 (horizontal line under title) -->
 	<Fragment step={3} withPrev={true} animate={"fade"}>
-		<div class="horizontal-line" style="left: 74.7px; top: 46.7px; width: 802.3px; height: 2.7px; z-index: 26;"></div>
+		<div class="horizontal-line" style="left: 74.7px; top: 46.7px; width: 811px; height: 2.7px;"></div>
 	</Fragment>
 
 	<!-- Step 4: Great Nation -->
@@ -151,9 +150,8 @@
 	<!-- Step 12: Rectangle 60 (blue background column) -->
 	<Fragment
 		step={12}
-		layout={{ x: 609.9, y: 48, width: 266.1, height: 464.4 }}
+		layout={{ x: 609.9, y: 50, width: 274.8, height: 462.4 }}
 		fill="var(--color-level2)"
-		zIndex={0}
 	>
 		<span></span>
 	</Fragment>
@@ -180,16 +178,12 @@
 	</Fragment>
 
 	<!-- Step 15: Right arrow (Israel to Church) -->
-	<Fragment step={15}>
-		<ArrowPath 
-			direction="right"
-			x={307.2}
-			y={188}
-			width={358.5}
-			height={20}
-			zIndex={34}
-		/>
-	</Fragment>
+	<FragmentArrow 
+		step={15}
+		path={{ start: { x: 307, y: 197 }, end: { x: 666, y: 197 } }}
+		line={{ width: 10 }}
+		zIndex={34}
+	/>
 
 	<!-- Step 16: Church (blue boxed) -->
 	<Fragment
@@ -247,16 +241,12 @@
 	</Fragment>
 
 	<!-- Step 21: Right arrow (Canaan to Heaven) -->
-	<Fragment step={21}>
-		<ArrowPath 
-			direction="right"
-			x={307.2}
-			y={293}
-			width={367.2}
-			height={20}
-			zIndex={35}
-		/>
-	</Fragment>
+	<FragmentArrow 
+		step={21}
+		path={{ start: { x: 307, y: 302 }, end: { x: 674, y: 302 } }}
+		line={{ width: 10 }}
+		zIndex={35}
+	/>
 
 	<!-- Step 22: Heaven (blue boxed) -->
 	<Fragment
