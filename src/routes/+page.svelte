@@ -17,6 +17,20 @@
 
 	<nav class="models">
 		<div class="model-card-wrapper">
+			<a href="/physical-spiritual" class="model-card">
+				<h2>Physical / Spiritual</h2>
+				<p>Understanding the visible and invisible realms</p>
+				<span class="arrow">→</span>
+			</a>
+			<button 
+				class="reset-btn" 
+				onclick={() => startFresh('physical-spiritual', '/physical-spiritual')}
+				title="Reset progress and start fresh"
+			>
+				Reset
+			</button>
+		</div>
+		<div class="model-card-wrapper">
 			<a href="/promises" class="model-card">
 				<h2>The Promises</h2>
 				<p>What did God promise Abraham?</p>
