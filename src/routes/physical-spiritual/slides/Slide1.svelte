@@ -59,58 +59,50 @@
 	<!-- Step 3: "Heavens" + Blue rectangle + Lines + "Earth" + Gray rectangle (all with timing) -->
 	<Fragment
 		step={3}
-		layout={{ x: 239.5, y: 6.9, width: 217.1, height: 40.8 }}
-		font={{ font_size: 40, bold: true, color: '#0000FF' }}
-		zIndex={10}
-	>
-		Heavens
-	</Fragment>
-
-	<!-- Blue column (Heavens) - appears with step 3 -->
-	<Fragment
-		step={3}
 		layout={{ x: 192.7, y: 0, width: 288, height: 540 }}
 		fill="var(--color-level2)"
+        animate='fly-down'
 		zIndex={2}
 	>
 		<span></span>
 	</Fragment>
 
-	<!-- Horizontal line under Heavens/Earth -->
-	<Fragment step={3} zIndex={12}>
-		<div class="horizontal-line" style="left: 192.4px; top: 53.9px; width: 558px; height: 3px;"></div>
-	</Fragment>
-
-	<!-- Vertical line dividing Heavens/Earth -->
-	<Fragment step={3} zIndex={3}>
-		<div class="vertical-line" style="left: 480px; top: 0; width: 3px; height: 540px;"></div>
-	</Fragment>
-
-	<!-- "Earth" text -->
-	<Fragment
-		step={3}
-		layout={{ x: 520.8, y: 7.5, width: 161.1, height: 40.8 }}
-		font={{ font_size: 40, bold: true }}
-		zIndex={11}
-	>
-		Earth
-	</Fragment>
-
-	<!-- Gray column (Earth) -->
 	<Fragment
 		step={3}
 		layout={{ x: 480, y: 0, width: 270, height: 540 }}
 		fill="var(--color-level1)"
+        animate='fly-down'
 		zIndex={0}
 	>
 		<span></span>
+	</Fragment>
+	<Fragment step={3}>
+		<div class="horizontal-line" style="left: 192.4px; top: 53.9px; width: 558px; height: 3px; z-index: 12;"></div>
+		<div class="vertical-line" style="left: 480px; top: 0; width: 3px; height: 540px; z-index: 3;"></div>
+    </Fragment>
+	<Fragment
+		step={3.25}
+		layout={{ x: 239.5, y: 6.9, width: 217.1, height: 40.8 }}
+		font={{ font_size: 50, bold: true, color: 'var(--color-level3)' }}
+		zIndex={10}
+	>
+		Heavens
+	</Fragment>
+
+	<Fragment
+		step={3.25}
+		layout={{ x: 520.8, y: 7.5, width: 161.1, height: 40.8 }}
+		font={{ font_size: 50, bold: true }}
+		zIndex={11}
+	>
+		Earth
 	</Fragment>
 
 	<!-- Step 4: Colossians 1:15-16 (hyperlink) + "All things..." -->
 	<Fragment
 		step={4}
 		drillTo="physical-spiritual/colossians-1-15"
-		layout={{ x: 693.8, y: 63.3, width: 247.2, height: 36.1 }}
+		layout={{ x: 693.8, y: 60.3, width: 247.2, height: 36.1 }}
 		font={{ font_size: 23.3, bold: true, alignment: 'left' }}
 		fill="var(--color-level1)"
 		zIndex={62}
@@ -120,7 +112,7 @@
 
 	<Fragment
 		step={4}
-		layout={{ x: 773.8, y: 42.5, width: 137.8, height: 25.4 }}
+		layout={{ x: 773.8, y: 38.5, width: 137.8, height: 25.4 }}
 		font={{ font_size: 20, italic: true }}
 		zIndex={74}
 	>
@@ -141,7 +133,7 @@
 	<Fragment
 		step={6}
 		layout={{ x: 240.4, y: 55, width: 210, height: 36.1 }}
-		font={{ font_size: 40, color: '#0000FF' }}
+		font={{ font_size: 40, color: 'var(--color-level3)' }}
 		zIndex={14}
 	>
 		Invisible
@@ -183,7 +175,7 @@
 	<Fragment
 		step={10}
 		layout={{ x: 264.9, y: 93.6, width: 161.1, height: 35.9 }}
-		font={{ font_size: 40, color: '#0000FF' }}
+		font={{ font_size: 40, color: 'var(--color-level3)' }}
 		zIndex={16}
 	>
 		Unseen
@@ -193,7 +185,7 @@
 	<Fragment
 		step={11}
 		layout={{ x: 265.8, y: 131.4, width: 159.3, height: 38.6 }}
-		font={{ font_size: 40, color: '#0000FF' }}
+		font={{ font_size: 40, color: 'var(--color-level3)' }}
 		zIndex={18}
 	>
 		Eternal
@@ -205,7 +197,7 @@
 		drillTo="physical-spiritual/hebrews-11-1"
 		layout={{ x: 695.6, y: 134.2, width: 245.1, height: 35.1 }}
 		font={{ font_size: 23.3, bold: true, alignment: 'left' }}
-		fill="var(--color-level2)"
+		fill="var(--color-level1)"
 		zIndex={22}
 	>
 		Hebrews 11:1
@@ -213,7 +205,7 @@
 
 	<Fragment
 		step={12}
-		layout={{ x: 769.7, y: 172.9, width: 129.3, height: 25.4 }}
+		layout={{ x: 769.7, y: 168, width: 129.3, height: 25.4 }}
 		font={{ font_size: 20, italic: true }}
 		zIndex={73}
 	>
@@ -251,9 +243,18 @@
 		<span class="wrap-text">Is it safe to put<br />a paper clip in a<br />light socket?</span>
 	</Fragment>
 
+    <Fragment
+		step={16}
+		layout={{ x: 766, y: 240, width: 130.2, height: 60.4 }}
+		font={{ font_size: 15, alignment: 'left' }}
+		zIndex={21}
+	>
+		<span class="wrap-text">No, why?</span>
+	</Fragment>
+
 	<!-- Step 16: "Fan spins" -->
 	<Fragment
-		step={16}
+		step={16.1}
 		layout={{ x: 530.6, y: 263.9, width: 153.9, height: 31.3 }}
 		font={{ font_size: 25 }}
 		zIndex={24}
@@ -273,7 +274,7 @@
 	<Fragment
 		step={17}
 		layout={{ x: 228.8, y: 260, width: 235.9, height: 31.3 }}
-		font={{ font_size: 25, color: '#0000FF' }}
+		font={{ font_size: 25, color: 'var(--color-level3)' }}
 		zIndex={27}
 	>
 		Force of Electricity
@@ -301,7 +302,7 @@
 	<Fragment
 		step={19}
 		layout={{ x: 255.8, y: 234.8, width: 182, height: 31.3 }}
-		font={{ font_size: 25, color: '#0000FF' }}
+		font={{ font_size: 25, color: 'var(--color-level3)' }}
 		zIndex={26}
 	>
 		Force of Wind
@@ -329,25 +330,33 @@
 	<Fragment
 		step={21}
 		layout={{ x: 246.8, y: 206.1, width: 199.8, height: 31.3 }}
-		font={{ font_size: 25, color: '#0000FF' }}
+		font={{ font_size: 25, color: 'var(--color-level3)' }}
 		zIndex={28}
 	>
 		Force of Gravity
 	</Fragment>
 
-	<!-- Step 22: "Causes" + Causes box -->
-	<Fragment
+    <FragmentArrow 
 		step={22}
-		layout={{ x: 287.2, y: 177, width: 136.8, height: 36.1 }}
-		font={{ font_size: 35, bold: true, color: '#0000FF' }}
-		zIndex={30}
-	>
-		Causes
-	</Fragment>
+		path={{ start: { x: 170, y: 252 }, end: { x: 235, y: 228 } }}
+		line={{ width: 7 }}
+        headSize={2}
+		zIndex={32}
+	/>
 
 	<Fragment
 		step={22}
-		layout={{ x: 199.3, y: 178, width: 280, height: 118.9 }}
+		layout={{ x: 71.3, y: 245.6, width: 96.8, height: 45.8 }}
+		font={{ font_size: 21.7, bold: true }}
+		zIndex={31}
+	>
+		<span class="wrap-text">Forms of<br />what?</span>
+	</Fragment>
+	
+    <!-- "Causes" + Causes box -->
+    <Fragment
+		step={22}
+		layout={{ x: 206, y: 178, width: 275, height: 118.9 }}
 		fill="var(--color-bg-light)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={6}
@@ -355,9 +364,17 @@
 		<span></span>
 	</Fragment>
 
-	<!-- Step 23: "Effects" + Effects box -->
 	<Fragment
 		step={23}
+		layout={{ x: 287.2, y: 177, width: 136.8, height: 36.1 }}
+		font={{ font_size: 35, bold: true, color: 'var(--color-level3)' }}
+		zIndex={30}
+	>
+		Causes
+	</Fragment>
+
+	<Fragment
+		step={24}
 		layout={{ x: 535.3, y: 177, width: 144.5, height: 36.1 }}
 		font={{ font_size: 35, bold: true }}
 		zIndex={29}
@@ -366,8 +383,8 @@
 	</Fragment>
 
 	<Fragment
-		step={23}
-		layout={{ x: 478.3, y: 178, width: 261.4, height: 118.9 }}
+		step={24}
+		layout={{ x: 482, y: 178, width: 250, height: 118.9 }}
 		fill="var(--color-bg-light)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={5}
@@ -376,9 +393,13 @@
 	</Fragment>
 
 	<!-- Step 24: Diagonal line + "What is effected?" -->
-	<Fragment step={24} zIndex={34}>
-		<div class="connector-line angled-down" style="left: 725px; top: 251.2px; width: 70.8px; height: 40.7px;"></div>
-	</Fragment>
+	<FragmentArrow 
+		step={24}
+		path={{ start: { x: 796, y: 292 }, end: { x: 725, y: 251 } }}
+		line={{ width: 7 }}
+		headSize={2}
+		zIndex={34}
+	/>
 
 	<Fragment
 		step={24}
@@ -408,25 +429,11 @@
 		<span></span>
 	</Fragment>
 
-	<!-- Step 26: Diagonal line + "Forms of what?" -->
-	<Fragment step={26} zIndex={32}>
-		<div class="connector-line angled-down" style="left: 153.3px; top: 252px; width: 67.2px; height: 25.3px;"></div>
-	</Fragment>
-
-	<Fragment
-		step={26}
-		layout={{ x: 71.3, y: 245.6, width: 96.8, height: 45.8 }}
-		font={{ font_size: 21.7, bold: true }}
-		zIndex={31}
-	>
-		<span class="wrap-text">Forms of<br />what?</span>
-	</Fragment>
-
 	<!-- Step 27: "Energy" + white box -->
 	<Fragment
 		step={27}
 		layout={{ x: 252.5, y: 294.4, width: 177.3, height: 53.9 }}
-		font={{ font_size: 44.2, bold: true, color: '#0000FF' }}
+		font={{ font_size: 44.2, bold: true, color: 'var(--color-level3)' }}
 		zIndex={65}
 	>
 		Energy
@@ -445,7 +452,7 @@
 	<Fragment
 		step={28}
 		layout={{ x: 10.9, y: 299.4, width: 184.8, height: 86.9 }}
-		font={{ font_size: 11.7, bold: true, color: '#000000', alignment: 'left' }}
+		font={{ font_size: 11, color: '#000000', alignment: 'left' }}
 		zIndex={39}
 	>
 		<span class="wrap-text"><strong>First Law of Thermodynamics</strong><br />States the total energy of an isolated system is constant; energy can be transformed from one form to another but can be neither created nor destroyed.</span>
@@ -478,7 +485,7 @@
 	<Fragment
 		step={31}
 		layout={{ x: 434.9, y: 341.6, width: 41.9, height: 45.6 }}
-		font={{ font_size: 50, color: '#0000FF' }}
+		font={{ font_size: 50, color: 'var(--color-level3)' }}
 		zIndex={68}
 	>
 		E
@@ -535,15 +542,19 @@
 		<span class="wrap-text">What gives matter stability?</span>
 	</Fragment>
 
-	<Fragment step={34} zIndex={38}>
-		<div class="connector-line angled-down" style="left: 583.1px; top: 361px; width: 170.7px; height: 18.3px;"></div>
-	</Fragment>
+	<FragmentArrow 
+		step={34}
+		path={{ start: { x: 754, y: 379 }, end: { x: 583, y: 361 } }}
+		line={{ width: 7 }}
+		headSize={2}
+		zIndex={38}
+	/>
 
 	<!-- Step 35: "c²" -->
 	<Fragment
 		step={35}
 		layout={{ x: 525.6, y: 338.4, width: 63, height: 45.6 }}
-		font={{ font_size: 50, color: '#0000FF' }}
+		font={{ font_size: 50, color: 'var(--color-level3)' }}
 		zIndex={71}
 	>
 		c²
@@ -559,16 +570,20 @@
 		Creation Equation
 	</Fragment>
 
-	<Fragment step={36} zIndex={72}>
-		<div class="connector-line angled-down" style="left: 168.5px; top: 373.3px; width: 65.1px; height: 74.1px;"></div>
-	</Fragment>
+	<FragmentArrow 
+		step={36}
+		path={{ start: { x: 169, y: 447 }, end: { x: 234, y: 373 } }}
+		line={{ width: 7 }}
+		headSize={2}
+		zIndex={72}
+	/>
 
 	<!-- Step 37: 1 Corinthians 15:40-45 (hyperlink) -->
 	<Fragment
 		step={37}
 		drillTo="physical-spiritual/1corinthians-15-40"
 		layout={{ x: 33.3, y: 470.4, width: 140, height: 53.9 }}
-		font={{ font_size: 20, bold: true, color: '#0000FF' }}
+		font={{ font_size: 20, bold: true, color: 'var(--color-level3)' }}
 		fill="#FFFFFF"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={40}
@@ -640,7 +655,7 @@
 	<Fragment
 		step={39}
 		layout={{ x: 266.4, y: 420, width: 132.2, height: 26.4 }}
-		font={{ font_size: 21.7, bold: true, color: '#0000FF' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--color-level3)' }}
 		zIndex={50}
 	>
 		imperishable
@@ -650,7 +665,7 @@
 	<Fragment
 		step={39.1}
 		layout={{ x: 301.4, y: 441.9, width: 62.6, height: 26.4 }}
-		font={{ font_size: 21.7, bold: true, color: '#0000FF' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--color-level3)' }}
 		zIndex={52}
 	>
 		glory
@@ -660,7 +675,7 @@
 	<Fragment
 		step={39.2}
 		layout={{ x: 296.7, y: 463.8, width: 71.9, height: 26.4 }}
-		font={{ font_size: 21.7, bold: true, color: '#0000FF' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--color-level3)' }}
 		zIndex={54}
 	>
 		power
@@ -670,7 +685,7 @@
 	<Fragment
 		step={39.3}
 		layout={{ x: 263, y: 485.6, width: 139.3, height: 26.4 }}
-		font={{ font_size: 21.7, bold: true, color: '#0000FF' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--color-level3)' }}
 		zIndex={56}
 	>
 		spiritual body
@@ -680,7 +695,7 @@
 	<Fragment
 		step={39.4}
 		layout={{ x: 242, y: 507.5, width: 107.2, height: 26.4 }}
-		font={{ font_size: 21.7, bold: true, color: '#0000FF' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--color-level3)' }}
 		zIndex={58}
 	>
 		2nd Adam
@@ -690,7 +705,7 @@
 	<Fragment
 		step={39.5}
 		layout={{ x: 353.9, y: 507.5, width: 94.8, height: 26.4 }}
-		font={{ font_size: 21.7, bold: true, color: '#0000FF' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--color-level3)' }}
 		zIndex={60}
 	>
 		- Heaven
@@ -700,8 +715,7 @@
 	<Fragment
 		step={40}
 		layout={{ x: 235, y: 386.3, width: 218, height: 35.9 }}
-		font={{ font_size: 39.2, bold: true, color: '#0000FF' }}
-		line={{ color: '#000000', width: 1 }}
+		font={{ font_size: 39.2, bold: true, color: 'var(--color-level3)' }}
 		zIndex={41}
 	>
 		SPIRITUAL
@@ -750,14 +764,4 @@
 		background-color: #000000;
 	}
 
-	.connector-line.angled-down {
-		position: absolute;
-		background: linear-gradient(
-			to bottom right,
-			transparent calc(50% - 2px),
-			#0000FF calc(50% - 2px),
-			#0000FF calc(50% + 2px),
-			transparent calc(50% + 2px)
-		);
-	}
 </style>

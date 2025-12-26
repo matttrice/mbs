@@ -50,7 +50,7 @@
 	<!-- "ETERNAL" label (right side) -->
 	<Fragment
 		layout={{ x: 760.8, y: 205.7, width: 128.9, height: 27.2 }}
-		font={{ font_size: 26.7, bold: true, color: '#0000FF', alignment: 'center' }}
+		font={{ font_size: 26.7, bold: true, color: 'var(--color-level3)', alignment: 'center' }}
 		zIndex={7}
 	>
 		ETERNAL
@@ -97,7 +97,7 @@
 	<!-- "Eternity" labels (left and right) -->
 	<Fragment
 		layout={{ x: 59.3, y: 302.4, width: 142.1, height: 48.3 }}
-		font={{ font_size: 33.3, bold: true, color: '#0000FF' }}
+		font={{ font_size: 33.3, bold: true, color: 'var(--color-level3)' }}
 		zIndex={24}
 	>
 		Eternity
@@ -105,7 +105,7 @@
 
 	<Fragment
 		layout={{ x: 738.9, y: 302.4, width: 142.2, height: 48.3 }}
-		font={{ font_size: 33.3, bold: true, color: '#0000FF' }}
+		font={{ font_size: 33.3, bold: true, color: 'var(--color-level3)' }}
 		zIndex={25}
 	>
 		Eternity
@@ -126,7 +126,7 @@
 	<Fragment
 		step={1}
 		layout={{ x: 223.1, y: 7, width: 230.6, height: 52.4 }}
-		font={{ font_size: 36.7, bold: true, color: '#0000FF', alignment: 'center' }}
+		font={{ font_size: 36.7, bold: true, color: 'var(--color-level3)', alignment: 'center' }}
 		zIndex={9}
 	>
 		SPIRITUAL
@@ -165,7 +165,7 @@
 	<Fragment
 		step={3}
 		layout={{ x: 462.5, y: 45, width: 221.9, height: 88.3 }}
-		font={{ font_size: 33.3, color: '#0000FF' }}
+		font={{ font_size: 33.3, color: 'var(--color-level3)' }}
 		zIndex={27}
 	>
 		<span class="wrap-text">Eternal<br />Unseen</span>
@@ -235,7 +235,7 @@
 	<Fragment
 		step={8}
 		layout={{ x: 514.1, y: 316.5, width: 157.4, height: 118 }}
-		font={{ font_size: 26.7, bold: true, color: '#0000FF', alignment: 'center' }}
+		font={{ font_size: 26.7, bold: true, color: 'var(--color-level3)', alignment: 'center' }}
 		zIndex={23}
 	>
 		<span class="wrap-text">Imperishable<br />Powerful<br />Glorified</span>
@@ -254,7 +254,7 @@
 	<Fragment
 		step={9}
 		layout={{ x: 261.8, y: 174.8, width: 130.8, height: 29.2 }}
-		font={{ font_size: 26.7, bold: true, italic: true, color: '#0000FF', alignment: 'center' }}
+		font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--color-level3)', alignment: 'center' }}
 		zIndex={15}
 	>
 		Glory #1
@@ -264,7 +264,7 @@
 	<Fragment
 		step={10}
 		layout={{ x: 527.6, y: 180.4, width: 130.6, height: 29.2 }}
-		font={{ font_size: 26.7, bold: true, italic: true, color: '#0000FF', alignment: 'center' }}
+		font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--color-level3)', alignment: 'center' }}
 		zIndex={11}
 	>
 		Glory #2
@@ -274,7 +274,7 @@
 	<Fragment
 		step={11}
 		layout={{ x: 745.8, y: 128.6, width: 130.6, height: 29.2 }}
-		font={{ font_size: 26.7, bold: true, italic: true, color: '#0000FF', alignment: 'center' }}
+		font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--color-level3)', alignment: 'center' }}
 		zIndex={4}
 	>
 		Glory #3
@@ -283,7 +283,7 @@
 	<Fragment
 		step={11}
 		layout={{ x: 730.8, y: 150, width: 177.8, height: 55.4 }}
-		font={{ font_size: 39.2, bold: true, color: '#0000FF', alignment: 'center' }}
+		font={{ font_size: 39.2, bold: true, color: 'var(--color-level3)', alignment: 'center' }}
 		zIndex={14}
 	>
 		HEAVEN
