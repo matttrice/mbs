@@ -31,7 +31,7 @@
 	<!-- Scaled: x: 126.75, y: 120.1, width: 733.3, height: 299.9 -->
 	<Fragment
 		layout={{ x: 127, y: 120, width: 733, height: 300 }}
-		font={{ font_size: 23.3, align: 'left' }}
+		font={{ font_size: 23.3, align: 'left', wrap: true }}
 		fill="var(--color-bg-light)"
 		zIndex={1}
 	>

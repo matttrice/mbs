@@ -39,7 +39,7 @@
 	<!-- Step 1: "In the beginning God created the HEAVENS and the EARTH..." -->
 	<Fragment
 		step={1}
-		layout={{ x: 20.3, y: 24.6, width: 166.1, height: 70 }}
+		layout={{ x: 20.3, y: 29, width: 166.1, height: 70 }}
 		font={{ font_size: 15, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={48}
 	>

@@ -232,7 +232,7 @@
 	<!-- Step 12: "What if you begin inductively?" -->
 	<Fragment
 		step={12}
-		layout={{ x: 311.6, y: 80.8, width: 234.7, height: 26.2 }}
+		layout={{ x: 311.6, y: 70, width: 234.7, height: 26.2 }}
 		font={{ font_size: 16.7 }}
 		zIndex={0}
 	>
@@ -631,28 +631,19 @@
 		<img src="/images/arc1.png" alt="" style="width: 100%; height: 100%;" />
 	</Fragment>
 
-	<!-- Step 35: "Is it possible to think like God?" + 1Corinthians reference -->
 	<Fragment
 		step={35}
-		layout={{ x: 267.8, y: 83.4, width: 314.4, height: 59.9 }}
-		font={{ font_size: 21.7 }}
-		fill="var(--color-level2)"
-		line={{ width: 1.1 }}
-		zIndex={65}
-	>
-		<span style="display: flex; align-items: center; justify-content: center; height: 100%; text-align: center; color: white;">
-			Is it possible to think like God?
-		</span>
-	</Fragment>
-
-	<Fragment
-		step={35}
-		drillTo="reasoning/1corinthians-2-11"
-		layout={{ x: 305.3, y: 115.6, width: 219.9, height: 24.1 }}
-		font={{ font_size: 18.7, bold: true, color: '#E8E8E8' }}
+		layout={{ x: 305.3, y: 85, width: 250, height: 60 }}
+		font={{ font_size: 18.7, bold: true, color: 'var(--color-level3)', align: 'center' }}
 		zIndex={66}
 	>
-		1Corinthians 2:11-16
+		<button 
+			onclick={() => import('$lib/stores/navigation').then(m => m.navigation.goToSlide(3))}
+			style="background: none; border: none; cursor: pointer; color: inherit; font: inherit; width: 100%; height: 100%;"
+		>
+			Is it possible to think like God? <br/>
+			1 Corinthians 2:11-16
+		</button>
 	</Fragment>
 </Slide>
 

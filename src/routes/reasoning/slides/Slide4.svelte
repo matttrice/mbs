@@ -30,7 +30,7 @@
 	<!-- Original: x: 116.2, y: 16.3, font_size: 70.7 -->
 	<Fragment
 		layout={{ x: 73, y: 10, width: 470, height: 50 }}
-		font={{ font_size: 44.2, bold: true }}
+		font={{ font_size: 30, align: 'left', bold: true }}
 		zIndex={1}
 	>
 		1 Corinthians 2:9-16:
@@ -40,7 +40,7 @@
 	<!-- Original: x: 143.8, y: 77.7, width: 1273.5, height: 762.3, font_size: 38.7 -->
 	<Fragment
 		layout={{ x: 90, y: 49, width: 796, height: 476 }}
-		font={{ font_size: 24.2, align: 'left' }}
+		font={{ font_size: 20, align: 'left', wrap: true }}
 		zIndex={0}
 	>
 		<div class="scripture-text">
@@ -55,7 +55,7 @@
 	<Fragment
 		step={1}
 		layout={{ x: 90, y: 49, width: 796, height: 476 }}
-		font={{ font_size: 24.2, align: 'left' }}
+		font={{ font_size: 20, align: 'left', wrap: true }}
 		fill="var(--color-bg-ghost)"
 		zIndex={2}
 	>
@@ -67,7 +67,7 @@
 	<Fragment
 		step={2}
 		layout={{ x: 90, y: 49, width: 796, height: 476 }}
-		font={{ font_size: 24.2, align: 'left' }}
+		font={{ font_size: 20, align: 'left', wrap: true }}
 		fill="var(--color-bg-ghost)"
 		zIndex={3}
 	>
@@ -79,7 +79,7 @@
 	<Fragment
 		step={3}
 		layout={{ x: 90, y: 49, width: 796, height: 476 }}
-		font={{ font_size: 24.2, align: 'left' }}
+		font={{ font_size: 20, align: 'left', wrap: true }}
 		fill="var(--color-bg-ghost)"
 		zIndex={4}
 	>
@@ -102,6 +102,5 @@
 
 	.scripture-text .emphasis {
 		color: #0000CC;
-		font-size: 1.1em;
 	}
 </style>
