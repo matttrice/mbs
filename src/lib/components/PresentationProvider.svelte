@@ -6,8 +6,12 @@
 	export interface PresentationContext {
 		/** Register a slide's maxStep. Called by Slide components. */
 		registerSlide: (slideIndex: number, maxStep: number) => void;
+		/** Register a slide's original step lookup function. Called by Slide components. */
+		registerOriginalStepLookup: (slideIndex: number, lookup: (normalizedStep: number) => number) => void;
 		/** Get the current slide index for visibility control */
 		currentSlide: import('svelte/store').Readable<number>;
+		/** Get the original author step for the current fragment on the current slide */
+		getOriginalStep: (slideIndex: number, normalizedStep: number) => number;
 	}
 
 	export function getPresentationContext(): PresentationContext | undefined {
@@ -41,15 +45,19 @@
 		name: string;
 		/** Number of slides in the presentation */
 		slideCount: number;
+		/** Bindable: function to get original author step from normalized step */
+		getOriginalStep?: (slideIndex: number, normalizedStep: number) => number;
 		children: import('svelte').Snippet;
 	}
 
-	let { name, slideCount, children }: Props = $props();
+	let { name, slideCount, getOriginalStep: getOriginalStepBind = $bindable(), children }: Props = $props();
 
 	// Track maxSteps for each slide
 	let slideMaxSteps = $state<number[]>(Array(slideCount).fill(0));
 	// Track which slides have registered (separate from maxStep value)
 	let slideRegistered = $state<boolean[]>(Array(slideCount).fill(false));
+	// Track original step lookup functions for each slide
+	let originalStepLookups = $state<Map<number, (normalizedStep: number) => number>>(new Map());
 	let initialized = $state(false);
 
 	function registerSlide(slideIndex: number, maxStep: number) {
@@ -60,6 +68,17 @@
 		} else {
 			console.warn(`[PresentationProvider] Invalid slide index: ${slideIndex}. Expected 0-${slideCount - 1}`);
 		}
+	}
+
+	function registerOriginalStepLookup(slideIndex: number, lookup: (normalizedStep: number) => number) {
+		originalStepLookups.set(slideIndex, lookup);
+		// Update the bindable prop so parent can use this function
+		getOriginalStepBind = getOriginalStep;
+	}
+
+	function getOriginalStep(slideIndex: number, normalizedStep: number): number {
+		const lookup = originalStepLookups.get(slideIndex);
+		return lookup ? lookup(normalizedStep) : normalizedStep;
 	}
 
 	function checkAndInit() {
@@ -73,7 +92,9 @@
 	// Set up context for child Slide components
 	setContext<PresentationContext>(PRESENTATION_CONTEXT_KEY, {
 		registerSlide,
-		currentSlide
+		registerOriginalStepLookup,
+		currentSlide,
+		getOriginalStep
 	});
 
 	// Validate all slides registered properly

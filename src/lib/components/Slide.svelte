@@ -13,6 +13,12 @@
 		 * Preserves decimal part for animation delay (19.1 → 3.1 if 19 normalizes to 3).
 		 */
 		getNormalizedStep: (authorStep: number) => number;
+		/**
+		 * Get the original author step number for a normalized step.
+		 * Reverse lookup: normalized 3 → original 19 (if steps were [1, 5, 19]).
+		 * Returns the normalized step if no mapping exists.
+		 */
+		getOriginalStep: (normalizedStep: number) => number;
 		/** The 0-based slide index, or undefined for standalone drill slides */
 		slideIndex: number | undefined;
 	}
@@ -88,14 +94,19 @@
 	// Map author steps to normalized consecutive integers
 	// Rebuilds automatically when registeredSteps changes
 	let stepMap = $state(new Map<number, number>());
+	let reverseStepMap = $state(new Map<number, number>());
 
 	function rebuildStepMap() {
 		const sortedSteps = [...registeredSteps].sort((a, b) => a - b);
 		const newMap = new Map<number, number>();
+		const newReverseMap = new Map<number, number>();
 		sortedSteps.forEach((step, index) => {
-			newMap.set(step, index + 1); // 1-indexed normalized steps
+			const normalized = index + 1; // 1-indexed normalized steps
+			newMap.set(step, normalized);
+			newReverseMap.set(normalized, step);
 		});
 		stepMap = newMap;
+		reverseStepMap = newReverseMap;
 		// maxStep is now simply the count of unique steps
 		maxStep.set(sortedSteps.length);
 	}
@@ -119,11 +130,20 @@
 		return normalizedInt + decimalPart;
 	}
 
+	/**
+	 * Get the original author step for a normalized step.
+	 * Reverse lookup: normalized 3 → original 19 (if steps were [1, 5, 19]).
+	 */
+	function getOriginalStep(normalizedStep: number): number {
+		return reverseStepMap.get(normalizedStep) ?? normalizedStep;
+	}
+
 	// Set up context for child Fragment components
 	setContext<SlideContext>(SLIDE_CONTEXT_KEY, {
 		registerStep,
 		maxStep,
 		getNormalizedStep,
+		getOriginalStep,
 		slideIndex
 	});
 
@@ -135,6 +155,8 @@
 			// Inside PresentationProvider: register immediately with current maxStep
 			// This ensures slides with no animated fragments still register
 			presentationContext.registerSlide(slideIndex, $maxStep);
+			// Also register the original step lookup function
+			presentationContext.registerOriginalStepLookup(slideIndex, getOriginalStep);
 		}
 	});
 

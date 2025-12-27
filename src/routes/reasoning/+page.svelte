@@ -8,14 +8,24 @@
 	import Slide3 from './slides/Slide3.svelte';
 	import Slide4 from './slides/Slide4.svelte';
 	import Slide5 from './slides/Slide5.svelte';
+
+	// Get original step lookup function from PresentationProvider
+	let getOriginalStep: ((slideIndex: number, normalizedStep: number) => number) | undefined = $state();
+	
+	// Derive the original step for display
+	let originalStep = $derived(
+		getOriginalStep && $currentFragment > 0
+			? getOriginalStep($currentSlide, $currentFragment)
+			: $currentFragment
+	);
 </script>
 
-<PresentationProvider name="reasoning" slideCount={5}>
+<PresentationProvider name="reasoning" slideCount={5} bind:getOriginalStep>
 	<div class="presentation">
 		<!-- Debug overlay -->
 		<div class="debug">
 			Slide: {$currentSlide + 1}/{$maxSlide + 1} | 
-			Fragment: {$currentFragment}/{$maxFragment} | 
+			Fragment: {$currentFragment}/{$maxFragment} (step={originalStep}) | 
 			Stack: {$stackDepth}
 		</div>
 

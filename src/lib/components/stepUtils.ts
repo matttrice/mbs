@@ -101,6 +101,19 @@ export function getNormalizedStep(step: number | undefined, context: SlideContex
 	return context.getNormalizedStep(step);
 }
 
+/**
+ * Get the original author step from context for a normalized step.
+ * If context is unavailable, returns the normalized step unchanged.
+ * 
+ * @param normalizedStep - The normalized step number
+ * @param context - The slide context from getSlideContext()
+ * @returns Original author step (e.g., 3 → 19 if original steps were [1, 5, 19])
+ */
+export function getOriginalStep(normalizedStep: number, context: SlideContext | undefined): number {
+	if (!context) return normalizedStep;
+	return context.getOriginalStep(normalizedStep);
+}
+
 // ========== Animation Utilities ==========
 
 /**
