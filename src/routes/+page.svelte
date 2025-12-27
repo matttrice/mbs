@@ -19,7 +19,7 @@
 	<nav class="lessons">
 		<a href="/reasoning" class="lesson-card">
 			<div class="lesson-content">
-				<h2>Methods of Reason</h2>
+				<h2>1. Methods of Reason</h2>
 				<p>Inductive vs. Deductive thinking in Scripture</p>
 			</div>
 			<div class="lesson-actions">
@@ -35,7 +35,7 @@
 		</a>
 		<a href="/physical-spiritual" class="lesson-card">
 			<div class="lesson-content">
-				<h2>Physical / Spiritual</h2>
+				<h2>2. Physical / Spiritual</h2>
 				<p>Understanding the visible and invisible realms</p>
 			</div>
 			<div class="lesson-actions">
@@ -49,9 +49,25 @@
 				<span class="arrow">→</span>
 			</div>
 		</a>
+		<a href="/biblical-time" class="lesson-card">
+			<div class="lesson-content">
+				<h2>3. Biblical Time</h2>
+				<p>Understanding the timeline from eternity to eternity</p>
+			</div>
+			<div class="lesson-actions">
+				<button 
+					class="reset-btn" 
+					onclick={(e) => startFresh(e, 'biblical-time', '/biblical-time')}
+					title="Reset progress and start fresh"
+				>
+					Reset
+				</button>
+				<span class="arrow">→</span>
+			</div>
+		</a>
 		<a href="/promises" class="lesson-card">
 			<div class="lesson-content">
-				<h2>The Promises</h2>
+				<h2>9. The Promises</h2>
 				<p>What did God promise Abraham?</p>
 			</div>
 			<div class="lesson-actions">
