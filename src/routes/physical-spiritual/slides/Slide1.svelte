@@ -40,20 +40,20 @@
 	<Fragment
 		step={1}
 		layout={{ x: 20.3, y: 24.6, width: 166.1, height: 70 }}
-		font={{ font_size: 15, alignment: 'left' }}
+		font={{ font_size: 15, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={48}
 	>
-		<span class="wrap-text">In the beginning God<br />created the HEAVENS<br />and the EARTH...</span>
+		In the beginning God<br />created the HEAVENS<br />and the EARTH...
 	</Fragment>
 
 	<!-- Step 2: "Internal Interpretation" -->
 	<Fragment
 		step={2}
 		layout={{ x: 40, y: 95.4, width: 126.7, height: 50.8 }}
-		font={{ font_size: 17.5, color: '#000000' }}
+		font={{ font_size: 17.5, wrap: true }}
 		zIndex={45}
 	>
-		<span class="wrap-text">Internal<br />Interpretation</span>
+		Internal<br />Interpretation
 	</Fragment>
 
 	<!-- Step 3: "Heavens" + Blue rectangle + Lines + "Earth" + Gray rectangle (all with timing) -->
@@ -96,7 +96,7 @@
 		step={4}
 		drillTo="physical-spiritual/colossians-1-15"
 		layout={{ x: 693.8, y: 60.3, width: 247.2, height: 36.1 }}
-		font={{ font_size: 23.3, bold: true, alignment: 'left' }}
+		font={{ font_size: 23.3, bold: true, align: 'left' }}
 		fill="var(--color-level1)"
 		zIndex={62}
 	>
@@ -137,7 +137,7 @@
 		step={7}
 		drillTo="physical-spiritual/2corinthians-4-17"
 		layout={{ x: 693.8, y: 96.4, width: 247.2, height: 40.6 }}
-		font={{ font_size: 23.3, bold: true, alignment: 'left' }}
+		font={{ font_size: 23.3, bold: true, align: 'left' }}
 		fill="var(--color-level1)"
 		zIndex={63}
 	>
@@ -189,7 +189,7 @@
 		step={12}
 		drillTo="physical-spiritual/hebrews-11-1"
 		layout={{ x: 695.6, y: 134.2, width: 245.1, height: 35.1 }}
-		font={{ font_size: 23.3, bold: true, alignment: 'left' }}
+		font={{ font_size: 23.3, bold: true, align: 'left' }}
 		fill="var(--color-level1)"
 		zIndex={22}
 	>
@@ -210,44 +210,41 @@
 		step={13}
 		drillTo="physical-spiritual/romans-1-20"
 		layout={{ x: 33.3, y: 154.3, width: 140, height: 30.8 }}
-		font={{ font_size: 20, bold: true, alignment: 'left' }}
+		font={{ font_size: 20, bold: true, align: 'left' }}
 		zIndex={47}
 	>
 		Romans 1:20
 	</Fragment>
 
-	<!-- Step 14: "What evidence for invisible qualities—clearly seen?" -->
 	<Fragment
 		step={14}
 		layout={{ x: 31.1, y: 179.2, width: 154.4, height: 58.9 }}
-		font={{ font_size: 17.5, alignment: 'left' }}
+		font={{ font_size: 17.5, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={20}
 	>
-		<span class="wrap-text">What evidence for<br />invisible qualities—clearly seen?</span>
+		What evidence for invisible qualities are <strong>clearly seen</strong>?
 	</Fragment>
 
-	<!-- Step 15: "Is it safe to put a paper clip in a light socket?" -->
 	<Fragment
 		step={15}
 		layout={{ x: 766, y: 201.8, width: 130.2, height: 60.4 }}
-		font={{ font_size: 15, alignment: 'left' }}
+		font={{ font_size: 15, align: 'center', v_align: 'top', wrap: true }}
 		zIndex={21}
 	>
-		<span class="wrap-text">Is it safe to put<br />a paper clip in a<br />light socket?</span>
+		Is it safe to put paper clip in a light socket?
 	</Fragment>
 
     <Fragment
-		step={16}
-		layout={{ x: 766, y: 240, width: 130.2, height: 60.4 }}
-		font={{ font_size: 15, alignment: 'left' }}
+		step={15}
+		layout={{ x: 766, y: 260, width: 130.2, height: 60.4 }}
+		font={{ font_size: 15, align: 'center', v_align: 'top', wrap: true, bold: true }}
 		zIndex={21}
 	>
-		<span class="wrap-text">No, why?</span>
+		No. Why?
 	</Fragment>
 
-	<!-- Step 16: "Fan spins" -->
 	<Fragment
-		step={16.1}
+		step={16}
 		layout={{ x: 530.6, y: 263.9, width: 153.9, height: 31.3 }}
 		font={{ font_size: 25 }}
 		zIndex={24}
@@ -255,13 +252,12 @@
 		Fan spins
 	</Fragment>
 
-	<!-- Step 17: Line from Fan spins + "Force of Electricity" -->
-	<Fragment step={17} animate="draw">
+	<Fragment step={16} animate="draw">
 		<Line from={{ x: 547, y: 285 }} to={{ x: 453, y: 285 }} stroke={{ width: 3, dash: '5,5' }} zIndex={8} />
 	</Fragment>
 
 	<Fragment
-		step={17}
+		step={16.2}
 		layout={{ x: 228.8, y: 260, width: 235.9, height: 31.3 }}
 		font={{ font_size: 25, color: 'var(--color-level3)' }}
 		zIndex={27}
@@ -269,7 +265,6 @@
 		Force of Electricity
 	</Fragment>
 
-	<!-- Step 18: "Trees sway" -->
 	<Fragment
 		step={18}
 		layout={{ x: 536.1, y: 237.6, width: 142.8, height: 31.3 }}
@@ -279,8 +274,7 @@
 		Trees sway
 	</Fragment>
 
-	<!-- Step 19: Line + "Force of Wind" -->
-	<Fragment step={19} animate="draw">
+	<Fragment step={18} animate="draw">
 		<Line from={{ x: 537, y: 258 }} to={{ x: 434, y: 258 }} stroke={{ width: 3, dash: '5,5' }} zIndex={7} />
 	</Fragment>
 
@@ -293,7 +287,6 @@
 		Force of Wind
 	</Fragment>
 
-	<!-- Step 20: "Things fall" -->
 	<Fragment
 		step={20}
 		layout={{ x: 540.9, y: 208.8, width: 133.1, height: 31.3 }}
@@ -303,8 +296,7 @@
 		Things fall
 	</Fragment>
 
-	<!-- Step 21: Line + "Force of Gravity" -->
-	<Fragment step={21} animate="draw">
+	<Fragment step={20} animate="draw">
 		<Line from={{ x: 536, y: 228 }} to={{ x: 442, y: 228 }} stroke={{ width: 3, dash: '5,5' }} zIndex={9} />
 	</Fragment>
 
@@ -317,28 +309,26 @@
 		Force of Gravity
 	</Fragment>
 
-	<!-- Step 22: Arrow from "Forms of what?" to Gravity -->
-	<Fragment step={22} animate="wipe">
-		<Arrow from={{ x: 170, y: 252 }} to={{ x: 235, y: 228 }} stroke={{ width: 4 }} zIndex={32} />
-	</Fragment>
-
-	<Fragment
-		step={22}
-		layout={{ x: 71.3, y: 245.6, width: 96.8, height: 45.8 }}
-		font={{ font_size: 21.7, bold: true }}
-		zIndex={31}
-	>
-		<span class="wrap-text">Forms of<br />what?</span>
-	</Fragment>
-	
-    <!-- "Causes" + Causes box -->
 	<Fragment step={22} animate="fade">
 		<Rect x={206} y={178} width={275} height={118.9} fill="var(--color-bg-light)" stroke={{ color: '#000000', width: 1 }} zIndex={6} />
 	</Fragment>
 
+	<Fragment step={22} animate="wipe">
+		<Arrow from={{ x: 140, y: 270 }} to={{ x: 235, y: 228 }} stroke={{ width: 4 }} zIndex={32} />
+	</Fragment>
+
+	<Fragment
+		step={22}
+		layout={{ x: 50.3, y: 245.6, width: 96.8, height: 45.8 }}
+		font={{ font_size: 21.7, bold: true, wrap: true, align: 'center' }}
+		zIndex={31}
+	>
+		Forms of what?
+	</Fragment>
+
 	<Fragment
 		step={23}
-		layout={{ x: 287.2, y: 177, width: 136.8, height: 36.1 }}
+		layout={{ x: 280, y: 177, width: 136.8, height: 36.1 }}
 		font={{ font_size: 35, bold: true, color: 'var(--color-level3)' }}
 		zIndex={30}
 	>
@@ -358,21 +348,23 @@
 		<Rect x={482} y={178} width={250} height={118.9} fill="var(--color-bg-light)" stroke={{ color: '#000000', width: 1 }} zIndex={5} />
 	</Fragment>
 
-	<!-- Step 24: Diagonal arrow from "What is effected?" to Effects box -->
-	<Fragment step={24} animate="wipe-left">
-		<Arrow from={{ x: 790, y: 292 }} to={{ x: 725, y: 251 }} stroke={{ width: 4 }} zIndex={34} />
-	</Fragment>
-
 	<Fragment
 		step={24}
 		layout={{ x: 760.7, y: 273.9, width: 138.3, height: 75.8 }}
-		font={{ font_size: 21.7, bold: true }}
+		font={{ font_size: 21.7, bold: true, wrap: true }}
 		zIndex={33}
 	>
-		<span class="wrap-text">What is effected?</span>
+		What is effected?
 	</Fragment>
 
-	<!-- Step 25: "Matter" + white box -->
+	<Fragment step={24} animate="wipe-left">
+		<Arrow from={{ x: 760, y: 300 }} to={{ x: 685, y: 315 }} stroke={{ width: 4 }} zIndex={34} />
+	</Fragment>
+
+	<Fragment step={24} animate="fade">
+		<Rect x={481.1} y={295.4} width={258.6} height={127.7} fill="var(--color-bg-ghost)" zIndex={1} />
+	</Fragment>
+
 	<Fragment
 		step={25}
 		layout={{ x: 533.6, y: 301.8, width: 161.1, height: 40 }}
@@ -380,10 +372,6 @@
 		zIndex={64}
 	>
 		Matter
-	</Fragment>
-
-	<Fragment step={25} animate="fade">
-		<Rect x={481.1} y={295.4} width={258.6} height={127.7} fill="var(--color-bg-ghost)" zIndex={1} />
 	</Fragment>
 
 	<!-- Step 27: "Energy" + white box -->
@@ -396,7 +384,7 @@
 		Energy
 	</Fragment>
 
-	<Fragment step={27} animate="fade">
+	<Fragment step={27}>
 		<Rect x={199.3} y={294.9} width={281} height={128.4} fill="var(--color-bg-ghost)" zIndex={4} />
 	</Fragment>
 
@@ -404,10 +392,10 @@
 	<Fragment
 		step={28}
 		layout={{ x: 10.9, y: 299.4, width: 184.8, height: 86.9 }}
-		font={{ font_size: 11, color: '#000000', alignment: 'left' }}
+		font={{ font_size: 11, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={39}
 	>
-		<span class="wrap-text"><strong>First Law of Thermodynamics</strong><br />States the total energy of an isolated system is constant; energy can be transformed from one form to another but can be neither created nor destroyed.</span>
+		<strong>First Law of Thermodynamics</strong><br />States the total energy of an isolated system is constant; energy can be transformed from one form to another but can be neither created nor destroyed.
 	</Fragment>
 
 	<!-- Step 29: "Einstein" box -->
@@ -425,7 +413,7 @@
 	<!-- Step 30: "=" overlay -->
 	<Fragment
 		step={30}
-		layout={{ x: 424.4, y: 304.4, width: 113.1, height: 41.4 }}
+		layout={{ x: 424.4, y: 297, width: 113.1, height: 47 }}
 		font={{ font_size: 48.3, bold: true }}
 		fill="var(--color-bg-ghost)"
 		zIndex={61}
@@ -489,10 +477,10 @@
 	<Fragment
 		step={34}
 		layout={{ x: 760.4, y: 365.8, width: 147.1, height: 48 }}
-		font={{ font_size: 17.5 }}
+		font={{ font_size: 17.5, wrap: true }}
 		zIndex={37}
 	>
-		<span class="wrap-text">What gives matter stability?</span>
+		What gives matter stability?
 	</Fragment>
 
 	<Fragment step={34} animate="wipe-left">
@@ -528,12 +516,12 @@
 		step={37}
 		drillTo="physical-spiritual/1corinthians-15-40"
 		layout={{ x: 33.3, y: 470.4, width: 140, height: 53.9 }}
-		font={{ font_size: 20, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 20, bold: true, color: 'var(--color-level3)', wrap: true }}
 		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={40}
 	>
-		<span class="wrap-text">1Corinthians 15:40-45</span>
+		1Corinthians 15:40-45
 	</Fragment>
 
 	<!-- Step 38: "perishable" -->
@@ -679,7 +667,8 @@
 	<!-- Step 42: "=" between SPIRITUAL and PHYSICAL -->
 	<Fragment
 		step={42}
-		layout={{ x: 462.9, y: 389.8, width: 36.1, height: 28.9 }}
+		fill="var(--color-bg-ghost)"
+		layout={{ x: 462.9, y: 387, width: 40, height: 36, padding: 0 }}
 		font={{ font_size: 39.2, bold: true }}
 		zIndex={43}
 	>
@@ -690,11 +679,11 @@
 	<Fragment
 		step={43}
 		layout={{ x: 715.6, y: 431.6, width: 196.1, height: 96.1 }}
-		font={{ font_size: 17.5, bold: true, alignment: 'left' }}
+		font={{ font_size: 17.5, bold: true, align: 'left', v_align: 'top', wrap: true }}
 		fill="var(--color-level1)"
 		zIndex={44}
 	>
-		<span class="wrap-text">Spiritual & Physical:<br />Equal, but in different<br />forms, same as energy<br />& matter</span>
+		Spiritual & Physical:<br />Equal, but in different<br />forms, same as energy<br />& matter
 	</Fragment>
 </Slide>
 

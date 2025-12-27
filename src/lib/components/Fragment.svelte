@@ -295,6 +295,26 @@
 			style += `opacity: ${$tweenedOpacity};`;
 		}
 
+		// Flex alignment - defaults to center/center, can be overridden by font properties
+		const hAlign = font?.align ?? 'center';
+		const vAlign = font?.v_align ?? 'middle';
+		
+		// Map alignment values to flex properties
+		const justifyMap = { left: 'flex-start', center: 'center', right: 'flex-end' };
+		const alignMap = { top: 'flex-start', middle: 'center', bottom: 'flex-end' };
+		
+		// Use align-content for vertical alignment (works with flex-wrap)
+		style += `justify-content: ${justifyMap[hAlign]};`;
+		style += `align-content: ${alignMap[vAlign]};`;
+		style += `align-items: ${alignMap[vAlign]};`;
+		
+		// Text wrapping
+		if (font?.wrap) {
+			style += 'flex-wrap: wrap; white-space: normal; word-wrap: break-word;';
+		} else {
+			style += 'white-space: nowrap;';
+		}
+
 		// Font styles
 		if (font) {
 			if (font.font_size) style += `font-size: ${font.font_size}px;`;
@@ -302,7 +322,7 @@
 			if (font.italic) style += 'font-style: italic;';
 			if (font.color) style += `color: ${font.color};`;
 			if (font.font_name) style += `font-family: "${font.font_name}", sans-serif;`;
-			if (font.alignment) style += `text-align: ${font.alignment};`;
+			if (font.align) style += `text-align: ${font.align};`;
 		}
 
 		// Fill
@@ -314,6 +334,14 @@
 		if (line) {
 			if (line.color) style += `border-color: ${line.color};`;
 			if (line.width) style += `border-width: ${line.width}px; border-style: solid;`;
+		}
+
+		// Padding (default 4px for wrapped text, 0 otherwise)
+		const defaultPadding = font?.wrap ? 4 : 0;
+		const pad = layout.padding ?? defaultPadding;
+		if (pad !== 0) {
+			const padValue = typeof pad === 'number' ? `${pad}px` : pad;
+			style += `padding: ${padValue};`;
 		}
 
 		return style;
@@ -332,6 +360,7 @@
 	<div
 		class="fragment"
 		class:fragment-positioned={layout}
+		class:fragment-wrap={font?.wrap}
 		class:drillable={drillTo}
 		class:animate-fade={showAnimation && animate === 'fade'}
 		class:animate-fly-up={showAnimation && animate === 'fly-up'}
@@ -349,7 +378,11 @@
 		style="{computedStyle()}--animation-delay: {animationDelay}ms;"
 		onclick={drillTo ? handleClick : undefined}
 	>
-		{@render children()}
+		{#if font?.wrap}
+			<span class="wrap-content">{@render children()}</span>
+		{:else}
+			{@render children()}
+		{/if}
 	</div>
 {/if}
 
@@ -357,11 +390,13 @@
 	/* Positioned fragment styling (when layout is provided) */
 	.fragment-positioned {
 		display: flex;
-		align-items: center;
-		justify-content: center;
 		box-sizing: border-box;
 		overflow: visible;
-		white-space: nowrap;
+	}
+
+	/* Wrap content - inner span allows inline elements to flow naturally */
+	.wrap-content {
+		display: inline;
 	}
 
 	/* Drillable styling */

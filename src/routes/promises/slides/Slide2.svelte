@@ -64,7 +64,7 @@
 	<Fragment
 		step={5}
 		layout={{ x: 180.9, y: 107.5, width: 170.2, height: 61.1 }}
-		font={{ font_size: 43.2, alignment: 'left' }}
+		font={{ font_size: 43.2, align: 'left' }}
 		zIndex={4}
 	>
 		Ishmael
@@ -74,7 +74,7 @@
 	<Fragment
 		step={6}
 		layout={{ x: 624.9, y: 108.7, width: 121.7, height: 61.1 }}
-		font={{ font_size: 43.2, alignment: 'left', color: 'var(--color-level3)' }}
+		font={{ font_size: 43.2, align: 'left', color: 'var(--color-level3)' }}
 		zIndex={3}
 	>
 		Isaac
@@ -114,7 +114,7 @@
 	<Fragment
 		step={9.1}
 		layout={{ x: 195.3, y: 154.3, width: 141.1, height: 61.1 }}
-		font={{ font_size: 43.2, bold: true, alignment: 'left' }}
+		font={{ font_size: 43.2, bold: true, align: 'left' }}
 		zIndex={8}
 	>
 		Hagar
@@ -124,7 +124,7 @@
 	<Fragment
 		step={11}
 		layout={{ x: 178.5, y: 196.7, width: 174.8, height: 55.3 }}
-		font={{ font_size: 38.4, alignment: 'left' }}
+		font={{ font_size: 38.4, align: 'left' }}
 		zIndex={18}
 	>
 		covenant
@@ -144,7 +144,7 @@
 	<Fragment
 		step={12.1}
 		layout={{ x: 616.5, y: 158.2, width: 138.7, height: 61.1 }}
-		font={{ font_size: 43.2, bold: true, alignment: 'left', color: 'var(--color-level3)' }}
+		font={{ font_size: 43.2, bold: true, align: 'left', color: 'var(--color-level3)' }}
 		zIndex={5}
 	>
 		Sarah
@@ -154,7 +154,7 @@
 	<Fragment
 		step={14}
 		layout={{ x: 598.5, y: 196.7, width: 174.8, height: 55.3 }}
-		font={{ font_size: 38.4, alignment: 'left', color: 'var(--color-level3)' }}
+		font={{ font_size: 38.4, align: 'left', color: 'var(--color-level3)' }}
 		zIndex={19}
 	>
 		covenant
@@ -169,7 +169,7 @@
 	<Fragment
 		step={15.1}
 		layout={{ x: 177.5, y: 282.2, width: 176.9, height: 55.3 }}
-		font={{ font_size: 38.4, bold: true, alignment: 'left' }}
+		font={{ font_size: 38.4, bold: true, align: 'left' }}
 		zIndex={9}
 	>
 		Mt. Sinai
@@ -179,7 +179,7 @@
 	<Fragment
 		step={17}
 		layout={{ x: 132.8, y: 314.2, width: 276.9, height: 55.3 }}
-		font={{ font_size: 38.4, bold: true, italic: true, alignment: 'left' }}
+		font={{ font_size: 38.4, bold: true, italic: true, align: 'left' }}
 		zIndex={10}
 	>
 		Mosaical Law
@@ -189,7 +189,7 @@
 	<Fragment
 		step={18}
 		layout={{ x: 116.4, y: 360, width: 302.1, height: 49.4 }}
-		font={{ font_size: 33.6, alignment: 'left' }}
+		font={{ font_size: 33.6, align: 'left' }}
 		zIndex={11}
 	>
 		Present Jerusalem
@@ -199,7 +199,7 @@
 	<Fragment
 		step={19}
 		layout={{ x: 144.3, y: 394.7, width: 252, height: 49.4 }}
-		font={{ font_size: 33.6, alignment: 'left' }}
+		font={{ font_size: 33.6, align: 'left' }}
 		zIndex={12}
 	>
 		Bondage to sin
@@ -209,7 +209,7 @@
 	<Fragment
 		step={20}
 		layout={{ x: 118.2, y: 438, width: 296.1, height: 49.4 }}
-		font={{ font_size: 33.6, alignment: 'left' }}
+		font={{ font_size: 33.6, align: 'left' }}
 		zIndex={13}
 	>
 		Slaves to the LAW
@@ -220,7 +220,7 @@
 		step={21}
 		drillTo="promises/romans-8-2"
 		layout={{ x: 166.1, y: 471.5, width: 208.2, height: 43.6 }}
-		font={{ font_size: 28.8, bold: true, alignment: 'left' }}
+		font={{ font_size: 28.8, bold: true, align: 'left' }}
 		zIndex={14}
 	>
 		Romans 8:2-3
@@ -235,10 +235,10 @@
 	<Fragment
 		step={22.1}
 		layout={{ x: 543.4, y: 278.5, width: 283.4, height: 97.9 }}
-		font={{ font_size: 38.4, italic: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 38.4, italic: true, color: 'var(--color-level3)', wrap: true, align: 'center' }}
 		zIndex={6}
 	>
-		<span class="wrap-text">"Jerusalem above is free"</span>
+		"Jerusalem above is free"
 	</Fragment>
 
 	<!-- Step 24: Hebrews 12:22-24 (hyperlink) -->
@@ -246,7 +246,7 @@
 		step={24}
 		drillTo="promises/hebrews-12-22"
 		layout={{ x: 551, y: 383, width: 284.7, height: 49.4 }}
-		font={{ font_size: 33.6, bold: true, alignment: 'left' }}
+		font={{ font_size: 33.6, bold: true, align: 'left' }}
 		zIndex={7}
 	>
 		Hebrews 12:22-24
@@ -255,36 +255,24 @@
 	<!-- Step 25: Physical Jews summary box -->
 	<Fragment
 		step={25}
-		layout={{ x: 85.4, y: 374.8, width: 362.9, height: 64.8 }}
-		font={{ font_size: 21.6, bold: true }}
+		layout={{ x: 85.4, y: 372, width: 362.9, height: 67 }}
+		font={{ font_size: 20, wrap: true, align: 'center', v_align: 'middle' }}
 		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={15}
 	>
-		<span class="wrap-text"><span class="text-physical">Physical</span> Jews/Following Mosaical Law <strong>does not</strong> give salvation.</span>
+		<strong>Physical</strong> Jews Following Mosaical Law <strong>does not</strong> give salvation.
 	</Fragment>
 
 	<!-- Step 26: Spiritual Jews summary box -->
 	<Fragment
 		step={26}
 		layout={{ x: 503.3, y: 446.3, width: 362.9, height: 64.8 }}
-		font={{ font_size: 24, bold: true }}
+		font={{ font_size: 24, bold: true, wrap: true, align: 'center' }}
 		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={25}
 	>
-		<span class="wrap-text"><span class="text-spiritual">Spiritual</span> Jews/Following Christ's Law <strong>gives</strong> salvation.</span>
+		<span style="color: var(--color-level3);">Spiritual</span> Jews/Following Christ's Law <strong>gives</strong> salvation.
 	</Fragment>
 </Slide>
-
-<style>
-	.text-physical {
-		color: var(--color-text-primary);
-	}
-
-	.text-spiritual {
-		color: var(--color-level3);
-	}
-
-	/* All shapes now use SVG components inside Fragment */
-</style>

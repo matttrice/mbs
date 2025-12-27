@@ -423,7 +423,7 @@ describe('Fragment Component - Font Styling', () => {
 			props: {
 				step: 1,
 				layout: { x: 0, y: 0, width: 100, height: 40 },
-				font: { color: '#FF0000', alignment: 'left' },
+				font: { color: '#FF0000', align: 'left' },
 				children: mockChildren
 			}
 		});

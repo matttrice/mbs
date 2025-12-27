@@ -12,6 +12,8 @@ export interface BoxLayout {
 	width: number;
 	height: number;
 	rotation?: number;
+	/** Padding inside the box (CSS shorthand: single value or "top right bottom left") */
+	padding?: string | number;
 }
 
 /**
@@ -24,7 +26,12 @@ export interface BoxFont {
 	italic?: boolean;
 	color?: string;
 	theme_color?: string;
-	alignment?: 'left' | 'center' | 'right';
+	/** Horizontal text alignment */
+	align?: 'left' | 'center' | 'right';
+	/** Vertical text alignment (PowerPoint anchor property) */
+	v_align?: 'top' | 'middle' | 'bottom';
+	/** Allow text to wrap within the box */
+	wrap?: boolean;
 }
 
 /**

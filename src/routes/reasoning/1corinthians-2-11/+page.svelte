@@ -32,7 +32,7 @@
 	<!-- Full scripture text -->
 	<Fragment
 		layout={{ x: 90, y: 49, width: 796, height: 476 }}
-		font={{ font_size: 24.2, alignment: 'left' }}
+		font={{ font_size: 24.2, align: 'left' }}
 		zIndex={0}
 	>
 		<div class="scripture-text">

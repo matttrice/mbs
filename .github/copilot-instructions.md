@@ -62,7 +62,7 @@ The `Fragment` component handles all slide content - from simple text to fully-p
 | `step` | `number` | Animation sequence. Integer = click number, decimal = delay (e.g., `2.1` = step 2 with 500ms delay). Omit for static content. |
 | `drillTo` | `string` | Route to drill into on click (e.g., `"promises/genesis-12-1"`) |
 | `layout` | `BoxLayout` | Absolute positioning: `{ x, y, width, height, rotation? }` |
-| `font` | `BoxFont` | Typography: `{ font_name?, font_size?, bold?, italic?, color?, alignment? }` |
+| `font` | `BoxFont` | Typography: `{ font_name?, font_size?, bold?, italic?, color?, align?, v_align?, wrap? }` |
 | `fill` | `string` | Background color (e.g., `"var(--color-bg-ghost)"`) |
 | `line` | `BoxLine` | Border: `{ color?, width? }` |
 | `zIndex` | `number` | Stacking order |
@@ -71,6 +71,19 @@ The `Fragment` component handles all slide content - from simple text to fully-p
 | `keyframes` | `Keyframe[]` | Step-based motion: `[{ step: 2, x: 100 }, { step: 3, x: 200 }]` |
 | `transition` | `TransitionConfig` | Motion config: `{ duration?: number, easing?: function }` |
 | `returnHere` | `boolean` | Return to this drill (not origin) after nested drill completes |
+
+### BoxFont Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `font_size` | `number` | Font size in CSS pixels |
+| `font_name` | `string` | Font family name |
+| `bold` | `boolean` | Bold text |
+| `italic` | `boolean` | Italic text |
+| `color` | `string` | Text color (hex or CSS variable) |
+| `align` | `'left' \| 'center' \| 'right'` | Horizontal text alignment (default: `'center'`) |
+| `v_align` | `'top' \| 'middle' \| 'bottom'` | Vertical text alignment (default: `'middle'`) |
+| `wrap` | `boolean` | Allow text to wrap within the box (default: `false`) |
 
 ### Usage Patterns
 
@@ -113,6 +126,17 @@ The `Fragment` component handles all slide content - from simple text to fully-p
 ```svelte
 <Fragment step={1}>
   <div class="custom-styled">Content</div>
+</Fragment>
+```
+
+**Multi-line text with alignment (e.g., book lists):**
+```svelte
+<Fragment
+  step={3}
+  layout={{ x: 125, y: 100, width: 82, height: 180 }}
+  font={{ font_size: 11, align: 'left', v_align: 'top', wrap: true }}
+>
+  Genesis<br/>Exodus<br/>Leviticus<br/>Numbers<br/>Deuteronomy
 </Fragment>
 ```
 

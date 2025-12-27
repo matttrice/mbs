@@ -163,10 +163,10 @@
 	<Fragment
 		step={7}
 		layout={{ x: 59.2, y: 29.3, width: 202.7, height: 68.6 }}
-		font={{ font_size: 16.7 }}
+		font={{ font_size: 16.7, wrap: true }}
 		zIndex={30}
 	>
-		<span class="wrap-text">What method of reason is best if you don't have the complete picture?</span>
+		What method of reason is best if you don't have the complete picture?
 	</Fragment>
 
 	<!-- Step 8: "How do you start a puzzle?" -->
@@ -291,7 +291,7 @@
 	<Fragment
 		step={16.1}
 		layout={{ x: 357.5, y: 381.1, width: 94.7, height: 46.8 }}
-		font={{ font_size: 21.7, bold: true, alignment: "center" }}
+		font={{ font_size: 21.7, bold: true, align: "center" }}
 		zIndex={93}
 	>
 		Major<br/>Prophets
@@ -300,7 +300,7 @@
 	<Fragment
 		step={16.2}
 		layout={{ x: 353.9, y: 428.2, width: 97.2, height: 45.1 }}
-		font={{ font_size: 21.7, bold: true, alignment: "center" }}
+		font={{ font_size: 21.7, bold: true, align: "center" }}
 		zIndex={92}
 	>
 		Minor<br/>Prophets
@@ -558,10 +558,10 @@
 	<Fragment
 		step={32}
 		layout={{ x: 32, y: 275, width: 220, height: 62.5 }}
-		font={{ font_size: 14, alignment: 'left' }}
+		font={{ font_size: 14, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={87}
 	>
-		<div class="wrap-text-left">Everything made in first sentence. Rest of chapter fills in details of each day.</div>
+		Everything made in first sentence. Rest of chapter fills in details of each day.
 	</Fragment>
 
 	<!-- Vertical oval loops for Genesis pattern - wrap around the timeline -->
@@ -598,11 +598,11 @@
 	<Fragment
 		step={34}
 		layout={{ x: 32, y: 486.9, width: 270, height: 44.2 }}
-		font={{ font_size: 15 }}
+		font={{ font_size: 15, wrap: true }}
 		fill="var(--color-bg-ghost)"
 		zIndex={95}
 	>
-		<div class="wrap-text">Two Adams? Or God being consistent and giving more detail about one?</div>  
+		Two Adams? Or God being consistent and giving more detail about one?
 	</Fragment>
 
 	<!-- More vertical oval loops for Genesis pattern -->
@@ -657,8 +657,5 @@
 </Slide>
 
 <style>
-	.wrap-text {
-		word-wrap: break-word;
-		white-space: normal;
-	}
+	/* Additional styling if needed */
 </style>

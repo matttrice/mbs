@@ -40,7 +40,7 @@
 	<!-- Original: x: 143.8, y: 77.7, width: 1273.5, height: 762.3, font_size: 38.7 -->
 	<Fragment
 		layout={{ x: 90, y: 49, width: 796, height: 476 }}
-		font={{ font_size: 24.2, alignment: 'left' }}
+		font={{ font_size: 24.2, align: 'left' }}
 		zIndex={0}
 	>
 		<div class="scripture-text">
@@ -55,7 +55,7 @@
 	<Fragment
 		step={1}
 		layout={{ x: 90, y: 49, width: 796, height: 476 }}
-		font={{ font_size: 24.2, alignment: 'left' }}
+		font={{ font_size: 24.2, align: 'left' }}
 		fill="var(--color-bg-ghost)"
 		zIndex={2}
 	>
@@ -67,7 +67,7 @@
 	<Fragment
 		step={2}
 		layout={{ x: 90, y: 49, width: 796, height: 476 }}
-		font={{ font_size: 24.2, alignment: 'left' }}
+		font={{ font_size: 24.2, align: 'left' }}
 		fill="var(--color-bg-ghost)"
 		zIndex={3}
 	>
@@ -79,7 +79,7 @@
 	<Fragment
 		step={3}
 		layout={{ x: 90, y: 49, width: 796, height: 476 }}
-		font={{ font_size: 24.2, alignment: 'left' }}
+		font={{ font_size: 24.2, align: 'left' }}
 		fill="var(--color-bg-ghost)"
 		zIndex={4}
 	>

@@ -2,18 +2,6 @@
  * Common utilities for main presentation slides
  */
 
-/* Text utilities */
-.wrap-text {
-	white-space: normal;
-	text-align: center;
-	line-height: 1.2;
-}
-.wrap-text-left {
-	white-space: normal;
-	text-align: left;
-	line-height: 1.2;
-}
-
 /* Level-based background colors */
 .bg-level1 {
 	background-color: var(--color-level1);

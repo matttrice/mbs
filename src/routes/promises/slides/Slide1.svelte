@@ -92,7 +92,7 @@
 		step={6.2}
 		drillTo="promises/deuteronomy-7-6"
 		layout={{ x: 105.6, y: 145.5, width: 223.2, height: 34.9 }}
-		font={{ font_size: 24, alignment: 'left' }}
+		font={{ font_size: 24, align: 'left' }}
 		zIndex={9}
 	>
 		Deuteronomy 7:6-8
@@ -115,7 +115,7 @@
 		step={8}
 		drillTo="promises/genesis-13-14"
 		layout={{ x: 105.6, y: 249.3, width: 204.6, height: 36 }}
-		font={{ font_size: 24, alignment: 'left' }}
+		font={{ font_size: 24, align: 'left' }}
 		zIndex={17}
 	>
 		Genesis 13:14-15
@@ -126,10 +126,10 @@
 		step={9}
 		drillTo="promises/forever-things"
 		layout={{ x: 354.7, y: 59.3, width: 252, height: 48.6 }}
-		font={{ font_size: 24 }}
+		font={{ font_size: 24, wrap: true, align: 'center' }}
 		zIndex={14}
 	>
-		<span class="wrap-text">What kinds of things are forever?</span>
+		What kinds of things are forever?
 	</Fragment>
 
 	<!-- Step 11: Spiritual (blue text) -->
@@ -162,7 +162,7 @@
 		step={13}
 		drillTo="promises/1peter-2-9"
 		layout={{ x: 681.6, y: 148, width: 122.4, height: 30 }}
-		font={{ font_size: 24, alignment: 'left' }}
+		font={{ font_size: 24, align: 'left' }}
 		zIndex={11}
 	>
 		1Peter 2:9
@@ -190,10 +190,10 @@
 	<Fragment
 		step={15}
 		layout={{ x: 629.4, y: 104.8, width: 235.8, height: 50.4 }}
-		font={{ font_size: 16.8 }}
+		font={{ font_size: 16.8, wrap: true, align: 'center' }}
 		zIndex={48}
 	>
-		<span class="wrap-text">Chosen race, royal priesthood, holy nation</span>
+		Chosen race, Royal Priesthood, Holy Nation
 	</Fragment>
 
 	<!-- Step 18: Canaan (boxed) -->
@@ -211,11 +211,11 @@
 	<!-- Step 19: Is physical Israel a great nation today?... -->
 	<Fragment
 		step={17}
-		layout={{ x: 64.6, y: 319.7, width: 308.2, height: 50.4 }}
-		font={{ font_size: 16.8 }}
+		layout={{ x: 82, y: 319.7, width: 288, height: 50.4 }}
+		font={{ font_size: 16.8, wrap: true }}
 		zIndex={49}
 	>
-		<span class="wrap-text">Is physical Israel a great nation today?<br />In possession of Canaan?</span>
+		Is physical Israel a great nation today? In possession of Canaan?
 	</Fragment>
 
 	<!-- Step 20: Hebrews 11:8-16 (hyperlink) -->
@@ -223,7 +223,7 @@
 		step={18}
 		drillTo="promises/hebrews-11-8"
 		layout={{ x: 652.8, y: 249.9, width: 201.6, height: 34.9 }}
-		font={{ font_size: 24, alignment: 'left' }}
+		font={{ font_size: 24, align: 'left' }}
 		zIndex={19}
 	>
 		Hebrews 11:8-16
@@ -250,8 +250,8 @@
 	<Fragment
 		step={21}
 		drillTo="promises/hebrews-3-14"
-		layout={{ x: 364.8, y: 142.2, width: 230.4, height: 60.3 }}
-		font={{ font_size: 13.3, bold: true, alignment: 'center' }}
+		layout={{ x: 364.8, y: 138, width: 230.4, height: 60.3 }}
+		font={{ font_size: 19, bold: true, align: 'center' }}
 		zIndex={37}
 	>
 		What if this point is missed?<br />Hebrews 3:11 - 4:11
@@ -260,23 +260,23 @@
 	<!-- Step 24: Joshua…Savior…Israel…Canaan -->
 	<Fragment
 		step={22}
-		layout={{ x: 380.7, y: 237.3, width: 211, height: 68.5 }}
-		font={{ font_size: 24, bold: true }}
+		layout={{ x: 380.7, y: 230, width: 211, height: 68.5 }}
+		font={{ font_size: 24, bold: true, wrap: true, align: 'center' }}
 		fill="var(--color-bg-ghost)"
 		zIndex={36}
 	>
-		<span class="wrap-text">Joshua…Savior…Israel…Canaan</span>
+		Joshua…Savior…Israel…Canaan
 	</Fragment>
 
 	<!-- Step 25: Jesus…Savior…Church…Heaven (blue) -->
 	<Fragment
 		step={23}
 		layout={{ x: 380.7, y: 302.3, width: 211, height: 66 }}
-		font={{ font_size: 24, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 24, bold: true, color: 'var(--color-level3)', wrap: true, align: 'center' }}
 		fill="var(--color-bg-ghost)"
 		zIndex={51}
 	>
-		<span class="wrap-text">Jesus…Savior…Church…Heaven</span>
+		Jesus…Savior…Church…Heaven
 	</Fragment>
 
 	<!-- Step 26: Luke 1:30-33 (hyperlink) -->
@@ -284,7 +284,7 @@
 		step={24}
 		drillTo="promises/luke-1-30"
 		layout={{ x: 674.4, y: 366, width: 158.4, height: 30 }}
-		font={{ font_size: 24, alignment: 'left' }}
+		font={{ font_size: 24, align: 'left' }}
 		zIndex={13}
 	>
 		Luke 1:30-33
@@ -307,7 +307,7 @@
 		step={26}
 		drillTo="promises/galatians-3-16"
 		layout={{ x: 105.6, y: 396, width: 205.2, height: 30 }}
-		font={{ font_size: 24, alignment: 'left' }}
+		font={{ font_size: 24, align: 'left' }}
 		zIndex={21}
 	>
 		Galatians 3:16-29
@@ -334,7 +334,7 @@
 	<Fragment
 		step={29}
 		layout={{ x: 328.8, y: 421.5, width: 64.2, height: 27.2 }}
-		font={{ font_size: 19.2, alignment: 'left' }}
+		font={{ font_size: 19.2, align: 'left' }}
 		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={45}
@@ -351,7 +351,7 @@
 	<Fragment
 		step={31}
 		layout={{ x: 392.1, y: 375.3, width: 62.1, height: 27.2 }}
-		font={{ font_size: 19.2, alignment: 'left' }}
+		font={{ font_size: 19.2, align: 'left' }}
 		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={27}
@@ -368,7 +368,7 @@
 	<Fragment
 		step={33}
 		layout={{ x: 422.4, y: 421.5, width: 69.6, height: 27.2 }}
-		font={{ font_size: 19.2, alignment: 'left' }}
+		font={{ font_size: 19.2, align: 'left' }}
 		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={47}
@@ -426,10 +426,10 @@
 	<Fragment
 		step={39}
 		layout={{ x: 621.3, y: 449.1, width: 239.2, height: 50.4 }}
-		font={{ font_size: 16.8 }}
+		font={{ font_size: 17, wrap: true, align: 'center', bold: true }}
 		zIndex={50}
 	>
-		<span class="wrap-text">"if you are Christ's, then you are Abraham's offspring, "</span>
+		"If you are Christ's, then you are Abraham's offspring"
 	</Fragment>
 
 	<!-- Step 42: Line 46 (connector down to Ishmael) -->
@@ -441,7 +441,7 @@
 	<Fragment
 		step={41}
 		layout={{ x: 201.4, y: 478.1, width: 85.5, height: 27.2 }}
-		font={{ font_size: 19.2, alignment: 'left' }}
+		font={{ font_size: 19.2, align: 'left' }}
 		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={41}
@@ -475,7 +475,7 @@
 	<Fragment
 		step={45}
 		layout={{ x: 481.1, y: 480, width: 119.7, height: 27.2 }}
-		font={{ font_size: 19.2, alignment: 'left' }}
+		font={{ font_size: 19.2, align: 'left' }}
 		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={42}

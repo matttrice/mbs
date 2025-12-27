@@ -88,7 +88,7 @@
 	<Fragment
 		step={3.1}
 		layout={{ x: 125, y: 100, width: 82, height: 180 }}
-		font={{ font_size: 11, color: '#000000' }}
+		font={{ font_size: 11, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={5}
 	>
 		Genesis<br/>Exodus<br/>Leviticus<br/>Numbers<br/>Deuteronomy
@@ -109,7 +109,7 @@
 	<Fragment
 		step={4.1}
 		layout={{ x: 253, y: 100, width: 123, height: 180 }}
-		font={{ font_size: 11, color: '#000000' }}
+		font={{ font_size: 11, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={6}
 	>
 		Joshua<br/>Judges<br/>Ruth<br/>1 Samuel<br/>2 Samuel<br/>1 Kings<br/>2 Kings<br/>1 Chronicles<br/>2 Chronicles<br/>Ezra<br/>Nehemiah<br/>Esther
@@ -130,7 +130,7 @@
 	<Fragment
 		step={5.1}
 		layout={{ x: 392, y: 100, width: 108, height: 180 }}
-		font={{ font_size: 11, color: '#000000', alignment: 'left' }}
+		font={{ font_size: 11, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={7}
 	>
 		Job<br/>Psalms<br/>Proverbs<br/>Songs<br/>Ecclesiastes
@@ -151,7 +151,7 @@
 	<Fragment
 		step={6.1}
 		layout={{ x: 534, y: 100, width: 135, height: 180 }}
-		font={{ font_size: 11, color: '#000000' }}
+		font={{ font_size: 11, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={8}
 	>
 		Isaiah<br/>Jeremiah<br/>Lamentations<br/>Ezekiel<br/>Daniel
@@ -172,7 +172,7 @@
 	<Fragment
 		step={7.1}
 		layout={{ x: 682, y: 100, width: 143, height: 180 }}
-		font={{ font_size: 11, color: '#000000' }}
+		font={{ font_size: 11, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={9}
 	>
 		Hosea<br/>Joel<br/>Amos<br/>Obadiah<br/>Jonah<br/>Micah<br/>Nahum<br/>Habakkuk<br/>Zephaniah<br/>Haggai<br/>Zechariah<br/>Malachi
@@ -193,7 +193,7 @@
 	<Fragment
 		step={8.1}
 		layout={{ x: 116, y: 343, width: 95, height: 80 }}
-		font={{ font_size: 11, color: '#000000' }}
+		font={{ font_size: 11, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={10}
 	>
 		Matthew<br/>Mark<br/>Luke<br/>John
@@ -214,7 +214,7 @@
 	<Fragment
 		step={9.1}
 		layout={{ x: 270, y: 350, width: 96, height: 30 }}
-		font={{ font_size: 11, color: '#000000' }}
+		font={{ font_size: 11, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={11}
 	>
 		Acts
@@ -235,7 +235,7 @@
 	<Fragment
 		step={10.1}
 		layout={{ x: 417, y: 354, width: 117, height: 130 }}
-		font={{ font_size: 11, color: '#000000' }}
+		font={{ font_size: 11, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={13}
 	>
 		Romans<br/>1 Corinthians<br/>2 Corinthians<br/>Galatians<br/>Ephesians<br/>Philippians<br/>Colossians<br/>1 Thessalonians<br/>2 Thessalonians
@@ -256,7 +256,7 @@
 	<Fragment
 		step={11.1}
 		layout={{ x: 582, y: 354, width: 134, height: 160 }}
-		font={{ font_size: 11, color: '#000000' }}
+		font={{ font_size: 11, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={14}
 	>
 		1 Timothy<br/>2 Timothy<br/>Titus<br/>Philemon<br/>Hebrews<br/>James<br/>1 Peter<br/>2 Peter<br/>1 John<br/>2 John<br/>3 John<br/>Jude
@@ -277,7 +277,7 @@
 	<Fragment
 		step={12.1}
 		layout={{ x: 725, y: 343, width: 116, height: 30 }}
-		font={{ font_size: 11, color: '#000000' }}
+		font={{ font_size: 11, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={12}
 	>
 		Revelation
