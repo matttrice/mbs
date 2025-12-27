@@ -38,6 +38,11 @@
 					}
 					break;
 
+				case 'q':
+					e.preventDefault();
+					window.location.href = '/';
+					break;
+
 				case 'Home':
 					e.preventDefault();
 					navigation.goToFragment(0);

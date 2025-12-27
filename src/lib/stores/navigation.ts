@@ -115,15 +115,46 @@ function createNavigationStore() {
 
 				// Check for persisted state on page refresh
 				const persisted = loadPersistedState();
-				if (persisted?.current?.presentation === presentation && persisted.slideFragments?.length) {
+				
+				// Check if persisted state is for this presentation (either directly or via drill stack)
+				const isDirectMatch = persisted?.current?.presentation === presentation;
+				const isInDrillStack = (persisted?.stack?.length ?? 0) > 0 && 
+					persisted?.stack?.[0]?.presentation === presentation;
+				
+				if ((isDirectMatch || isInDrillStack) && persisted?.slideFragments?.length) {
 					console.log('[Navigation] Restoring from localStorage:', persisted);
+					
+					// If we were in a drill, restore to the stack's origin position
+					if (isInDrillStack && !isDirectMatch && persisted.stack) {
+						const originState = persisted.stack[0];
+						console.log('[Navigation] Was in drill, restoring to origin:', originState);
+						const restoredState = {
+							...ctx,
+							isReturningFromDrill: false,
+							current: {
+								presentation,
+								slide: originState.slide,
+								fragment: originState.fragment
+							},
+							stack: [], // Clear drill stack
+							maxSlide: slideFragmentCounts.length - 1,
+							maxFragment: slideFragmentCounts[originState.slide] || 0,
+							slideFragmentCounts,
+							slideFragments: persisted.slideFragments
+						};
+						persistState(restoredState);
+						return restoredState;
+					}
+					
+					// persisted.current is guaranteed to exist here due to isDirectMatch check
+					const currentSlide = persisted.current!.slide;
 					const restoredState = {
 						...ctx,
 						isReturningFromDrill: false,
-						current: persisted.current,
+						current: persisted.current!,
 						stack: persisted.stack || [],
 						maxSlide: slideFragmentCounts.length - 1,
-						maxFragment: slideFragmentCounts[persisted.current.slide] || 0,
+						maxFragment: slideFragmentCounts[currentSlide] || 0,
 						slideFragmentCounts,
 						slideFragments: persisted.slideFragments
 					};

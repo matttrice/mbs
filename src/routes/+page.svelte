@@ -14,7 +14,20 @@
 		<h1>Master Bible Study</h1>
 		<p class="subtitle">Select a lesson</p>
 	</header>
-
+		<div class="model-card-wrapper">
+			<a href="/reasoning" class="model-card">
+				<h2>Methods of Reason</h2>
+				<p>Inductive vs. Deductive thinking in Scripture</p>
+				<span class="arrow">→</span>
+			</a>
+			<button 
+				class="reset-btn" 
+				onclick={() => startFresh('reasoning', '/reasoning')}
+				title="Reset progress and start fresh"
+			>
+				Reset
+			</button>
+		</div>
 	<nav class="models">
 		<div class="model-card-wrapper">
 			<a href="/physical-spiritual" class="model-card">
@@ -39,20 +52,6 @@
 			<button 
 				class="reset-btn" 
 				onclick={() => startFresh('promises', '/promises')}
-				title="Reset progress and start fresh"
-			>
-				Reset
-			</button>
-		</div>
-		<div class="model-card-wrapper">
-			<a href="/reasoning" class="model-card">
-				<h2>Methods of Reason</h2>
-				<p>Inductive vs. Deductive thinking in Scripture</p>
-				<span class="arrow">→</span>
-			</a>
-			<button 
-				class="reset-btn" 
-				onclick={() => startFresh('reasoning', '/reasoning')}
 				title="Reset progress and start fresh"
 			>
 				Reset
