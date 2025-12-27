@@ -40,7 +40,7 @@
 
 /* Scripture blockquote styling */
 .scripture {
-	background: var(--color-bg-white);
+	background: var(--color-bg-ghost);
 	padding: 24px 32px;
 	margin: 0;
 	font-size: var(--font-size-scripture);
@@ -90,7 +90,7 @@
 	text-align: center;
 	color: #333;
 	padding: 20px;
-	background: var(--color-bg-white);
+	background: var(--color-bg-ghost);
 	border-radius: var(--radius-card);
 	box-shadow: 0 2px 8px var(--color-shadow);
 }

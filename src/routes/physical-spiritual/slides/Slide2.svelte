@@ -2,6 +2,7 @@
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
 	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
+	import { Rect } from '$lib/components/svg';
 
 	/**
 	 * Slide 2: Physical/Spiritual - Timeline diagram
@@ -114,13 +115,8 @@
 	<!-- ========== ANIMATION SEQUENCE (18 Steps) ========== -->
 
 	<!-- Step 1: Blue rectangle (SPIRITUAL column) + "SPIRITUAL" title -->
-	<Fragment
-		step={1}
-		layout={{ x: 196.4, y: 0, width: 263.3, height: 541.2 }}
-		fill="var(--color-level2)"
-		zIndex={1}
-	>
-		<span></span>
+	<Fragment step={1} animate="wipe-down">
+		<Rect x={196.4} y={0} width={263.3} height={541.2} fill="var(--color-level2)" zIndex={1} />
 	</Fragment>
 
 	<Fragment
@@ -133,13 +129,8 @@
 	</Fragment>
 
 	<!-- Step 1.1 (after): Gray rectangle (PHYSICAL column) + "PHYSICAL" title -->
-	<Fragment
-		step={1.1}
-		layout={{ x: 460, y: 0, width: 270.7, height: 540 }}
-		fill="var(--color-level2)"
-		zIndex={0}
-	>
-		<span></span>
+	<Fragment step={1.1} animate="wipe-down">
+		<Rect x={460} y={0} width={270.7} height={540} fill="var(--color-level2)" zIndex={0} />
 	</Fragment>
 
 	<Fragment

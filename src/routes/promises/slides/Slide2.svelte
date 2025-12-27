@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-	import FragmentArrow from '$lib/components/FragmentArrow.svelte';
 	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
+	import { Arrow, Line, Rect } from '$lib/components/svg';
 
 	/**
 	 * Slide 2: Galatians 4:21-31 - Physical vs Spiritual (Hagar/Sarah allegory)
@@ -39,23 +39,13 @@
 	</Fragment>
 
 	<!-- Step 2: Rectangle 35 (grey background column - Physical) -->
-	<Fragment
-		step={2}
-		layout={{ x: 92.3, y: 52.7, width: 345.6, height: 468 }}
-		fill="var(--color-level1)"
-		zIndex={0}
-	>
-		<span></span>
+	<Fragment step={2} animate="wipe-down">
+		<Rect x={92.3} y={52.7} width={345.6} height={468} fill="var(--color-level1)" zIndex={0} />
 	</Fragment>
 
 	<!-- Step 3: Rectangle 34 (blue background column - Spiritual) -->
-	<Fragment
-		step={3}
-		layout={{ x: 516, y: 52.7, width: 338.4, height: 468 }}
-		fill="var(--color-level2)"
-		zIndex={0}
-	>
-		<span></span>
+	<Fragment step={3} animate="wipe-down">
+		<Rect x={516} y={52.7} width={338.4} height={468} fill="var(--color-level2)" zIndex={0} />
 	</Fragment>
 
 	<!-- Step 4: Abraham (centered boxed) -->
@@ -64,7 +54,7 @@
 		layout={{ x: 379.2, y: 100.7, width: 208.8, height: 54 }}
 		font={{ font_size: 43.2 }}
 		fill="var(--color-bg-light)"
-		line={{ color: '#000000', width: 2.3 }}
+		line={{ color: 'var(--color-bg-darkest)', width: 2.3 }}
 		zIndex={22}
 	>
 		Abraham
@@ -111,16 +101,14 @@
 	</Fragment>
 
 	<!-- Step 9: Vertical stem from Abraham + Arrow to Hagar -->
-	<Fragment step={9} animate="none">
-		<!-- Vertical stem centered under Abraham -->
-		<div class="connector-stem" style="left: 450px; top: 154px; width: 20px; height: 41px; z-index: 21;"></div>
+	<Fragment step={9} animate="fade">
+		<!-- Vertical stem -->
+		<Line from={{ x: 460, y: 154 }} to={{ x: 460, y: 193.5 }} stroke={{ width: 15}} zIndex={21} />
 	</Fragment>
-	<FragmentArrow 
-		step={9}
-		path={{ start: { x: 450, y: 186 }, end: { x: 336, y: 186 } }}
-		line={{ width: 16 }}
-		zIndex={21}
-	/>
+	<Fragment step={9} animate="wipe-left">
+		<!-- Arrow to Hagar -->
+		<Arrow from={{ x: 460, y: 186 }} to={{ x: 336, y: 186 }} stroke={{ width: 15 }} zIndex={21} />
+	</Fragment>
 
 	<!-- Step 10: Hagar (bold) - appears with arrow at step 9, slightly delayed -->
 	<Fragment
@@ -143,15 +131,14 @@
 	</Fragment>
 
 	<!-- Step 12: Arrow from Abraham to Sarah (right arrow shape) -->
-	<Fragment step={12} animate="none">
-		<div class="connector-stem" style="left: 485px; top: 154px; width: 20px; height: 41px; z-index: 21;"></div>
+	<Fragment step={12} animate="fade">
+		<!-- Vertical stem -->
+		<Line from={{ x: 495, y: 154 }} to={{ x: 495, y: 186 }} stroke={{ width: 15 }} zIndex={20} />
 	</Fragment>
-	<FragmentArrow 
-		step={12}
-		path={{ start: { x: 505, y: 186 }, end: { x: 617, y: 186 } }}
-		line={{ width: 16 }}
-		zIndex={20}
-	/>
+	<Fragment step={12} animate="wipe">
+		<!-- Arrow to Sarah -->
+		<Arrow from={{ x: 487.5, y: 186 }} to={{ x: 615, y: 186 }} stroke={{ width: 15 }} zIndex={20} />
+	</Fragment>
 
 	<!-- Step 13: Sarah (bold, blue) - appears with arrow at step 12, slightly delayed -->
 	<Fragment
@@ -174,13 +161,9 @@
 	</Fragment>
 
 	<!-- Step 15: Down arrow (left side) -->
-	<FragmentArrow 
-		step={15}
-		path={{ start: { x: 265, y: 244 }, end: { x: 265, y: 292 } }}
-		line={{ width: 24 }}
-		headSize={1}
-		zIndex={23}
-	/>
+	<Fragment step={15} animate="wipe-down">
+		<Arrow from={{ x: 265, y: 244 }} to={{ x: 265, y: 288 }} stroke={{ width: 10 }} zIndex={23} />
+	</Fragment>
 
 	<!-- Step 16: Mt. Sinai (bold) -->
 	<Fragment
@@ -244,13 +227,9 @@
 	</Fragment>
 
 	<!-- Step 22: Down arrow (right side) -->
-	<FragmentArrow 
-		step={22}
-		path={{ start: { x: 685, y: 244 }, end: { x: 685, y: 292 } }}
-		line={{ width: 24 }}
-		headSize={1}
-		zIndex={24}
-	/>
+	<Fragment step={22} animate="wipe-down">
+		<Arrow from={{ x: 685, y: 244 }} to={{ x: 685, y: 288 }} stroke={{ width: 10 }} zIndex={24} />
+	</Fragment>
 
 	<!-- Step 23: "Jerusalem above is free" (blue, italic) -->
 	<Fragment
@@ -278,7 +257,7 @@
 		step={25}
 		layout={{ x: 85.4, y: 374.8, width: 362.9, height: 64.8 }}
 		font={{ font_size: 21.6, bold: true }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={15}
 	>
@@ -290,7 +269,7 @@
 		step={26}
 		layout={{ x: 503.3, y: 446.3, width: 362.9, height: 64.8 }}
 		font={{ font_size: 24, bold: true }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={25}
 	>
@@ -307,8 +286,5 @@
 		color: var(--color-level3);
 	}
 
-	.connector-stem {
-		position: absolute;
-		background: #000000;
-	}
+	/* All shapes now use SVG components inside Fragment */
 </style>

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-	import FragmentArrow from '$lib/components/FragmentArrow.svelte';
 	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
+	import { Arrow, Line, Path, Rect } from '$lib/components/svg';
 
 	/**
 	 * Slide 1: The Promises - Pixel-perfect layout from PowerPoint extraction
@@ -48,16 +48,12 @@
 	</Fragment>
 
 	<!-- Step 2: Rectangle 59 (grey background column) + Line 62 (horizontal line) -->
-	<Fragment
-		step={2}
-		layout={{ x: 75.6, y: 50, width: 274.8, height: 462.4 }}
-		fill="var(--color-level1)"
-	>
-		<span></span>
+	<Fragment step={2} animate="wipe-down">
+		<Rect x={75.6} y={50} width={274.8} height={462.4} fill="var(--color-level1)" />
 	</Fragment>
 
-	<Fragment step={2} animate={"fade"}>
-		<div class="horizontal-line" style="left: 74.7px; top: 46.7px; width: 811px; height: 2.7px;"></div>
+	<Fragment step={2} animate="fade">
+		<Line from={{ x: 74.7, y: 48.2 }} to={{ x: 885.7, y: 48.2 }} stroke={{ width: 2.7, color: '#000000' }} />
 	</Fragment>
 
 	<!-- Step 3: Great Nation -->
@@ -66,7 +62,7 @@
 		layout={{ x: 112.8, y: 115.5, width: 180, height: 28.9 }}
 		font={{ font_size: 28.8, bold: true }}
 		zIndex={6}
-		animate={"fade"}
+		animate="fly-right"
 	>
 		Great Nation
 	</Fragment>
@@ -107,7 +103,7 @@
 		step={7}
 		layout={{ x: 156, y: 175.4, width: 122.4, height: 43.9 }}
 		font={{ font_size: 33.6, bold: true }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1.3 }}
 		zIndex={10}
 	>
@@ -147,12 +143,8 @@
 	</Fragment>
 
 	<!-- Step 12: Rectangle 60 (blue background column) -->
-	<Fragment
-		step={11}
-		layout={{ x: 609.9, y: 50, width: 274.8, height: 462.4 }}
-		fill="var(--color-level2)"
-	>
-		<span></span>
+	<Fragment step={11} animate="wipe-down">
+		<Rect x={609.9} y={50} width={274.8} height={462.4} fill="var(--color-level2)" />
 	</Fragment>
 
 	<!-- Step 13: Physical -->
@@ -177,22 +169,19 @@
 	</Fragment>
 
 	<!-- Step 15: Right arrow (Israel to Church) -->
-	<FragmentArrow 
-		step={14}
-		path={{ start: { x: 307, y: 197 }, end: { x: 666, y: 197 } }}
-		line={{ width: 10 }}
-		zIndex={34}
-	/>
+	<Fragment step={14} animate="wipe">
+		<Arrow from={{ x: 307, y: 197 }} to={{ x: 666, y: 197 }} stroke={{ width: 10 }} zIndex={34} />
+	</Fragment>
 
 	<!-- Step 14.1: Church (blue boxed) - appears after arrow with delay -->
 	<Fragment
 		step={14.1}
 		layout={{ x: 679.8, y: 175.4, width: 138.6, height: 43.9 }}
 		font={{ font_size: 33.6, bold: true, color: 'var(--color-level3)' }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1.3 }}
 		zIndex={12}
-		animate={"fade"}
+		animate="fade"
 	>
 		Church
 	</Fragment>
@@ -212,7 +201,7 @@
 		step={16}
 		layout={{ x: 146, y: 280.3, width: 142.4, height: 43.9 }}
 		font={{ font_size: 33.6, bold: true }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1.3 }}
 		zIndex={18}
 	>
@@ -241,19 +230,16 @@
 	</Fragment>
 
 	<!-- Step 21: Right arrow (Canaan to Heaven) -->
-	<FragmentArrow 
-		step={19}
-		path={{ start: { x: 307, y: 302 }, end: { x: 674, y: 302 } }}
-		line={{ width: 10 }}
-		zIndex={35}
-	/>
+	<Fragment step={19} animate="wipe">
+		<Arrow from={{ x: 307, y: 302 }} to={{ x: 666, y: 302 }} stroke={{ width: 10 }} zIndex={35} />
+	</Fragment>
 
 	<!-- Step 22: Heaven (blue boxed) -->
 	<Fragment
 		step={19.1}
 		layout={{ x: 681.6, y: 280.3, width: 140.6, height: 43.9 }}
 		font={{ font_size: 33.6, bold: true, color: 'var(--color-level3)' }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1.3 }}
 		zIndex={20}
 	>
@@ -276,7 +262,7 @@
 		step={22}
 		layout={{ x: 380.7, y: 237.3, width: 211, height: 68.5 }}
 		font={{ font_size: 24, bold: true }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		zIndex={36}
 	>
 		<span class="wrap-text">Joshua…Savior…Israel…Canaan</span>
@@ -287,7 +273,7 @@
 		step={23}
 		layout={{ x: 380.7, y: 302.3, width: 211, height: 66 }}
 		font={{ font_size: 24, bold: true, color: 'var(--color-level3)' }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		zIndex={51}
 	>
 		<span class="wrap-text">Jesus…Savior…Church…Heaven</span>
@@ -309,7 +295,7 @@
 		step={25}
 		layout={{ x: 681.6, y: 400.1, width: 144, height: 43.9 }}
 		font={{ font_size: 33.6, bold: true, color: 'var(--color-level3)' }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1.3 }}
 		zIndex={22}
 	>
@@ -332,7 +318,7 @@
 		step={27}
 		layout={{ x: 137.1, y: 428.4, width: 160.2, height: 44.1 }}
 		font={{ font_size: 33.6, bold: true }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1.3 }}
 		zIndex={30}
 	>
@@ -340,8 +326,8 @@
 	</Fragment>
 
 	<!-- Step 30: Line 47 (connector from Abraham) -->
-	<Fragment step={28}>
-		<div class="connector-line" style="left: 271.2px; top: 433.3px; width: 56.5px; height: 4px; z-index: 24;"></div>
+	<Fragment step={28} animate="draw">
+		<Line from={{ x: 271.2, y: 435.3 }} to={{ x: 327.7, y: 435.3 }} stroke={{ width: 4 }} zIndex={24} />
 	</Fragment>
 
 	<!-- Step 31: Isaac (small boxed) -->
@@ -349,7 +335,7 @@
 		step={29}
 		layout={{ x: 328.8, y: 421.5, width: 64.2, height: 27.2 }}
 		font={{ font_size: 19.2, alignment: 'left' }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={45}
 	>
@@ -357,8 +343,8 @@
 	</Fragment>
 
 	<!-- Step 32: Line 51 (connector up to Esau) -->
-	<Fragment step={30}>
-		<div class="connector-line angled" style="left: 379.2px; top: 399.3px; width: 22.9px; height: 26.7px; z-index: 44;"></div>
+	<Fragment step={30} animate="draw">
+		<Line from={{ x: 379.2, y: 426 }} to={{ x: 402.1, y: 399.3 }} stroke={{ width: 4 }} zIndex={44} />
 	</Fragment>
 
 	<!-- Step 33: Esau (small boxed) -->
@@ -366,7 +352,7 @@
 		step={31}
 		layout={{ x: 392.1, y: 375.3, width: 62.1, height: 27.2 }}
 		font={{ font_size: 19.2, alignment: 'left' }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={27}
 	>
@@ -374,8 +360,8 @@
 	</Fragment>
 
 	<!-- Step 34: Line 52 (connector to Jacob) -->
-	<Fragment step={32}>
-		<div class="connector-line" style="left: 386.4px; top: 438px; width: 36px; height: 4px; z-index: 25;"></div>
+	<Fragment step={32} animate="draw">
+		<Line from={{ x: 386.4, y: 440 }} to={{ x: 422.4, y: 440 }} stroke={{ width: 4 }} zIndex={25} />
 	</Fragment>
 
 	<!-- Step 35: Jacob (small boxed) -->
@@ -383,7 +369,7 @@
 		step={33}
 		layout={{ x: 422.4, y: 421.5, width: 69.6, height: 27.2 }}
 		font={{ font_size: 19.2, alignment: 'left' }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={47}
 	>
@@ -391,8 +377,8 @@
 	</Fragment>
 
 	<!-- Step 36: Line 53 (connector to 12 Sons) -->
-	<Fragment step={34}>
-		<div class="connector-line" style="left: 486.6px; top: 438px; width: 50.2px; height: 4px; z-index: 46;"></div>
+	<Fragment step={34} animate="draw">
+		<Line from={{ x: 486.6, y: 440 }} to={{ x: 536.8, y: 440 }} stroke={{ width: 4 }} zIndex={46} />
 	</Fragment>
 
 	<!-- Step 37: 12 Sons (Tribes) (small boxed) -->
@@ -400,7 +386,7 @@
 		step={35}
 		layout={{ x: 531.4, y: 422.3, width: 88.8, height: 46.5 }}
 		font={{ font_size: 19.2 }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={31}
 	>
@@ -412,7 +398,7 @@
 		step={36}
 		layout={{ x: 547, y: 398.8, width: 81.9, height: 27.2 }}
 		font={{ font_size: 19.2 }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={29}
 	>
@@ -424,7 +410,7 @@
 		step={37}
 		layout={{ x: 564.2, y: 371.6, width: 75.2, height: 27.2 }}
 		font={{ font_size: 19.2 }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={28}
 	>
@@ -432,8 +418,8 @@
 	</Fragment>
 
 	<!-- Step 40: Line 55 (connector to Christ) -->
-	<Fragment step={38}>
-		<div class="connector-line angled" style="left: 638.4px; top: 387px; width: 39.5px; height: 20.2px; z-index: 3;"></div>
+	<Fragment step={38} animate="draw">
+		<Line from={{ x: 638.4, y: 387 }} to={{ x: 677.9, y: 407.2 }} stroke={{ width: 4 }} zIndex={3} />
 	</Fragment>
 
 	<!-- Step 41: "if you are Christ's, then you are Abraham's offspring" -->
@@ -447,8 +433,8 @@
 	</Fragment>
 
 	<!-- Step 42: Line 46 (connector down to Ishmael) -->
-	<Fragment step={40}>
-		<div class="connector-line angled" style="left: 164.5px; top: 472.5px; width: 36px; height: 15.2px; z-index: 23;"></div>
+	<Fragment step={40} animate="draw">
+		<Line from={{ x: 164.5, y: 472.5 }} to={{ x: 200.5, y: 487.7 }} stroke={{ width: 4 }} zIndex={23} />
 	</Fragment>
 
 	<!-- Step 43: Ishmael (small boxed) -->
@@ -456,7 +442,7 @@
 		step={41}
 		layout={{ x: 201.4, y: 478.1, width: 85.5, height: 27.2 }}
 		font={{ font_size: 19.2, alignment: 'left' }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={41}
 	>
@@ -464,8 +450,8 @@
 	</Fragment>
 
 	<!-- Step 44: Line 48 (connector to Arabic Nations) -->
-	<Fragment step={42}>
-		<div class="connector-line" style="left: 279.8px; top: 493.6px; width: 35px; height: 4px; z-index: 40;"></div>
+	<Fragment step={42} animate="draw">
+		<Line from={{ x: 279.8, y: 495.6 }} to={{ x: 314.8, y: 495.6 }} stroke={{ width: 4 }} zIndex={40} />
 	</Fragment>
 
 	<!-- Step 45: Arabic Nations (small boxed) -->
@@ -473,7 +459,7 @@
 		step={43}
 		layout={{ x: 307.2, y: 480, width: 147.5, height: 27.2 }}
 		font={{ font_size: 19.2 }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={39}
 	>
@@ -481,8 +467,8 @@
 	</Fragment>
 
 	<!-- Step 46: Line 49 (connector to Mohammed) -->
-	<Fragment step={44}>
-		<div class="connector-line" style="left: 438.9px; top: 493.6px; width: 43.2px; height: 4px; z-index: 0;"></div>
+	<Fragment step={44} animate="draw">
+		<Line from={{ x: 438.9, y: 495.6 }} to={{ x: 482.1, y: 495.6 }} stroke={{ width: 4 }} zIndex={0} />
 	</Fragment>
 
 	<!-- Step 47: Mohammed (small boxed) -->
@@ -490,7 +476,7 @@
 		step={45}
 		layout={{ x: 481.1, y: 480, width: 119.7, height: 27.2 }}
 		font={{ font_size: 19.2, alignment: 'left' }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={42}
 	>
@@ -498,8 +484,8 @@
 	</Fragment>
 
 	<!-- Step 48: Line 50 (connector to Islam) -->
-	<Fragment step={46}>
-		<div class="connector-line angled" style="left: 521.7px; top: 503.9px; width: 50.3px; height: 15.4px; z-index: 38;"></div>
+	<Fragment step={46} animate="draw">
+		<Line from={{ x: 521.7, y: 503.9 }} to={{ x: 572, y: 519.3 }} stroke={{ width: 4 }} zIndex={38} />
 	</Fragment>
 
 	<!-- Step 49: Islam (small boxed) -->
@@ -507,7 +493,7 @@
 		step={47}
 		layout={{ x: 572.9, y: 502.4, width: 75.9, height: 27.2 }}
 		font={{ font_size: 19.2 }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={43}
 	>
@@ -516,14 +502,5 @@
 </Slide>
 
 <style>
-	/* Angled connectors - diagonal line effect */
-	.connector-line.angled {
-		background: linear-gradient(
-			to bottom right,
-			transparent calc(50% - 2px),
-			#000000 calc(50% - 2px),
-			#000000 calc(50% + 2px),
-			transparent calc(50% + 2px)
-		);
-	}
+	/* All shapes now use SVG components inside Fragment */
 </style>

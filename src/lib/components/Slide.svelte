@@ -196,14 +196,14 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		overflow: hidden;
+		overflow: visible;
 		background: inherit;
 	}
 
 	.slide-canvas {
 		position: relative;
 		transform-origin: center center;
-		overflow: hidden;
+		overflow: visible;
 		/* Transparent - let slide content control background */
 		background: transparent;
 	}

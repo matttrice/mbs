@@ -38,8 +38,53 @@ export interface BoxLine {
 /**
  * Animation types for fragment entrance effects.
  * CSS keyframe animations triggered when fragment becomes visible.
+ * 
+ * Standard animations (work with any content):
+ * - 'fade': Fade in from transparent
+ * - 'fly-up', 'fly-down', 'fly-left', 'fly-right': Slide in from direction
+ * - 'scale': Scale up from 90%
+ * 
+ * SVG-specific animations (for SVG shape children):
+ * - 'wipe': Clip-path reveal from start to end
+ * - 'wipe-up', 'wipe-down', 'wipe-left', 'wipe-right': Directional wipe
+ * - 'draw': Stroke drawing effect using stroke-dashoffset
  */
-export type AnimationType = 'fade' | 'fly-up' | 'fly-down' | 'fly-left' | 'fly-right' | 'scale' | 'none';
+export type AnimationType = 
+	| 'fade' | 'fly-up' | 'fly-down' | 'fly-left' | 'fly-right' | 'scale'
+	| 'wipe' | 'wipe-up' | 'wipe-down' | 'wipe-left' | 'wipe-right'
+	| 'draw'
+	| 'none';
+
+/**
+ * Keyframe for step-based motion animation.
+ * Defines property values at a specific step for interpolation.
+ */
+export interface Keyframe {
+	/** Step number when these values should be reached */
+	step: number;
+	/** X position change (relative to layout.x) */
+	x?: number;
+	/** Y position change (relative to layout.y) */
+	y?: number;
+	/** Width change */
+	width?: number;
+	/** Height change */
+	height?: number;
+	/** Rotation in degrees */
+	rotation?: number;
+	/** Opacity (0-1) */
+	opacity?: number;
+}
+
+/**
+ * Transition configuration for keyframe animations.
+ */
+export interface TransitionConfig {
+	/** Duration in milliseconds (default: 300) */
+	duration?: number;
+	/** CSS easing function (default: 'ease-out') */
+	easing?: string;
+}
 
 // ============================================
 // Navigation Types

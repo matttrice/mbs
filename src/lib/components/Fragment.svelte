@@ -2,7 +2,9 @@
 	import { currentFragment, currentSlide, navigation } from '$lib/stores/navigation';
 	import { getSlideContext } from './Slide.svelte';
 	import { onMount, onDestroy } from 'svelte';
-	import type { BoxLayout, BoxFont, BoxLine, AnimationType } from '$lib/types';
+	import { tweened } from 'svelte/motion';
+	import { cubicOut } from 'svelte/easing';
+	import type { BoxLayout, BoxFont, BoxLine, AnimationType, Keyframe, TransitionConfig } from '$lib/types';
 	import { 
 		getEffectiveStep, 
 		getAnimationDelay, 
@@ -58,6 +60,11 @@
 		 * Use decimals for animation delay: 14.1 = click 14, 500ms delay
 		 */
 		step?: number;
+		/**
+		 * Step number when this content should disappear.
+		 * Content will be hidden when currentFragment >= exitStep.
+		 */
+		exitStep?: number;
 		/** 
 		 * Animation delay in milliseconds. Overrides the decimal-based delay calculation.
 		 */
@@ -86,11 +93,22 @@
 		zIndex?: number;
 		/** Entrance animation when fragment becomes visible. */
 		animate?: AnimationType;
+		/**
+		 * Keyframes for step-based motion animation.
+		 * Each keyframe defines property values at a specific step.
+		 * Fragment interpolates between keyframes when step changes.
+		 */
+		keyframes?: Keyframe[];
+		/**
+		 * Transition configuration for keyframe animations.
+		 */
+		transition?: TransitionConfig;
 		children: import('svelte').Snippet;
 	}
 
 	let {
 		step,
+		exitStep,
 		delay,
 		drillTo,
 		returnHere = false,
@@ -100,6 +118,8 @@
 		line,
 		zIndex = 0,
 		animate = 'fade',
+		keyframes,
+		transition,
 		children
 	}: Props = $props();
 
@@ -126,10 +146,63 @@
 	);
 
 	// Always visible if no step defined, otherwise visibility depends on currentFragment
-	let visible = $derived(shouldBeVisible(normalizedStep, $currentFragment));
+	// Also check exitStep - hide if we've reached it
+	let visible = $derived(() => {
+		const stepVisible = shouldBeVisible(normalizedStep, $currentFragment);
+		if (!stepVisible) return false;
+		if (exitStep !== undefined) {
+			const normalizedExit = getNormalizedStep(exitStep, slideContext);
+			if (normalizedExit !== undefined && $currentFragment >= normalizedExit) {
+				return false;
+			}
+		}
+		return true;
+	});
 
 	// Check if this fragment's slide is the currently active slide
 	let isActiveSlide = $derived(checkIsActiveSlide(slideContext?.slideIndex, $currentSlide));
+
+	// ========== KEYFRAME MOTION ==========
+	//
+	// When keyframes are provided, interpolate position/opacity between them
+	// based on the current fragment step.
+
+	const transitionDuration = transition?.duration ?? 300;
+	const transitionEasing = transition?.easing ?? 'ease-out';
+
+	// Tweened values for smooth interpolation
+	const tweenedX = tweened(0, { duration: transitionDuration, easing: cubicOut });
+	const tweenedY = tweened(0, { duration: transitionDuration, easing: cubicOut });
+	const tweenedWidth = tweened(0, { duration: transitionDuration, easing: cubicOut });
+	const tweenedHeight = tweened(0, { duration: transitionDuration, easing: cubicOut });
+	const tweenedRotation = tweened(0, { duration: transitionDuration, easing: cubicOut });
+	const tweenedOpacity = tweened(1, { duration: transitionDuration, easing: cubicOut });
+
+	// Find the active keyframe based on current fragment
+	$effect(() => {
+		if (!keyframes || keyframes.length === 0) return;
+
+		// Find the keyframe that applies at current step
+		// Use the last keyframe whose step <= currentFragment
+		const sortedKeyframes = [...keyframes].sort((a, b) => a.step - b.step);
+		let activeKeyframe: Keyframe | undefined;
+
+		for (const kf of sortedKeyframes) {
+			const normalizedKfStep = getNormalizedStep(kf.step, slideContext);
+			if (normalizedKfStep !== undefined && $currentFragment >= normalizedKfStep) {
+				activeKeyframe = kf;
+			}
+		}
+
+		if (activeKeyframe) {
+			if (activeKeyframe.x !== undefined) tweenedX.set(activeKeyframe.x);
+			if (activeKeyframe.y !== undefined) tweenedY.set(activeKeyframe.y);
+			if (activeKeyframe.width !== undefined) tweenedWidth.set(activeKeyframe.width);
+			if (activeKeyframe.height !== undefined) tweenedHeight.set(activeKeyframe.height);
+			if (activeKeyframe.rotation !== undefined) tweenedRotation.set(activeKeyframe.rotation);
+			if (activeKeyframe.opacity !== undefined) tweenedOpacity.set(activeKeyframe.opacity);
+		}
+	});
 
 	// ========== ANIMATION LOGIC ==========
 	// 
@@ -161,7 +234,7 @@
 			if (step !== undefined) {
 				const normalized = getNormalizedStep(step, slideContext) ?? step;
 				const effectiveStep = getEffectiveStep(normalized);
-				hasAnimated = wasAlreadyRevealed(effectiveStep, slideContext?.slideIndex, visible);
+				hasAnimated = wasAlreadyRevealed(effectiveStep, slideContext?.slideIndex, visible());
 			} else {
 				// Static content (no step) - never animate
 				hasAnimated = true;
@@ -172,7 +245,7 @@
 	
 	// Determine if we should show animation classes
 	// Animate if: ready, visible, on active slide, not yet animated
-	let showAnimation = $derived(animationReady && visible && isActiveSlide && !hasAnimated);
+	let showAnimation = $derived(animationReady && visible() && isActiveSlide && !hasAnimated);
 	
 	// When animation starts, mark as animated (after animation completes)
 	$effect(() => {
@@ -184,20 +257,42 @@
 			return () => clearTimeout(timer);
 		}
 	});
+	
+	// Reset hasAnimated when fragment becomes invisible (e.g., stepping backwards)
+	// This allows the animation to replay when stepping forward again
+	// Note: This doesn't affect drill returns because the fragment stays visible during drills
+	$effect(() => {
+		if (animationReady && !visible()) {
+			hasAnimated = false;
+		}
+	});
 	const computedStyle = $derived(() => {
 		if (!layout) return '';
 
+		// Base position from layout, adjusted by keyframe tweens
+		const x = layout.x + $tweenedX;
+		const y = layout.y + $tweenedY;
+		const width = layout.width + $tweenedWidth;
+		const height = layout.height + $tweenedHeight;
+
 		let style = `
 			position: absolute;
-			left: ${layout.x}px;
-			top: ${layout.y}px;
-			width: ${layout.width}px;
-			height: ${layout.height}px;
+			left: ${x}px;
+			top: ${y}px;
+			width: ${width}px;
+			height: ${height}px;
 			z-index: ${zIndex};
 		`;
 
-		if (layout.rotation) {
-			style += `transform: rotate(${layout.rotation}deg);`;
+		// Combine rotation from layout and keyframe
+		const rotation = (layout.rotation ?? 0) + $tweenedRotation;
+		if (rotation !== 0) {
+			style += `transform: rotate(${rotation}deg);`;
+		}
+
+		// Apply keyframe opacity
+		if ($tweenedOpacity !== 1) {
+			style += `opacity: ${$tweenedOpacity};`;
 		}
 
 		// Font styles
@@ -225,16 +320,17 @@
 	});
 
 	function handleClick() {
-		if (drillTo && visible) {
+		if (drillTo && visible()) {
 			navigation.drillInto(drillTo, 0, returnHere);
 		}
 	}
 </script>
 
-{#if visible}
+{#if visible()}
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div
+		class="fragment"
 		class:fragment-positioned={layout}
 		class:drillable={drillTo}
 		class:animate-fade={showAnimation && animate === 'fade'}
@@ -243,7 +339,14 @@
 		class:animate-fly-left={showAnimation && animate === 'fly-left'}
 		class:animate-fly-right={showAnimation && animate === 'fly-right'}
 		class:animate-scale={showAnimation && animate === 'scale'}
-		style="{computedStyle()}animation-delay: {animationDelay}ms;"
+		class:animate-wipe={showAnimation && animate === 'wipe'}
+		class:animate-wipe-up={showAnimation && animate === 'wipe-up'}
+		class:animate-wipe-down={showAnimation && animate === 'wipe-down'}
+		class:animate-wipe-left={showAnimation && animate === 'wipe-left'}
+		class:animate-wipe-right={showAnimation && animate === 'wipe-right'}
+		class:animate-draw={showAnimation && animate === 'draw'}
+		class:revealed={animationReady && !showAnimation}
+		style="{computedStyle()}--animation-delay: {animationDelay}ms;"
 		onclick={drillTo ? handleClick : undefined}
 	>
 		{@render children()}
@@ -257,7 +360,7 @@
 		align-items: center;
 		justify-content: center;
 		box-sizing: border-box;
-		overflow: hidden;
+		overflow: visible;
 		white-space: nowrap;
 	}
 
@@ -276,6 +379,7 @@
 	/* Fade */
 	.animate-fade {
 		animation: fragmentFadeIn 0.5s ease-out both;
+		animation-delay: var(--animation-delay, 0ms);
 	}
 	@keyframes fragmentFadeIn {
 		from { opacity: 0; }
@@ -285,6 +389,7 @@
 	/* Fly Up */
 	.animate-fly-up {
 		animation: fragmentFlyUp 0.3s ease-out both;
+		animation-delay: var(--animation-delay, 0ms);
 	}
 	@keyframes fragmentFlyUp {
 		from { opacity: 0; transform: translateY(20px); }
@@ -294,6 +399,7 @@
 	/* Fly Down */
 	.animate-fly-down {
 		animation: fragmentFlyDown 0.3s ease-out both;
+		animation-delay: var(--animation-delay, 0ms);
 	}
 	@keyframes fragmentFlyDown {
 		from { opacity: 0; transform: translateY(-20px); }
@@ -303,6 +409,7 @@
 	/* Fly Left */
 	.animate-fly-left {
 		animation: fragmentFlyLeft 0.3s ease-out both;
+		animation-delay: var(--animation-delay, 0ms);
 	}
 	@keyframes fragmentFlyLeft {
 		from { opacity: 0; transform: translateX(20px); }
@@ -312,6 +419,7 @@
 	/* Fly Right */
 	.animate-fly-right {
 		animation: fragmentFlyRight 0.3s ease-out both;
+		animation-delay: var(--animation-delay, 0ms);
 	}
 	@keyframes fragmentFlyRight {
 		from { opacity: 0; transform: translateX(-20px); }
@@ -321,9 +429,100 @@
 	/* Scale */
 	.animate-scale {
 		animation: fragmentScale 0.3s ease-out both;
+		animation-delay: var(--animation-delay, 0ms);
 	}
 	@keyframes fragmentScale {
 		from { opacity: 0; transform: scale(0.9); }
 		to { opacity: 1; transform: scale(1); }
+	}
+
+	/* ========== SVG-specific Animations ========== */
+
+	/* Wipe (default: left to right) */
+	.animate-wipe :global(svg) {
+		clip-path: inset(0 100% 0 0);
+		animation: wipeRight 0.5s ease-out forwards;
+		animation-delay: var(--animation-delay, 0ms);
+	}
+
+	/* Wipe Right (explicit) */
+	.animate-wipe-right :global(svg) {
+		clip-path: inset(0 100% 0 0);
+		animation: wipeRight 0.5s ease-out forwards;
+		animation-delay: var(--animation-delay, 0ms);
+	}
+
+	/* Wipe Left */
+	.animate-wipe-left :global(svg) {
+		clip-path: inset(0 0 0 100%);
+		animation: wipeLeft 0.5s ease-out forwards;
+		animation-delay: var(--animation-delay, 0ms);
+	}
+
+	/* Wipe Up */
+	.animate-wipe-up :global(svg) {
+		clip-path: inset(100% 0 0 0);
+		animation: wipeUp 0.5s ease-out forwards;
+		animation-delay: var(--animation-delay, 0ms);
+	}
+
+	/* Wipe Down */
+	.animate-wipe-down :global(svg) {
+		clip-path: inset(0 0 100% 0);
+		animation: wipeDown 0.5s ease-out forwards;
+		animation-delay: var(--animation-delay, 0ms);
+	}
+
+	/* Revealed state (for drill return - show immediately without animation) */
+	.revealed :global(svg) {
+		clip-path: inset(0 0 0 0);
+	}
+
+	@keyframes wipeRight {
+		from { clip-path: inset(0 100% 0 0); }
+		to { clip-path: inset(0 0 0 0); }
+	}
+
+	@keyframes wipeLeft {
+		from { clip-path: inset(0 0 0 100%); }
+		to { clip-path: inset(0 0 0 0); }
+	}
+
+	@keyframes wipeUp {
+		from { clip-path: inset(100% 0 0 0); }
+		to { clip-path: inset(0 0 0 0); }
+	}
+
+	@keyframes wipeDown {
+		from { clip-path: inset(0 0 100% 0); }
+		to { clip-path: inset(0 0 0 0); }
+	}
+
+	/* Draw animation (stroke drawing effect) */
+	.animate-draw :global(svg path),
+	.animate-draw :global(svg line),
+	.animate-draw :global(svg polyline),
+	.animate-draw :global(svg circle),
+	.animate-draw :global(svg ellipse),
+	.animate-draw :global(svg rect),
+	.animate-draw :global(svg polygon) {
+		stroke-dasharray: var(--path-length, 1000);
+		stroke-dashoffset: var(--path-length, 1000);
+		animation: strokeDraw 0.5s ease-out forwards;
+		animation-delay: var(--animation-delay, 0ms);
+	}
+
+	.revealed :global(svg path),
+	.revealed :global(svg line),
+	.revealed :global(svg polyline),
+	.revealed :global(svg circle),
+	.revealed :global(svg ellipse),
+	.revealed :global(svg rect),
+	.revealed :global(svg polygon) {
+		stroke-dashoffset: 0;
+	}
+
+	@keyframes strokeDraw {
+		to { stroke-dashoffset: 0; }
 	}
 </style>

@@ -13,7 +13,8 @@
 
 	/* Neutral colors */
 	--color-bg-light: #e8e8e8;
-	--color-bg-white: #ffffff;
+	--color-bg-ghost: #ffffff;
+	--color-bg-darkest: #000000;
 	--color-text-primary: #000000;
 	--color-text-muted: #666666;
 

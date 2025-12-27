@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-	import FragmentArrow from '$lib/components/FragmentArrow.svelte';
 	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
+	import { Arrow, Line, Rect } from '$lib/components/svg';
 
 	/**
 	 * Slide 1: Physical/Spiritual - Genesis 1:1
@@ -57,29 +57,22 @@
 	</Fragment>
 
 	<!-- Step 3: "Heavens" + Blue rectangle + Lines + "Earth" + Gray rectangle (all with timing) -->
-	<Fragment
-		step={3}
-		layout={{ x: 192.7, y: 0, width: 288, height: 540 }}
-		fill="var(--color-level2)"
-        animate='fly-down'
-		zIndex={2}
-	>
-		<span></span>
+	<Fragment step={3} animate="wipe-down">
+		<Rect x={192.7} y={0} width={288} height={540} fill="var(--color-level2)" zIndex={2} />
 	</Fragment>
 
-	<Fragment
-		step={3}
-		layout={{ x: 480, y: 0, width: 270, height: 540 }}
-		fill="var(--color-level1)"
-        animate='fly-down'
-		zIndex={0}
-	>
-		<span></span>
+	<Fragment step={3} animate="wipe-down">
+		<Rect x={480} y={0} width={270} height={540} fill="var(--color-level1)" zIndex={0} />
 	</Fragment>
+	<!-- Horizontal divider line -->
 	<Fragment step={3}>
-		<div class="horizontal-line" style="left: 192.4px; top: 53.9px; width: 558px; height: 3px; z-index: 12;"></div>
-		<div class="vertical-line" style="left: 480px; top: 0; width: 3px; height: 540px; z-index: 3;"></div>
-    </Fragment>
+		<Line from={{ x: 192.4, y: 55.4 }} to={{ x: 750.4, y: 55.4 }} stroke={{ width: 3, color: '#000000' }} zIndex={12} />
+	</Fragment>
+
+	<!-- Vertical divider line -->
+	<Fragment step={3}>
+		<Line from={{ x: 481.5, y: 0 }} to={{ x: 481.5, y: 540 }} stroke={{ width: 3, color: '#000000' }} zIndex={3} />
+	</Fragment>
 	<Fragment
 		step={3.25}
 		layout={{ x: 239.5, y: 6.9, width: 217.1, height: 40.8 }}
@@ -263,13 +256,9 @@
 	</Fragment>
 
 	<!-- Step 17: Line from Fan spins + "Force of Electricity" -->
-	<FragmentArrow 
-		step={17}
-		path={{ start: { x: 547, y: 285 }, end: { x: 453, y: 285 } }}
-		line={{ width: 3 }}
-		arrowhead={false}
-		zIndex={8}
-	/>
+	<Fragment step={17} animate="draw">
+		<Line from={{ x: 547, y: 285 }} to={{ x: 453, y: 285 }} stroke={{ width: 3, dash: '5,5' }} zIndex={8} />
+	</Fragment>
 
 	<Fragment
 		step={17}
@@ -291,13 +280,9 @@
 	</Fragment>
 
 	<!-- Step 19: Line + "Force of Wind" -->
-	<FragmentArrow 
-		step={19}
-		path={{ start: { x: 537, y: 258 }, end: { x: 434, y: 258 } }}
-		line={{ width: 3 }}
-		arrowhead={false}
-		zIndex={7}
-	/>
+	<Fragment step={19} animate="draw">
+		<Line from={{ x: 537, y: 258 }} to={{ x: 434, y: 258 }} stroke={{ width: 3, dash: '5,5' }} zIndex={7} />
+	</Fragment>
 
 	<Fragment
 		step={19}
@@ -319,13 +304,9 @@
 	</Fragment>
 
 	<!-- Step 21: Line + "Force of Gravity" -->
-	<FragmentArrow 
-		step={21}
-		path={{ start: { x: 536, y: 228 }, end: { x: 442, y: 228 } }}
-		line={{ width: 3 }}
-		arrowhead={false}
-		zIndex={9}
-	/>
+	<Fragment step={21} animate="draw">
+		<Line from={{ x: 536, y: 228 }} to={{ x: 442, y: 228 }} stroke={{ width: 3, dash: '5,5' }} zIndex={9} />
+	</Fragment>
 
 	<Fragment
 		step={21}
@@ -336,13 +317,10 @@
 		Force of Gravity
 	</Fragment>
 
-    <FragmentArrow 
-		step={22}
-		path={{ start: { x: 170, y: 252 }, end: { x: 235, y: 228 } }}
-		line={{ width: 7 }}
-        headSize={2}
-		zIndex={32}
-	/>
+	<!-- Step 22: Arrow from "Forms of what?" to Gravity -->
+	<Fragment step={22} animate="wipe">
+		<Arrow from={{ x: 170, y: 252 }} to={{ x: 235, y: 228 }} stroke={{ width: 4 }} zIndex={32} />
+	</Fragment>
 
 	<Fragment
 		step={22}
@@ -354,14 +332,8 @@
 	</Fragment>
 	
     <!-- "Causes" + Causes box -->
-    <Fragment
-		step={22}
-		layout={{ x: 206, y: 178, width: 275, height: 118.9 }}
-		fill="var(--color-bg-light)"
-		line={{ color: '#000000', width: 1 }}
-		zIndex={6}
-	>
-		<span></span>
+	<Fragment step={22} animate="fade">
+		<Rect x={206} y={178} width={275} height={118.9} fill="var(--color-bg-light)" stroke={{ color: '#000000', width: 1 }} zIndex={6} />
 	</Fragment>
 
 	<Fragment
@@ -382,24 +354,14 @@
 		Effects
 	</Fragment>
 
-	<Fragment
-		step={24}
-		layout={{ x: 482, y: 178, width: 250, height: 118.9 }}
-		fill="var(--color-bg-light)"
-		line={{ color: '#000000', width: 1 }}
-		zIndex={5}
-	>
-		<span></span>
+	<Fragment step={24} animate="fade">
+		<Rect x={482} y={178} width={250} height={118.9} fill="var(--color-bg-light)" stroke={{ color: '#000000', width: 1 }} zIndex={5} />
 	</Fragment>
 
-	<!-- Step 24: Diagonal line + "What is effected?" -->
-	<FragmentArrow 
-		step={24}
-		path={{ start: { x: 796, y: 292 }, end: { x: 725, y: 251 } }}
-		line={{ width: 7 }}
-		headSize={2}
-		zIndex={34}
-	/>
+	<!-- Step 24: Diagonal arrow from "What is effected?" to Effects box -->
+	<Fragment step={24} animate="wipe-left">
+		<Arrow from={{ x: 790, y: 292 }} to={{ x: 725, y: 251 }} stroke={{ width: 4 }} zIndex={34} />
+	</Fragment>
 
 	<Fragment
 		step={24}
@@ -420,13 +382,8 @@
 		Matter
 	</Fragment>
 
-	<Fragment
-		step={25}
-		layout={{ x: 481.1, y: 295.4, width: 258.6, height: 127.7 }}
-		fill="#FFFFFF"
-		zIndex={1}
-	>
-		<span></span>
+	<Fragment step={25} animate="fade">
+		<Rect x={481.1} y={295.4} width={258.6} height={127.7} fill="var(--color-bg-ghost)" zIndex={1} />
 	</Fragment>
 
 	<!-- Step 27: "Energy" + white box -->
@@ -439,13 +396,8 @@
 		Energy
 	</Fragment>
 
-	<Fragment
-		step={27}
-		layout={{ x: 199.3, y: 294.9, width: 283.6, height: 128.4 }}
-		fill="#FFFFFF"
-		zIndex={4}
-	>
-		<span></span>
+	<Fragment step={27} animate="fade">
+		<Rect x={199.3} y={294.9} width={281} height={128.4} fill="var(--color-bg-ghost)" zIndex={4} />
 	</Fragment>
 
 	<!-- Step 28: First Law of Thermodynamics -->
@@ -463,7 +415,7 @@
 		step={29}
 		layout={{ x: 429.1, y: 308, width: 101.9, height: 30 }}
 		font={{ font_size: 21.7, bold: true }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={46}
 	>
@@ -475,7 +427,7 @@
 		step={30}
 		layout={{ x: 424.4, y: 304.4, width: 113.1, height: 41.4 }}
 		font={{ font_size: 48.3, bold: true }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		zIndex={61}
 	>
 		=
@@ -495,6 +447,7 @@
 		step={31}
 		layout={{ x: 466.4, y: 342.1, width: 29.2, height: 45.6 }}
 		font={{ font_size: 39.2 }}
+		fill="var(--color-bg-ghost)"
 		zIndex={70}
 	>
 		=
@@ -503,7 +456,7 @@
 	<Fragment
 		step={31}
 		layout={{ x: 489.6, y: 338.8, width: 48, height: 45.6 }}
-		font={{ font_size: 50, color: '#000000' }}
+		font={{ font_size: 50}}
 		zIndex={69}
 	>
 		m
@@ -525,7 +478,7 @@
 		drillTo="physical-spiritual/genesis-1-1"
 		layout={{ x: 23.2, y: 437.5, width: 160.2, height: 30.8 }}
 		font={{ font_size: 20, bold: true }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={36}
 	>
@@ -542,13 +495,9 @@
 		<span class="wrap-text">What gives matter stability?</span>
 	</Fragment>
 
-	<FragmentArrow 
-		step={34}
-		path={{ start: { x: 754, y: 379 }, end: { x: 583, y: 361 } }}
-		line={{ width: 7 }}
-		headSize={2}
-		zIndex={38}
-	/>
+	<Fragment step={34} animate="wipe-left">
+		<Arrow from={{ x: 754, y: 379 }} to={{ x: 583, y: 361 }} stroke={{ width: 4 }} zIndex={38} />
+	</Fragment>
 
 	<!-- Step 35: "c²" -->
 	<Fragment
@@ -570,13 +519,9 @@
 		Creation Equation
 	</Fragment>
 
-	<FragmentArrow 
-		step={36}
-		path={{ start: { x: 169, y: 447 }, end: { x: 234, y: 373 } }}
-		line={{ width: 7 }}
-		headSize={2}
-		zIndex={72}
-	/>
+	<Fragment step={36} animate="wipe">
+		<Arrow from={{ x: 169, y: 447 }} to={{ x: 234, y: 373 }} stroke={{ width: 4 }} zIndex={72} />
+	</Fragment>
 
 	<!-- Step 37: 1 Corinthians 15:40-45 (hyperlink) -->
 	<Fragment
@@ -584,7 +529,7 @@
 		drillTo="physical-spiritual/1corinthians-15-40"
 		layout={{ x: 33.3, y: 470.4, width: 140, height: 53.9 }}
 		font={{ font_size: 20, bold: true, color: 'var(--color-level3)' }}
-		fill="#FFFFFF"
+		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={40}
 	>
@@ -754,14 +699,5 @@
 </Slide>
 
 <style>
-	.horizontal-line {
-		position: absolute;
-		background-color: #000000;
-	}
-
-	.vertical-line {
-		position: absolute;
-		background-color: #000000;
-	}
-
+	/* All shapes now use SVG components inside Fragment */
 </style>

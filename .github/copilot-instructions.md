@@ -16,7 +16,7 @@ JSON (hsu-pptx/) → extractor.py → Slide components → navigation store → 
 | [navigation.ts](src/lib/stores/navigation.ts) | State machine managing slides, fragments, drill stack, and localStorage persistence |
 | [Slide.svelte](src/lib/components/Slide.svelte) | Context provider that collects `maxStep` from child Fragments |
 | [Fragment.svelte](src/lib/components/Fragment.svelte) | Unified component for visibility, positioning, styling, drills, and animations |
-| [FragmentArrow.svelte](src/lib/components/FragmentArrow.svelte) | Animated arrows/lines with wipe animation and step integration |
+| [SVG Components](src/lib/components/svg/) | svg.js-powered shape components (Arrow, Line, Rect, Circle, Ellipse, Path, Polygon) |
 
 ### Fixed Canvas System
 All presentations use a **960×540 pixel fixed canvas** (16:9 aspect ratio). The canvas scales to fit the viewport via CSS `transform: scale()`. All layout coordinates are absolute pixel positions within this canvas.
@@ -36,13 +36,13 @@ Use CSS custom properties for semantic colors instead of hardcoded hex values. T
 **Example - Column backgrounds:**
 ```svelte
 <!-- Physical column (gray) -->
-<Fragment fill="var(--color-level1)" layout={{ x: 75, y: 48, width: 275, height: 464 }}>
-  <span></span>
+<Fragment step={2} animate="wipe-down">
+  <Rect x={75} y={48} width={275} height={464} fill="var(--color-level1)" />
 </Fragment>
 
 <!-- Spiritual column (blue) -->
-<Fragment fill="var(--color-level2)" layout={{ x: 610, y: 48, width: 266, height: 464 }}>
-  <span></span>
+<Fragment step={3} animate="wipe-down">
+  <Rect x={610} y={48} width={266} height={464} fill="var(--color-level2)" />
 </Fragment>
 ```
 
@@ -63,10 +63,13 @@ The `Fragment` component handles all slide content - from simple text to fully-p
 | `drillTo` | `string` | Route to drill into on click (e.g., `"promises/genesis-12-1"`) |
 | `layout` | `BoxLayout` | Absolute positioning: `{ x, y, width, height, rotation? }` |
 | `font` | `BoxFont` | Typography: `{ font_name?, font_size?, bold?, italic?, color?, alignment? }` |
-| `fill` | `string` | Background color (e.g., `"#FFFFFF"`) |
+| `fill` | `string` | Background color (e.g., `"var(--color-bg-ghost)"`) |
 | `line` | `BoxLine` | Border: `{ color?, width? }` |
 | `zIndex` | `number` | Stacking order |
-| `animate` | `AnimationType` | Entrance animation: `'fade'`, `'fly-up'`, `'fly-down'`, `'fly-left'`, `'fly-right'`, `'scale'`, `'none'` |
+| `animate` | `AnimationType` | Entrance animation: `'fade'`, `'fly-up'`, `'fly-down'`, `'fly-left'`, `'fly-right'`, `'scale'`, `'wipe'`, `'wipe-up'`, `'wipe-down'`, `'wipe-left'`, `'wipe-right'`, `'draw'`, `'none'` |
+| `exitStep` | `number` | Step at which this fragment disappears (for temporary content) |
+| `keyframes` | `Keyframe[]` | Step-based motion: `[{ step: 2, x: 100 }, { step: 3, x: 200 }]` |
+| `transition` | `TransitionConfig` | Motion config: `{ duration?: number, easing?: function }` |
 | `returnHere` | `boolean` | Return to this drill (not origin) after nested drill completes |
 
 ### Usage Patterns
@@ -113,74 +116,140 @@ The `Fragment` component handles all slide content - from simple text to fully-p
 </Fragment>
 ```
 
-**Lines/connectors (no layout prop - inline child handles positioning):**
+**Lines/connectors with SVG components:**
 ```svelte
-<Fragment step={5}>
-  <div class="connector-line" style="left: 200px; top: 300px; width: 100px; height: 4px;"></div>
+<Fragment step={5} animate="wipe">
+  <Arrow from={{ x: 200, y: 300 }} to={{ x: 400, y: 300 }} stroke={{ width: 4 }} zIndex={10} />
 </Fragment>
 ```
 
-## FragmentArrow Component
+## SVG Shape Components
 
-The `FragmentArrow` component draws animated arrows/lines with a "wipe" reveal animation (like PowerPoint). It integrates with the slide fragment system for step-based visibility.
+Arrow, Line, and Rect are self-positioning components that use **canvas coordinates** (960×540). Fragment only provides step-based visibility and animation timing—no `layout` prop needed for these components.
 
-### FragmentArrow Props
+```svelte
+<script>
+  import Fragment from '$lib/components/Fragment.svelte';
+  import { Arrow, Line, Rect, Circle, Ellipse, Path, Polygon } from '$lib/components/svg';
+</script>
+```
+
+### Arrow and Line Components
+
+Arrow and Line position themselves absolutely on the canvas. They handle their own SVG rendering and zIndex.
 
 | Prop | Type | Description |
 |------|------|-------------|
-| `step` | `number` | Animation sequence. Integer = click number, decimal = delay (e.g., `2.1` = step 2 with 500ms delay). |
-| `path` | `ArrowPathPoints` | Start and end coordinates: `{ start: {x, y}, end: {x, y} }` |
-| `line` | `ArrowLineStyle` | Styling: `{ color?, width? }` |
-| `arrowhead` | `boolean` | Show arrowhead at end (default: true) |
-| `headSize` | `number` | Arrowhead size relative to width (default: 1.5) |
-| `duration` | `number` | Animation duration in seconds (default: 0.5) |
-| `zIndex` | `number` | Stacking order |
+| `from` | `{ x, y }` | Start point in canvas coordinates (960×540) |
+| `to` | `{ x, y }` | End point in canvas coordinates |
+| `stroke` | `StrokeStyle` | Stroke styling (width, color, dash) |
+| `zIndex` | `number` | Stacking order (default: 1) |
+| `headSize` | `number` | Arrow only: head size multiplier (default: 3) |
 
-### Usage Patterns
+### Rect Component
+
+Rect positions itself absolutely on the canvas. Use for background columns, boxes, and filled shapes.
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `x` | `number` | X position on canvas (960×540) |
+| `y` | `number` | Y position on canvas |
+| `width` | `number` | Rectangle width |
+| `height` | `number` | Rectangle height |
+| `fill` | `string` | Fill color (e.g., `"var(--color-level2)"`) |
+| `stroke` | `StrokeStyle` | Border styling (width, color, dash) |
+| `radius` | `number` | Corner radius for rounded rectangles |
+| `zIndex` | `number` | Stacking order (default: 1) |
+
+### StrokeStyle Type
+
+```typescript
+interface StrokeStyle {
+  width?: number;     // Stroke width in pixels (default: 2)
+  color?: string;     // Stroke color (default: '#000000')
+  dash?: string;      // Dash pattern (e.g., '10,5')
+}
+```
+
+### Arrow and Line Usage
 
 **Horizontal arrow (pointing right):**
 ```svelte
-<FragmentArrow 
-  step={15}
-  path={{ start: { x: 100, y: 200 }, end: { x: 400, y: 200 } }}
-  line={{ width: 20 }}
-/>
+<Fragment step={14} animate="wipe">
+  <Arrow from={{ x: 307, y: 197 }} to={{ x: 666, y: 197 }} stroke={{ width: 10 }} zIndex={34} />
+</Fragment>
 ```
 
 **Vertical arrow (pointing down):**
 ```svelte
-<FragmentArrow 
-  step={5}
-  path={{ start: { x: 250, y: 100 }, end: { x: 250, y: 300 } }}
-  line={{ width: 30, color: '#333333' }}
-/>
+<Fragment step={15} animate="wipe">
+  <Arrow from={{ x: 265, y: 244 }} to={{ x: 265, y: 292 }} stroke={{ width: 24 }} headSize={1} zIndex={23} />
+</Fragment>
 ```
 
-**Line without arrowhead:**
+**Horizontal line (no arrowhead):**
 ```svelte
-<FragmentArrow 
-  step={3}
-  path={{ start: { x: 100, y: 150 }, end: { x: 300, y: 150 } }}
-  line={{ width: 4 }}
-  arrowhead={false}
-/>
+<Fragment step={17} animate="draw">
+  <Line from={{ x: 547, y: 285 }} to={{ x: 453, y: 285 }} stroke={{ width: 3 }} zIndex={8} />
+</Fragment>
 ```
 
-**Delayed appearance (same click, 500ms delay):**
+**Diagonal arrow (angled connector):**
 ```svelte
-<FragmentArrow 
-  step={10.1}
-  path={{ start: { x: 200, y: 250 }, end: { x: 400, y: 250 } }}
-  line={{ width: 20 }}
-/>
+<Fragment step={22} animate="wipe">
+  <Arrow from={{ x: 170, y: 252 }} to={{ x: 235, y: 228 }} stroke={{ width: 7 }} headSize={2} zIndex={32} />
+</Fragment>
 ```
+
+**Dashed line:**
+```svelte
+<Fragment step={5} animate="draw">
+  <Line from={{ x: 100, y: 100 }} to={{ x: 300, y: 100 }} stroke={{ width: 2, dash: '10,5' }} zIndex={5} />
+</Fragment>
+```
+
+### Rect Usage
+
+**Background column (full height, wipes down):**
+```svelte
+<Fragment step={3} animate="wipe-down">
+  <Rect x={192.7} y={0} width={288} height={540} fill="var(--color-level2)" zIndex={2} />
+</Fragment>
+```
+
+**Box with border:**
+```svelte
+<Fragment step={22} animate="fade">
+  <Rect x={206} y={178} width={275} height={118.9} fill="var(--color-bg-light)" stroke={{ color: '#000000', width: 1 }} zIndex={6} />
+</Fragment>
+```
+
+**White background box:**
+```svelte
+<Fragment step={25} animate="fade">
+  <Rect x={481.1} y={295.4} width={258.6} height={127.7} fill="var(--color-bg-ghost)" zIndex={1} />
+</Fragment>
+```
+
+### Other SVG Components
+
+For other shapes (Circle, etc.), use Fragment with `layout` to position them:
+
+| Component | Purpose | Key Props |
+|-----------|---------|-----------|
+| `Circle` | Circle | `cx`, `cy`, `r`, `fill`, `stroke` |
+| `Ellipse` | Ellipse | `cx`, `cy`, `rx`, `ry`, `fill`, `stroke` |
+| `Path` | SVG path | `d`, `fill`, `stroke` |
+| `Polygon` | Multi-point shape | `points`, `fill`, `stroke` |
 
 ### Key Features
 
-- **Direction inference**: Arrow direction is calculated from `path.start` to `path.end`
-- **Wipe animation**: Reveals from start to end using CSS clip-path animation
-- **Drill return handling**: Skips animation when returning from drill (shows fully revealed)
-- **Step registration**: Automatically registers with slide context like Fragment
+- **Arrow/Line use canvas coordinates**: `from={{ x: 100, y: 200 }}` is position on the 960×540 canvas
+- **Self-positioning**: Arrow/Line render their own absolutely-positioned SVG—no Fragment layout needed
+- **Animation types**: Use `animate="wipe"` for arrows, `animate="draw"` for lines
+- **Direction inference**: Wipe direction auto-calculated from `from` → `to` direction
+- **Drill return handling**: Animations skip when returning from drill (content shows fully revealed)
+- **perfect-arrows library**: Arrow uses perfect-arrows for clean arrowhead geometry
 
 ## Critical Patterns
 
@@ -262,7 +331,9 @@ PowerPoint has three animation timing modes that map to MBS decimal step notatio
 **Example - cascading animation:**
 ```svelte
 <!-- Click 1: Arrow appears -->
-<FragmentArrow step={1} path={{ start: { x: 100, y: 200 }, end: { x: 300, y: 200 } }} />
+<Fragment step={1} layout={{ x: 100, y: 195, width: 200, height: 10 }} animate="wipe">
+  <Arrow from={{ x: 0, y: 5 }} to={{ x: 200, y: 5 }} stroke={{ width: 10 }} />
+</Fragment>
 
 <!-- Still click 1: Box appears 500ms after arrow -->
 <Fragment step={1.1} layout={{ x: 310, y: 185, width: 100, height: 30 }}>
@@ -333,7 +404,7 @@ Becomes:
     step={1}
     drillTo="promises/genesis-12-1"
     layout={{ x: 100, y: 50, width: 200, height: 30 }}
-    font={{ font_size: 24, bold: true, color: '#0000CC' }}
+    font={{ font_size: 24, bold: true, color: 'var(--color-level3)' }}
   >
     Genesis 12:1-3
   </Fragment>

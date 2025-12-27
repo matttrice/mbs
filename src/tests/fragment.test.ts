@@ -175,7 +175,7 @@ describe('Fragment Component - Animation Delay', () => {
 		
 		const div = container.querySelector('div');
 		if (div) {
-			expect(div.style.animationDelay).toBe('500ms');
+			expect(div.style.getPropertyValue('--animation-delay')).toBe('500ms');
 		}
 	});
 
@@ -189,7 +189,7 @@ describe('Fragment Component - Animation Delay', () => {
 		
 		const div = container.querySelector('div');
 		if (div) {
-			expect(div.style.animationDelay).toBe('1000ms');
+			expect(div.style.getPropertyValue('--animation-delay')).toBe('1000ms');
 		}
 	});
 
@@ -203,7 +203,7 @@ describe('Fragment Component - Animation Delay', () => {
 		
 		const div = container.querySelector('div');
 		if (div) {
-			expect(div.style.animationDelay).toBe('0ms');
+			expect(div.style.getPropertyValue('--animation-delay')).toBe('0ms');
 		}
 	});
 
@@ -218,7 +218,7 @@ describe('Fragment Component - Animation Delay', () => {
 		
 		const div = container.querySelector('div');
 		if (div) {
-			expect(div.style.animationDelay).toBe('200ms');
+			expect(div.style.getPropertyValue('--animation-delay')).toBe('200ms');
 		}
 	});
 });
@@ -273,7 +273,7 @@ describe('Fragment Component - Optional Step (Static Drillable Links)', () => {
 		
 		const div = container.querySelector('div');
 		if (div) {
-			expect(div.style.animationDelay).toBe('0ms');
+			expect(div.style.getPropertyValue('--animation-delay')).toBe('0ms');
 		}
 	});
 
