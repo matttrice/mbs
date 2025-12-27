@@ -15,20 +15,6 @@
 	overflow: hidden;
 }
 
-/* Debug overlay - shows navigation state (top-right corner) */
-.debug {
-	position: fixed;
-	top: 10px;
-	right: 10px;
-	background: rgba(0, 0, 0, 0.7);
-	color: #0f0;
-	padding: 8px 12px;
-	border-radius: 4px;
-	font-family: monospace;
-	font-size: 12px;
-	z-index: 1000;
-}
-
 /* Container for all slides - handles centering and overflow */
 .slide-container {
 	flex: 1;

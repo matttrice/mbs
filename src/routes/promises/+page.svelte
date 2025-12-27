@@ -1,31 +1,15 @@
 <script lang="ts">
-	import { currentFragment, currentSlide, stackDepth, maxFragment, maxSlide } from '$lib/stores/navigation';
+	import { currentSlide } from '$lib/stores/navigation';
 	import PresentationProvider from '$lib/components/PresentationProvider.svelte';
 	
 	// Import slide components
 	import Slide1 from './slides/Slide1.svelte';
 	import Slide2 from './slides/Slide2.svelte';
 	import Slide3 from './slides/Slide3.svelte';
-	
-	// Get original step lookup function from PresentationProvider
-	let getOriginalStep: ((slideIndex: number, normalizedStep: number) => number) | undefined = $state();
-	
-	// Derive the original step for display
-	let originalStep = $derived(
-		getOriginalStep && $currentFragment > 0
-			? getOriginalStep($currentSlide, $currentFragment)
-			: $currentFragment
-	);
 </script>
 
-<PresentationProvider name="promises" slideCount={3} bind:getOriginalStep>
+<PresentationProvider name="promises" slideCount={3}>
 	<div class="presentation">
-		<!-- Debug overlay -->
-		<div class="debug">
-			Slide: {$currentSlide + 1}/{$maxSlide + 1} | 
-			Fragment: {$currentFragment}/{$maxFragment} (step={originalStep}) | 
-			Stack: {$stackDepth}
-		</div>
 
 		<div class="slide-container">
 			<!-- All slides render to register maxSteps, only active one visible -->

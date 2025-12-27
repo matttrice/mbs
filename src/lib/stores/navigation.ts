@@ -506,3 +506,49 @@ export const canReturn = derived(navigation, ($nav) => $nav.stack.length > 0);
 export const stackDepth = derived(navigation, ($nav) => $nav.stack.length);
 export const maxFragment = derived(navigation, ($nav) => $nav.maxFragment);
 export const maxSlide = derived(navigation, ($nav) => $nav.maxSlide);
+
+// ========== Global Original Step Registry ==========
+// Used by DebugOverlay to show original author steps
+
+type OriginalStepLookup = (normalizedStep: number) => number;
+const originalStepRegistry = new Map<string, OriginalStepLookup>();
+
+// Reactive trigger - increments when registry changes to force Svelte reactivity
+const registryVersion = writable(0);
+
+/**
+ * Register an original step lookup function for a presentation/slide.
+ * Called by Slide components on mount.
+ */
+export function registerOriginalStepLookup(
+	presentation: string,
+	slideIndex: number,
+	lookup: OriginalStepLookup
+): void {
+	const key = `${presentation}:${slideIndex}`;
+	originalStepRegistry.set(key, lookup);
+	registryVersion.update(v => v + 1);
+}
+
+/**
+ * Unregister an original step lookup (called on unmount).
+ */
+export function unregisterOriginalStepLookup(presentation: string, slideIndex: number): void {
+	const key = `${presentation}:${slideIndex}`;
+	originalStepRegistry.delete(key);
+	registryVersion.update(v => v + 1);
+}
+
+/**
+ * Get the original author step for a normalized step.
+ * Returns the normalized step if no lookup is registered.
+ * Pass registryVersion store value to ensure reactivity.
+ */
+export function getOriginalStep(presentation: string, slideIndex: number, normalizedStep: number, _version?: number): number {
+	const key = `${presentation}:${slideIndex}`;
+	const lookup = originalStepRegistry.get(key);
+	return lookup ? lookup(normalizedStep) : normalizedStep;
+}
+
+// Export the registry version for reactive lookups
+export { registryVersion };

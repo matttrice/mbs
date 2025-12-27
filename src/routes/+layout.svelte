@@ -6,6 +6,7 @@
 
 	import { navigation, canReturn } from '$lib/stores/navigation';
 	import ReturnButton from '$lib/components/ReturnButton.svelte';
+	import DebugOverlay from '$lib/components/DebugOverlay.svelte';
 	import { onMount } from 'svelte';
 
 	let { children } = $props();
@@ -62,6 +63,7 @@
 <div class="presentation-container">
 	{@render children()}
 	<ReturnButton />
+	<DebugOverlay />
 </div>
 
 <style>

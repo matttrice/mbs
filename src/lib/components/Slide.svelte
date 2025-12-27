@@ -44,9 +44,10 @@
 </script>
 
 <script lang="ts">
-	import { navigation } from '$lib/stores/navigation';
+	import { navigation, registerOriginalStepLookup, unregisterOriginalStepLookup, currentPresentation } from '$lib/stores/navigation';
 	import { getPresentationContext } from './PresentationProvider.svelte';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
+	import { get } from 'svelte/store';
 
 	/**
 	 * Wrapper component for slide content that auto-registers Fragment steps.
@@ -150,13 +151,34 @@
 	// Report maxStep based on context
 	// For PresentationProvider: always register (even with 0 steps) using onMount
 	// For standalone drill: use effect to set maxFragment when > 0
+	// Also register with global original step registry for DebugOverlay
+	let registeredPresentation: string | undefined;
+	let registeredSlideIndex: number | undefined;
+
 	onMount(() => {
+		const presentation = get(currentPresentation);
+		const effectiveSlideIndex = slideIndex ?? 0;
+
 		if (presentationContext && slideIndex !== undefined) {
 			// Inside PresentationProvider: register immediately with current maxStep
 			// This ensures slides with no animated fragments still register
 			presentationContext.registerSlide(slideIndex, $maxStep);
-			// Also register the original step lookup function
+			// Also register the original step lookup function (for backward compat)
 			presentationContext.registerOriginalStepLookup(slideIndex, getOriginalStep);
+		}
+
+		// Register with global registry for DebugOverlay
+		if (presentation) {
+			registerOriginalStepLookup(presentation, effectiveSlideIndex, getOriginalStep);
+			registeredPresentation = presentation;
+			registeredSlideIndex = effectiveSlideIndex;
+		}
+	});
+
+	onDestroy(() => {
+		// Clean up global registry
+		if (registeredPresentation !== undefined && registeredSlideIndex !== undefined) {
+			unregisterOriginalStepLookup(registeredPresentation, registeredSlideIndex);
 		}
 	});
 
