@@ -3,7 +3,9 @@
 	import { goto } from '$app/navigation';
 	
 	// Reset and start fresh
-	function startFresh(presentation: string, route: string) {
+	function startFresh(event: Event, presentation: string, route: string) {
+		event.preventDefault();
+		event.stopPropagation();
 		navigation.clearPresentation(presentation);
 		goto(route);
 	}
@@ -14,49 +16,55 @@
 		<h1>Master Bible Study</h1>
 		<p class="subtitle">Select a lesson</p>
 	</header>
-		<div class="model-card-wrapper">
-			<a href="/reasoning" class="model-card">
+	<nav class="lessons">
+		<a href="/reasoning" class="lesson-card">
+			<div class="lesson-content">
 				<h2>Methods of Reason</h2>
 				<p>Inductive vs. Deductive thinking in Scripture</p>
+			</div>
+			<div class="lesson-actions">
+				<button 
+					class="reset-btn" 
+					onclick={(e) => startFresh(e, 'reasoning', '/reasoning')}
+					title="Reset progress and start fresh"
+				>
+					Reset
+				</button>
 				<span class="arrow">→</span>
-			</a>
-			<button 
-				class="reset-btn" 
-				onclick={() => startFresh('reasoning', '/reasoning')}
-				title="Reset progress and start fresh"
-			>
-				Reset
-			</button>
-		</div>
-	<nav class="models">
-		<div class="model-card-wrapper">
-			<a href="/physical-spiritual" class="model-card">
+			</div>
+		</a>
+		<a href="/physical-spiritual" class="lesson-card">
+			<div class="lesson-content">
 				<h2>Physical / Spiritual</h2>
 				<p>Understanding the visible and invisible realms</p>
+			</div>
+			<div class="lesson-actions">
+				<button 
+					class="reset-btn" 
+					onclick={(e) => startFresh(e, 'physical-spiritual', '/physical-spiritual')}
+					title="Reset progress and start fresh"
+				>
+					Reset
+				</button>
 				<span class="arrow">→</span>
-			</a>
-			<button 
-				class="reset-btn" 
-				onclick={() => startFresh('physical-spiritual', '/physical-spiritual')}
-				title="Reset progress and start fresh"
-			>
-				Reset
-			</button>
-		</div>
-		<div class="model-card-wrapper">
-			<a href="/promises" class="model-card">
+			</div>
+		</a>
+		<a href="/promises" class="lesson-card">
+			<div class="lesson-content">
 				<h2>The Promises</h2>
 				<p>What did God promise Abraham?</p>
+			</div>
+			<div class="lesson-actions">
+				<button 
+					class="reset-btn" 
+					onclick={(e) => startFresh(e, 'promises', '/promises')}
+					title="Reset progress and start fresh"
+				>
+					Reset
+				</button>
 				<span class="arrow">→</span>
-			</a>
-			<button 
-				class="reset-btn" 
-				onclick={() => startFresh('promises', '/promises')}
-				title="Reset progress and start fresh"
-			>
-				Reset
-			</button>
-		</div>
+			</div>
+		</a>
 	</nav>
 </div>
 
@@ -64,107 +72,118 @@
 	.menu {
 		width: 100%;
 		height: 100%;
-		background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+		background: var(--color-bg-light);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
-		padding: 40px;
+		padding: 60px 40px;
 		box-sizing: border-box;
+		overflow-y: auto;
 	}
 
 	header {
 		text-align: center;
-		margin-bottom: 60px;
+		margin-bottom: 48px;
+		flex-shrink: 0;
 	}
 
 	header h1 {
-		font-size: 48px;
+		font-size: 64px;
+		font-weight: 300;
 		margin: 0;
-		color: #ffd700;
+		color: var(--color-level3);
+		letter-spacing: -1px;
 	}
 
 	.subtitle {
-		color: #aaa;
-		font-size: 18px;
-		margin-top: 12px;
-	}
-
-	.models {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 24px;
-		justify-content: center;
-		max-width: 800px;
-	}
-
-	.model-card-wrapper {
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
-	}
-
-	.model-card {
-		display: block;
-		background: rgba(255, 255, 255, 0.1);
-		border: 2px solid rgba(255, 215, 0, 0.3);
-		border-radius: 12px;
-		padding: 30px 40px;
-		text-decoration: none;
-		color: #fff;
-		min-width: 280px;
-		transition: all 0.2s;
-		position: relative;
-	}
-
-	.model-card:hover {
-		background: rgba(255, 255, 255, 0.15);
-		border-color: #ffd700;
-		transform: translateY(-4px);
-	}
-
-	.model-card h2 {
-		font-size: 28px;
-		margin: 0 0 12px 0;
-		color: #ffd700;
-	}
-
-	.model-card p {
-		margin: 0;
-		color: #ccc;
+		color: var(--color-text-muted);
 		font-size: 16px;
+		margin-top: 12px;
+		font-weight: 400;
+		text-transform: uppercase;
+		letter-spacing: 3px;
+	}
+
+	.lessons {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+		gap: 20px;
+		width: 100%;
+		max-width: 1200px;
+	}
+
+	.lesson-card {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		background: var(--color-bg-ghost);
+		border: none;
+		border-radius: 8px;
+		padding: 32px 36px;
+		text-decoration: none;
+		box-shadow: 0 1px 3px var(--color-shadow);
+		transition: box-shadow 0.2s ease, transform 0.2s ease;
+	}
+
+	.lesson-card:hover {
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+		transform: translateY(-2px);
+	}
+
+	.lesson-content {
+		flex: 1;
+	}
+
+	.lesson-card h2 {
+		font-size: 28px;
+		font-weight: 600;
+		margin: 0 0 8px 0;
+		color: var(--color-level3);
+	}
+
+	.lesson-card p {
+		margin: 0;
+		color: var(--color-text-muted);
+		font-size: 18px;
+	}
+
+	.lesson-actions {
+		display: flex;
+		align-items: center;
+		gap: 16px;
 	}
 
 	.arrow {
-		position: absolute;
-		right: 20px;
-		top: 50%;
-		transform: translateY(-50%);
-		font-size: 24px;
-		color: #ffd700;
-		opacity: 0;
-		transition: opacity 0.2s;
+		font-size: 28px;
+		color: var(--color-level3);
+		opacity: 0.3;
+		transition: opacity 0.2s ease, transform 0.2s ease;
 	}
 
-	.model-card:hover .arrow {
-		opacity: 1;
+	.lesson-card:hover .arrow {
+		opacity: 0.7;
+		transform: translateX(3px);
 	}
 
 	.reset-btn {
 		background: transparent;
-		border: 1px solid rgba(255, 100, 100, 0.4);
-		color: rgba(255, 100, 100, 0.7);
-		padding: 6px 12px;
-		border-radius: 4px;
-		font-size: 12px;
+		border: none;
+		color: var(--color-text-muted);
+		padding: 8px 16px;
+		border-radius: 6px;
+		font-size: 15px;
+		font-weight: 500;
 		cursor: pointer;
-		transition: all 0.2s;
-		align-self: flex-end;
+		transition: color 0.15s ease, background 0.15s ease;
+		opacity: 0;
+	}
+
+	.lesson-card:hover .reset-btn {
+		opacity: 1;
 	}
 
 	.reset-btn:hover {
-		background: rgba(255, 100, 100, 0.1);
-		border-color: rgba(255, 100, 100, 0.7);
-		color: #ff6666;
+		background: rgba(204, 0, 0, 0.08);
+		color: var(--color-danger);
 	}
 </style>
