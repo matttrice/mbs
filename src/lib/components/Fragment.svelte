@@ -512,6 +512,11 @@
 		animation-delay: var(--animation-delay, 0ms);
 	}
 
+	/* Arc arrowhead appears after arc path finishes drawing */
+	.animate-draw :global(svg path.arc-arrowhead) {
+		animation-delay: calc(var(--animation-delay, 0ms) + 0.45s);
+	}
+
 	.revealed :global(svg path),
 	.revealed :global(svg line),
 	.revealed :global(svg polyline),

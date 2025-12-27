@@ -130,13 +130,32 @@ Arrow, Line, and Rect are self-positioning components that use **canvas coordina
 ```svelte
 <script>
   import Fragment from '$lib/components/Fragment.svelte';
-  import { Arrow, Line, Rect, Circle, Ellipse, Path, Polygon } from '$lib/components/svg';
+  import { Arrow, Arc, Line, Rect, Circle, Ellipse, Path, Polygon } from '$lib/components/svg';
 </script>
 ```
 
-### Arrow and Line Components
+### Arrow Component
 
-Arrow and Line position themselves absolutely on the canvas. They handle their own SVG rendering and zIndex.
+Arrow uses the [perfect-arrows](https://github.com/steveruizok/perfect-arrows) library for consistent rendering. Supports two modes:
+
+1. **Point-to-point**: Use `from`/`to` with `{x, y}` coordinates
+2. **Box-to-box**: Use `fromBox`/`toBox` with `{x, y, width, height}` for automatic curved arrows between rectangles
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `from` | `{ x, y }` | Start point in canvas coordinates (point-to-point mode) |
+| `to` | `{ x, y }` | End point in canvas coordinates (point-to-point mode) |
+| `fromBox` | `{ x, y, width, height }` | Source rectangle (box-to-box mode) |
+| `toBox` | `{ x, y, width, height }` | Target rectangle (box-to-box mode) |
+| `stroke` | `StrokeStyle` | Stroke styling (width, color, dash) |
+| `zIndex` | `number` | Stacking order (default: 1) |
+| `headSize` | `number` | Arrow head size multiplier (default: 3, use 0 for no head) |
+| `bow` | `number` | Curvature amount (0 = straight, 0.1-0.5 = curved). Default: 0 |
+| `flip` | `boolean` | Reverse curve direction (default: false) |
+
+### Line Component
+
+Line is the same as Arrow but without an arrowhead.
 
 | Prop | Type | Description |
 |------|------|-------------|
@@ -144,7 +163,6 @@ Arrow and Line position themselves absolutely on the canvas. They handle their o
 | `to` | `{ x, y }` | End point in canvas coordinates |
 | `stroke` | `StrokeStyle` | Stroke styling (width, color, dash) |
 | `zIndex` | `number` | Stacking order (default: 1) |
-| `headSize` | `number` | Arrow only: head size multiplier (default: 3) |
 
 ### Rect Component
 
@@ -177,6 +195,32 @@ interface StrokeStyle {
 ```svelte
 <Fragment step={14} animate="wipe">
   <Arrow from={{ x: 307, y: 197 }} to={{ x: 666, y: 197 }} stroke={{ width: 10 }} zIndex={34} />
+</Fragment>
+```
+
+**Curved arrow (point-to-point with bow):**
+```svelte
+<Fragment step={15} animate="draw">
+  <Arrow from={{ x: 100, y: 200 }} to={{ x: 300, y: 200 }} bow={0.3} stroke={{ width: 5 }} />
+</Fragment>
+```
+
+**Curved arrow between boxes (for timeline self-references):**
+```svelte
+<script>
+  // Define boxes for timeline elements
+  const genesisBox = { x: 74, y: 362, width: 99, height: 29 };
+  const revelationBox = { x: 757, y: 356, width: 123, height: 32 };
+</script>
+
+<!-- Revelation → Genesis curved arrow (arcs upward) -->
+<Fragment step={27} animate="draw">
+  <Arrow fromBox={revelationBox} toBox={genesisBox} bow={0.5} flip={true} stroke={{ width: 5, color: '#0000FF' }} />
+</Fragment>
+
+<!-- Genesis → Revelation curved arrow (arcs downward) -->
+<Fragment step={27.1} animate="draw">
+  <Arrow fromBox={genesisBox} toBox={revelationBox} bow={0.5} stroke={{ width: 5, color: '#0000FF' }} headSize={0} />
 </Fragment>
 ```
 
@@ -230,6 +274,36 @@ interface StrokeStyle {
   <Rect x={481.1} y={295.4} width={258.6} height={127.7} fill="var(--color-bg-ghost)" zIndex={1} />
 </Fragment>
 ```
+
+### Arc Component
+
+Arc is a self-positioning curved line/arrow for drawing half-circle arcs above or below content (like timeline self-references). Uses quadratic bezier curves.
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `from` | `{ x, y }` | Start point in canvas coordinates (960×540) |
+| `to` | `{ x, y }` | End point in canvas coordinates |
+| `curve` | `number` | Vertical offset: negative = curves up, positive = curves down |
+| `stroke` | `StrokeStyle` | Stroke styling (width, color, dash) |
+| `arrow` | `boolean` | Show arrowhead at end (default: false) |
+| `headSize` | `number` | Arrow head size multiplier (default: 3) |
+| `zIndex` | `number` | Stacking order (default: 1) |
+
+**Arc curving upward (e.g., Poetry → Ezra):**
+```svelte
+<Fragment step={48} animate="draw">
+  <Arc from={{ x: 364, y: 382 }} to={{ x: 242, y: 382 }} curve={-34} stroke={{ width: 5, color: '#0000FF' }} arrow />
+</Fragment>
+```
+
+**Arc curving downward (looping below timeline):**
+```svelte
+<Fragment step={49} animate="draw">
+  <Arc from={{ x: 400, y: 300 }} to={{ x: 600, y: 300 }} curve={50} stroke={{ width: 4 }} arrow />
+</Fragment>
+```
+
+**Note:** When converting from PowerPoint JSON with `arc_path` data, scale coordinates by `960 / slide_width` (typically 0.625 for 1536-wide slides).
 
 ### Other SVG Components
 

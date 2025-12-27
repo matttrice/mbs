@@ -1,0 +1,53 @@
+<script lang="ts">
+	import Slide from '$lib/components/Slide.svelte';
+	import Fragment from '$lib/components/Fragment.svelte';
+	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
+
+	/**
+	 * Drill: 1 Corinthians 2:11-16 - Scripture about the mind of Christ
+	 * Canvas: 960 x 540 pixels (16:9 aspect ratio)
+	 * Scale factor: 0.625 (from 1536×864 PowerPoint)
+	 * 
+	 * Full scripture text with key phrases highlighted
+	 */
+</script>
+
+<Slide>
+	<!-- Slide background -->
+	<div class="slide-bg"></div>
+	<!-- Reference overlay for development (press O to toggle) -->
+	<ReferenceOverlay src="/export/01-Intro_Reasoning/Slide4.png" />
+
+	<!-- ===== STATIC CONTENT ===== -->
+	
+	<!-- Title: 1 Corinthians 2:9-16 -->
+	<Fragment
+		layout={{ x: 73, y: 10, width: 470, height: 50 }}
+		font={{ font_size: 44.2, bold: true }}
+		zIndex={1}
+	>
+		1 Corinthians 2:9-16:
+	</Fragment>
+
+	<!-- Full scripture text -->
+	<Fragment
+		layout={{ x: 90, y: 49, width: 796, height: 476 }}
+		font={{ font_size: 24.2, alignment: 'left' }}
+		zIndex={0}
+	>
+		<div class="scripture-text">
+			However, as it is written: "No eye has seen, no ear has heard, no mind has conceived what God has prepared for those who love him"— <sup>10</sup> but God has revealed it to us by his Spirit. The Spirit searches all things, even the deep things of God. <sup>11</sup> For who among men knows the thoughts of a man except the man's spirit within him? In the same way no one knows the thoughts of God except the Spirit of God. <sup>12</sup> We have not received the spirit of the world but the Spirit who is from God, that we may understand what God has freely given us. <sup>13</sup> This is what we speak, not in words taught us by human wisdom but in words taught by the Spirit, expressing spiritual truths in spiritual words. <sup>14</sup> The man without the Spirit does not accept the things that come from the Spirit of God, for they are foolishness to him, and he cannot understand them, because they are spiritually discerned. <sup>15</sup> The spiritual man makes judgments about all things, but he himself is not subject to any man's judgment: <sup>16</sup> "For who has known the mind of the Lord that he may instruct him?" <strong>"But we have the mind of Christ."</strong>
+		</div>
+	</Fragment>
+</Slide>
+
+<style>
+	.scripture-text {
+		line-height: 1.6;
+		padding: 10px;
+	}
+
+	.scripture-text strong {
+		color: #0000CC;
+	}
+</style>
