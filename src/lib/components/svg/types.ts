@@ -31,6 +31,14 @@ export type StrokeStyle = {
 	linejoin?: 'miter' | 'round' | 'bevel';
 }
 
+/** Circle marker at line endpoints */
+export type CircleMarker = {
+	/** Radius of the circle in pixels */
+	radius: number;
+	/** Fill color (default: same as stroke color) */
+	fill?: string;
+};
+
 /** Wipe animation direction */
 export type WipeDirection = 'left' | 'right' | 'up' | 'down' | 'auto';
 

@@ -21,9 +21,6 @@
 <Slide {slideIndex}>
 	<!-- Slide background -->
 	<div class="slide-bg"></div>
-	<!-- Reference overlay for development (press O to toggle) -->
-	<ReferenceOverlay src="/export/01-Intro_Reasoning/Slide4.png" />
-
 	<!-- ===== STATIC CONTENT ===== -->
 	
 	<!-- Title: 1 Corinthians 2:9-16 -->

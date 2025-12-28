@@ -1,15 +1,28 @@
 <script lang="ts">
-	import type { Point, StrokeStyle } from './types';
+	import type { Point, StrokeStyle, CircleMarker } from './types';
 
 	/**
 	 * Line: SVG line shape without arrowhead.
 	 * Positions itself absolutely on the canvas using the from/to coordinates.
 	 * Should be used inside a Fragment WITHOUT a layout prop.
 	 *
+	 * Supports optional circle markers at start and/or end points.
+	 *
 	 * @example Simple line
 	 * ```svelte
 	 * <Fragment step={17} animate="draw">
 	 *   <Line from={{ x: 453, y: 285 }} to={{ x: 547, y: 285 }} stroke={{ width: 3 }} />
+	 * </Fragment>
+	 * ```
+	 *
+	 * @example Line with circle markers (small to large)
+	 * ```svelte
+	 * <Fragment step={4} animate="wipe">
+	 *   <Line from={{ x: 238, y: 201 }} to={{ x: 339, y: 201 }}
+	 *     stroke={{ width: 8 }}
+	 *     startMarker={{ radius: 4 }}
+	 *     endMarker={{ radius: 8 }}
+	 *   />
 	 * </Fragment>
 	 * ```
 	 */
@@ -20,11 +33,15 @@
 		to: Point;
 		/** Stroke styling */
 		stroke?: StrokeStyle;
+		/** Circle marker at the start point */
+		startMarker?: CircleMarker;
+		/** Circle marker at the end point */
+		endMarker?: CircleMarker;
 		/** Z-index for layering */
 		zIndex?: number;
 	}
 
-	let { from, to, stroke = {}, zIndex = 1 }: Props = $props();
+	let { from, to, stroke = {}, startMarker, endMarker, zIndex = 1 }: Props = $props();
 
 	const strokeWidth = $derived(stroke.width ?? 2);
 	const strokeColor = $derived(stroke.color ?? '#000000');
@@ -46,22 +63,44 @@
 
 	// Calculate line length for draw animation
 	const length = $derived(Math.hypot(to.x - from.x, to.y - from.y));
+
+	// Calculate extra padding needed for markers
+	const markerPadding = $derived(Math.max(
+		startMarker?.radius ?? 0,
+		endMarker?.radius ?? 0
+	));
 </script>
 
 <svg 
 	class="svg-line" 
-	width={svgWidth}
-	height={svgHeight}
-	style="position: absolute; left: {minX}px; top: {minY}px; overflow: visible; pointer-events: none; z-index: {zIndex}; --path-length: {length};"
+	width={svgWidth + markerPadding * 2}
+	height={svgHeight + markerPadding * 2}
+	style="position: absolute; left: {minX - markerPadding}px; top: {minY - markerPadding}px; overflow: visible; pointer-events: none; z-index: {zIndex}; --path-length: {length};"
 >
 	<line
-		x1={localFromX}
-		y1={localFromY}
-		x2={localToX}
-		y2={localToY}
+		x1={localFromX + markerPadding}
+		y1={localFromY + markerPadding}
+		x2={localToX + markerPadding}
+		y2={localToY + markerPadding}
 		stroke={strokeColor}
 		stroke-width={strokeWidth}
 		stroke-dasharray={stroke.dash}
 		stroke-linecap={stroke.linecap ?? 'butt'}
 	/>
+	{#if startMarker}
+		<circle
+			cx={localFromX + markerPadding}
+			cy={localFromY + markerPadding}
+			r={startMarker.radius}
+			fill={startMarker.fill ?? strokeColor}
+		/>
+	{/if}
+	{#if endMarker}
+		<circle
+			cx={localToX + markerPadding}
+			cy={localToY + markerPadding}
+			r={endMarker.radius}
+			fill={endMarker.fill ?? strokeColor}
+		/>
+	{/if}
 </svg>

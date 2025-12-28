@@ -17,4 +17,4 @@ export { default as Path } from './Path.svelte';
 export { default as Polygon } from './Polygon.svelte';
 
 // Re-export types
-export type { Point, StrokeStyle, WipeDirection, BaseSvgProps } from './types';
+export type { Point, StrokeStyle, CircleMarker, WipeDirection, BaseSvgProps } from './types';

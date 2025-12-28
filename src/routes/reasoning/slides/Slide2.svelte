@@ -287,15 +287,14 @@
 	<!-- Original: x: 258.3, y: 585.3, width: 418.5, height: 253.8, font_size: 42.7 -->
 	<Fragment
 		step={13}
-		layout={{ x: 161, y: 366, width: 261, height: 159 }}
-		font={{ font_size: 26.7, bold: true }}
+		layout={{ x: 161, y: 406, width: 200, height: 80 }}
+		font={{ font_size: 26.7, bold: true, wrap: true, align: 'center', v_align: 'middle' }}
 		fill="var(--color-bg-ghost)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--color-bg-darkest)', width: 1 }}
 		zIndex={17}
 	>
-		<span style="display: flex; align-items: center; justify-content: center; height: 100%; text-align: center;">
-			How does the Author think?
-		</span>
+		How does the Author think?
+
 	</Fragment>
 </Slide>
 

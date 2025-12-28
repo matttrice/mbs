@@ -84,12 +84,10 @@
 		Specific
 	</Fragment>
 
-	<!-- Step 4: Horizontal arrow (Small → Big Inductive) -->
 	<Fragment step={4} animate="wipe">
-		<Arrow from={{ x: 238, y: 201 }} to={{ x: 339, y: 201 }} stroke={{ width: 8 }} zIndex={28} />
+		<Line from={{ x: 238, y: 201 }} to={{ x: 339, y: 201 }} stroke={{ width: 8 }} startMarker={{ radius: 10 }} endMarker={{ radius: 20 }} zIndex={28} />
 	</Fragment>
 
-	<!-- Step 4.1: Big (delay 500ms) -->
 	<Fragment
 		step={4.1}
 		layout={{ x: 353.6, y: 174.8, width: 72.9, height: 50.4 }}
@@ -99,7 +97,6 @@
 		Big
 	</Fragment>
 
-	<!-- Step 4.2: General (delay 1000ms) -->
 	<Fragment
 		step={4.2}
 		layout={{ x: 305.8, y: 209.8, width: 133, height: 42 }}
@@ -134,9 +131,9 @@
 		General
 	</Fragment>
 
-	<!-- Step 6: Horizontal arrow (Big → Small in Deductive) -->
+	<!-- Step 6: Horizontal line with circles (Big → Small in Deductive) -->
 	<Fragment step={6} animate="wipe">
-		<Arrow from={{ x: 624, y: 204 }} to={{ x: 725, y: 204 }} stroke={{ width: 8, color: 'var(--color-level3)' }} zIndex={29} />
+		<Line from={{ x: 624, y: 204 }} to={{ x: 725, y: 204 }} stroke={{ width: 8, color: 'var(--color-level3)' }} startMarker={{ radius: 20 }} endMarker={{ radius: 10 }} zIndex={29} />
 	</Fragment>
 
 	<!-- Step 6.1: Small (blue) (delay 500ms) -->
