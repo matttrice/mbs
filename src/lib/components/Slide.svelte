@@ -156,8 +156,9 @@
 	let registeredSlideIndex: number | undefined;
 
 	onMount(() => {
-		const presentation = get(currentPresentation);
 		const effectiveSlideIndex = slideIndex ?? 0;
+		// Get presentation name from context (preferred) or navigation store (for drills)
+		const presentation = presentationContext?.presentationName ?? get(currentPresentation);
 
 		if (presentationContext && slideIndex !== undefined) {
 			// Inside PresentationProvider: register immediately with current maxStep

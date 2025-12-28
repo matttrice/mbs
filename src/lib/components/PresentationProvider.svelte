@@ -4,6 +4,8 @@
 	const PRESENTATION_CONTEXT_KEY = 'presentation-provider';
 
 	export interface PresentationContext {
+		/** The presentation name (used for global registry) */
+		presentationName: string;
 		/** Register a slide's maxStep. Called by Slide components. */
 		registerSlide: (slideIndex: number, maxStep: number) => void;
 		/** Register a slide's original step lookup function. Called by Slide components. */
@@ -91,6 +93,7 @@
 
 	// Set up context for child Slide components
 	setContext<PresentationContext>(PRESENTATION_CONTEXT_KEY, {
+		presentationName: name,
 		registerSlide,
 		registerOriginalStepLookup,
 		currentSlide,

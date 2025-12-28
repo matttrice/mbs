@@ -346,4 +346,38 @@ describe('Global Registry (simulated)', () => {
 		unregister('demo', 0);
 		expect(getOriginalStep('demo', 0, 5)).toBe(5); // Falls back to identity
 	});
+
+	it('requires presentation name at registration time (not later)', () => {
+		// This test ensures registration happens with a known presentation name,
+		// not from a store that might not be initialized yet.
+		// The bug was: Slide called get(currentPresentation) at mount time,
+		// but navigation.init() sets the presentation name AFTER slides mount.
+		// This caused debug overlay to not display the number of the actual step
+		// but instead always show the normalized fragment.
+		// Fix: PresentationProvider passes name via context, available at mount.
+		
+		const { register, getOriginalStep } = createRegistry();
+		
+		// Simulating the WRONG approach: empty presentation name at mount time
+		const emptyPresentationName = ''; // This is what get(currentPresentation) returned
+		register(emptyPresentationName, 0, (n) => n * 10);
+		
+		// Lookup with correct name fails because it was registered with empty string
+		expect(getOriginalStep('reasoning', 0, 5)).toBe(5); // Falls back, not 50!
+		
+		// Lookup with empty string works but is useless
+		expect(getOriginalStep('', 0, 5)).toBe(50);
+	});
+
+	it('registration with context-provided name works correctly', () => {
+		// This test shows the CORRECT approach: use presentation name from context
+		const { register, getOriginalStep } = createRegistry();
+		
+		// Simulating correct approach: name from PresentationProvider context
+		const contextPresentationName = 'reasoning'; // Available at mount via context
+		register(contextPresentationName, 0, (n) => n * 10);
+		
+		// Lookup with correct name succeeds
+		expect(getOriginalStep('reasoning', 0, 5)).toBe(50);
+	});
 });
