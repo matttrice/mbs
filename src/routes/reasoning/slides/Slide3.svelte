@@ -183,10 +183,10 @@
 	<Fragment step={8} animate="fade">
 		<Rect x={620} y={114} width={21} height={18} fill="var(--color-level1)" stroke={{ color: '#000000', width: 1 }} zIndex={86} />
 	</Fragment>
-	<Fragment step={8.1} animate="fade">
+	<Fragment step={8} animate="fade">
 		<Rect x={650} y={100} width={16} height={13} fill="var(--color-level1)" stroke={{ color: '#000000', width: 1 }} zIndex={101} />
 	</Fragment>
-	<Fragment step={8.1} animate="fade">
+	<Fragment step={8} animate="fade">
 		<Rect x={604} y={87} width={18} height={15} fill="var(--color-level1)" stroke={{ color: '#000000', width: 1 }} zIndex={102} />
 	</Fragment>
 
@@ -205,25 +205,33 @@
 	</Fragment>
 
 	<!-- Step 10: Connecting lines between puzzle corners -->
-	<Fragment step={10} animate="wipe">
-		<Arrow from={{ x: 678, y: 75 }} to={{ x: 752, y: 76 }} stroke={{ width: 12.5 }} zIndex={76} />
+	<Fragment step={10} animate="wipe-up">
+		<Line from={{ x: 714, y: 39 }} to={{ x: 714, y: 112 }} stroke={{ width: 12.5 }} zIndex={76} />
 	</Fragment>
-	<Fragment step={10.1} animate="wipe">
+	<Fragment step={10.1} animate="wipe-right">
 		<Line from={{ x: 729, y: 24 }} to={{ x: 838, y: 24 }} stroke={{ width: 12.5 }} zIndex={78} />
 	</Fragment>
-	<Fragment step={10.2} animate="wipe">
-		<Line from={{ x: 816, y: 75 }} to={{ x: 889, y: 76 }} stroke={{ width: 12.5 }} zIndex={77} />
+	<Fragment step={10.2} animate="wipe-down">
+		<Line from={{ x: 852, y: 39 }} to={{ x: 852, y: 112 }} stroke={{ width: 12.5 }} zIndex={77} />
 	</Fragment>
-	<Fragment step={10.3} animate="wipe">
+	<Fragment step={10.3} animate="wipe-left">
 		<Line from={{ x: 730, y: 127 }} to={{ x: 837, y: 128 }} stroke={{ width: 12.5 }} zIndex={79} />
 	</Fragment>
 
 	<!-- Step 11: Puzzle → Deductive curved arrows (Arc 233, 234) -->
 	<Fragment step={11} animate="draw">
-		<Arc from={{ x: 636.8, y: 120 }} to={{ x: 788, y: 71.6 }} curve={76.9} stroke={{ width: 3.3, color: '#0000FF' }} />
+		<Arc from={{ x: 636.8, y: 120 }} to={{ x: 788, y: 50 }} curve={76.9} stroke={{ width: 3.3, color: 'var(--color-level3)' }} arrow={true} zIndex={85}/>
+	</Fragment>
+	<!-- Gray puzzle piece appearing at end of first arc -->
+	<Fragment step={11} animate="fade">
+		<Rect x={777} y={30} width={21} height={18} fill="var(--color-level1)" stroke={{ color: 'var(--color-stroke-dark)', width: 1 }} zIndex={84} />
 	</Fragment>
 	<Fragment step={11.1} animate="draw">
-		<Arc from={{ x: 655, y: 78.1 }} to={{ x: 788, y: 88.8 }} curve={-9.6} stroke={{ width: 3.3, color: '#0000FF' }} />
+		<Arc from={{ x: 655, y: 78.1 }} to={{ x: 788, y: 88.8 }} curve={-9.6} stroke={{ width: 3.3, color: 'var(--color-level3)' }} arrow={true} />
+	</Fragment>
+	<!-- Gray puzzle piece appearing at end of second arc -->
+	<Fragment step={11.1} animate="fade">
+		<Rect x={790} y={82} width={16} height={13} fill="var(--color-level1)" stroke={{ color: '#000000', width: 1 }} zIndex={85} />
 	</Fragment>
 
 	<!-- Step 12: "What if you begin inductively?" -->
@@ -234,6 +242,22 @@
 		zIndex={0}
 	>
 		What if you begin inductively?
+	</Fragment>
+
+	<!-- Step 12.1: Wrong piece rejected - arrow pointing outside border with red X -->
+	<Fragment step={12.1} animate="draw">
+		<Arc from={{ x: 658, y: 102 }} to={{ x: 890, y: 55 }} curve={-40} stroke={{ width: 3.3, color: 'var(--color-danger)' }} arrow={true} />
+	</Fragment>
+	<!-- Small gray box outside the border -->
+	<Fragment step={12.1} animate="fade">
+		<Rect x={895} y={50} width={16} height={13} fill="var(--color-level1)" stroke={{ color: 'var(--color-stroke-dark)', width: 1 }} zIndex={86} />
+	</Fragment>
+	<!-- Red X on the rejected piece -->
+	<Fragment step={12.1} animate="fade">
+		<Line from={{ x: 893, y: 48 }} to={{ x: 918, y: 65 }} stroke={{ width: 3, color: 'var(--color-danger)' }} zIndex={87} />
+	</Fragment>
+	<Fragment step={12.1} animate="fade">
+		<Line from={{ x: 913, y: 48 }} to={{ x: 893, y: 65 }} stroke={{ width: 3, color: 'var(--color-danger)' }} zIndex={87} />
 	</Fragment>
 
 	<!-- Step 13: Genesis + Timeline arrow -->
@@ -296,8 +320,8 @@
 
 	<Fragment
 		step={16.2}
-		layout={{ x: 353.9, y: 428.2, width: 97.2, height: 45.1 }}
-		font={{ font_size: 21.7, bold: true, align: "center" }}
+		layout={{ x: 357.5, y: 435, width: 97.2, height: 45.1 }}
+		font={{ font_size: 21.7, bold: true, align: "left" }}
 		zIndex={92}
 	>
 		Minor<br/>Prophets
@@ -305,18 +329,26 @@
 
 	<!-- Step 17: Curved arcs from Poetry/Prophets back to Ezra (fanned out) -->
 	<Fragment step={17} animate="draw">
-		<Arc from={{ x: 364, y: 365 }} to={{ x: 290, y: 365 }} curve={-25} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={23} />
+		<Arc from={{ x: 355, y: 365 }} to={{ x: 200, y: 390 }} curve={-75} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={23} />
 	</Fragment>
 	<Fragment step={17} animate="draw">
-		<Arc from={{ x: 364, y: 404 }} to={{ x: 290, y: 420 }} curve={35} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={25} />
+		<Arc from={{ x: 355, y: 365 }} to={{ x: 180, y: 375 }} curve={-75} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={23} />
+	</Fragment>
+	<Fragment step={17} animate="draw">
+		<Arc from={{ x: 355, y: 365 }} to={{ x: 185, y: 385 }} curve={-75} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={23} />
 	</Fragment>
 	<Fragment step={17.1} animate="draw">
-		<Arc from={{ x: 364, y: 425 }} to={{ x: 290, y: 430 }} curve={55} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={63} />
+		<Arc from={{ x: 355, y: 425 }} to={{ x: 175, y: 420 }} curve={85} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={63} />
+	</Fragment>
+	<Fragment step={17.1} animate="draw">
+		<Arc from={{ x: 355, y: 425 }} to={{ x: 190, y: 420 }} curve={85} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={63} />
 	</Fragment>
 	<Fragment step={17} animate="draw">
-		<Arc from={{ x: 364, y: 448 }} to={{ x: 290, y: 445 }} curve={75} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={24} />
+		<Arc from={{ x: 360, y: 480 }} to={{ x: 200, y: 405 }} curve={75} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={24} />
 	</Fragment>
-
+	<Fragment step={17} animate="draw">
+		<Arc from={{ x: 360, y: 480 }} to={{ x: 210, y: 405 }} curve={75} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={24} />
+	</Fragment>
 	<!-- Step 18: "What book begins New Testament?" -->
 	<Fragment
 		step={18}
@@ -383,8 +415,8 @@
 	</Fragment>
 
 	<!-- Step 21: Vertical line + Acts -->
-	<Fragment step={21} animate="draw">
-		<Line from={{ x: 535, y: 313 }} to={{ x: 536, y: 365 }} stroke={{ width: 5 }} zIndex={11} />
+	<Fragment step={21} animate="wipe-down">
+		<Arrow from={{ x: 535, y: 313 }} to={{ x: 536, y: 365 }} stroke={{ width: 5 }} zIndex={11} />
 	</Fragment>
 
 	<Fragment
@@ -537,8 +569,8 @@
 	</Fragment>
 
 	<!-- Step 30: Arrow pointing up to Deductive -->
-	<Fragment step={30} animate="draw">
-		<Line from={{ x: 670, y: 182 }} to={{ x: 735, y: 270 }} stroke={{ width: 6.7 }} zIndex={34} />
+	<Fragment step={30}>
+		<Arrow to={{ x: 670, y: 182 }} from={{ x: 735, y: 270 }} stroke={{ width: 6.7 }} zIndex={50} />
 	</Fragment>
 
 	<!-- Step 31: "Biblical Examples:" section -->
