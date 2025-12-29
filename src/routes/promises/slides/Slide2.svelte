@@ -101,9 +101,9 @@
 	</Fragment>
 
 	<!-- Step 9: Vertical stem from Abraham + Arrow to Hagar -->
-	<Fragment step={9} animate="fade">
+	<Fragment step={9} animate="wipe-down">
 		<!-- Vertical stem -->
-		<Line from={{ x: 460, y: 154 }} to={{ x: 460, y: 193.5 }} stroke={{ width: 15}} zIndex={21} />
+		<Line from={{ x: 460, y: 154 }} to={{ x: 460, y: 194 }} stroke={{ width: 15}} zIndex={21} />
 	</Fragment>
 	<Fragment step={9} animate="wipe-left">
 		<!-- Arrow to Hagar -->
@@ -131,13 +131,13 @@
 	</Fragment>
 
 	<!-- Step 12: Arrow from Abraham to Sarah (right arrow shape) -->
-	<Fragment step={12} animate="fade">
+	<Fragment step={12} animate="wipe-down">
 		<!-- Vertical stem -->
 		<Line from={{ x: 495, y: 154 }} to={{ x: 495, y: 186 }} stroke={{ width: 15 }} zIndex={20} />
 	</Fragment>
-	<Fragment step={12} animate="wipe">
+	<Fragment step={12} animate="wipe-right">
 		<!-- Arrow to Sarah -->
-		<Arrow from={{ x: 487.5, y: 186 }} to={{ x: 615, y: 186 }} stroke={{ width: 15 }} zIndex={20} />
+		<Arrow from={{ x: 487.5, y: 186 }} to={{ x: 600, y: 186 }} stroke={{ width: 15 }} zIndex={20} />
 	</Fragment>
 
 	<!-- Step 13: Sarah (bold, blue) - appears with arrow at step 12, slightly delayed -->

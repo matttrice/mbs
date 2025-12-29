@@ -192,16 +192,16 @@
 
 	<!-- Step 9/10: Blue corner pieces of completed puzzle -->
 	<Fragment step={9} animate="fade">
-		<Rect x={700} y={112} width={30} height={30} fill="#0000FF" stroke={{ color: '#000000', width: 1 }} zIndex={74} />
+		<Rect x={700} y={112} width={30} height={30} fill="var(--color-level3)" zIndex={74} />
 	</Fragment>
 	<Fragment step={9.1} animate="fade">
-		<Rect x={699} y={9} width={30} height={30} fill="#0000FF" stroke={{ color: '#000000', width: 1 }} zIndex={73} />
+		<Rect x={699} y={9} width={30} height={30} fill="var(--color-level3)" zIndex={73} />
 	</Fragment>
 	<Fragment step={9.2} animate="fade">
-		<Rect x={838} y={9} width={30} height={30} fill="#0000FF" stroke={{ color: '#000000', width: 1 }} zIndex={72} />
+		<Rect x={838} y={9} width={30} height={30} fill="var(--color-level3)"  zIndex={72} />
 	</Fragment>
 	<Fragment step={9.3} animate="fade">
-		<Rect x={837} y={112} width={30} height={30} fill="#0000FF" stroke={{ color: '#000000', width: 1 }} zIndex={75} />
+		<Rect x={837} y={112} width={30} height={30} fill="var(--color-level3)" zIndex={75} />
 	</Fragment>
 
 	<!-- Step 10: Connecting lines between puzzle corners -->
@@ -212,7 +212,7 @@
 		<Line from={{ x: 729, y: 24 }} to={{ x: 838, y: 24 }} stroke={{ width: 12.5 }} zIndex={78} />
 	</Fragment>
 	<Fragment step={10.2} animate="wipe-down">
-		<Line from={{ x: 852, y: 39 }} to={{ x: 852, y: 112 }} stroke={{ width: 12.5 }} zIndex={77} />
+		<Line from={{ x: 852, y: 39 }} to={{ x: 852, y: 113 }} stroke={{ width: 12.5 }} zIndex={77} />
 	</Fragment>
 	<Fragment step={10.3} animate="wipe-left">
 		<Line from={{ x: 730, y: 127 }} to={{ x: 837, y: 128 }} stroke={{ width: 12.5 }} zIndex={79} />
@@ -227,13 +227,15 @@
 		<Rect x={777} y={30} width={21} height={18} fill="var(--color-level1)" stroke={{ color: 'var(--color-stroke-dark)', width: 1 }} zIndex={84} />
 	</Fragment>
 	<Fragment step={11.1} animate="draw">
-		<Arc from={{ x: 655, y: 78.1 }} to={{ x: 788, y: 88.8 }} curve={-9.6} stroke={{ width: 3.3, color: 'var(--color-level3)' }} arrow={true} />
+		<Arc from={{ x: 655, y: 78.1 }} to={{ x: 809, y: 88.8 }} curve={-9.6} stroke={{ width: 3.3, color: 'var(--color-level3)' }} arrow={true} />
 	</Fragment>
 	<!-- Gray puzzle piece appearing at end of second arc -->
 	<Fragment step={11.1} animate="fade">
-		<Rect x={790} y={82} width={16} height={13} fill="var(--color-level1)" stroke={{ color: '#000000', width: 1 }} zIndex={85} />
+		<Rect x={811} y={86} width={26} height={36} fill="var(--color-level1)" stroke={{ color: '#000000', width: 1 }} zIndex={85} />
 	</Fragment>
-
+	<Fragment step={11.1} animate="fade">
+		<Rect x={836} y={93} width={10} height={20} fill="var(--color-level1)" stroke={{ color: '#000000', width: 1 }} zIndex={85} />
+	</Fragment>
 	<!-- Step 12: "What if you begin inductively?" -->
 	<Fragment
 		step={12}
@@ -246,18 +248,19 @@
 
 	<!-- Step 12.1: Wrong piece rejected - arrow pointing outside border with red X -->
 	<Fragment step={12.1} animate="draw">
-		<Arc from={{ x: 658, y: 102 }} to={{ x: 890, y: 55 }} curve={-40} stroke={{ width: 3.3, color: 'var(--color-danger)' }} arrow={true} />
+		<Arc from={{ x: 658, y: 102 }} to={{ x: 885, y: 55 }} curve={-40} stroke={{ width: 3.3, color: 'var(--color-danger)' }} arrow={true} />
 	</Fragment>
 	<!-- Small gray box outside the border -->
 	<Fragment step={12.1} animate="fade">
-		<Rect x={895} y={50} width={16} height={13} fill="var(--color-level1)" stroke={{ color: 'var(--color-stroke-dark)', width: 1 }} zIndex={86} />
+		<Rect x={890} y={45} width={25} height={25} fill="var(--color-level1)" stroke={{ color: 'var(--color-stroke-dark)', width: 1 }} zIndex={86} />
 	</Fragment>
-	<!-- Red X on the rejected piece -->
-	<Fragment step={12.1} animate="fade">
-		<Line from={{ x: 893, y: 48 }} to={{ x: 918, y: 65 }} stroke={{ width: 3, color: 'var(--color-danger)' }} zIndex={87} />
-	</Fragment>
-	<Fragment step={12.1} animate="fade">
-		<Line from={{ x: 913, y: 48 }} to={{ x: 893, y: 65 }} stroke={{ width: 3, color: 'var(--color-danger)' }} zIndex={87} />
+	<!-- Red ? on the rejected piece -->
+	<Fragment 
+		step={12.1} 
+		layout={{ x: 900, y: 54, width: 5, height: 5 }}
+		font={{ font_size: 25, bold: true, color: 'var(--color-danger)' }}
+		zIndex={87}>
+		?
 	</Fragment>
 
 	<!-- Step 13: Genesis + Timeline arrow -->

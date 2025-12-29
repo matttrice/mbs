@@ -2,16 +2,6 @@
 
 A SvelteKit-based presentation system replicating PowerPoint's **Custom Show** "drill and return" functionality. Navigate through multi-slide presentations with fragment-by-fragment reveals, drill into scripture references, and automatically return to your exact position.
 
-## Features
-
-- **Pixel-perfect** - 960×540 fixed canvas with absolute positioning
-- **Multi-slide presentations** with per-slide fragment tracking
-- **Drill-and-return** - click scripture references to explore, auto-return when complete
-- **Stack-based navigation** - supports nested drills
-- **State persistence** - survives page refresh via localStorage
-- **Keyboard navigation** - Arrow keys, Space, Escape
-- **CSS entrance animations** - fade, fly, scale (opt-in via `animate` prop)
-
 ## Quick Start
 
 ```bash
@@ -20,17 +10,6 @@ npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173)
-
-## Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start dev server |
-| `npm run build` | Production build |
-| `npm run preview` | Preview production build |
-| `npm test` | Run unit tests (watch mode) |
-| `npm run test:unit` | Run unit tests (single run) |
-| `npm run check` | TypeScript type checking |
 
 ## Project Structure
 

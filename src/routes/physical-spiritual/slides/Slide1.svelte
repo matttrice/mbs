@@ -58,23 +58,16 @@
 
 	<!-- Step 3: "Heavens" + Blue rectangle + Lines + "Earth" + Gray rectangle (all with timing) -->
 	<Fragment step={3} animate="wipe-down">
-		<Rect x={192.7} y={0} width={288} height={540} fill="var(--color-level2)" zIndex={2} />
-	</Fragment>
-
-	<Fragment step={3} animate="wipe-down">
+		<Rect x={192.7} y={0} width={288} height={540} fill="var(--color-level2)" zIndex={0} />
 		<Rect x={480} y={0} width={270} height={540} fill="var(--color-level1)" zIndex={0} />
-	</Fragment>
-	<!-- Horizontal divider line -->
-	<Fragment step={3}>
-		<Line from={{ x: 192.4, y: 55.4 }} to={{ x: 750.4, y: 55.4 }} stroke={{ width: 3, color: '#000000' }} zIndex={12} />
+		<!-- Horizontal divider line -->
+		<Line from={{ x: 192.4, y: 55.4 }} to={{ x: 750.4, y: 55.4 }} stroke={{ width: 3, color: 'var(--color-stroke-dark)' }} zIndex={0} />
+		<!-- Vertical divider line -->
+		<Line from={{ x: 481.5, y: 0 }} to={{ x: 481.5, y: 540 }} stroke={{ width: 3, color: 'var(--color-stroke-dark)' }} zIndex={0} />
 	</Fragment>
 
-	<!-- Vertical divider line -->
-	<Fragment step={3}>
-		<Line from={{ x: 481.5, y: 0 }} to={{ x: 481.5, y: 540 }} stroke={{ width: 3, color: '#000000' }} zIndex={3} />
-	</Fragment>
 	<Fragment
-		step={3.25}
+		step={3}
 		layout={{ x: 239.5, y: 6.9, width: 217.1, height: 40.8 }}
 		font={{ font_size: 50, bold: true, color: 'var(--color-level3)' }}
 		zIndex={10}
@@ -83,7 +76,7 @@
 	</Fragment>
 
 	<Fragment
-		step={3.25}
+		step={3}
 		layout={{ x: 520.8, y: 7.5, width: 161.1, height: 40.8 }}
 		font={{ font_size: 50, bold: true }}
 		zIndex={11}
@@ -350,7 +343,7 @@
 
 	<Fragment
 		step={24}
-		layout={{ x: 760.7, y: 273.9, width: 138.3, height: 75.8 }}
+		layout={{ x: 761, y: 273.9, width: 138.3, height: 75.8 }}
 		font={{ font_size: 21.7, bold: true, wrap: true }}
 		zIndex={33}
 	>
@@ -362,7 +355,7 @@
 	</Fragment>
 
 	<Fragment step={24} animate="fade">
-		<Rect x={481.1} y={295.4} width={258.6} height={127.7} fill="var(--color-bg-ghost)" zIndex={1} />
+		<Rect x={483} y={295.4} width={258.6} height={127.7} fill="var(--color-bg-ghost)" zIndex={1} />
 	</Fragment>
 
 	<Fragment

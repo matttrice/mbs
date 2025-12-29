@@ -1,118 +1,197 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import { Rect, Line } from '$lib/components/svg';
 </script>
 
 <Slide>
-<div class="drill-content">
-	<header>
-		<Fragment drillTo="promises/1corinthians-15-40" returnHere>
-			<h1 class="title-link">1 Corinthians 15:40-45</h1>
-		</Fragment>
-	</header>
+	<!-- Background columns -->
+	<Rect x={192} y={0} width={288} height={540} fill="var(--color-level2)" zIndex={0} />
+	<Rect x={480} y={0} width={288} height={540} fill="var(--color-level1)" zIndex={0} />
+	
+	<!-- Vertical divider -->
+	<Line from={{ x: 480, y: 0 }} to={{ x: 480, y: 540 }} stroke={{ width: 3, color: '#000000' }} zIndex={1} />
 
-	<div class="content">
-		<div class="two-columns">
-			<!-- Spiritual Column (Left) -->
-			<div class="column spiritual">
-				<div class="column-header text-level3">SPIRITUAL</div>
-				<div class="item text-level3">Imperishable</div>
-				<div class="item text-level3">Glory</div>
-				<div class="item text-level3">Power</div>
-				<div class="item text-level3">Spiritual Body</div>
-				<div class="item text-level3">2nd Adam - Heaven</div>
-				
-				<Fragment step={1}>
-					<div class="item text-level3 animated">Invisible</div>
-				</Fragment>
-				<Fragment step={2}>
-					<div class="item text-level3 animated">Eternal</div>
-				</Fragment>
-				<Fragment step={4}>
-					<div class="item text-level3 animated large">True & Real</div>
-				</Fragment>
-			</div>
+	<!-- Title: 1 Corinthians 15:40-45 (drillable) -->
+	<Fragment
+		drillTo="promises/1corinthians-15-40"
+		returnHere
+		layout={{ x: 280, y: -25, width: 400, height: 50 }}
+		font={{ font_size: 28, bold: true }}
+		fill="var(--color-bg-ghost)"
+		line={{ color: 'var(--color-bg-darkest)', width: 2 }}
+		zIndex={10}
+	>
+		1 Corinthians 15:40-45
+	</Fragment>
 
-			<!-- Divider -->
-			<div class="divider">or</div>
+	<!-- Column Headers -->
+	<Fragment
+		layout={{ x: 235, y: 70, width: 200, height: 40 }}
+		font={{ font_size: 45, bold: true, color: 'var(--color-level3)' }}
+		zIndex={10}
+	>
+		SPIRITUAL
+	</Fragment>
 
-			<!-- Physical Column (Right) -->
-			<div class="column physical">
-				<div class="column-header">PHYSICAL</div>
-				<div class="item">Perishable</div>
-				<div class="item">Dishonor</div>
-				<div class="item">Weakness</div>
-				<div class="item">Physical Body</div>
-				<div class="item">1st Adam - Earth</div>
-				
-				<Fragment step={3}>
-					<div class="item animated">Visible</div>
-				</Fragment>
-				<Fragment step={3}>
-					<div class="item animated">Temporary</div>
-				</Fragment>
-				<Fragment step={5}>
-					<div class="item animated large">Shadow & Copy</div>
-				</Fragment>
-			</div>
-		</div>
-	</div>
-</div>
+	<Fragment
+		layout={{ x: 525, y: 70, width: 200, height: 40 }}
+		font={{ font_size: 45, bold: true }}
+		zIndex={10}
+	>
+		PHYSICAL
+	</Fragment>
+
+	<!-- "or" divider -->
+	<Fragment
+		layout={{ x: 455, y: 70, width: 50, height: 40 }}
+		font={{ font_size: 24 }}
+		fill="var(--color-bg-ghost)"
+		line={{ color: 'var(--color-bg-darkest)', width: 2 }}
+		zIndex={5}
+	>
+		or
+	</Fragment>
+
+	<!-- ===== SPIRITUAL Column (Left) - Static items ===== -->
+	<Fragment
+		layout={{ x: 235, y: 130, width: 200, height: 30 }}
+		font={{ font_size: 22, bold: true, color: 'var(--color-level3)' }}
+		zIndex={10}
+	>
+		Imperishable
+	</Fragment>
+
+	<Fragment
+		layout={{ x: 235, y: 165, width: 200, height: 30 }}
+		font={{ font_size: 22, bold: true, color: 'var(--color-level3)' }}
+		zIndex={10}
+	>
+		Glory
+	</Fragment>
+
+	<Fragment
+		layout={{ x: 235, y: 200, width: 200, height: 30 }}
+		font={{ font_size: 22, bold: true, color: 'var(--color-level3)' }}
+		zIndex={10}
+	>
+		Power
+	</Fragment>
+
+	<Fragment
+		layout={{ x: 235, y: 235, width: 200, height: 30 }}
+		font={{ font_size: 22, bold: true, color: 'var(--color-level3)' }}
+		zIndex={10}
+	>
+		Spiritual Body
+	</Fragment>
+
+	<Fragment
+		layout={{ x: 235, y: 270, width: 200, height: 30 }}
+		font={{ font_size: 22, bold: true, color: 'var(--color-level3)' }}
+		zIndex={10}
+	>
+		2nd Adam - Heaven
+	</Fragment>
+
+	<!-- ===== PHYSICAL Column (Right) - Static items ===== -->
+	<Fragment
+		layout={{ x: 525, y: 130, width: 200, height: 30 }}
+		font={{ font_size: 22, bold: true }}
+		zIndex={10}
+	>
+		Perishable
+	</Fragment>
+
+	<Fragment
+		layout={{ x: 525, y: 165, width: 200, height: 30 }}
+		font={{ font_size: 22, bold: true }}
+		zIndex={10}
+	>
+		Dishonor
+	</Fragment>
+
+	<Fragment
+		layout={{ x: 525, y: 200, width: 200, height: 30 }}
+		font={{ font_size: 22, bold: true }}
+		zIndex={10}
+	>
+		Weakness
+	</Fragment>
+
+	<Fragment
+		layout={{ x: 525, y: 235, width: 200, height: 30 }}
+		font={{ font_size: 22, bold: true }}
+		zIndex={10}
+	>
+		Physical Body
+	</Fragment>
+
+	<Fragment
+		layout={{ x: 525, y: 270, width: 200, height: 30 }}
+		font={{ font_size: 22, bold: true }}
+		zIndex={10}
+	>
+		1st Adam - Earth
+	</Fragment>
+
+	<!-- ===== ANIMATED Items ===== -->
+	<!-- Step 1: Invisible (Spiritual) -->
+	<Fragment
+		step={1}
+		layout={{ x: 235, y: 320, width: 200, height: 30 }}
+		font={{ font_size: 40, bold: true, italic: true, color: 'var(--color-level3)' }}
+		zIndex={10}
+	>
+		Invisible
+	</Fragment>
+
+	<!-- Step 2: Eternal (Spiritual) -->
+	<Fragment
+		step={1}
+		layout={{ x: 235, y: 355, width: 200, height: 30 }}
+		font={{ font_size: 40, bold: true, italic: true, color: 'var(--color-level3)' }}
+		zIndex={10}
+	>
+		Eternal
+	</Fragment>
+
+	<!-- Step 3: Visible & Temporary (Physical) -->
+	<Fragment
+		step={3}
+		layout={{ x: 525, y: 320, width: 200, height: 30 }}
+		font={{ font_size: 40, bold: true, italic: true }}
+		zIndex={10}
+	>
+		Visible
+	</Fragment>
+
+	<Fragment
+		step={3}
+		layout={{ x: 525, y: 355, width: 200, height: 30 }}
+		font={{ font_size: 40, bold: true, italic: true }}
+		zIndex={10}
+	>
+		Temporary
+	</Fragment>
+
+	<!-- Step 4: True & Real (Spiritual) -->
+	<Fragment
+		step={4}
+		layout={{ x: 235, y: 410, width: 200, height: 40 }}
+		font={{ font_size: 26, bold: true, italic: true, color: 'var(--color-level3)' }}
+		zIndex={10}
+	>
+		True & Real
+	</Fragment>
+
+	<!-- Step 5: Shadow & Copy (Physical) -->
+	<Fragment
+		step={5}
+		layout={{ x: 525, y: 410, width: 200, height: 40 }}
+		font={{ font_size: 26, bold: true, italic: true }}
+		zIndex={10}
+	>
+		Shadow & Copy
+	</Fragment>
 </Slide>
-
-<style>
-	.title-link {
-		text-decoration: underline;
-		cursor: pointer;
-	}
-
-	.content {
-		flex: 1;
-		display: flex;
-		justify-content: center;
-		align-items: flex-start;
-	}
-
-	.two-columns {
-		display: flex;
-		gap: 20px;
-		align-items: flex-start;
-	}
-
-	.column {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 8px;
-		min-width: 200px;
-	}
-
-	.column-header {
-		font-size: 28px;
-		font-weight: bold;
-		text-decoration: underline;
-		margin-bottom: 8px;
-	}
-
-	.item {
-		font-size: 18px;
-		text-align: center;
-	}
-
-	.item.animated {
-		font-style: italic;
-	}
-
-	.item.large {
-		font-size: 22px;
-		font-weight: bold;
-		margin-top: 8px;
-	}
-
-	.divider {
-		font-size: 24px;
-		color: #000;
-		padding: 0 16px;
-		margin-top: 40px;
-	}
-</style>

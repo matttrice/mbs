@@ -79,7 +79,7 @@
 			Ubuntu,
 			sans-serif;
 		overflow: hidden;
-		background: #1a1a2e;
+		background: var(--color-bg-light);
 	}
 
 	.presentation-container {
