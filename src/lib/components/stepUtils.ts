@@ -24,7 +24,7 @@ import type { SlideContext } from './Slide.svelte';
 export const DEFAULT_DELAY_PER_DECIMAL = 500;
 
 /** Duration to wait after animation starts before marking as complete (ms) */
-export const ANIMATION_COMPLETE_DELAY = 600;
+export const ANIMATION_COMPLETE_DELAY = 400;
 
 /**
  * Get the effective step number (integer part) for visibility calculations.

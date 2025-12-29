@@ -247,12 +247,15 @@
 	// Animate if: ready, visible, on active slide, not yet animated
 	let showAnimation = $derived(animationReady && visible() && isActiveSlide && !hasAnimated);
 	
-	// When animation starts, mark as animated (after animation completes)
+	// When animation starts, mark as animated (after animation delay + duration completes)
 	$effect(() => {
 		if (showAnimation) {
+			// Wait for animation delay + animation duration before marking complete
+			// This prevents the .revealed class from overriding in-progress animations
+			const totalAnimationTime = animationDelay + ANIMATION_COMPLETE_DELAY;
 			const timer = setTimeout(() => {
 				hasAnimated = true;
-			}, ANIMATION_COMPLETE_DELAY);
+			}, totalAnimationTime);
 			
 			return () => clearTimeout(timer);
 		}
