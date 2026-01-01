@@ -81,6 +81,22 @@
 				<span class="arrow">→</span>
 			</div>
 		</a>
+		<a href="/law" class="lesson-card">
+			<div class="lesson-content">
+				<h2>5. Law</h2>
+				<p>Moral Law, Commandment Law, and the Law of Faith</p>
+			</div>
+			<div class="lesson-actions">
+				<button 
+					class="reset-btn" 
+					onclick={(e) => startFresh(e, 'law', '/law')}
+					title="Reset progress and start fresh"
+				>
+					Reset
+				</button>
+				<span class="arrow">→</span>
+			</div>
+		</a>
 		<a href="/promises" class="lesson-card">
 			<div class="lesson-content">
 				<h2>9. The Promises</h2>
