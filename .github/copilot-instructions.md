@@ -327,7 +327,7 @@ Arc is a self-positioning curved line/arrow for drawing half-circle arcs above o
 </Fragment>
 ```
 
-**Note:** When converting from PowerPoint JSON with `arc_path` data, scale coordinates by `960 / slide_width` (typically 0.625 for 1536-wide slides).
+**Note:** Coordinates from PowerPoint JSON are already scaled to 960×540 by the extractor - use them directly without manual scaling.
 
 ### Other SVG Components
 

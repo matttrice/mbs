@@ -65,6 +65,22 @@
 				<span class="arrow">→</span>
 			</div>
 		</a>
+		<a href="/life" class="lesson-card">
+			<div class="lesson-content">
+				<h2>4. Life</h2>
+				<p>Body, Spirit, and Soul - understanding the whole person</p>
+			</div>
+			<div class="lesson-actions">
+				<button 
+					class="reset-btn" 
+					onclick={(e) => startFresh(e, 'life', '/life')}
+					title="Reset progress and start fresh"
+				>
+					Reset
+				</button>
+				<span class="arrow">→</span>
+			</div>
+		</a>
 		<a href="/promises" class="lesson-card">
 			<div class="lesson-content">
 				<h2>9. The Promises</h2>
