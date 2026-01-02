@@ -3,37 +3,29 @@
 	import Fragment from '$lib/components/Fragment.svelte';
 
 	/**
-	 * Romans 10:17 - Faith Comes from Hearing
-	 * Custom Show ID: 8 (Romans10.17)
+	 * Drill: Romans 10:17 - Faith comes from hearing
 	 */
 </script>
 
 <Slide>
-	<!-- Title -->
 	<Fragment
-		layout={{ x: 30, y: 50, width: 900, height: 50 }}
-		font={{ font_size: 42, bold: true, align: 'center' }}
+		layout={{ x: 102.8, y: 37.3, width: 755.9, height: 44.4 }}
+		font={{ font_size: 36.7, bold: true }}
 	>
-		Romans 10:17
+		Romans 10:17 NASB
 	</Fragment>
 
-	<!-- NASB Version -->
 	<Fragment
-		step={1}
-		layout={{ x: 40, y: 140, width: 880, height: 100 }}
-		font={{ font_size: 28, align: 'center', wrap: true }}
-		animate="fade"
+		layout={{ x: 105.1, y: 85.5, width: 764.9, height: 78.8 }}
+		font={{ font_size: 30, wrap: true }}
 	>
-		<strong>NASB:</strong> So faith comes from hearing, and hearing by the word of Christ.
+		So faith comes from hearing, and hearing by the word of Christ.
 	</Fragment>
 
-	<!-- NIV Version -->
 	<Fragment
-		step={2}
-		layout={{ x: 40, y: 280, width: 880, height: 100 }}
-		font={{ font_size: 28, align: 'center', wrap: true }}
-		animate="fade"
+		layout={{ x: 102.1, y: 191.6, width: 780, height: 123.2 }}
+		font={{ font_size: 36.7, wrap: true }}
 	>
-		<strong>NIV:</strong> Consequently, faith comes from hearing the message, and the message is heard through the word about Christ.
+		Romans 10:17 NIV<br/>Consequently, faith comes from hearing the message, and the message is heard through the word about Christ.
 	</Fragment>
 </Slide>

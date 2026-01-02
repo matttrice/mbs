@@ -3,58 +3,30 @@
 	import Fragment from '$lib/components/Fragment.svelte';
 
 	/**
-	 * Hebrews 7:11-12 - Change of Priesthood, Change of Law
-	 * Custom Show ID: 17 (Hebrews7.11)
+	 * Drill: Hebrews 7:11-12 - Change of priesthood, change of law
 	 */
 </script>
 
 <Slide>
-	<!-- Title -->
 	<Fragment
-		layout={{ x: 30, y: 30, width: 900, height: 50 }}
-		font={{ font_size: 42, bold: true, align: 'center' }}
+		layout={{ x: 89.2, y: 30.4, width: 755.9, height: 44.4 }}
+		font={{ font_size: 40, bold: true }}
 	>
 		Hebrews 7:11-12
 	</Fragment>
 
-	<!-- Scripture Text -->
+	<Fragment
+		layout={{ x: 89.2, y: 87.6, width: 782.8, height: 232.8 }}
+		font={{ font_size: 28, wrap: true }}
+	>
+		Now if perfection was through the Levitical priesthood (for on the basis of it the people received the Law), what further need was there for another priest to arise according to the order of Melchizedek, and not be designated according to the order of Aaron? 12 For when the priesthood is changed, of necessity there takes place a change of law also.
+	</Fragment>
+
 	<Fragment
 		step={1}
-		layout={{ x: 40, y: 100, width: 880, height: 160 }}
-		font={{ font_size: 26, align: 'left', wrap: true }}
-		animate="fade"
+		layout={{ x: 128.6, y: 345.2, width: 704.6, height: 90 }}
+		font={{ font_size: 26, align: 'center', color: '#0066CC' }}
 	>
-		Now if perfection was through the Levitical priesthood (for on the basis of it the people received the Law), what further need was there for another priest to arise according to the order of Melchizedek, and not be designated according to the order of Aaron? For when the priesthood is changed, of necessity there takes place a change of law also.
-	</Fragment>
-
-	<!-- Comparison -->
-	<Fragment
-		step={2}
-		layout={{ x: 100, y: 300, width: 320, height: 80 }}
-		font={{ font_size: 26, align: 'center', wrap: true }}
-		fill="var(--color-bg-light)"
-		animate="fade"
-	>
-		Commandment Law<br/>Levitical – Not perfect
-	</Fragment>
-
-	<Fragment
-		step={2}
-		layout={{ x: 540, y: 300, width: 320, height: 80 }}
-		font={{ font_size: 26, align: 'center', wrap: true }}
-		fill="var(--color-level2)"
-		animate="fade"
-	>
-		Law of Faith / Grace<br/>Christ – Perfect Law
-	</Fragment>
-
-	<!-- Change of Law -->
-	<Fragment
-		step={3}
-		layout={{ x: 340, y: 420, width: 280, height: 50 }}
-		font={{ font_size: 36, bold: true, align: 'center', color: '#0000CC' }}
-		animate="fade"
-	>
-		Change of Law
+		"change of law" - does this support<br/>that the commandment law applies only<br/>to Jewish believers?
 	</Fragment>
 </Slide>

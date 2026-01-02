@@ -3,26 +3,21 @@
 	import Fragment from '$lib/components/Fragment.svelte';
 
 	/**
-	 * Philippians 2:12 - Work Out Salvation with Fear and Trembling
-	 * Custom Show ID: 9 (Philippians2.12)
+	 * Drill: Philippians 2:12 - Work out salvation with fear and trembling
 	 */
 </script>
 
 <Slide>
-	<!-- Title -->
 	<Fragment
-		layout={{ x: 30, y: 80, width: 900, height: 50 }}
-		font={{ font_size: 42, bold: true, align: 'center' }}
+		layout={{ x: 100.4, y: 32.9, width: 755.9, height: 44.4 }}
+		font={{ font_size: 40, bold: true }}
 	>
 		Philippians 2:12
 	</Fragment>
 
-	<!-- Scripture Text -->
 	<Fragment
-		step={1}
-		layout={{ x: 40, y: 180, width: 880, height: 180 }}
-		font={{ font_size: 30, align: 'center', wrap: true }}
-		animate="fade"
+		layout={{ x: 103.1, y: 88.2, width: 783.7, height: 122.6 }}
+		font={{ font_size: 30, wrap: true }}
 	>
 		So then, my beloved, just as you have always obeyed, not as in my presence only, but now much more in my absence, work out your salvation with fear and trembling;
 	</Fragment>

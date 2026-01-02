@@ -3,47 +3,30 @@
 	import Fragment from '$lib/components/Fragment.svelte';
 
 	/**
-	 * 1 Peter 4:12-18 + Hebrews 10:23
-	 * Custom Show ID: 10 (1Peter4.12)
+	 * Drill: 1 Peter 4:12-13 - Trials and testing
 	 */
 </script>
 
 <Slide>
-	<!-- Title -->
 	<Fragment
-		layout={{ x: 30, y: 10, width: 450, height: 35 }}
-		font={{ font_size: 32, bold: true, align: 'left' }}
+		layout={{ x: 104.4, y: 32.9, width: 755.9, height: 44.4 }}
+		font={{ font_size: 40, bold: true }}
 	>
-		1 Peter 4:12-18
+		1 Peter 4:12-13
 	</Fragment>
 
-	<!-- 1 Peter Text -->
+	<Fragment
+		layout={{ x: 103.9, y: 88.6, width: 752.4, height: 230.6 }}
+		font={{ font_size: 30, wrap: true }}
+	>
+		Beloved, do not be surprised at the fiery ordeal among you, which comes upon you for your testing, as though some strange thing were happening to you; 13 but to the degree that you share the sufferings of Christ, keep on rejoicing, so that also at the revelation of His glory you may rejoice with exultation.
+	</Fragment>
+
 	<Fragment
 		step={1}
-		layout={{ x: 30, y: 50, width: 450, height: 380 }}
-		font={{ font_size: 16, align: 'left', wrap: true }}
-		animate="fade"
+		layout={{ x: 114.7, y: 340.9, width: 731.1, height: 106.9 }}
+		font={{ font_size: 28, align: 'center', color: '#CC00CC' }}
 	>
-		Dear friends, do not be surprised at the painful trial you are suffering, as though something strange were happening to you. But rejoice that you participate in the sufferings of Christ, so that you may be overjoyed when his glory is revealed. If you are insulted because of the name of Christ, you are blessed, for the Spirit of glory and of God rests on you. If you suffer, it should not be as a murderer or thief or any other kind of criminal, or even as a meddler. However, if you suffer as a Christian, do not be ashamed, but praise God that you bear that name. For it is time for judgment to begin with the family of God; and if it begins with us, what will the outcome be for those who do not obey the gospel of God? And, "If it is hard for the righteous to be saved, what will become of the ungodly and the sinner?"
-	</Fragment>
-
-	<!-- Hebrews Title -->
-	<Fragment
-		step={2}
-		layout={{ x: 500, y: 10, width: 430, height: 35 }}
-		font={{ font_size: 32, bold: true, align: 'left' }}
-		animate="fade"
-	>
-		Hebrews 10:23-27
-	</Fragment>
-
-	<!-- Hebrews Text -->
-	<Fragment
-		step={2}
-		layout={{ x: 500, y: 50, width: 430, height: 380 }}
-		font={{ font_size: 16, align: 'left', wrap: true }}
-		animate="fade"
-	>
-		Let us hold fast the confession of our hope without wavering, for He who promised is faithful; and let us consider how to stimulate one another to love and good deeds, not forsaking our own assembling together, as is the habit of some, but encouraging one another; and all the more as you see the day drawing near. For if we go on sinning willfully after receiving the knowledge of the truth, there no longer remains a sacrifice for sins, but a terrifying expectation of judgment and the fury of a fire which will consume the adversaries.
+		Trials & Testing is synonymous with Judgment.<br/>It's testing the believer to see if the work has been done.
 	</Fragment>
 </Slide>

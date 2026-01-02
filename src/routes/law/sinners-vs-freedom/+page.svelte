@@ -1,96 +1,70 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import { Rect } from '$lib/components/svg';
 
 	/**
-	 * Sinners vs. Freedom - Reconciliation
-	 * Custom Show ID: 19 (SinnersVsSinless)
+	 * Drill: Sinners vs Freedom - Contrasting the two states
 	 */
 </script>
 
 <Slide>
-	<!-- Title -->
 	<Fragment
-		layout={{ x: 30, y: 10, width: 900, height: 45 }}
-		font={{ font_size: 38, bold: true, align: 'center' }}
+		layout={{ x: 163.2, y: 14.4, width: 633.6, height: 40 }}
+		font={{ font_size: 36.7, bold: true }}
 	>
-		Sinners vs. Freedom
+		Sinners vs. Freedom from Sin
 	</Fragment>
 
-	<!-- Left column: We have sin -->
+	<!-- Left column header - Sinners -->
+	<Fragment animate="wipe-down">
+		<Rect x={66.5} y={60} width={350} height={460} fill="var(--color-level1)" zIndex={0} />
+	</Fragment>
+
+	<Fragment
+		layout={{ x: 66.5, y: 64.7, width: 350, height: 38 }}
+		font={{ font_size: 28, bold: true, align: 'center', color: '#FFFFFF' }}
+		fill="var(--color-level1)"
+	>
+		Sinners
+	</Fragment>
+
+	<!-- Right column header - Freedom from Sin -->
+	<Fragment animate="wipe-down">
+		<Rect x={543.5} y={60} width={350} height={460} fill="var(--color-level2)" zIndex={0} />
+	</Fragment>
+
+	<Fragment
+		layout={{ x: 543.5, y: 64.7, width: 350, height: 38 }}
+		font={{ font_size: 28, bold: true, align: 'center', color: '#FFFFFF' }}
+		fill="var(--color-level2)"
+	>
+		Freedom from Sin
+	</Fragment>
+
+	<!-- Left column content -->
 	<Fragment
 		step={1}
-		layout={{ x: 30, y: 65, width: 450, height: 200 }}
-		font={{ font_size: 18, align: 'left', wrap: true }}
-		animate="fade"
+		layout={{ x: 76.5, y: 110, width: 330, height: 400 }}
+		font={{ font_size: 22, align: 'left', v_align: 'top', wrap: true }}
 	>
-		<strong>1 John 1:8</strong><br/>
-		If we say that we have no sin, we are deceiving ourselves and the truth is not in us.<br/><br/>
-		<strong>1 John 1:10</strong><br/>
-		If we say that we have not sinned, we make Him a liar and His word is not in us.
+		• Slaves to sin (Rom 6:17)<br/><br/>
+		• Under the law (Rom 6:14)<br/><br/>
+		• Wages of sin is death (Rom 6:23)<br/><br/>
+		• Unrighteous will not inherit (1 Cor 6:9)<br/><br/>
+		• Condemned already (John 3:18)
 	</Fragment>
 
-	<!-- Right column: Set free from sin -->
+	<!-- Right column content -->
 	<Fragment
 		step={2}
-		layout={{ x: 490, y: 65, width: 440, height: 200 }}
-		font={{ font_size: 18, align: 'left', wrap: true }}
-		animate="fade"
+		layout={{ x: 553.5, y: 110, width: 330, height: 400 }}
+		font={{ font_size: 22, align: 'left', v_align: 'top', wrap: true }}
 	>
-		<strong>Romans 6:18</strong><br/>
-		You have been set free from sin..<br/><br/>
-		<strong>1 John 5:18</strong><br/>
-		We know that no one who is born of God sins;
-	</Fragment>
-
-	<!-- Question -->
-	<Fragment
-		step={3}
-		layout={{ x: 30, y: 280, width: 900, height: 40 }}
-		font={{ font_size: 28, bold: true, align: 'center', color: '#CC0000' }}
-		animate="fade"
-	>
-		Which is it? Does the Church have sin or not?
-	</Fragment>
-
-	<!-- Resolution -->
-	<Fragment
-		step={4}
-		layout={{ x: 30, y: 330, width: 900, height: 100 }}
-		font={{ font_size: 18, align: 'left', wrap: true }}
-		animate="fade"
-	>
-		<strong>2 Corinthians 5:18-19</strong><br/>
-		God, who reconciled us to himself through Christ and gave us the ministry of reconciliation: that God was reconciling the world to himself in Christ, not counting men's sins against them.
-	</Fragment>
-
-	<Fragment
-		step={4}
-		layout={{ x: 30, y: 435, width: 450, height: 80 }}
-		font={{ font_size: 17, align: 'left', wrap: true }}
-		animate="fade"
-	>
-		<strong>Romans 4:8</strong><br/>
-		"Blessed is the one whose sin the Lord will never count against them."
-	</Fragment>
-
-	<Fragment
-		step={4}
-		layout={{ x: 490, y: 435, width: 440, height: 80 }}
-		font={{ font_size: 17, align: 'left', wrap: true }}
-		animate="fade"
-	>
-		<strong>Psalm 32:1</strong><br/>
-		How blessed is he whose transgression is forgiven, whose sin is covered!
-	</Fragment>
-
-	<!-- Conclusion -->
-	<Fragment
-		step={5}
-		layout={{ x: 30, y: 520, width: 900, height: 25 }}
-		font={{ font_size: 20, italic: true, align: 'center', color: '#0000CC' }}
-		animate="fade"
-	>
-		In Christ, sins are not counted. Christ covers the sins of the Church.
+		• Slaves to righteousness (Rom 6:18)<br/><br/>
+		• Under grace (Rom 6:14)<br/><br/>
+		• Gift of God is eternal life (Rom 6:23)<br/><br/>
+		• Washed, sanctified, justified (1 Cor 6:11)<br/><br/>
+		• No condemnation (Rom 8:1)
 	</Fragment>
 </Slide>

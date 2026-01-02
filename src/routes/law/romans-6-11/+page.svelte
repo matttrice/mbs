@@ -3,27 +3,22 @@
 	import Fragment from '$lib/components/Fragment.svelte';
 
 	/**
-	 * Romans 6:11-14 - Dead to Sin, Alive in Christ
-	 * Custom Show ID: 6 (Romans6.11-14)
+	 * Drill: Romans 6:11-14 - Not under law, under grace
 	 */
 </script>
 
 <Slide>
-	<!-- Title -->
 	<Fragment
-		layout={{ x: 30, y: 30, width: 900, height: 50 }}
-		font={{ font_size: 42, bold: true, align: 'center' }}
+		layout={{ x: 101.6, y: 20.2, width: 756.1, height: 44.5 }}
+		font={{ font_size: 36.7, bold: true }}
 	>
 		Romans 6:11-14
 	</Fragment>
 
-	<!-- Scripture Text -->
 	<Fragment
-		step={1}
-		layout={{ x: 40, y: 100, width: 880, height: 300 }}
-		font={{ font_size: 24, align: 'left', wrap: true }}
-		animate="fade"
+		layout={{ x: 101.7, y: 71.4, width: 784.9, height: 393.8 }}
+		font={{ font_size: 30, wrap: true }}
 	>
-		In the same way, count yourselves dead to sin but alive to God in Christ Jesus. Therefore do not let sin reign in your mortal body so that you obey its evil desires. Do not offer the parts of your body to sin, as instruments of wickedness, but rather offer yourselves to God, as those who have been brought from death to life; and offer the parts of your body to him as instruments of righteousness. For sin shall not be your master, because you are not under law, but under grace.
+		In the same way, count yourselves dead to sin but alive to God in Christ Jesus. 12 Therefore do not let sin reign in your mortal body so that you obey its evil desires. 13 Do not offer the parts of your body to sin, as instruments of wickedness, but rather offer yourselves to God, as those who have been brought from death to life; and offer the parts of your body to him as instruments of righteousness. 14 For sin shall not be your master, because you are not under law, but under grace.
 	</Fragment>
 </Slide>

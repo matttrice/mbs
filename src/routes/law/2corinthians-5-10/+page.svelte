@@ -3,38 +3,30 @@
 	import Fragment from '$lib/components/Fragment.svelte';
 
 	/**
-	 * 2 Corinthians 5:10 - Judgment Seat of Christ
-	 * Custom Show ID: 12 (2Corinthians5.10)
+	 * Drill: 2 Corinthians 5:10 - Judgment seat of Christ
 	 */
 </script>
 
 <Slide>
-	<!-- Title -->
 	<Fragment
-		layout={{ x: 30, y: 50, width: 900, height: 50 }}
-		font={{ font_size: 42, bold: true, align: 'center' }}
+		layout={{ x: 104.4, y: 42.9, width: 755.9, height: 44.4 }}
+		font={{ font_size: 40, bold: true }}
 	>
-		2 Corinthians 5:10-11
+		2 Corinthians 5:10
 	</Fragment>
 
-	<!-- Scripture Text -->
+	<Fragment
+		layout={{ x: 100.7, y: 100.2, width: 759.7, height: 170 }}
+		font={{ font_size: 30, wrap: true }}
+	>
+		For we must all appear before the judgment seat of Christ, so that each one may be recompensed for his deeds in the body, according to what he has done, whether good or bad.
+	</Fragment>
+
 	<Fragment
 		step={1}
-		layout={{ x: 40, y: 130, width: 880, height: 160 }}
-		font={{ font_size: 26, align: 'left', wrap: true }}
-		animate="fade"
+		layout={{ x: 100.7, y: 299.2, width: 759.7, height: 122.6 }}
+		font={{ font_size: 28, align: 'center', color: '#0066CC' }}
 	>
-		For we must all appear before the judgment seat of Christ, that each one may receive what is due him for the thing done while in the body, whether good or bad. Since, then, we know what it is to fear the Lord, we try to persuade men.
-	</Fragment>
-
-	<!-- Questions -->
-	<Fragment
-		step={2}
-		layout={{ x: 40, y: 340, width: 880, height: 100 }}
-		font={{ font_size: 28, italic: true, align: 'center', color: '#0000CC', wrap: true }}
-		animate="fade"
-	>
-		Did you respect the office of Ambassador for Christ?<br/>
-		Did you respect your grace period? Your diplomatic immunity?
+		"bema seat"<br/>Recompense is reward for what you did while alive.<br/>(rewards for believers)
 	</Fragment>
 </Slide>

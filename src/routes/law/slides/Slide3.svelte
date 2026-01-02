@@ -2,14 +2,15 @@
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
 	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
-	import { Arrow, Rect, Line } from '$lib/components/svg';
+	import { Arrow, Line, Rect } from '$lib/components/svg';
 
 	/**
-	 * Slide 3: Faith / Grace - Responsibility and hamartia
+	 * Slide 3: Faith / Grace - Responsibility & Judgment
 	 * Canvas: 960 x 540 pixels (16:9 aspect ratio)
-	 * Scale factor: 0.625 (from 1536×864 PowerPoint)
+	 * Converted from 1536x864 PowerPoint (scale 0.625)
 	 * 
-	 * Explores the concept of missing the mark (hamartia) and responsibility under grace
+	 * 32 animation steps covering Luke 13:6-9 parable,
+	 * hamartia definition, and fear/trembling concepts
 	 */
 
 	interface Props {
@@ -20,329 +21,314 @@
 </script>
 
 <Slide {slideIndex}>
-	<!-- Slide background -->
-	<div class="slide-bg"></div>
+    <div class="slide-bg"></div>
 	<!-- Reference overlay for development (press O to toggle) -->
 	<ReferenceOverlay src="/export/05-Law/Slide3.png" />
 
 	<!-- ===== STATIC CONTENT ===== -->
-	
-	<!-- Title: Faith / Grace -->
+	<!-- Title: "Faith / Grace" -->
 	<Fragment
-		layout={{ x: 331, y: 16, width: 313, height: 44 }}
-		font={{ font_size: 64, align: 'center', color: '#000000' }}
+		layout={{ x: 330.9, y: 15.5, width: 313.1, height: 44.4 }}
+		font={{ font_size: 40, align: 'center' }}
 		zIndex={5}
 	>
 		Faith / Grace
 	</Fragment>
 
-	<!-- ===== ANIMATED CONTENT ===== -->
-	
-	<!-- Step 1: Philippians 2:12 (click) - drillTo -->
+	<!-- ===== ANIMATION SEQUENCE (32 Steps) ===== -->
+
+	<!-- Step 1: Philippians 2:12 (drill) -->
 	<Fragment
 		step={1}
 		drillTo="law/philippians-2-12"
-		layout={{ x: 90, y: 19, width: 227, height: 31 }}
-		font={{ font_size: 37.3, align: 'center' }}
+		layout={{ x: 90.4, y: 18.9, width: 227.4, height: 31.4 }}
+		font={{ font_size: 23.3, align: 'center' }}
 		zIndex={25}
-		animate="fade"
 	>
 		Philippians 2:12
 	</Fragment>
 
-	<!-- Step 2: "Sin Not Counted = No Death..." (click) -->
+	<!-- Step 2: "Sin Not Counted = No Death, Why Fear & Trembling?" -->
 	<Fragment
 		step={2}
-		layout={{ x: 90, y: 46, width: 229, height: 53 }}
-		font={{ font_size: 26.7, align: 'center', italic: true, color: '#0000FF', wrap: true }}
+		layout={{ x: 89.5, y: 45.8, width: 229.2, height: 52.7 }}
+		font={{ font_size: 16.7, align: 'center', italic: true, color: '#0000FF' }}
 		zIndex={26}
-		animate="fade"
 	>
-		Sin Not Counted = No Death<br/>Why Fear &amp; Trembling?
+		Sin Not Counted = No Death<br/>Why Fear & Trembling?
 	</Fragment>
 
-	<!-- Step 3: 2 Corinthians 5:10 (click) - drillTo -->
+	<!-- Step 3: 2 Corinthians 5:10 (drill) -->
 	<Fragment
 		step={3}
 		drillTo="law/2corinthians-5-10"
-		layout={{ x: 95, y: 111, width: 219, height: 38 }}
-		font={{ font_size: 37.3, align: 'center' }}
+		layout={{ x: 94.6, y: 110.8, width: 219.1, height: 38 }}
+		font={{ font_size: 23.3, align: 'center' }}
 		zIndex={31}
-		animate="fade"
 	>
 		2 Corinthians 5:10
 	</Fragment>
 
-	<!-- Step 4: "Responsible for good and bad..." (click) -->
+	<!-- Step 4: "Responsible for good and bad..." -->
 	<Fragment
 		step={4}
-		layout={{ x: 76, y: 136, width: 257, height: 56 }}
-		font={{ font_size: 32, align: 'center', italic: true, wrap: true }}
+		layout={{ x: 75.5, y: 143, width: 257.1, height: 55.9 }}
+		font={{ font_size: 20, align: 'center', italic: true , wrap: true }}
 		zIndex={30}
-		animate="fade"
 	>
 		Responsible for good and bad while in the body,<br/>Fear the Lord.
 	</Fragment>
 
-	<!-- Step 5: Romans 6:18 (click) - drillTo -->
+	<!-- Step 5: Romans 6:18 (drill) -->
 	<Fragment
 		step={5}
 		drillTo="law/romans-6-17"
-		layout={{ x: 80, y: 213, width: 248, height: 31 }}
-		font={{ font_size: 37.3, align: 'center' }}
+		layout={{ x: 80.3, y: 213.1, width: 247.6, height: 31.1 }}
+		font={{ font_size: 23.3, align: 'center' }}
 		zIndex={19}
-		animate="fade"
 	>
 		Romans 6:18
 	</Fragment>
 
-	<!-- Step 5: Horizontal line (with) -->
+	<!-- Step 5 (with): Horizontal line under Romans 6:18 -->
 	<Fragment step={5} animate="draw">
-		<Line from={{ x: 84, y: 245 }} to={{ x: 324, y: 246 }} stroke={{ width: 5, color: '#CCCCCC' }} zIndex={32} />
+		<Line from={{ x: 84.1, y: 245.8 }} to={{ x: 324.1, y: 245.8 }} stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={32} />
 	</Fragment>
 
-	<!-- Step 6: "You have been set free from sin..." (click) - drillTo -->
+	<!-- Step 6: Romans 6:18 quote box (drill) -->
 	<Fragment
 		step={6}
 		drillTo="law/romans-6-17"
-		layout={{ x: 79, y: 245, width: 250, height: 79 }}
-		font={{ font_size: 32, align: 'center', wrap: true }}
+		layout={{ x: 79.1, y: 245.3, width: 250.1, height: 78.8 }}
+		font={{ font_size: 20, align: 'center', wrap: true }}
 		zIndex={22}
-		animate="fade"
 	>
 		"You have been set free<br/>from sin and have become slaves to righteousness"
 	</Fragment>
 
-	<!-- Step 6: "Freedom from sin but not responsibility!" (with) -->
+	<!-- Step 6 (with): "Freedom from sin but not responsibility!" -->
 	<Fragment
 		step={6}
-		layout={{ x: 80, y: 328, width: 238, height: 55 }}
-		font={{ font_size: 32, italic: true, wrap: true }}
+		layout={{ x: 79.8, y: 327.9, width: 237.8, height: 54.5 }}
+		font={{ font_size: 20, italic: true }}
 		zIndex={23}
-		animate="fade"
 	>
 		Freedom from sin but not<br/>responsibility!
 	</Fragment>
 
-	<!-- Step 7: "Fear and trembling from responsibility..." (click) -->
+	<!-- Step 7: "Fear and trembling from responsibility...not sin." -->
 	<Fragment
 		step={7}
-		layout={{ x: 81, y: 465, width: 570, height: 42 }}
-		font={{ font_size: 42.7, italic: true, wrap: true }}
+		layout={{ x: 80.8, y: 464.6, width: 570, height: 42.4 }}
+		font={{ font_size: 26.7, italic: true }}
 		zIndex={27}
-		animate="fade"
 	>
 		Fear and trembling from responsibility...not sin.
 	</Fragment>
 
-	<!-- Step 8: Blue responsibility box (click) -->
-	<Fragment step={8} animate="fade">
-		<Rect x={333} y={16} width={309} height={417} fill="var(--color-level2)" stroke={{ color: '#000000', width: 1 }} zIndex={0} />
+	<!-- Step 8: Right column rectangle (blue) -->
+	<Fragment step={8} animate="wipe-down">
+		<Rect x={333} y={15.5} width={308.9} height={416.6} fill="var(--color-level2)" stroke={{ width: 1, color: '#000000' }} zIndex={0} />
 	</Fragment>
 
-	<!-- Step 8: "As a slave you have new set of responsibility" (with) -->
+	<!-- Step 8 (with): "As a slave you have new set of responsibility" -->
 	<Fragment
 		step={8}
-		layout={{ x: 374, y: 64, width: 227, height: 55 }}
-		font={{ font_size: 32, align: 'center', wrap: true }}
+		layout={{ x: 374.2, y: 64.2, width: 226.6, height: 54.6 }}
+		font={{ font_size: 20, align: 'center' }}
 		zIndex={24}
-		animate="fade"
 	>
 		As a slave you have<br/>new set of responsibility
 	</Fragment>
 
-	<!-- Step 8: Luke 13:6-9 (with) - drillTo -->
+	<!-- Step 8 (with): Luke 13:6-9 (drill) -->
 	<Fragment
 		step={8}
 		drillTo="law/luke-13-6"
-		layout={{ x: 398, y: 112, width: 179, height: 46 }}
-		font={{ font_size: 48 }}
+		layout={{ x: 397.8, y: 112.4, width: 179.4, height: 45.9 }}
+		font={{ font_size: 30 }}
 		zIndex={17}
-		animate="fade"
 	>
 		Luke 13:6-9
 	</Fragment>
 
-	<!-- Step 9: "Owner Keeper Vineyard Trees Fruit" list (click) -->
+	<!-- Step 9: Parable keywords list -->
 	<Fragment
 		step={9}
-		layout={{ x: 368, y: 203, width: 129, height: 170 }}
-		font={{ font_size: 42.7, wrap: true }}
+		layout={{ x: 367.5, y: 203.2, width: 129.2, height: 169.5 }}
+		font={{ font_size: 26.7 }}
 		zIndex={6}
-		animate="fade"
 	>
 		Owner<br/>Keeper<br/>Vineyard<br/>Trees<br/>Fruit
 	</Fragment>
 
-	<!-- Step 10: Arrow to God (click) -->
+	<!-- Step 10: Arrow to "God" -->
 	<Fragment step={10} animate="wipe">
-		<Arrow from={{ x: 477, y: 226.2 }} to={{ x: 509, y: 226.2 }} stroke={{ width: 4.7, color: '#000000' }} zIndex={7} />
+		<Arrow from={{ x: 477.2, y: 226.2 }} to={{ x: 507.2, y: 226.2 }} stroke={{ width: 4.7 }} zIndex={7} />
 	</Fragment>
 
-	<!-- Step 10.1: "God" (after) -->
+	<!-- Step 10.1: "God" -->
 	<Fragment
 		step={10.1}
-		layout={{ x: 507, y: 201, width: 70, height: 40 }}
-		font={{ font_size: 42.7 }}
+		layout={{ x: 507.2, y: 201.2, width: 69.8, height: 40.3 }}
+		font={{ font_size: 26.7 }}
 		zIndex={8}
-		animate="fade"
 	>
 		God
 	</Fragment>
 
-	<!-- Step 11: Arrow to Christ (click) -->
+	<!-- Step 11: Arrow to "Christ" -->
 	<Fragment step={11} animate="wipe">
-		<Arrow from={{ x: 476, y: 255.6 }} to={{ x: 509, y: 255.6 }} stroke={{ width: 4.7, color: '#000000' }} zIndex={9} />
+		<Arrow from={{ x: 475.8, y: 255.6 }} to={{ x: 507.2, y: 255.6 }} stroke={{ width: 4.7 }} zIndex={9} />
 	</Fragment>
 
-	<!-- Step 11.1: "Christ" (after) -->
+	<!-- Step 11.1: "Christ" -->
 	<Fragment
 		step={11.1}
-		layout={{ x: 507, y: 236, width: 94, height: 40 }}
-		font={{ font_size: 42.7 }}
+		layout={{ x: 507.2, y: 235.8, width: 93.8, height: 40.2 }}
+		font={{ font_size: 26.7 }}
 		zIndex={13}
-		animate="fade"
 	>
 		Christ
 	</Fragment>
 
-	<!-- Step 12: Arrow to Church (click) -->
+	<!-- Step 12: Arrow to "Church" -->
 	<Fragment step={12} animate="wipe">
-		<Arrow from={{ x: 488, y: 290.6 }} to={{ x: 509, y: 290.6 }} stroke={{ width: 4.7, color: '#000000' }} zIndex={10} />
+		<Arrow from={{ x: 488.4, y: 290.6 }} to={{ x: 507.2, y: 290.6 }} stroke={{ width: 4.7 }} zIndex={10} />
 	</Fragment>
 
-	<!-- Step 12.1: "Church" (after) -->
+	<!-- Step 12.1: "Church" -->
 	<Fragment
 		step={12.1}
-		layout={{ x: 507, y: 267, width: 110, height: 40 }}
-		font={{ font_size: 42.7 }}
+		layout={{ x: 507.2, y: 267.2, width: 110.2, height: 40.3 }}
+		font={{ font_size: 26.7 }}
 		zIndex={14}
-		animate="fade"
 	>
 		Church
 	</Fragment>
 
-	<!-- Step 13: Arrow to Sons (click) -->
+	<!-- Step 13: Arrow to "Sons" -->
 	<Fragment step={13} animate="wipe">
-		<Arrow from={{ x: 459, y: 322.6 }} to={{ x: 509, y: 322.6 }} stroke={{ width: 4.7, color: '#000000' }} zIndex={11} />
+		<Arrow from={{ x: 459.2, y: 322.7 }} to={{ x: 507.2, y: 322.7 }} stroke={{ width: 4.7 }} zIndex={11} />
 	</Fragment>
 
-	<!-- Step 13.1: "Sons" (after) -->
+	<!-- Step 13.1: "Sons" -->
 	<Fragment
 		step={13.1}
-		layout={{ x: 507, y: 301, width: 82, height: 40 }}
-		font={{ font_size: 42.7 }}
+		layout={{ x: 507.2, y: 300.8, width: 81.8, height: 40.3 }}
+		font={{ font_size: 26.7 }}
 		zIndex={15}
-		animate="fade"
 	>
 		Sons
 	</Fragment>
 
-	<!-- Step 14: Arrow to Fruits (click) -->
+	<!-- Step 14: Arrow to "Fruits of Spirit" -->
 	<Fragment step={14} animate="wipe">
-		<Arrow from={{ x: 446, y: 351.6 }} to={{ x: 470, y: 351.6 }} stroke={{ width: 4.7, color: '#000000' }} zIndex={12} />
+		<Arrow from={{ x: 446.2, y: 351.8 }} to={{ x: 470.2, y: 351.8 }} stroke={{ width: 4.7 }} zIndex={12} />
 	</Fragment>
 
-	<!-- Step 14.1: "Fruits of Spirit: Benevolence, Teaching, etc." (after) -->
+	<!-- Step 14.1: "Fruits of Spirit: Benevolence, Teaching, etc." -->
 	<Fragment
 		step={14.1}
-		layout={{ x: 470, y: 341, width: 147, height: 72 }}
-		font={{ font_size: 28, italic: true, wrap: true }}
+		layout={{ x: 470.2, y: 340.8, width: 146.9, height: 71.6 }}
+		font={{ font_size: 17.5, italic: true }}
 		zIndex={16}
-		animate="fade"
 	>
 		Fruits of Spirit:<br/>Benevolence,<br/>Teaching, ect.
 	</Fragment>
 
-	<!-- Step 15: "Church Exclusive" (click) -->
+	<!-- Step 15: "Church Exclusive" -->
 	<Fragment
 		step={15}
-		layout={{ x: 357, y: 163, width: 261, height: 36 }}
-		font={{ font_size: 42.7, align: 'center', v_align: 'middle', italic: true }}
+		layout={{ x: 356.9, y: 162.7, width: 261.1, height: 36.4 }}
+		font={{ font_size: 26.7, align: 'center', v_align: 'middle', italic: true }}
 		zIndex={18}
-		animate="fade"
 	>
 		Church Exclusive
 	</Fragment>
 
-	<!-- Step 16: hamartia blue box (click) -->
-	<Fragment step={16} animate="fade">
-		<Rect x={651} y={16} width={234} height={472} fill="var(--color-level2)" stroke={{ color: '#000000', width: 1 }} zIndex={1} />
+	<!-- Step 16: Right column rectangle (blue) for hamartia -->
+	<Fragment step={16} animate="wipe-down">
+		<Rect x={650.8} y={15.8} width={234.2} height={472.2} fill="var(--color-level2)" stroke={{ width: 1, color: '#000000' }} zIndex={1} />
 	</Fragment>
 
-	<!-- Step 16: "hamartia" definition (with) -->
+	<!-- Step 16 (with): "hamartia" title -->
 	<Fragment
 		step={16}
-		layout={{ x: 652, y: 17, width: 231, height: 273 }}
-		font={{ font_size: 56, italic: true, wrap: true }}
-		zIndex={2}
-		animate="fade"
+		layout={{ x: 650.8, y: 15.5, width: 234.2, height: 44.4 }}
+		font={{ font_size: 40, align: 'center' }}
+		zIndex={5}
 	>
-		"hamartia"<br/>to be without a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;share in<br/>b) to miss the mark<br/>c) to err, be mistaken<br/>d) to miss or wander&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from the path of&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uprightness<br/>e) to wander from the&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;law of God
+		hamartia
 	</Fragment>
 
-	<!-- Step 17: Arrow down from hamartia (click) -->
-	<Fragment step={17} animate="wipe">
-		<Arrow from={{ x: 767.1, y: 292.7 }} to={{ x: 767.1, y: 365.9 }} stroke={{ width: 8, color: '#000000' }} zIndex={3} />
+	<!-- Step 16 (with): hamartia definition -->
+	<Fragment
+		step={16}
+		layout={{ x: 651.8, y: 65, width: 230.8, height: 225 }}
+		font={{ font_size: 20, italic: true, v_align: 'top', wrap: true }}
+		zIndex={2}
+	>
+		to be without a share in<br/>b) to miss the mark<br/>c) to err, be mistaken<br/>d) to miss or wander from the path of uprightness<br/>e) to wander from the law of God
 	</Fragment>
 
-	<!-- Step 17.1: "Death" (after 500ms) -->
+	<!-- Step 17: Arrow down for hamartia -->
+	<Fragment step={17} animate="wipe-down">
+		<Arrow from={{ x: 767.1, y: 292.7 }} to={{ x: 767.1, y: 365.9 }} stroke={{ width: 8 }} zIndex={3} />
+	</Fragment>
+
+	<!-- Step 17.1: "Death" -->
 	<Fragment
 		step={17.1}
-		layout={{ x: 691, y: 352, width: 152, height: 66 }}
-		font={{ font_size: 77.3, align: 'center' }}
+		layout={{ x: 691.4, y: 351.7, width: 151.6, height: 66.4 }}
+		font={{ font_size: 48.3, align: 'center' }}
 		zIndex={4}
-		animate="fade"
 	>
 		Death
 	</Fragment>
 
-	<!-- Step 17.1: "Same result as other sins..." (with) -->
+	<!-- Step 17.1 (with): "Same result as other sins..." -->
 	<Fragment
 		step={17.1}
-		layout={{ x: 649, y: 415, width: 236, height: 49 }}
-		font={{ font_size: 26.7, align: 'center', wrap: true }}
+		layout={{ x: 649.2, y: 415.3, width: 235.8, height: 48.6 }}
+		font={{ font_size: 16.7, align: 'center', wrap: true }}
 		zIndex={21}
-		animate="fade"
 	>
 		Same result as other sins Decided at judgment.
 	</Fragment>
 
-	<!-- Step 18: "If it bears fruit..." quote (click) -->
+	<!-- Step 18: Luke 13:9 quote -->
 	<Fragment
 		step={18}
-		layout={{ x: 83, y: 498, width: 783, height: 45 }}
-		font={{ font_size: 48, color: '#000000', wrap: true }}
+		layout={{ x: 83.4, y: 497.5, width: 783.4, height: 45.3 }}
+		font={{ font_size: 30 }}
 		zIndex={20}
-		animate="fade"
 	>
 		9 If it bears fruit next year, fine! If not, then cut it down.
 	</Fragment>
 
-	<!-- Step 19: 1 Peter 4:12-18 (click) - drillTo -->
+	<!-- Step 19: 1 Peter 4:12-18 / Hebrews 10:23 (drill) -->
 	<Fragment
 		step={19}
 		drillTo="law/1peter-4-12"
-		layout={{ x: 73, y: 384, width: 248, height: 65 }}
-		font={{ font_size: 37.3, align: 'center', wrap: true }}
+		layout={{ x: 73.4, y: 383.5, width: 247.6, height: 64.8 }}
+		font={{ font_size: 23.3, align: 'center' }}
 		zIndex={28}
-		animate="fade"
 	>
 		1Peter 4:12-18<br/>Hebrews 10:23
 	</Fragment>
 
-	<!-- Step 20: "Judgment begins with the household of God" (click) -->
+	<!-- Step 20: "Judgment begins with the household of God" -->
 	<Fragment
 		step={20}
-		layout={{ x: 84, y: 438, width: 448, height: 29 }}
-		font={{ font_size: 32 }}
+		layout={{ x: 84.1, y: 437.7, width: 447.9, height: 29.4 }}
+		font={{ font_size: 20 }}
 		zIndex={29}
-		animate="fade"
 	>
 		Judgment begins with the household of God
 	</Fragment>
 </Slide>
 
 <style>
-	/* Additional styling if needed */
+	/* All shapes now use SVG components or Fragment with fill/line */
 </style>

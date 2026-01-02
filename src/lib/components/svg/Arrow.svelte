@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getArrow, getBoxToBoxArrow } from 'perfect-arrows';
-	import type { StrokeStyle } from './types';
+	import type { StrokeStyle, CircleMarker } from './types';
 
 	/**
 	 * Arrow: SVG arrow using perfect-arrows library for consistent rendering.
@@ -16,9 +16,19 @@
 	 * The `bow` prop controls curvature: 0 = straight, positive = curve right/down, 
 	 * negative = curve left/up. Use `flip` to reverse curve direction.
 	 * 
+	 * Supports optional circle markers at start and/or end points.
+	 * 
 	 * @example Point-to-point arrow
 	 * <Fragment step={5} animate="wipe">
 	 *   <Arrow from={{ x: 100, y: 200 }} to={{ x: 300, y: 150 }} stroke={{ width: 4 }} />
+	 * </Fragment>
+	 * 
+	 * @example Arrow with circle at start point
+	 * <Fragment step={1.1} animate="wipe-left">
+	 *   <Arrow from={{ x: 707.2, y: 292 }} to={{ x: 213.1, y: 292 }}
+	 *     stroke={{ width: 18.3 }}
+	 *     startMarker={{ radius: 8 }}
+	 *   />
 	 * </Fragment>
 	 * 
 	 * @example Box-to-box curved arrow (for timeline self-references)
@@ -38,12 +48,14 @@
 		toBox?: { x: number; y: number; width: number; height: number };
 		stroke?: StrokeStyle;
 		headSize?: number;
+		startMarker?: CircleMarker;
+		endMarker?: CircleMarker;
 		zIndex?: number;
 		bow?: number;
 		flip?: boolean;
 	}
 
-	let { from, to, fromBox, toBox, stroke = {}, headSize = 3, zIndex = 1, bow = 0, flip = false }: Props = $props();
+	let { from, to, fromBox, toBox, stroke = {}, headSize = 3, startMarker, endMarker, zIndex = 1, bow = 0, flip = false }: Props = $props();
 
 	const strokeWidth = $derived(stroke.width ?? 4);
 	const strokeColor = $derived(stroke.color ?? 'var(--color-bg-darkest)');
@@ -54,6 +66,12 @@
 
 	// Determine if we're using box-to-box mode
 	const isBoxMode = $derived(fromBox !== undefined && toBox !== undefined);
+
+	// Calculate extra padding needed for markers
+	const markerPadding = $derived(Math.max(
+		startMarker?.radius ?? 0,
+		endMarker?.radius ?? 0
+	));
 
 	// Calculate canvas-space coordinates for bounding box
 	const canvasPoints = $derived(() => {
@@ -76,7 +94,7 @@
 	});
 
 	// Add padding for curved arrows and arrowheads
-	const padding = $derived(Math.max(headLength * 2, Math.abs(bow) * 200 + 50));
+	const padding = $derived(Math.max(headLength * 2, Math.abs(bow) * 200 + 50, markerPadding));
 	const minX = $derived(canvasPoints().minX - padding);
 	const minY = $derived(canvasPoints().minY - padding);
 	const maxX = $derived(canvasPoints().maxX + padding);
@@ -151,4 +169,20 @@
 		fill={strokeColor}
 		transform="translate({ex},{ey}) rotate({endAngleDegrees})"
 	/>
+	{#if startMarker}
+		<circle
+			cx={sx}
+			cy={sy}
+			r={startMarker.radius}
+			fill={startMarker.fill ?? strokeColor}
+		/>
+	{/if}
+	{#if endMarker}
+		<circle
+			cx={ex}
+			cy={ey}
+			r={endMarker.radius}
+			fill={endMarker.fill ?? strokeColor}
+		/>
+	{/if}
 </svg>

@@ -3,68 +3,32 @@
 	import Fragment from '$lib/components/Fragment.svelte';
 
 	/**
-	 * 10 Commandments - Additions vs Codification
-	 * Custom Show ID: 18 (10Commandments)
+	 * Drill: The 10 Commandments - Exodus 20:1-17
 	 */
 </script>
 
 <Slide>
-	<!-- Title -->
 	<Fragment
-		layout={{ x: 30, y: 10, width: 450, height: 45 }}
-		font={{ font_size: 38, bold: true, align: 'left' }}
+		layout={{ x: 273.9, y: 9.5, width: 416.2, height: 44.4 }}
+		font={{ font_size: 36.7, bold: true }}
 	>
 		10 Commandments
 	</Fragment>
 
-	<!-- Commandments List -->
 	<Fragment
-		step={1}
-		layout={{ x: 30, y: 60, width: 450, height: 340 }}
-		font={{ font_size: 18, align: 'left', wrap: true }}
-		animate="fade"
+		layout={{ x: 59.9, y: 48.2, width: 840.8, height: 476.9 }}
+		font={{ font_size: 25, v_align: 'top', wrap: true }}
 	>
-		<span style="color: #0000CC">+</span> You shall have no other gods before Me.<br/>
-		<span style="color: #0000CC">+</span> You shall not make idols.<br/>
-		<span style="color: #0000CC">+</span> You shall not take the name of the LORD your God in vain.<br/>
-		<span style="color: #0000CC">+</span> Remember the Sabbath day, to keep it holy.<br/>
-		<span style="color: #CC0000">*</span> Honor your father and your mother.<br/>
-		<span style="color: #CC0000">*</span> You shall not murder.<br/>
-		<span style="color: #CC0000">*</span> You shall not commit adultery.<br/>
-		<span style="color: #CC0000">*</span> You shall not steal.<br/>
-		<span style="color: #CC0000">*</span> You shall not bear false witness against your neighbor.<br/>
-		<span style="color: #CC0000">*</span> You shall not covet.
-	</Fragment>
-
-	<!-- Legend -->
-	<Fragment
-		step={2}
-		layout={{ x: 30, y: 410, width: 450, height: 80 }}
-		font={{ font_size: 16, align: 'left', wrap: true, italic: true }}
-		animate="fade"
-	>
-		<span style="color: #0000CC">+</span> Additions that increased transgression.<br/>
-		<span style="color: #CC0000">*</span> Codification of the Moral Law, things your conscience knows by instinct
-	</Fragment>
-
-	<!-- Romans reference -->
-	<Fragment
-		step={3}
-		layout={{ x: 490, y: 60, width: 440, height: 280 }}
-		font={{ font_size: 17, align: 'left', wrap: true }}
-		animate="fade"
-	>
-		<strong>Romans 2:19-23</strong><br/>
-		If you are convinced that you are a guide for the blind, a light for those who are in the dark, an instructor of the foolish, a teacher of little children, because you have in the law the embodiment of knowledge and truth— you, then, who teach others, do you not teach yourself? You who preach against stealing, do you steal? You who say that people should not commit adultery, do you commit adultery? You who abhor idols, do you rob temples? You who boast in the law, do you dishonor God by breaking the law?
-	</Fragment>
-
-	<!-- Conclusion -->
-	<Fragment
-		step={4}
-		layout={{ x: 490, y: 360, width: 440, height: 100 }}
-		font={{ font_size: 18, italic: true, align: 'left', wrap: true, color: '#0000CC' }}
-		animate="fade"
-	>
-		Most example law violations are moral law (stealing, adultery). Paul (2:12) argues that Gentiles may do these things instinctually.
+		Exodus 20:1-17<br/>
+		1. "I am the LORD your God...You shall have no other gods before Me.<br/>
+		2. "You shall not make for yourself an idol...you shall not worship them or serve them...<br/>
+		3. "You shall not take the name of the LORD your God in vain...<br/>
+		4. "Remember the sabbath day, to keep it holy.<br/>
+		5. "Honor your father and your mother, that your days may be prolonged...<br/>
+		6. "You shall not murder.<br/>
+		7. "You shall not commit adultery.<br/>
+		8. "You shall not steal.<br/>
+		9. "You shall not bear false witness against your neighbor.<br/>
+		10. "You shall not covet your neighbor's house...or anything that belongs to your neighbor."
 	</Fragment>
 </Slide>
