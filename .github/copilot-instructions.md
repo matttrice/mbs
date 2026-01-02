@@ -2,7 +2,7 @@
 
 ## Architecture Overview
 
-MBS is a SvelteKit presentation system replicating PowerPoint's **Custom Show "drill and return"** functionality. The core innovation is a stack-based navigation system that preserves exact fragment position when drilling into scripture references or sequences of slides.
+MBS is a SvelteKit presentation system replicating PowerPoint's **Custom Show "drillTo and return"** functionality. The core innovation is a stack-based navigation system that preserves exact fragment position when drilling into scripture references or sequences of slides.
 
 ### Core Data Flow
 ```
@@ -150,6 +150,21 @@ The `Fragment` component handles all slide content - from simple text to fully-p
 ## SVG Shape Components
 
 Arrow, Line, and Rect are self-positioning components that use **canvas coordinates** (960×540). Fragment only provides step-based visibility and animation timing—no `layout` prop needed for these components.
+
+**Important:** For shapes without text content (empty rectangles, lines, arrows), use SVG components directly inside Fragment rather than using Fragment's `layout` and `fill` props. Fragment requires children content—using it with layout/fill but no children causes TypeScript errors.
+
+**Identifying in JSON:** When converting from PowerPoint JSON, shapes without text content will NOT have `text` or `font` properties—only `shape_name`, `layout`, `fill`, `line`, etc. These should be converted to SVG components (Rect, Line, Arrow, Arc) inside Fragment.
+
+```svelte
+<!-- ✅ CORRECT: SVG component inside Fragment for empty shapes -->
+<Fragment step={2} animate="wipe-down">
+  <Rect x={75} y={48} width={275} height={464} fill="var(--color-level1)" zIndex={5} />
+</Fragment>
+
+<!-- ❌ WRONG: Fragment with layout/fill but no children -->
+<Fragment step={2} layout={{ x: 75, y: 48, width: 275, height: 464 }} fill="var(--color-level1)">
+</Fragment>
+```
 
 ```svelte
 <script>
@@ -365,7 +380,8 @@ All slides must render (use `visibility: hidden`, not `display: none`) so Fragme
 Drills omit the `onMaxStep` callback—Slide auto-calls `navigation.setMaxFragment()`:
 
 ```svelte
-<Slide>  <!-- No onMaxStep = drill mode -->
+<Slide>
+<div class="slide-bg"></div>  <!-- No onMaxStep = drill mode -->
   <Fragment step={1} layout={{ x: 50, y: 50, width: 860, height: 440 }} font={{ font_size: 24 }}>
     Scripture content here
   </Fragment>
@@ -489,6 +505,7 @@ Becomes:
 ```svelte
 <!-- routes/promises/slides/Slide1.svelte -->
 <Slide {onMaxStep}>
+  <div class="slide-bg"></div>
   <!-- static_content: no step prop -->
   <Fragment
     layout={{ x: 0, y: 0, width: 960, height: 50 }}
@@ -527,7 +544,7 @@ Becomes:
 </Slide>
 ```
 
-**Custom shows** (`custom_shows` object) become **drill routes**:
+**Custom shows** (`custom_shows` object `linked_content`) become **drill routes**:
 ```svelte
 <!-- routes/promises/genesis-12-1/+page.svelte -->
 <Slide>  <!-- No onMaxStep = drill mode -->
@@ -538,6 +555,48 @@ Becomes:
     <blockquote>1 Now the LORD said...</blockquote>
   </Fragment>
 </Slide>
+```
+
+#### Shapes Without Text (SVG Components)
+
+JSON entries **without `text` or `font` properties** represent visual-only shapes (rectangles, lines, arrows). Convert these to SVG components inside Fragment:
+
+**JSON entry (no text/font = visual shape):**
+```json
+{
+  "sequence": 5,
+  "shape_name": "Rectangle 68",
+  "timing": "click",
+  "layout": { "x": 75, "y": 48, "width": 275, "height": 464 },
+  "fill": "#B3B3B3"
+}
+```
+
+**Becomes SVG component inside Fragment:**
+```svelte
+<Fragment step={5} animate="wipe-down">
+  <Rect x={75} y={48} width={275} height={464} fill="var(--color-level1)" zIndex={5} />
+</Fragment>
+```
+
+**JSON with `line_endpoints` = Arrow or Line:**
+```json
+{
+  "sequence": 14,
+  "shape_name": "Line 74",
+  "timing": "click",
+  "layout": { "x": 191.5, "y": 285.0, "width": 0.6, "height": 558.6, "rotation": 90.0 },
+  "line": { "width": 9.4 },
+  "arrow_ends": { "tailEnd": "triangle" },
+  "line_endpoints": { "from": { "x": 0, "y": 285.3 }, "to": { "x": 750.3, "y": 285.3 } }
+}
+```
+
+**Becomes:**
+```svelte
+<Fragment step={14} animate="wipe">
+  <Arrow from={{ x: 0, y: 285.3 }} to={{ x: 750.3, y: 285.3 }} stroke={{ width: 9.4 }} zIndex={30} />
+</Fragment>
 ```
 
 **Drill route naming**: Convert `custom_shows[id].name` to lowercase route folder (e.g., `Gen12.1` → `genesis-12-1/`).

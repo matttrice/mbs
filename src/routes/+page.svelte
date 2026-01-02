@@ -36,7 +36,7 @@
 		<a href="/physical-spiritual" class="lesson-card">
 			<div class="lesson-content">
 				<h2>2. Physical / Spiritual</h2>
-				<p>Understanding the visible and invisible realms</p>
+				<p>Understanding the visible and invisible realms; foundational model for all other lessons</p>
 			</div>
 			<div class="lesson-actions">
 				<button 
@@ -90,6 +90,22 @@
 				<button 
 					class="reset-btn" 
 					onclick={(e) => startFresh(e, 'law', '/law')}
+					title="Reset progress and start fresh"
+				>
+					Reset
+				</button>
+				<span class="arrow">→</span>
+			</div>
+		</a>
+		<a href="/sin-and-death" class="lesson-card">
+			<div class="lesson-content">
+				<h2>6. Sin & Death</h2>
+				<p>Understanding mortality, morality, and original sin</p>
+			</div>
+			<div class="lesson-actions">
+				<button 
+					class="reset-btn" 
+					onclick={(e) => startFresh(e, 'sin-and-death', '/sin-and-death')}
 					title="Reset progress and start fresh"
 				>
 					Reset
