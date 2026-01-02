@@ -14,10 +14,9 @@
 
 	<!-- Scripture text -->
 	<Fragment
-		step={1}
 		layout={{ x: 110.4, y: 54.6, width: 755.2, height: 157.5 }}
 		line={{ width: 1 }}
-		font={{ font_size: 30.8 }}
+		font={{ font_size: 30.8, wrap: true }}
 		animate="fade"
 	>
 		Another of the disciples said to Him, "Lord, permit me first to go and bury my father." 22 But Jesus said to him, "Follow Me, and allow the dead to bury their own dead."

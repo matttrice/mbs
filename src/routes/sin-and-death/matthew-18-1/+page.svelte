@@ -14,7 +14,6 @@
 
 	<!-- Matthew 18:1-3 -->
 	<Fragment
-		step={1}
 		layout={{ x: 87.4, y: 45.8, width: 775.9, height: 113 }}
 		line={{ width: 1 }}
 		font={{ wrap: true, font_size: 21.7 }}
@@ -25,7 +24,7 @@
 
 	<!-- Matthew 19:13-14 -->
 	<Fragment
-		step={2}
+		step={1}
 		layout={{ x: 87.4, y: 153.9, width: 797.9, height: 150.3 }}
 		line={{ width: 1 }}
 		font={{ v_align: 'middle', font_size: 30.8 }}
@@ -36,7 +35,7 @@
 
 	<!-- 2 Samuel 12:21-23 -->
 	<Fragment
-		step={3}
+		step={1}
 		layout={{ x: 87.4, y: 306.4, width: 803.2, height: 214.9 }}
 		line={{ width: 1 }}
 		font={{ v_align: 'middle', wrap: true, font_size: 30.8 }}

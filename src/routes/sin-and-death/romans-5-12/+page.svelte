@@ -14,10 +14,9 @@
 
 	<!-- Scripture text -->
 	<Fragment
-		step={1}
 		layout={{ x: 107.8, y: 80.8, width: 744.4, height: 169.5 }}
 		line={{ width: 1 }}
-		font={{ font_size: 33.3 }}
+		font={{ font_size: 33.3, wrap: true }}
 		animate="fade"
 	>
 		12 Therefore, just as through one man sin entered into the world, and death through sin, and so death spread to all men, because all sinned—

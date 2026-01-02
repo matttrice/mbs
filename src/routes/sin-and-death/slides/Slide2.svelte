@@ -28,12 +28,11 @@
 	<Fragment
 		drillTo="sin-and-death/romans-5-12"
 		layout={{ x: 199.1, y: 72.4, width: 575.6, height: 44.5 }}
-		fill="#F4F4F4"
 		line={{ width: 1.3 }}
 		font={{ v_align: 'middle', align: 'center', font_size: 36.7 }}
 		zIndex={8}
 	>
-		Romans 5:12 "All have sinned"
+		Romans 5:12 <i>"All have sinned"</i>
 	</Fragment>
 
 	<!-- Animated Content -->
@@ -97,14 +96,14 @@
 	</Fragment>
 
 	<!-- Step 3: Down arrow for "No Choice" -->
-	<Fragment step={3} animate="wipe">
-		<Arrow from={{ x: 296.6, y: 243.3 }} to={{ x: 296.6, y: 307.7 }} stroke={{ width: 18.7 }} zIndex={10} />
+	<Fragment step={3} animate="wipe-down">
+		<Arrow from={{ x: 296.6, y: 243.3 }} to={{ x: 296.6, y: 315.4 }} stroke={{ width: 18.7 }} zIndex={10} />
 	</Fragment>
 
 	<!-- Step 3.1: "No Choice" -->
 	<Fragment
 		step={3.1}
-		layout={{ x: 178.1, y: 299.3, width: 236.4, height: 61.6 }}
+		layout={{ x: 178.1, y: 330, width: 236.4, height: 61.6 }}
 		fill="#F4F4F4"
 		line={{ width: 1 }}
 		font={{ align: 'center', font_size: 44.2 }}
@@ -115,14 +114,14 @@
 	</Fragment>
 
 	<!-- Step 4: Down arrow for "Choice" -->
-	<Fragment step={4} animate="wipe">
+	<Fragment step={4} animate="wipe-down">
 		<Arrow from={{ x: 664.3, y: 243.3 }} to={{ x: 664.3, y: 315.4 }} stroke={{ width: 18.7 }} zIndex={11} />
 	</Fragment>
 
 	<!-- Step 4.1: "Choice" -->
 	<Fragment
 		step={4.1}
-		layout={{ x: 563.4, y: 299.3, width: 202.9, height: 61.6 }}
+		layout={{ x: 563.4, y: 330, width: 202.9, height: 61.6 }}
 		fill="#F4F4F4"
 		line={{ width: 1 }}
 		font={{ align: 'center', font_size: 44.2 }}
@@ -137,7 +136,7 @@
 		step={5}
 		layout={{ x: 178.9, y: 383.4, width: 234.7, height: 129.1 }}
 		line={{ width: 1 }}
-		font={{ align: 'center', font_size: 50 }}
+		font={{ align: 'center', font_size: 50, bold: true }}
 		zIndex={6}
 		animate="fade"
 	>
@@ -149,7 +148,7 @@
 		step={6}
 		layout={{ x: 517.8, y: 385.8, width: 293.9, height: 129.1 }}
 		line={{ width: 1 }}
-		font={{ align: 'center', font_size: 50 }}
+		font={{ align: 'center', font_size: 50, bold: true }}
 		zIndex={7}
 		animate="fade"
 	>

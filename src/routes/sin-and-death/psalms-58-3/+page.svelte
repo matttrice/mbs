@@ -14,10 +14,9 @@
 
 	<!-- Scripture text -->
 	<Fragment
-		step={1}
 		layout={{ x: 107.8, y: 57.5, width: 691.4, height: 82.7 }}
 		line={{ width: 1 }}
-		font={{ font_size: 30.8 }}
+		font={{ font_size: 30.8, wrap: true }}
 		animate="fade"
 	>
 		The wicked are estranged from the womb; These who speak lies go astray from birth.

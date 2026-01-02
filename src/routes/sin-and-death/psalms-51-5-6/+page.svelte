@@ -14,10 +14,9 @@
 
 	<!-- Scripture text -->
 	<Fragment
-		step={1}
 		layout={{ x: 107.8, y: 57.7, width: 744.4, height: 194.8 }}
 		line={{ width: 1 }}
-		font={{ font_size: 30.8 }}
+		font={{ font_size: 30.8, wrap: true }}
 		animate="fade"
 	>
 		Behold, I was brought forth in iniquity, And in sin my mother conceived me. 6 Behold, You desire truth in the innermost being, And in the hidden part You will make me know wisdom.

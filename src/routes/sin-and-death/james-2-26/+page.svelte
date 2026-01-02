@@ -14,10 +14,9 @@
 
 	<!-- Scripture text -->
 	<Fragment
-		step={1}
 		layout={{ x: 107.8, y: 55.5, width: 744.4, height: 100 }}
 		line={{ width: 1 }}
-		font={{ font_size: 30.8 }}
+		font={{ font_size: 30.8, wrap: true }}
 		animate="fade"
 	>
 		For just as the body without the spirit is dead, so also faith without works is dead.

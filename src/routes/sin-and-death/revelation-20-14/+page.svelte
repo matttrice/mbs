@@ -13,8 +13,7 @@
 	</Fragment>
 
 	<!-- Scripture text -->
-	<Fragment
-		step={1}
+	<Fragment	
 		layout={{ x: 107.8, y: 55.5, width: 744.4, height: 400 }}
 		line={{ width: 1 }}
 		font={{ font_size: 26.7, wrap: true }}

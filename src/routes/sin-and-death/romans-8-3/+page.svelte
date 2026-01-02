@@ -14,7 +14,6 @@
 
 	<!-- Romans 8:3 text -->
 	<Fragment
-		step={1}
 		layout={{ x: 73.1, y: 40.6, width: 807.8, height: 104.9 }}
 		line={{ width: 1 }}
 		font={{ wrap: true, font_size: 20 }}
@@ -25,10 +24,10 @@
 
 	<!-- Philippians 2:6-7 -->
 	<Fragment
-		step={2}
+		step={1}
 		layout={{ x: 73.1, y: 117.3, width: 801.7, height: 113 }}
 		line={{ width: 1 }}
-		font={{ v_align: 'middle', font_size: 26.7 }}
+		font={{ v_align: 'middle', font_size: 26.7, wrap: true }}
 		animate="fade"
 	>
 		Philippians 2:6-7 Who, although He existed in the form of God, did not regard equality with God a thing to be grasped, 7 but emptied Himself, taking the form of a bond-servant, and being made in the likeness of men.
@@ -36,7 +35,7 @@
 
 	<!-- Hebrews 2:14-17 -->
 	<Fragment
-		step={3}
+		step={2}
 		layout={{ x: 73.1, y: 229.4, width: 826.1, height: 209.9 }}
 		line={{ width: 1 }}
 		font={{ v_align: 'middle', font_size: 26.7 }}
@@ -47,10 +46,10 @@
 
 	<!-- Hebrews 4:15 -->
 	<Fragment
-		step={4}
+		step={3}
 		layout={{ x: 73.1, y: 433.6, width: 801.7, height: 88.8 }}
 		line={{ width: 1 }}
-		font={{ v_align: 'middle', font_size: 26.7 }}
+		font={{ v_align: 'middle', font_size: 26.7, wrap: true }}
 		animate="fade"
 	>
 		Hebrews 4:15 For we do not have a high priest who cannot sympathize with our weaknesses, but One who has been tempted in all things as we are, yet without sin.

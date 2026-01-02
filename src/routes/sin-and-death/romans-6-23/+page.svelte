@@ -14,10 +14,9 @@
 
 	<!-- Scripture text -->
 	<Fragment
-		step={1}
 		layout={{ x: 112.9, y: 90.5, width: 740.8, height: 88.8 }}
 		line={{ width: 1 }}
-		font={{ font_size: 33.3 }}
+		font={{ font_size: 33.3, wrap: true }}
 		animate="fade"
 	>
 		For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord

@@ -14,7 +14,6 @@
 
 	<!-- Scripture text -->
 	<Fragment
-		step={1}
 		layout={{ x: 102, y: 58.9, width: 766.8, height: 343.2 }}
 		line={{ width: 1 }}
 		font={{ wrap: true, font_size: 30, color: '#000000' }}
