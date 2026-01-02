@@ -180,6 +180,6 @@
 		font={{ font_size: 33.3 }}
 		animate="fade"
 	>
-		1Corinthians<br/>15:45-53
+		1 Corinthians<br/>15:45-53
 	</Fragment>
 </Slide>

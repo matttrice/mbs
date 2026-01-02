@@ -8,10 +8,16 @@
 	import ReturnButton from '$lib/components/ReturnButton.svelte';
 	import DebugOverlay from '$lib/components/DebugOverlay.svelte';
 	import { onMount } from 'svelte';
+	import { dev } from '$app/environment';
 
 	let { children } = $props();
 
 	onMount(() => {
+		// Expose navigation for E2E tests in development
+		if (dev) {
+			(window as unknown as { __mbs_navigation: typeof navigation }).__mbs_navigation = navigation;
+		}
+
 		function handleKeydown(e: KeyboardEvent) {
 			// Ignore if user is typing in an input
 			if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {

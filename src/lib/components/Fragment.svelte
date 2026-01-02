@@ -133,10 +133,11 @@
 	
 	// Track drill registration state
 	let registeredNormalizedStep: number | undefined = undefined;
+	let registeredSlideIndex: number = 0;
 
 	onDestroy(() => {
 		if (registeredNormalizedStep !== undefined) {
-			navigation.unregisterDrillTarget(registeredNormalizedStep);
+			navigation.unregisterDrillTarget(registeredSlideIndex, registeredNormalizedStep);
 		}
 	});
 
@@ -223,8 +224,11 @@
 				const normalized = getNormalizedStep(step, slideContext);
 				if (normalized !== undefined) {
 					const effectiveNormalized = getEffectiveStep(normalized);
-					navigation.registerDrillTarget(effectiveNormalized, drillTo, returnHere);
+					// Use slideIndex for slide-aware drill target registration (0 for drills)
+					const slideIdx = slideContext?.slideIndex ?? 0;
+					navigation.registerDrillTarget(slideIdx, effectiveNormalized, drillTo, returnHere);
 					registeredNormalizedStep = effectiveNormalized;
+					registeredSlideIndex = slideIdx;
 				}
 			}, 0);
 		}

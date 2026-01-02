@@ -4,6 +4,31 @@ import { browser } from '$app/environment';
 import type { NavigationContext } from '$lib/types';
 
 const STORAGE_KEY = 'mbs-nav-state';
+const DRILLTO_STORAGE_KEY = 'mbs-drillto';
+
+// Load autoDrillAll preference from localStorage
+function loadAutoDrillAll(): boolean {
+	if (!browser) return true; // Default to true
+	try {
+		const stored = localStorage.getItem(DRILLTO_STORAGE_KEY);
+		if (stored !== null) {
+			return JSON.parse(stored);
+		}
+	} catch (e) {
+		console.warn('[Navigation] Failed to load autoDrillAll:', e);
+	}
+	return true; // Default to true
+}
+
+// Save autoDrillAll preference to localStorage
+function persistAutoDrillAll(value: boolean): void {
+	if (!browser) return;
+	try {
+		localStorage.setItem(DRILLTO_STORAGE_KEY, JSON.stringify(value));
+	} catch (e) {
+		console.warn('[Navigation] Failed to persist autoDrillAll:', e);
+	}
+}
 
 // Create the navigation store with initial state
 function createNavigationStore() {
@@ -20,7 +45,9 @@ function createNavigationStore() {
 		slideFragments: [],              // Track fragment position per slide
 		isReturningFromDrill: false,     // Flag to prevent init() from resetting state
 		drillTargets: {},                // Map of step -> drillTo target for current slide/drill
-		returnHere: false                // If true, return here (to parent) instead of origin
+		returnHere: false,               // If true, return here (to parent) instead of origin
+		autoDrillAll: loadAutoDrillAll(), // If true, all drillTo fragments auto-drill on next click
+		pendingAutoDrill: null           // Pending drill to execute on next click
 	};
 
 	// Load persisted state from localStorage
@@ -196,16 +223,20 @@ function createNavigationStore() {
 		},
 
 		/**
-		 * Register a drill target for a specific step
+		 * Register a drill target for a specific slide and step
 		 * Called by Fragment components that have a drillTo prop
+		 * @param slideIndex - The slide index (0 for drills, actual slide index for presentations)
+		 * @param step - The normalized step number
+		 * @param target - The route to drill into
 		 * @param returnHere - if true, this drill returns to its immediate caller, not origin
 		 */
-		registerDrillTarget(step: number, target: string, returnHere: boolean = false) {
+		registerDrillTarget(slideIndex: number, step: number, target: string, returnHere: boolean = false) {
+			const key = `${slideIndex}:${step}`;
 			update((ctx) => ({
 				...ctx,
 				drillTargets: {
 					...ctx.drillTargets,
-					[step]: { target, returnHere }
+					[key]: { target, returnHere }
 				}
 			}));
 		},
@@ -213,9 +244,10 @@ function createNavigationStore() {
 		/**
 		 * Unregister a drill target (called when Fragment unmounts)
 		 */
-		unregisterDrillTarget(step: number) {
+		unregisterDrillTarget(slideIndex: number, step: number) {
+			const key = `${slideIndex}:${step}`;
 			update((ctx) => {
-				const { [step]: _, ...rest } = ctx.drillTargets;
+				const { [key]: _, ...rest } = ctx.drillTargets;
 				return {
 					...ctx,
 					drillTargets: rest
@@ -235,10 +267,26 @@ function createNavigationStore() {
 
 		/**
 		 * Advance to the next fragment, slide, or auto-return if at end of a drill
+		 * 
+		 * Auto-drill behavior (when autoDrillAll is enabled):
+		 * 1. Fragment with drillTo is shown first (content visible)
+		 * 2. NEXT click executes the pending drill
+		 * This ensures fragment content is always revealed before drilling.
+		 * 
 		 * If at the last fragment and it has a registered drillTo, auto-drill into it
 		 */
 		next() {
 			const ctx = get({ subscribe });
+			
+			// Check for pending auto-drill from previous next() call
+			// This executes the drill AFTER the fragment was shown
+			if (ctx.pendingAutoDrill) {
+				const { target, returnHere } = ctx.pendingAutoDrill;
+				console.log('[Navigation] Executing pending auto-drill to:', target, returnHere ? '(returnHere)' : '');
+				update((c) => ({ ...c, pendingAutoDrill: null }));
+				this.drillInto(target, 0, returnHere);
+				return;
+			}
 			
 			if (ctx.current.fragment < ctx.maxFragment) {
 				// Still have fragments to show in current slide
@@ -246,13 +294,25 @@ function createNavigationStore() {
 					const newFragment = c.current.fragment + 1;
 					const newSlideFragments = [...c.slideFragments];
 					newSlideFragments[c.current.slide] = newFragment;
+					
+					// If autoDrillAll is enabled, check if new fragment has a drillTo
+					// Set it as pending so NEXT click will drill (fragment shows first)
+					// Use slide-aware key: "slideIndex:step"
+					const drillKey = `${c.current.slide}:${newFragment}`;
+					const drillInfo = c.autoDrillAll ? c.drillTargets[drillKey] : null;
+					
+					if (drillInfo) {
+						console.log('[Navigation] Setting pending auto-drill for:', drillKey, '->', drillInfo.target);
+					}
+					
 					return {
 						...c,
 						current: {
 							...c.current,
 							fragment: newFragment
 						},
-						slideFragments: newSlideFragments
+						slideFragments: newSlideFragments,
+						pendingAutoDrill: drillInfo || null
 					};
 				});
 			} else if (ctx.current.slide < ctx.maxSlide) {
@@ -268,12 +328,14 @@ function createNavigationStore() {
 							fragment: 0  // When advancing naturally, start fresh
 						},
 						maxFragment: c.slideFragmentCounts[nextSlide] || 0,
-						drillTargets: {}  // Clear drill targets when changing slides
+						pendingAutoDrill: null  // Clear pending drill when changing slides
 					};
 				});
 			} else {
 				// At end of current slide/drill - check for auto-drill or auto-return
-				const drillInfo = ctx.drillTargets[ctx.maxFragment];
+				// Use slide-aware key for drill lookup
+				const drillKey = `${ctx.current.slide}:${ctx.maxFragment}`;
+				const drillInfo = ctx.drillTargets[drillKey];
 				
 				if (drillInfo) {
 					// Last fragment has a drillTo - auto drill into it
@@ -296,6 +358,7 @@ function createNavigationStore() {
 
 		/**
 		 * Go back to the previous fragment or slide
+		 * Clears any pending auto-drill since user explicitly moved backward
 		 */
 		prev() {
 			updateAndPersist((ctx) => {
@@ -310,7 +373,8 @@ function createNavigationStore() {
 							...ctx.current,
 							fragment: newFragment
 						},
-						slideFragments: newSlideFragments
+						slideFragments: newSlideFragments,
+						pendingAutoDrill: null  // Clear pending drill when going backward
 					};
 				} else if (ctx.current.slide > 0) {
 					// Go to previous slide, at its saved fragment position
@@ -325,7 +389,8 @@ function createNavigationStore() {
 							slide: prevSlide,
 							fragment: prevSlideFragment
 						},
-						maxFragment: prevSlideMaxFragment
+						maxFragment: prevSlideMaxFragment,
+						pendingAutoDrill: null  // Clear pending drill when changing slides
 					};
 				}
 				return ctx;
@@ -341,7 +406,8 @@ function createNavigationStore() {
 				current: {
 					...ctx.current,
 					fragment: Math.max(0, Math.min(fragment, ctx.maxFragment))
-				}
+				},
+				pendingAutoDrill: null  // Clear pending drill when jumping
 			}));
 		},
 
@@ -361,7 +427,8 @@ function createNavigationStore() {
 						slide: targetSlide,
 						fragment: targetFragment
 					},
-					maxFragment: ctx.slideFragmentCounts[targetSlide] || 0
+					maxFragment: ctx.slideFragmentCounts[targetSlide] || 0,
+					pendingAutoDrill: null  // Clear pending drill when jumping slides
 				};
 			});
 		},
@@ -396,7 +463,8 @@ function createNavigationStore() {
 					maxFragment: 0, // Will be set by the drill's setMaxFragment or init
 					slideFragmentCounts: [],
 					drillTargets: {},  // Clear - new drill will register its own
-					returnHere        // Store flag for when this drill ends
+					returnHere,        // Store flag for when this drill ends
+					pendingAutoDrill: null  // Clear pending drill when drilling
 				};
 			});
 
@@ -437,14 +505,16 @@ function createNavigationStore() {
 			// Extract slideFragments from returnState (if saved during drill)
 			const { slideFragments: savedSlideFragments, ...currentState } = returnState;
 
-			// Update the store - return to EXACT same position with flag set
+			// Update the store - return to EXACT same position
+			// The pending drill approach means we don't need to advance - just return cleanly
 			updateAndPersist((c) => ({
 				...c,
 				stack: newStack,
-				current: currentState,
-				slideFragments: savedSlideFragments || c.slideFragments,  // Restore per-slide positions
+				current: currentState,  // Return to exact position
+				slideFragments: savedSlideFragments || c.slideFragments,
 				isReturningFromDrill: true,  // Flag to prevent init() from resetting
 				drillTargets: {},  // Clear drill targets - origin will re-register
+				pendingAutoDrill: null,  // Clear any pending drill
 				// These will be properly set by the presentation's init()
 				maxSlide: 0,
 				maxFragment: 0,
@@ -487,10 +557,43 @@ function createNavigationStore() {
 		},
 
 		/**
+		 * Set auto-drill-all mode
+		 * When enabled, all fragments with drillTo auto-drill on next click (not just last fragment)
+		 * When disabled, only the last fragment with drillTo auto-drills
+		 * If toggling off while in a drill, returns to origin to avoid orphaned state
+		 */
+		setAutoDrillAll(value: boolean) {
+			const ctx = get({ subscribe });
+			
+			// If turning off while in a drill, return to origin first
+			if (!value && ctx.stack.length > 0) {
+				console.log('[Navigation] Turning off autoDrillAll while in drill - returning to origin');
+				this.returnFromDrill(true);
+			}
+			
+			persistAutoDrillAll(value);
+			update((c) => ({
+				...c,
+				autoDrillAll: value
+			}));
+			console.log('[Navigation] autoDrillAll set to:', value);
+		},
+
+		/**
+		 * Get current auto-drill-all setting
+		 */
+		getAutoDrillAll(): boolean {
+			return get({ subscribe }).autoDrillAll;
+		},
+
+		/**
 		 * Reset everything
 		 */
 		reset() {
-			set(initial);
+			set({
+				...initial,
+				autoDrillAll: loadAutoDrillAll() // Preserve autoDrillAll setting
+			});
 		}
 	};
 }
@@ -506,6 +609,7 @@ export const canReturn = derived(navigation, ($nav) => $nav.stack.length > 0);
 export const stackDepth = derived(navigation, ($nav) => $nav.stack.length);
 export const maxFragment = derived(navigation, ($nav) => $nav.maxFragment);
 export const maxSlide = derived(navigation, ($nav) => $nav.maxSlide);
+export const autoDrillAll = derived(navigation, ($nav) => $nav.autoDrillAll);
 
 // ========== Global Original Step Registry ==========
 // Used by DebugOverlay to show original author steps

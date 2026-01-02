@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { navigation } from '$lib/stores/navigation';
+	import { navigation, autoDrillAll } from '$lib/stores/navigation';
 	import { goto } from '$app/navigation';
 	
 	// Reset and start fresh
@@ -9,12 +9,30 @@
 		navigation.clearPresentation(presentation);
 		goto(route);
 	}
+
+	function toggleAutoDrill() {
+		navigation.setAutoDrillAll(!$autoDrillAll);
+	}
 </script>
 
 <div class="menu">
 	<header>
 		<h1>Master Bible Study</h1>
 		<p class="subtitle">Select a lesson</p>
+		<div class="auto-drill-toggle">
+			<label class="toggle-label">
+				<span class="toggle-text">Auto-drill</span>
+				<button 
+					class="toggle-switch"
+					class:active={$autoDrillAll}
+					onclick={toggleAutoDrill}
+					aria-pressed={$autoDrillAll}
+					title={$autoDrillAll ? 'Auto-drill enabled: all scripture references drill automatically' : 'Auto-drill disabled: only last reference drills automatically'}
+				>
+					<span class="toggle-knob"></span>
+				</button>
+			</label>
+		</div>
 	</header>
 	<nav class="lessons">
 		<a href="/reasoning" class="lesson-card">
@@ -147,8 +165,9 @@
 
 	header {
 		text-align: center;
-		margin-bottom: 48px;
+		margin-bottom: 10px;
 		flex-shrink: 0;
+		position: relative;
 	}
 
 	header h1 {
@@ -166,6 +185,57 @@
 		font-weight: 400;
 		text-transform: uppercase;
 		letter-spacing: 3px;
+	}
+
+	.auto-drill-toggle {
+		position: absolute;
+		top: 0;
+		right: -200px;
+	}
+
+	.toggle-label {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		cursor: pointer;
+	}
+
+	.toggle-text {
+		font-size: 14px;
+		color: var(--color-text-muted);
+		font-weight: 500;
+	}
+
+	.toggle-switch {
+		position: relative;
+		width: 44px;
+		height: 24px;
+		background: var(--color-text-muted);
+		border: none;
+		border-radius: 12px;
+		cursor: pointer;
+		transition: background 0.2s ease;
+		padding: 0;
+	}
+
+	.toggle-switch.active {
+		background: var(--color-level3);
+	}
+
+	.toggle-knob {
+		position: absolute;
+		top: 2px;
+		left: 2px;
+		width: 20px;
+		height: 20px;
+		background: white;
+		border-radius: 50%;
+		transition: transform 0.2s ease;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	}
+
+	.toggle-switch.active .toggle-knob {
+		transform: translateX(20px);
 	}
 
 	.lessons {

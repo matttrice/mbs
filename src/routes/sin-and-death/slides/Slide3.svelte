@@ -301,9 +301,9 @@
 		Definition of<br/>"flesh"
 	</Fragment>
 
-	<!-- Step 19.1: MORTALITY - Limited to flesh -->
+	<!-- Step 20: MORTALITY - Limited to flesh -->
 	<Fragment
-		step={19.1}
+		step={20}
 		layout={{ x: 277, y: 276.1, width: 203, height: 83.1 }}
 		line={{ width: 1 }}
 		font={{ align: 'center', font_size: 30.8 }}
@@ -316,7 +316,7 @@
 
 	<!-- Step 20: "Why does the inner man die?" -->
 	<Fragment
-		step={20}
+		step={20.1}
 		layout={{ x: 662, y: 318.4, width: 189.1, height: 48 }}
 		line={{ width: 1 }}
 		font={{ align: 'center', font_size: 21.7, italic: true }}

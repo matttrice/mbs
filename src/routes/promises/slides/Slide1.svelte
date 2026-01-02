@@ -89,7 +89,7 @@
 
 	<!-- Step 7: Deuteronomy 7:6-8 (hyperlink) -->
 	<Fragment
-		step={6.2}
+		step={6}
 		drillTo="promises/deuteronomy-7-6"
 		layout={{ x: 105.6, y: 145.5, width: 223.2, height: 34.9 }}
 		font={{ font_size: 24, align: 'left' }}

@@ -118,8 +118,10 @@ export interface NavigationContext {
 	slideFragmentCounts: number[];      // Fragment count per slide
 	slideFragments: number[];           // Current fragment position for each slide (preserved when jumping)
 	isReturningFromDrill: boolean;      // Flag to prevent init() from resetting state
-	drillTargets: Record<number, DrillTargetInfo>;  // Map of step -> drillTo info for current slide/drill
+	drillTargets: Record<string, DrillTargetInfo>;  // Map of "slideIndex:step" -> drillTo info (slide-aware)
 	returnHere: boolean;                // If true, this drill returns to its caller, not origin
+	autoDrillAll: boolean;              // If true, all drillTo fragments auto-drill on next click (not just last)
+	pendingAutoDrill: DrillTargetInfo | null;  // Pending drill to execute on next click (fragment shown first)
 }
 
 // Drill target info registered by Fragment components

@@ -305,8 +305,8 @@ describe('Fragment Component - Optional Step (Static Drillable Links)', () => {
 		// Wait for tick() in Fragment's $effect to complete
 		await new Promise(resolve => setTimeout(resolve, 0));
 		
-		// Should register for auto-drill at step 5
-		expect(mockRegister).toHaveBeenCalledWith(5, 'life/test', false);
+		// Should register for auto-drill at slideIndex 0, step 5
+		expect(mockRegister).toHaveBeenCalledWith(0, 5, 'life/test', false);
 	});
 });
 

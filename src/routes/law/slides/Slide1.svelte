@@ -30,6 +30,15 @@
 
 	<!-- Step 1: Romans 2:12-16 (drill) -->
 	<Fragment
+		layout={{ x: 107.6, y: 4.4, width: 126.1, height: 53.2 }}
+		font={{ font_size: 50 , bold: true }}
+		zIndex={20}
+	>
+		Law
+	</Fragment>
+	
+	<Fragment
+		step={1}
 		drillTo="law/romans-2-12"
 		layout={{ x: 115.9, y: 78.8, width: 201.9, height: 25 }}
 		font={{ font_size: 26.7, align: 'center', v_align: 'middle' }}
@@ -39,13 +48,13 @@
 	</Fragment>
 
 	<!-- Step 2: Moral Law Rectangle (gray box) -->
-	<Fragment step={1} animate="wipe-down">
+	<Fragment step={2} animate="wipe-down">
 		<Rect x={74.1} y={69.4} width={285.4} height={319.4} fill="var(--color-level1)" stroke={{ width: 2.3, color: 'var(--color-stroke-dark)' }} zIndex={2} />
 	</Fragment>
 
 	<!-- Step 2 (with): "Moral" label -->
 	<Fragment
-		step={1}
+		step={2}
 		layout={{ x: 149.4, y: 90.9, width: 134.9, height: 61.4 }}
 		font={{ font_size: 48, align: 'center', bold: true }}
 		zIndex={3}
@@ -55,7 +64,7 @@
 
 	<!-- Step 2.1: "Ability to know good and evil." -->
 	<Fragment
-		step={1}
+		step={2}
 		layout={{ x: 104.1, y: 256.6, width: 225.5, height: 26.1 }}
 		font={{ font_size: 16.7, align: 'center' }}
 		zIndex={4}
@@ -267,17 +276,7 @@
 		<Arrow from={{ x: 588, y: 235.8 }} to={{ x: 300, y: 138.2 }} stroke={{ width: 4 }} zIndex={31} />
 	</Fragment>
 
-	<!-- Step 15 (with): "Law" title -->
-	<Fragment
-		step={15}
-		layout={{ x: 107.6, y: 4.4, width: 126.1, height: 53.2 }}
-		font={{ font_size: 50 , bold: true }}
-		zIndex={20}
-	>
-		Law
-	</Fragment>
-
-	<!-- Step 15 (with): Main outer rectangle (orange background) -->
+	<!-- Step 15 (with): Law outer rectangle (orange background) -->
 	<Fragment step={15} animate="fade">
 		<Rect x={32.8} y={3.4} width={878.2} height={399.3} fill="var(--color-bg-cmd-law)" stroke={{ width: 1, color: '#000000' }} zIndex={0} />
 	</Fragment>
@@ -325,11 +324,11 @@
 	<!-- Step 19: "All Violate Conscience." (highlighted box) -->
 	<Fragment
 		step={19}
-		layout={{ x: 340, y: 20, width: 250, height: 81.6 }}
+		layout={{ x: 320, y: 20, width: 270, height: 81.6 }}
 		font={{ font_size: 30, align: 'center', bold: true, color: 'var(--color-bg-cmd-law)' }}
 		fill="var(--color-bg-darkest)"
 		zIndex={34}
 	>
-		All Violate<br/>Conscience.
+		Everyone Violates<br/>Conscience.
 	</Fragment>
 </Slide>
