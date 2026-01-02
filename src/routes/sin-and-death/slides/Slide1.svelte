@@ -48,7 +48,7 @@
 	<!-- Animated Content -->
 	<!-- Step 1: Gray column (Physical Death) -->
 	<Fragment step={1} animate="wipe-down">
-		<Rect x={66.8} y={101.4} width={271.4} height={240} fill="#969696" stroke={{ width: 1, color: '#000000' }} zIndex={1} />
+		<Rect x={66.8} y={101.4} width={271.4} height={240} fill="var(--color-level1)" stroke={{ width: 1, color: '#000000' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 1: Isaiah 59:1-2 -->
@@ -104,17 +104,17 @@
 	<!-- Step 5: "Physical Death" -->
 	<Fragment
 		step={5}
-		layout={{ x: 80.4, y: 102.7, width: 245.0, height: 91.8 }}
-		font={{ v_align: 'middle', align: 'center', font_size: 45.0 }}
+		layout={{ x: 80.4, y: 103, width: 245.0, height: 92 }}
+		font={{ v_align: 'middle', align: 'center', font_size: 45, bold: true }}
 		zIndex={4}
 		animate="fade"
 	>
 		Physical<br/>Death
 	</Fragment>
 
-	<!-- Step 6: Blue column (Spiritual Death) -->
+	<!-- Step 6: Orange (Spiritual Death) -->
 	<Fragment step={6} animate="wipe-down">
-		<Rect x={315.3} y={101.4} width={271.4} height={240} fill="#0000FF" stroke={{ width: 1, color: '#000000' }} zIndex={1} />
+		<Rect x={315.3} y={101.4} width={271.4} height={240} fill="var(--color-bg-cmd-law)" stroke={{ width: 1, color: 'var(--color-stroke-dark)' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 7: Ezekiel 18:4 reference -->
@@ -127,20 +127,7 @@
 		zIndex={6}
 		animate="fade"
 	>
-		Ezekiel 18:4
-	</Fragment>
-
-	<!-- Step 8-10.2: Ephesians 2:1-2 reference -->
-	<Fragment
-		step={8}
-		drillTo="sin-and-death/ephesians-2-1"
-		layout={{ x: 343.1, y: 247.2, width: 211.1, height: 31.9 }}
-		line={{ width: 1 }}
-		font={{ v_align: 'middle', align: 'center', font_size: 23.3 }}
-		zIndex={5}
-		animate="fade"
-	>
-		Ephesians 2:1-2
+		Ezekiel 18:4 <br/> Ephesians 2:1-2
 	</Fragment>
 
 	<!-- Step 9-11: "Separation?" for Spiritual -->
@@ -150,7 +137,6 @@
 		line={{ width: 1 }}
 		font={{ v_align: 'middle', align: 'center', font_size: 30.8 }}
 		zIndex={17}
-		exitStep={12}
 		animate="fade"
 	>
 		Separation?
@@ -163,7 +149,6 @@
 		line={{ width: 1 }}
 		font={{ v_align: 'middle', align: 'center', font_size: 30.8 }}
 		zIndex={18}
-		exitStep={12}
 		animate="fade"
 	>
 		Soul / God
@@ -172,8 +157,8 @@
 	<!-- Step 11: "Spiritual Death" title -->
 	<Fragment
 		step={11}
-		layout={{ x: 341.2, y: 102.7, width: 235.0, height: 87.1 }}
-		font={{ v_align: 'middle', align: 'center', font_size: 45.0 }}
+		layout={{ x: 341.2, y: 103, width: 235.0, height: 92 }}
+		font={{ v_align: 'middle', align: 'center', font_size: 45.0, bold: true }}
 		zIndex={9}
 		animate="fade"
 	>
@@ -182,7 +167,7 @@
 
 	<!-- Step 12: Red column (Eternal Death) -->
 	<Fragment step={12} animate="wipe-down">
-		<Rect x={585.8} y={101.4} width={271.4} height={240} fill="#FF0000" stroke={{ width: 1, color: '#000000' }} zIndex={1} />
+		<Rect x={585.8} y={101.4} width={271.4} height={240} fill="var(--color-bg-danger)" stroke={{ width: 1, color: 'var(--color-stroke-dark)' }} zIndex={0} />
 	</Fragment>
 
 	<!-- Step 12.1: Revelation 20:14-15, 21:6-8 -->
@@ -225,8 +210,8 @@
 	<!-- Step 15: "Eternal Death" title -->
 	<Fragment
 		step={15}
-		layout={{ x: 614.7, y: 102.7, width: 214.6, height: 91.8 }}
-		font={{ v_align: 'middle', align: 'center', font_size: 45.0 }}
+		layout={{ x: 614.7, y: 103, width: 214.6, height: 92 }}
+		font={{ v_align: 'middle', align: 'center', font_size: 45.0, bold: true }}
 		zIndex={10}
 		animate="fade"
 	>
@@ -236,9 +221,9 @@
 	<!-- Step 16: "Difference?" -->
 	<Fragment
 		step={16}
-		layout={{ x: 486.4, y: 328.8, width: 203.0, height: 23.9 }}
+		layout={{ x: 460, y: 325, width: 203.0, height: 23.9 }}
 		fill="#FFFFFF"
-		line={{ width: 1 }}
+		line={{ width: 1, color: 'var(--color-stroke-dark)' }}
 		font={{ v_align: 'middle', align: 'center', font_size: 17.5, italic: true }}
 		zIndex={30}
 		animate="fade"
@@ -248,55 +233,33 @@
 
 	<!-- Step 16.1: "Changeable" -->
 	<Fragment
-		step={16.1}
-		layout={{ x: 332.5, y: 349.9, width: 282.2, height: 47.9 }}
-		line={{ width: 1 }}
-		font={{ v_align: 'middle', align: 'center', font_size: 30.8, italic: true }}
-		zIndex={21}
-		animate="fade"
+		step={17}
+		layout={{ x: 315.3, y: 330, width: 271.4, height: 100 }}
+		line={{ width: [0, 1, 1, 1], color: 'var(--color-stroke-dark)' }}
+		font={{ v_align: 'middle', align: 'center', font_size: 30.8, italic: true, wrap: true }}
+		zIndex={1}
+		fill="var(--color-bg-cmd-law)"
+		animate="wipe-down"
 	>
-		Changeable
-	</Fragment>
-
-	<!-- Step 16.2: "you formerly walked" -->
-	<Fragment
-		step={16.2}
-		layout={{ x: 343.2, y: 398.4, width: 231.1, height: 28.8 }}
-		line={{ width: 1 }}
-		font={{ v_align: 'middle', align: 'center', font_size: 20.0, italic: true }}
-		zIndex={22}
-		animate="fade"
-	>
-		"you formerly walked"
+		Changeable<br/><span style="font-size: 0.7em">"You formerly walked"</span>
 	</Fragment>
 
 	<!-- Step 16.3: "Permanent" -->
 	<Fragment
-		step={16.3}
-		layout={{ x: 623.9, y: 347.6, width: 196.1, height: 47.4 }}
-		line={{ width: 1 }}
-		font={{ align: 'center', font_size: 30.8 }}
-		zIndex={23}
+		step={17.1}
+		layout={{ x: 585.8, y: 340, width: 271.4, height: 150 }}
+		line={{ width: [0, 1, 1, 1], color: 'var(--color-stroke-dark)' }}
+		font={{ v_align: 'top', align: 'center', font_size: 30.8, italic: true, wrap: true }}
+		zIndex={1}
+		fill="var(--color-bg-danger)"
 		animate="fade"
 	>
-		Permanent
+		Permanent<br/><span style="font-size: 0.7em">"It is done"</span>
 	</Fragment>
 
-	<!-- Step 16.4: "It is done" -->
+	<!-- Step 18: Nature of Death -->
 	<Fragment
-		step={16.4}
-		layout={{ x: 623.9, y: 403.4, width: 196.1, height: 43.3 }}
-		line={{ width: 1 }}
-		font={{ align: 'center', font_size: 30.8, italic: true }}
-		zIndex={31}
-		animate="fade"
-	>
-		"It is done"
-	</Fragment>
-
-	<!-- Step 17: Nature of Death -->
-	<Fragment
-		step={17}
+		step={18}
 		drillTo="sin-and-death/death-states"
 		layout={{ x: 66.2, y: 322.2, width: 266.1, height: 52.1 }}
 		line={{ width: 1 }}
@@ -307,9 +270,9 @@
 		Nature of Death:
 	</Fragment>
 
-	<!-- Step 17.1: "Process Genesis 3:19" -->
+	<!-- Step 19: "Process Genesis 3:19" -->
 	<Fragment
-		step={17.1}
+		step={19}
 		drillTo="sin-and-death/death-states"
 		layout={{ x: 98.1, y: 359.2, width: 206.6, height: 73.3 }}
 		line={{ width: 1 }}
@@ -320,9 +283,9 @@
 		Process<br/>Genesis 3:19
 	</Fragment>
 
-	<!-- Step 17.2: "Event Ezekiel 18:4" -->
+	<!-- Step 19.1: "Event Ezekiel 18:4" -->
 	<Fragment
-		step={17.2}
+		step={19.1}
 		drillTo="sin-and-death/death-states"
 		layout={{ x: 98.1, y: 416.6, width: 193.8, height: 79.2 }}
 		line={{ width: 1 }}
@@ -333,9 +296,9 @@
 		Event<br/>Ezekiel 18:4
 	</Fragment>
 
-	<!-- Step 17.3: "State Ephesians 2:1" -->
+	<!-- Step 19.2: "State Ephesians 2:1" -->
 	<Fragment
-		step={17.3}
+		step={19.2}
 		drillTo="sin-and-death/death-states"
 		layout={{ x: 98.1, y: 472.9, width: 189.1, height: 66.1 }}
 		line={{ width: 1 }}
@@ -346,9 +309,9 @@
 		State<br/>Ephesians 2:1
 	</Fragment>
 
-	<!-- Step 18: Matthew 8:21-22 -->
+	<!-- Step 20: Matthew 8:21-22 -->
 	<Fragment
-		step={18}
+		step={20}
 		drillTo="sin-and-death/matthew-8-21"
 		layout={{ x: 320.3, y: 440.4, width: 246.1, height: 45.0 }}
 		line={{ width: 1 }}
@@ -359,9 +322,9 @@
 		Matthew 8:21-22
 	</Fragment>
 
-	<!-- Step 19: "How can dead people bury dead people?" -->
+	<!-- Step 21: "How can dead people bury dead people?" -->
 	<Fragment
-		step={19}
+		step={21}
 		layout={{ x: 320.7, y: 482.2, width: 463.9, height: 30.6 }}
 		line={{ width: 1 }}
 		font={{ v_align: 'middle', font_size: 23.3, italic: true }}

@@ -7,7 +7,7 @@
 
 :root {
 	/* Level-based color palette */
-	--color-level1: #B3B3B3;
+	--color-level1: #969696;
 	--color-level2: #00aaff;
 	--color-level3: #0000cc;
 
@@ -16,6 +16,8 @@
 	--color-bg-ghost: #ffffff;
 	--color-bg-darkest: #000000;
 	--color-bg-cmd-law: #FD8017;
+	--color-bg-danger: #FF0000;
+	--color-bg-danger-dark: #cc0000;
 	--color-stroke-dark: #000000;
 	--color-text-primary: #000000;
 	--color-text-muted: #666666;
@@ -23,7 +25,7 @@
 	/* Accent colors */
 	--color-highlight: #ffd700;
 
-	--color-danger: #cc0000;
+
 	--color-success: #00aa00;
 
 	/* UI colors */

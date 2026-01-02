@@ -19,6 +19,7 @@
 		line={{ width: 1 }}
 		font={{ font_size: 30.8 }}
 		animate="fade"
+		drillTo="sin-and-death/ephesians-2-1"
 	>
 		"Behold, all souls are Mine; the soul of the father as well as the soul of the son is Mine. The soul who sins will die.
 	</Fragment>

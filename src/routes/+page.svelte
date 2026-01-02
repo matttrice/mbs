@@ -251,6 +251,6 @@
 
 	.lesson-card:hover .reset-btn:hover {
 		background: rgba(204, 0, 0, 0.3);
-		color: var(--color-danger);
+		color: var(--color-bg-danger-dark);
 	}
 </style>

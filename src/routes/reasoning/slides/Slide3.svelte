@@ -248,7 +248,7 @@
 
 	<!-- Step 12.1: Wrong piece rejected - arrow pointing outside border with red X -->
 	<Fragment step={12.1} animate="draw">
-		<Arc from={{ x: 658, y: 102 }} to={{ x: 885, y: 55 }} curve={-40} stroke={{ width: 3.3, color: 'var(--color-danger)' }} arrow={true} />
+		<Arc from={{ x: 658, y: 102 }} to={{ x: 885, y: 55 }} curve={-40} stroke={{ width: 3.3, color: 'var(--color-bg-danger-dark)' }} arrow={true} />
 	</Fragment>
 	<!-- Small gray box outside the border -->
 	<Fragment step={12.1} animate="fade">
@@ -258,7 +258,7 @@
 	<Fragment 
 		step={12.1} 
 		layout={{ x: 900, y: 54, width: 5, height: 5 }}
-		font={{ font_size: 25, bold: true, color: 'var(--color-danger)' }}
+		font={{ font_size: 25, bold: true, color: 'var(--color-bg-danger-dark)' }}
 		zIndex={87}>
 		?
 	</Fragment>

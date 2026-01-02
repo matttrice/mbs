@@ -307,6 +307,7 @@
 		layout={{ x: 277, y: 276.1, width: 203, height: 83.1 }}
 		line={{ width: 1 }}
 		font={{ align: 'center', font_size: 30.8 }}
+		fill="var(--color-level1)"
 		zIndex={24}
 		animate="fade"
 	>

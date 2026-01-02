@@ -36,10 +36,14 @@ export interface BoxFont {
 
 /**
  * Border/outline styling for positioned boxes.
+ * Width can be a single number (all sides) or a 4-tuple [top, right, bottom, left] like CSS.
+ * @example { color: '#000', width: 1 } // 1px all sides
+ * @example { color: '#000', width: [0, 1, 1, 1] } // no top border
  */
 export interface BoxLine {
 	color?: string;
-	width?: number;
+	/** Border width in pixels. Single number for all sides, or [top, right, bottom, left]. */
+	width?: number | [number, number, number, number];
 }
 
 /**

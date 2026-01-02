@@ -334,9 +334,17 @@
 		}
 
 		// Border
-		if (line) {
-			if (line.color) style += `border-color: ${line.color};`;
-			if (line.width) style += `border-width: ${line.width}px; border-style: solid;`;
+		if (line && line.color) {
+			style += `border-color: ${line.color};`;
+			if (line.width !== undefined) {
+				if (Array.isArray(line.width)) {
+					// 4-tuple: [top, right, bottom, left]
+					const [top, right, bottom, left] = line.width;
+					style += `border-width: ${top}px ${right}px ${bottom}px ${left}px; border-style: solid;`;
+				} else {
+					style += `border-width: ${line.width}px; border-style: solid;`;
+				}
+			}
 		}
 
 		// Padding (default 4px for wrapped text, 0 otherwise)
