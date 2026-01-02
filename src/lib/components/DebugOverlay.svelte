@@ -32,9 +32,10 @@
 {#if showOverlay}
 	<div class="debug">
 		Slide: {$currentSlide + 1}/{$maxSlide + 1} | 
-		Fragment: {$currentFragment}/{$maxFragment}
-		{#if originalStep !== $currentFragment}
-			(step={originalStep})
+		{#if originalStep == $currentFragment}
+			Step:{$currentFragment}/{$maxFragment}
+		{:else}
+			Step:~{originalStep}/{$maxFragment}
 		{/if}
 		| Drill: {$stackDepth}
 	</div>

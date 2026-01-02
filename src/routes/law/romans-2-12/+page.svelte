@@ -9,8 +9,8 @@
 
 <Slide>
 	<Fragment
-		layout={{ x: 42.6, y: 26.8, width: 390.1, height: 51.1 }}
-		font={{ font_size: 44.2, bold: true }}
+		layout={{ x: 42.6, y: 26.8, width: 390.1, height: 51.1, }}
+		font={{ font_size: 44.2, bold: true, align: 'left' }}
 	>
 		Romans 2:12-16
 	</Fragment>
@@ -24,25 +24,25 @@
 
 	<Fragment
 		step={1}
-		layout={{ x: 67.8, y: 396.2, width: 265.3, height: 66.8 }}
-		font={{ font_size: 26.7, align: 'center', v_align: 'middle' }}
-		line={{ width: 5 }}
+		layout={{ x: 67.8, y: 385, width: 254, height: 88 }}
+		font={{ font_size: 26.7, align: 'center', v_align: 'middle', bold: true }}
+		line={{ width: 2 }}
 	>
 		Jew vs. Gentile<br/>Hearers vs Doers
 	</Fragment>
 
 	<Fragment
 		step={2}
-		layout={{ x: 354.1, y: 385.7, width: 254.5, height: 87.8 }}
-		font={{ font_size: 35, align: 'center' }}
-		fill="#FF6600"
+		layout={{ x: 354, y: 385, width: 254, height: 88 }}
+		font={{ font_size: 23, align: 'center' , wrap: true }}
+		fill="var(--color-level1)"
 	>
-		"instinctively" Means what?
+		<strong>"instinctively"</strong> <br/> Means what?
 	</Fragment>
 
 	<Fragment
 		step={3}
-		layout={{ x: 354.1, y: 475.2, width: 254.5, height: 40.2 }}
+		layout={{ x: 354, y: 475, width: 254.5, height: 40.2 }}
 		font={{ font_size: 26.7, align: 'center', wrap: true }}
 	>
 		Is instinct learned?
@@ -52,7 +52,7 @@
 		step={4}
 		layout={{ x: 632.8, y: 389.2, width: 300.2, height: 80.7 }}
 		font={{ font_size: 30, align: 'center' }}
-		fill="#FF6600"
+		fill="var(--color-level1)"
 	>
 		Instinct +<br/>Conscience & Heart
 	</Fragment>

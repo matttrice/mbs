@@ -269,7 +269,7 @@
 		font={{ font_size: 20, italic: true, v_align: 'top', wrap: true }}
 		zIndex={2}
 	>
-		to be without a share in<br/>b) to miss the mark<br/>c) to err, be mistaken<br/>d) to miss or wander from the path of uprightness<br/>e) to wander from the law of God
+		To be without a share in<br/> b) to miss the mark<br/> c) to err, be mistaken<br/> d) to miss or wander from the path of uprightness<br/> e) to wander from the law of God
 	</Fragment>
 
 	<!-- Step 17: Arrow down for hamartia -->
@@ -300,11 +300,11 @@
 	<!-- Step 18: Luke 13:9 quote -->
 	<Fragment
 		step={18}
-		layout={{ x: 83.4, y: 497.5, width: 783.4, height: 45.3 }}
-		font={{ font_size: 30 }}
+		layout={{ x: 83.4, y: 497.5, width: 788, height: 45.3 }}
+		font={{ font_size: 28, align: 'left' }}
 		zIndex={20}
 	>
-		9 If it bears fruit next year, fine! If not, then cut it down.
+		 <strong>Luke 13:9</strong> If it bears fruit next year, fine! If not, then cut it down.
 	</Fragment>
 
 	<!-- Step 19: 1 Peter 4:12-18 / Hebrews 10:23 (drill) -->
@@ -312,7 +312,7 @@
 		step={19}
 		drillTo="law/1peter-4-12"
 		layout={{ x: 73.4, y: 383.5, width: 247.6, height: 64.8 }}
-		font={{ font_size: 23.3, align: 'center' }}
+		font={{ font_size: 23.3, align: 'center', bold: true }}
 		zIndex={28}
 	>
 		1Peter 4:12-18<br/>Hebrews 10:23

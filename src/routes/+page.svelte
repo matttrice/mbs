@@ -221,17 +221,20 @@
 		border-radius: 6px;
 		font-size: 15px;
 		font-weight: 500;
-		cursor: pointer;
-		transition: color 0.15s ease, background 0.15s ease;
+		transition: color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
 		opacity: 0;
+		pointer-events: none;
 	}
 
 	.lesson-card:hover .reset-btn {
-		opacity: 1;
+		opacity: .8;
+		background: var(--color-level3);
+		color: var(--color-bg-ghost);
+		pointer-events: auto;
 	}
 
-	.reset-btn:hover {
-		background: rgba(204, 0, 0, 0.08);
+	.lesson-card:hover .reset-btn:hover {
+		background: rgba(204, 0, 0, 0.3);
 		color: var(--color-danger);
 	}
 </style>

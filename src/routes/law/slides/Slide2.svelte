@@ -80,7 +80,7 @@
 
 	<!-- Step 3: Commandment Law Rectangle (orange box) -->
 	<Fragment step={3} animate="wipe-down">
-		<Rect x={53.2} y={46.4} width={466.7} height={493.6} fill="var(--color-bg-cmd-law)" stroke={{ width: 8.3, color: '#000000' }} zIndex={0} />
+		<Rect x={53.2} y={46.4} width={466.7} height={493.6} fill="var(--color-bg-cmd-law)" stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={0} />
 	</Fragment>
 
 	<!-- Step 3 (with): "Command" label -->
@@ -142,7 +142,7 @@
 
 	<!-- Step 6 (with): Faith/Grace Rectangle (blue box) -->
 	<Fragment step={6} animate="wipe-down">
-		<Rect x={558.4} y={0} width={369.8} height={540} fill="var(--color-level2)" stroke={{ width: 16, color: '#000000' }} zIndex={1} />
+		<Rect x={558.4} y={0} width={369.8} height={540} fill="var(--color-level2)" stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 6 (with): "Faith / Grace" title -->

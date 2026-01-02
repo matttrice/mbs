@@ -30,7 +30,6 @@
 
 	<!-- Step 1: Romans 2:12-16 (drill) -->
 	<Fragment
-		step={1}
 		drillTo="law/romans-2-12"
 		layout={{ x: 115.9, y: 78.8, width: 201.9, height: 25 }}
 		font={{ font_size: 26.7, align: 'center', v_align: 'middle' }}
@@ -40,15 +39,15 @@
 	</Fragment>
 
 	<!-- Step 2: Moral Law Rectangle (gray box) -->
-	<Fragment step={2} animate="wipe-down">
-		<Rect x={74.1} y={69.4} width={285.4} height={319.4} fill="var(--color-level1)" stroke={{ width: 1, color: '#000000' }} zIndex={2} />
+	<Fragment step={1} animate="wipe-down">
+		<Rect x={74.1} y={69.4} width={285.4} height={319.4} fill="var(--color-level1)" stroke={{ width: 2.3, color: 'var(--color-stroke-dark)' }} zIndex={2} />
 	</Fragment>
 
 	<!-- Step 2 (with): "Moral" label -->
 	<Fragment
-		step={2}
+		step={1}
 		layout={{ x: 149.4, y: 90.9, width: 134.9, height: 61.4 }}
-		font={{ font_size: 48, align: 'center' }}
+		font={{ font_size: 48, align: 'center', bold: true }}
 		zIndex={3}
 	>
 		Moral
@@ -56,7 +55,7 @@
 
 	<!-- Step 2.1: "Ability to know good and evil." -->
 	<Fragment
-		step={2.1}
+		step={1}
 		layout={{ x: 104.1, y: 256.6, width: 225.5, height: 26.1 }}
 		font={{ font_size: 16.7, align: 'center' }}
 		zIndex={4}
@@ -127,17 +126,6 @@
 		Sin existed before Law, even over those who did not break a commandment like Adam.
 	</Fragment>
 
-	<!-- Step 8: "Moral Law" box on timeline -->
-	<Fragment
-		step={8}
-		layout={{ x: 368, y: 446.7, width: 212.2, height: 55.1 }}
-		font={{ font_size: 40, align: 'center', v_align: 'middle', bold: true }}
-		fill="var(--color-level1)"
-		zIndex={24}
-	>
-		Moral Law
-	</Fragment>
-
 	<!-- Step 8: "Adam" box -->
 	<Fragment
 		step={8}
@@ -149,10 +137,21 @@
 		Adam
 	</Fragment>
 
+	<!-- Step 8: "Moral Law" box on timeline -->
+	<Fragment
+		step={8}
+		layout={{ x: 368, y: 417, width: 212.2, height: 85 }}
+		font={{ font_size: 40, align: 'center', v_align: 'bottom', bold: true }}
+		fill="var(--color-level1)"
+		zIndex={24}
+	>
+		Moral Law
+	</Fragment>
+
 	<!-- Step 8: "Moses Law" box (orange) -->
 	<Fragment
 		step={8}
-		layout={{ x: 613.1, y: 403.1, width: 143.1, height: 112.6 }}
+		layout={{ x: 613.1, y: 417, width: 143.1, height: 100 }}
 		font={{ font_size: 40, align: 'center', v_align: 'middle', bold: true }}
 		fill="var(--color-bg-cmd-law)"
 		zIndex={26}
@@ -163,16 +162,16 @@
 	<!-- Step 8: "Yet death reigned due to violations of" -->
 	<Fragment
 		step={8}
-		layout={{ x: 240, y: 415, width: 274.4, height: 34.4 }}
-		font={{ font_size: 16.7 }}
+		layout={{ x: 340, y: 425, width: 274.4, height: 35 }}
+		font={{ font_size: 17, align: 'center', v_align: 'bottom', bold: true }}
 		zIndex={27}
 	>
-		Yet death reigned due to violations of:
+		Death reigned <br/> due to violations of:
 	</Fragment>
 
 	<!-- Step 8: Timeline arrow -->
 	<Fragment step={8} animate="wipe">
-		<Arrow from={{ x: 333.9, y: 473 }} to={{ x: 800, y: 473 }} stroke={{ width: 13.3 }} zIndex={23} />
+		<Arrow from={{ x: 333.9, y: 473 }} to={{ x: 900, y: 473 }} stroke={{ width: 13.3 }} zIndex={23} />
 	</Fragment>
 
 	<!-- Step 9: Genesis 2:16-17 (drill) -->
@@ -188,14 +187,14 @@
 
 	<!-- Step 9 (with): Commandment Law Rectangle (orange box) -->
 	<Fragment step={9} animate="wipe-down">
-		<Rect x={567.5} y={67.2} width={307.9} height={321.1} fill="var(--color-bg-cmd-law)" stroke={{ width: 2.3, color: '#000000' }} zIndex={1} />
+		<Rect x={567.5} y={67.2} width={307.9} height={321.1} fill="var(--color-bg-cmd-law)" stroke={{ width: 2.3, color: 'var(--color-stroke-dark)' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 10: "Command" label -->
 	<Fragment
 		step={10}
 		layout={{ x: 604.5, y: 79.1, width: 233.9, height: 61.4 }}
-		font={{ font_size: 48 }}
+		font={{ font_size: 48 , bold: true }}
 		zIndex={12}
 	>
 		Command
@@ -306,27 +305,27 @@
 	<!-- Step 17: "Entire World: Violates Moral Law" -->
 	<Fragment
 		step={17}
-		layout={{ x: 369.8, y: 224.4, width: 187.3, height: 59.2 }}
-		font={{ font_size: 26.7, align: 'center', wrap: true }}
+		layout={{ x: 369.8, y: 115, width: 187.3, height: 59.2 }}
+		font={{ font_size: 27, align: 'center', wrap: true }}
 		zIndex={19}
 	>
-		Entire World:<br/>Moral Law
+		<strong>Entire World:</strong><br/>Moral Law
 	</Fragment>
 
 	<!-- Step 18: "Only Israel: Violates Moral & Commandment Law" -->
 	<Fragment
 		step={18}
-		layout={{ x: 355, y: 294, width: 220, height: 107 }}
-		font={{ font_size: 20, align: 'center', wrap: true, bold: true }}
+		layout={{ x: 355, y: 220, width: 220, height: 107 }}
+		font={{ font_size: 27, align: 'center', wrap: true}}
 		zIndex={33}
 	>
-		Only Israel:<br/> Moral &<br/>Commandment Law
+		<strong>Only Israel:</strong><br/> Moral &<br/>Commandment Law
 	</Fragment>
 
 	<!-- Step 19: "All Violate Conscience." (highlighted box) -->
 	<Fragment
 		step={19}
-		layout={{ x: 340, y: 50, width: 250, height: 81.6 }}
+		layout={{ x: 340, y: 20, width: 250, height: 81.6 }}
 		font={{ font_size: 30, align: 'center', bold: true, color: 'var(--color-bg-cmd-law)' }}
 		fill="var(--color-bg-darkest)"
 		zIndex={34}
