@@ -30,16 +30,16 @@
 	<!-- Original: x: 202.8, y: 192.1, width: 1173.2, height: 479.8 -->
 	<!-- Scaled: x: 126.75, y: 120.1, width: 733.3, height: 299.9 -->
 	<Fragment
-		layout={{ x: 127, y: 120, width: 733, height: 300 }}
+		layout={{ x: 127, y: 50, width: 733, height: 300 }}
 		font={{ font_size: 23.3, align: 'left', wrap: true }}
 		fill="var(--color-bg-light)"
 		zIndex={1}
 	>
 		<p style="margin: 0; padding: 15px; line-height: 1.5;">
-			'When one learns to read, one learns a peculiar way of behaving. Self restraint is a challenge not only to the body but to the mind. Sentences paragraphs and pages unfold slowly, in sequence and according to a logic that is far from intuitive... the literate person must learn to be reflective and analytical, patient and assertive always poised, after due consideration to say no to a text.'
+			"When one learns to read, one learns a peculiar way of behaving. Self restraint is a challenge not only to the body but to the mind. Sentences paragraphs and pages unfold slowly, in sequence and according to a logic that is far from intuitive... the literate person must learn to be reflective and analytical, patient and assertive always poised, after due consideration to say no to a text."
 		</p>
 		<p style="margin: 0; padding: 0 15px 15px 15px; font-style: italic;">
-			Neil Postman – The Disappearance of Childhood
+			Neil Postman: The Disappearance of Childhood
 		</p>
 	</Fragment>
 </Slide>

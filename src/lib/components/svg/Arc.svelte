@@ -52,7 +52,7 @@
 	// Calculate bounding box with padding for the arc
 	const padding = Math.abs(curve) + (stroke?.width ?? 2) * 2 + 20;
 	const minX = Math.min(from.x, to.x) - padding;
-	const minY = Math.min(from.y, to.y) - Math.abs(curve) - padding;
+	const minY = Math.min(from.y, to.y) - padding;
 	const maxX = Math.max(from.x, to.x) + padding;
 	const maxY = Math.max(from.y, to.y) + padding;
 	const width = maxX - minX;
@@ -62,10 +62,25 @@
 	const localFrom = { x: from.x - minX, y: from.y - minY };
 	const localTo = { x: to.x - minX, y: to.y - minY };
 
-	// Control point for quadratic bezier (at midpoint, offset by curve amount)
+	// Calculate control point perpendicular to the line between from and to
+	// This centers the curve in the middle of the arc regardless of angle
 	const midX = (localFrom.x + localTo.x) / 2;
-	const midY = (localFrom.y + localTo.y) / 2 + curve;
-	const controlPoint = { x: midX, y: midY };
+	const midY = (localFrom.y + localTo.y) / 2;
+	
+	// Calculate perpendicular direction (rotate line direction by 90 degrees)
+	const dx = localTo.x - localFrom.x;
+	const dy = localTo.y - localFrom.y;
+	const lineLength = Math.sqrt(dx * dx + dy * dy);
+	
+	// Perpendicular unit vector (rotated 90 degrees counterclockwise)
+	const perpX = -dy / lineLength;
+	const perpY = dx / lineLength;
+	
+	// Offset control point perpendicular to the line
+	const controlPoint = { 
+		x: midX + perpX * curve, 
+		y: midY + perpY * curve 
+	};
 
 	onMount(() => {
 		if (!svgEl) return;
