@@ -293,11 +293,6 @@ Navigation state is saved to `localStorage` under key `mbs-nav-state`. This pres
 
 The menu's Reset button clears this state.
 
-## Future Roadmap
-
-- **Motion paths** - Support for multi-stage animations where fragments move to new positions at later steps (PowerPoint-style motion paths). Will use a `motions` prop: `motions={[{ atStep: 3, to: { x: 500 }, duration: 500 }]}`
-- **Hide on step*** - Support removing an already visible step.
-
 ## Common Gotchas
 
 1. **Wrap slides in `<Slide>`** - Without the Slide wrapper, Fragments won't register their steps and maxStep won't be reported.

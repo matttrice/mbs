@@ -783,6 +783,61 @@ JSON entries **without `text` or `font` properties** represent visual-only shape
 </Fragment>
 ```
 
+#### Images (Pictures)
+
+JSON entries with `shape_type: "picture"` represent embedded images. Images are saved to `mbs/static/export/{presentation}/`. Find the image  and use Fragment's `layout` prop to position them.
+
+**JSON picture entry:**
+```json
+{
+  "sequence": 1,
+  "shape_name": "Picture 1",
+  "shape_type": "picture",
+  "image": "image1.jpg",
+  "timing": "with",
+  "description": "ark2.jpg",
+  "layout": { "x": 60, "y": 133, "width": 840, "height": 273, "rotation": 0.0 },
+  "line": { "width": 1 }
+}
+```
+
+**Becomes Fragment with img tag:**
+```svelte
+<Fragment
+  step={1}
+  layout={{ x: 60, y: 133, width: 840, height: 273 }}
+  animate="fade"
+>
+  <img src="/images/ark/image1.jpg" alt="ark2.jpg" class="slide-image" />
+</Fragment>
+```
+
+**Static picture (no step):**
+```svelte
+<Fragment
+  layout={{ x: 0, y: 318, width: 960, height: 222 }}
+  line={{ width: 1 }}
+>
+  <img src="/images/ark/image5.jpeg" alt="Underwater" class="slide-image" />
+</Fragment>
+```
+
+**Key points:**
+- Use Fragment's `layout` prop for positioning—the image fills the Fragment container
+- Add `class="slide-image"` for proper sizing (defined in utilities.css)
+- Use `description` field for alt text when available
+- For borders, use Fragment's `line` prop
+
+**CSS for slide images** (add to `$lib/styles/utilities.css` if not present):
+```css
+.slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+```
+
 **Drill route naming**: Convert `custom_shows[id].name` to lowercase route folder (e.g., `Gen12.1` → `genesis-12-1/`).
 
 **Multi-slide custom shows**: When `custom_shows[id].slides` has multiple entries, chain them with `drillTo` on the last fragment of each drill page.
