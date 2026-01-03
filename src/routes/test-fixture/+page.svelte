@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { currentSlide, navigation } from '$lib/stores/navigation';
+	import { currentSlide } from '$lib/stores/navigation';
 	import PresentationProvider from '$lib/components/PresentationProvider.svelte';
-	import Slide from '$lib/components/Slide.svelte';
-	import Fragment from '$lib/components/Fragment.svelte';
+	
+	// Import slide components
+	import Slide1 from './slides/Slide1.svelte';
+	import Slide2 from './slides/Slide2.svelte';
 
 	/**
 	 * Test Fixture Presentation
@@ -23,73 +25,14 @@
 
 <PresentationProvider name="test-fixture" slideCount={2}>
 	<div class="presentation">
-		<div class="slides-container">
-			<!-- Slide 1: Basic Drill -->
+
+		<div class="slide-container">
+			<!-- All slides render to register maxSteps, only active one visible -->
 			<div class="slide-wrapper" class:active={$currentSlide === 0}>
-				<Slide slideIndex={0}>
-					<div class="slide-bg"></div>
-					
-					<!-- Title (always visible) -->
-					<Fragment
-						layout={{ x: 300, y: 20, width: 360, height: 50 }}
-						font={{ font_size: 36, bold: true }}
-					>
-						Test Fixture
-					</Fragment>
-
-					<!-- Step 1: Drillable fragment (single level drill) -->
-					<Fragment
-						step={1}
-						drillTo="test-fixture/drill-01"
-						layout={{ x: 100, y: 100, width: 200, height: 40 }}
-						font={{ font_size: 24 }}
-					>
-						First Fragment
-					</Fragment>
-
-					<!-- Step 2: Non-drillable fragment -->
-					<Fragment
-						step={2}
-						layout={{ x: 100, y: 160, width: 200, height: 40 }}
-						font={{ font_size: 24 }}
-					>
-						Second Fragment
-					</Fragment>
-				</Slide>
+				<Slide1 slideIndex={0} />
 			</div>
-
-			<!-- Slide 2: Multi-Drill Test -->
 			<div class="slide-wrapper" class:active={$currentSlide === 1}>
-				<Slide slideIndex={1}>
-					<div class="slide-bg"></div>
-					
-					<!-- Title (always visible) -->
-					<Fragment
-						layout={{ x: 300, y: 20, width: 360, height: 50 }}
-						font={{ font_size: 36, bold: true }}
-					>
-						Slide Two
-					</Fragment>
-
-					<!-- Step 1: Starts nested drill chain (drill-01 → drill-02 → drill-03) -->
-					<Fragment
-						step={1}
-						drillTo="test-fixture/drill-01"
-						layout={{ x: 100, y: 100, width: 250, height: 40 }}
-						font={{ font_size: 24 }}
-					>
-						Multi Drill Start
-					</Fragment>
-
-					<!-- Step 2: After returning from nested drills -->
-					<Fragment
-						step={2}
-						layout={{ x: 100, y: 160, width: 200, height: 40 }}
-						font={{ font_size: 24 }}
-					>
-						After Multi
-					</Fragment>
-				</Slide>
+				<Slide2 slideIndex={1} />
 			</div>
 		</div>
 
@@ -99,7 +42,7 @@
 				<button 
 					class="indicator-dot"
 					class:active={$currentSlide === index}
-					onclick={() => navigation.goToSlide(index)}
+					onclick={() => import('$lib/stores/navigation').then(m => m.navigation.goToSlide(index))}
 					aria-label="Go to slide {index + 1}"
 				>
 					{index + 1}
@@ -110,34 +53,5 @@
 </PresentationProvider>
 
 <style>
-	.presentation {
-		width: 100%;
-		height: 100%;
-		position: relative;
-	}
-
-	.slides-container {
-		width: 100%;
-		height: 100%;
-		position: relative;
-	}
-
-	.slide-wrapper {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		visibility: hidden;
-	}
-
-	.slide-wrapper.active {
-		visibility: visible;
-	}
-
-	.slide-bg {
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
-	}
+	/* All presentation styles now in $lib/styles/presentation.css */
 </style>

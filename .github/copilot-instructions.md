@@ -14,7 +14,8 @@ JSON (hsu-pptx/) → extractor.py → Slide components → navigation store → 
 | Component | Purpose |
 |-----------|---------|
 | [navigation.ts](src/lib/stores/navigation.ts) | State machine managing slides, fragments, drill stack, and localStorage persistence |
-| [Slide.svelte](src/lib/components/Slide.svelte) | Context provider that collects `maxStep` from child Fragments |
+| [PresentationProvider.svelte](src/lib/components/PresentationProvider.svelte) | Orchestrates multi-slide presentations, collects slide maxSteps, calls `navigation.init()` |
+| [Slide.svelte](src/lib/components/Slide.svelte) | Context provider that auto-registers Fragment steps with parent PresentationProvider |
 | [Fragment.svelte](src/lib/components/Fragment.svelte) | Unified component for visibility, positioning, styling, drills, and animations |
 | [SVG Components](src/lib/components/svg/) | svg.js-powered shape components (Arrow, Line, Rect, Circle, Ellipse, Path, Polygon) |
 
@@ -367,25 +368,108 @@ For other shapes (Circle, etc.), use Fragment with `layout` to position them:
 ## Critical Patterns
 
 ### Multi-Slide Presentations
-Presentations collect `maxStep` from each slide via callbacks before calling `navigation.init()`:
 
+Presentations use `PresentationProvider` to orchestrate slides. Each slide component receives a `slideIndex` prop and passes it to the `<Slide>` component. The provider automatically collects maxStep from each slide and calls `navigation.init()`.
+
+**Main presentation page (`+page.svelte`):**
 ```svelte
-<!-- Parent collects all slide maxSteps, then inits -->
-<Slide1 onMaxStep={step => { slideMaxSteps[0] = step; updateNavigation(); }} />
+<script lang="ts">
+  import { currentSlide } from '$lib/stores/navigation';
+  import PresentationProvider from '$lib/components/PresentationProvider.svelte';
+  import Slide1 from './slides/Slide1.svelte';
+  import Slide2 from './slides/Slide2.svelte';
+</script>
+
+<PresentationProvider name="my-presentation" slideCount={2}>
+  <div class="presentation">
+    <div class="slide-container">
+      <!-- All slides render to register maxSteps, only active one visible -->
+      <div class="slide-wrapper" class:active={$currentSlide === 0}>
+        <Slide1 slideIndex={0} />
+      </div>
+      <div class="slide-wrapper" class:active={$currentSlide === 1}>
+        <Slide2 slideIndex={1} />
+      </div>
+    </div>
+
+    <!-- Slide indicator dots -->
+    <div class="slide-indicators">
+      {#each {length: 2} as _, index}
+        <button 
+          class="indicator-dot"
+          class:active={$currentSlide === index}
+          onclick={() => import('$lib/stores/navigation').then(m => m.navigation.goToSlide(index))}
+          aria-label="Go to slide {index + 1}"
+        >
+          {index + 1}
+        </button>
+      {/each}
+    </div>
+  </div>
+</PresentationProvider>
 ```
 
-All slides must render (use `visibility: hidden`, not `display: none`) so Fragments can register steps.
+**Slide component (`slides/Slide1.svelte`):**
+```svelte
+<script lang="ts">
+  import Slide from '$lib/components/Slide.svelte';
+  import Fragment from '$lib/components/Fragment.svelte';
 
-### Slide Drills (Custom Shows + Return)
-Drills omit the `onMaxStep` callback—Slide auto-calls `navigation.setMaxFragment()`:
+  interface Props {
+    slideIndex?: number;
+  }
+
+  let { slideIndex }: Props = $props();
+</script>
+
+<Slide {slideIndex}>
+  <div class="slide-bg"></div>
+  
+  <!-- Static content (always visible) -->
+  <Fragment
+    layout={{ x: 300, y: 20, width: 360, height: 50 }}
+    font={{ font_size: 36, bold: true }}
+  >
+    Slide Title
+  </Fragment>
+
+  <!-- Step 1: Animated content -->
+  <Fragment
+    step={1}
+    layout={{ x: 100, y: 100, width: 200, height: 40 }}
+    font={{ font_size: 24 }}
+  >
+    First Fragment
+  </Fragment>
+</Slide>
+```
+
+The `.slide-bg` class is defined in `$lib/styles/utilities.css`. All slides must render (use `visibility: hidden` via `.slide-wrapper`, not `display: none`) so Fragments can register steps. Presentation styles are in `$lib/styles/presentation.css`.
+
+### Standalone Drill Pages (Custom Shows + Return)
+
+Drill pages use `<Slide>` without `slideIndex`—this triggers standalone mode where Slide auto-calls `navigation.setMaxFragment()`:
 
 ```svelte
+<!-- routes/my-presentation/genesis-12-1/+page.svelte -->
+<script lang="ts">
+  import Slide from '$lib/components/Slide.svelte';
+  import Fragment from '$lib/components/Fragment.svelte';
+</script>
+
 <Slide>
-<div class="slide-bg"></div>  <!-- No onMaxStep = drill mode -->
-  <Fragment step={1} layout={{ x: 50, y: 50, width: 860, height: 440 }} font={{ font_size: 24 }}>
-    Scripture content here
-  </Fragment>
-  <Fragment step={2} drillTo="demo/nested-drill">Chains to another drill</Fragment>
+  <div class="drill-content">
+    <h1>Genesis 12:1-3</h1>
+    
+    <Fragment step={1}>
+      <p>Scripture content here...</p>
+    </Fragment>
+    
+    <!-- Chain to another drill -->
+    <Fragment step={2} drillTo="my-presentation/genesis-12-7">
+      <p class="drill-link">Continue to next passage</p>
+    </Fragment>
+  </div>
 </Slide>
 ```
 
@@ -393,7 +477,7 @@ Drills omit the `onMaxStep` callback—Slide auto-calls `navigation.setMaxFragme
 Drill routes live under their parent presentation:
 ```
 routes/demo/+page.svelte           # Main presentation
-routes/demo/ecclesiastes.3.19/     # Drill route (scripture reference as folder name)
+routes/demo/genesis-12-1/+page.svelte  # Drill route (scripture reference as folder name)
 routes/demo/slides/Slide1.svelte   # Slide components
 ```
 
@@ -414,7 +498,7 @@ The navigation store has an `autoDrillAll` setting (persisted to localStorage as
 
 ### Multi-Level Drill Chains
 
-Drills can chain to other drills (e.g., `hebrews-3-14` → `hebrews-4-1`). When the deepest drill completes, navigation returns **directly to the origin** (the original presentation slide), not back through each intermediate drill.
+Drills can chain to other drills (e.g., `hebrews-3-14` → `hebrews-4-1`). When the deepest drill completes, navigation returns **directly to the origin** (the original presentation slide), not back through each intermediate drill, unless `returnHere={true}` is set on a fragment in the drill chain.
 
 **Example 3-level chain:**
 ```
@@ -479,13 +563,20 @@ npm run check        # TypeScript type checking
 ## Creating New Content
 
 ### New Presentation
-1. Create `routes/{name}/+page.svelte` - import slides, collect maxSteps, call `navigation.init('{name}', slideMaxSteps)`
-2. Create `routes/{name}/slides/Slide1.svelte` etc. - wrap in `<Slide onMaxStep={...}>`, use `<Fragment step={n} layout={...}>`
+1. Create `routes/{name}/+page.svelte`:
+   - Import `PresentationProvider` and `currentSlide` from stores
+   - Import slide components from `./slides/`
+   - Wrap everything in `<PresentationProvider name="{name}" slideCount={N}>`
+   - Render each slide in a `.slide-wrapper` div with `class:active={$currentSlide === index}`
+   - Pass `slideIndex={n}` to each slide component (0-indexed)
+2. Create `routes/{name}/slides/Slide1.svelte` etc.:
+   - Accept `slideIndex` prop and pass it to `<Slide {slideIndex}>`
+   - Use `<Fragment step={n} layout={...}>` for content
 3. Add menu entry in [routes/+page.svelte](src/routes/+page.svelte)
 
 ### New Drill
 1. Create `routes/{presentation}/{reference}/+page.svelte`
-2. Wrap content in `<Slide>` (no onMaxStep)
+2. Wrap content in `<Slide>` (no slideIndex = standalone drill mode)
 3. Use `drillTo` on last Fragment to chain drills, or let auto-return happen
 
 ### From PowerPoint JSON
@@ -575,12 +666,23 @@ PowerPoint has three animation timing modes that map to MBS decimal step notatio
 Becomes:
 ```svelte
 <!-- routes/promises/slides/Slide1.svelte -->
-<Slide {onMaxStep}>
+<script lang="ts">
+  import Slide from '$lib/components/Slide.svelte';
+  import Fragment from '$lib/components/Fragment.svelte';
+
+  interface Props {
+    slideIndex?: number;
+  }
+
+  let { slideIndex }: Props = $props();
+</script>
+
+<Slide {slideIndex}>
   <div class="slide-bg"></div>
   <!-- static_content: no step prop -->
   <Fragment
     layout={{ x: 0, y: 0, width: 960, height: 50 }}
-    font={{ font_size: 36, bold: true, alignment: 'center' }}
+    font={{ font_size: 36, bold: true, align: 'center' }}
   >
     The Promises
   </Fragment>
@@ -618,15 +720,24 @@ Becomes:
 **Custom shows** (`custom_shows` object `linked_content`) become **drill routes**:
 ```svelte
 <!-- routes/promises/genesis-12-1/+page.svelte -->
-<Slide>  <!-- No onMaxStep = drill mode -->
-  <Fragment layout={{ x: 50, y: 20, width: 860, height: 40 }} font={{ font_size: 28, bold: true }}>
-    Genesis 12:1-3
-  </Fragment>
-  <Fragment step={1} layout={{ x: 50, y: 80, width: 860, height: 400 }} font={{ font_size: 20 }}>
-    <blockquote>1 Now the LORD said...</blockquote>
-  </Fragment>
+<script lang="ts">
+  import Slide from '$lib/components/Slide.svelte';
+  import Fragment from '$lib/components/Fragment.svelte';
+</script>
+
+<Slide>  <!-- No slideIndex = standalone drill mode -->
+  <div class="drill-content">
+    <Fragment layout={{ x: 50, y: 20, width: 860, height: 40 }} font={{ font_size: 28, bold: true }}>
+      Genesis 12:1-3
+    </Fragment>
+    <Fragment step={1} layout={{ x: 50, y: 80, width: 860, height: 400 }} font={{ font_size: 20 }}>
+      <blockquote>1 Now the LORD said...</blockquote>
+    </Fragment>
+  </div>
 </Slide>
 ```
+
+The `.drill-content` class is defined in `$lib/styles/scripture.css`.
 
 #### Shapes Without Text (SVG Components)
 
@@ -685,8 +796,10 @@ Navigation state persists to `localStorage` key `mbs-nav-state`. The Reset butto
 ## Common Mistakes to Avoid
 - Using `step={0}` (steps are 1-indexed)
 - Forgetting to wrap drill content in `<Slide>`
+- Forgetting to pass `slideIndex` to slides inside `PresentationProvider`
+- Using `slideIndex` on standalone drill pages (omit it for drill mode)
 - Using absolute paths in `drillTo` (use `"demo/ref"` not `"/demo/ref"`)
-- Using `display: none` for inactive slides (breaks step registration)
+- Using `display: none` for inactive slides (breaks step registration—use `visibility: hidden` via `.slide-wrapper`)
 - Using Svelte transitions on positioned Fragments (use `animate` prop instead)
 - Expecting `returnHere` behavior by default (drills return to origin, not parent)
 - Expecting drills to execute when `autoDrillAll=false` (arrow keys skip ALL drills)

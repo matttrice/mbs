@@ -131,6 +131,22 @@
 				<span class="arrow">→</span>
 			</div>
 		</a>
+		<a href="/translation" class="lesson-card">
+			<div class="lesson-content">
+				<h2>7. Translation</h2>
+				<p>Physical to Spiritual realm transitions: Incarnation and Excarnation</p>
+			</div>
+			<div class="lesson-actions">
+				<button 
+					class="reset-btn" 
+					onclick={(e) => startFresh(e, 'translation', '/translation')}
+					title="Reset progress and start fresh"
+				>
+					Reset
+				</button>
+				<span class="arrow">→</span>
+			</div>
+		</a>
 		<a href="/promises" class="lesson-card">
 			<div class="lesson-content">
 				<h2>9. The Promises</h2>

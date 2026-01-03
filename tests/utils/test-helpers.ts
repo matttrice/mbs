@@ -41,6 +41,9 @@ export async function resetAndWaitForPresentation(page: Page, options: ResetOpti
 	// Hard reload to get fresh state (clears any in-memory navigation state)
 	await page.reload();
 
+	// Wait for any view transitions to complete
+	await page.waitForTimeout(300);
+
 	// Wait for indicator to be active (indicates init() ran)
 	await expect(page.locator('.indicator-dot.active')).toBeVisible({ timeout: 5000 });
 
@@ -67,8 +70,8 @@ export async function resetAndWaitForPresentation(page: Page, options: ResetOpti
  */
 export async function pressArrowRight(page: Page) {
 	await page.keyboard.press('ArrowRight');
-	// Small wait for navigation state update
-	await page.waitForTimeout(100);
+	// Wait for navigation state update and any view transitions
+	await page.waitForTimeout(200);
 }
 
 /**
@@ -76,8 +79,8 @@ export async function pressArrowRight(page: Page) {
  */
 export async function pressArrowLeft(page: Page) {
 	await page.keyboard.press('ArrowLeft');
-	// Small wait for navigation state update
-	await page.waitForTimeout(100);
+	// Wait for navigation state update and any view transitions
+	await page.waitForTimeout(200);
 }
 
 /**

@@ -73,11 +73,16 @@ test.describe('Basic Drill Navigation (autoDrillAll disabled)', () => {
 		
 		await drillable.click(); // Click to drill
 		await expect(page).toHaveURL('/test-fixture/drill-01');
+		await expect(page.getByText('Drill Level 1')).toBeVisible();
 
 		// Go through drill-01 and return (autoDrillAll=false skips nested drill)
 		await pressArrowRight(page); // Step 1 content
+		await expect(page.getByText('First level drill content')).toBeVisible();
 		await pressArrowRight(page); // Step 2 (Go to Level 2)
+		await expect(page.getByText('Go to Level 2')).toBeVisible();
 		await pressArrowRight(page); // Return from drill
+		
+		// Wait for URL and then for First Fragment to appear
 		await expect(page).toHaveURL('/test-fixture');
 		await expect(page.getByText('First Fragment')).toBeVisible();
 
