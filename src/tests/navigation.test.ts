@@ -842,7 +842,7 @@ describe('Navigation Store - Auto-Drill All Mode', () => {
 		expect(get(navigation).current.fragment).toBe(6);
 	});
 
-	it('still auto-drills at last fragment when autoDrillAll is disabled', () => {
+	it('arrow skips drill at last fragment when autoDrillAll is disabled', () => {
 		navigation.setAutoDrillAll(false);
 		
 		// Set up a drill with drillTo on the last fragment
@@ -854,10 +854,11 @@ describe('Navigation Store - Auto-Drill All Mode', () => {
 		for (let i = 0; i < 3; i++) navigation.next();
 		expect(get(navigation).current.fragment).toBe(3);
 		
-		// Next should auto-drill (last fragment behavior still works)
+		// Next should return from drill, not auto-drill (autoDrillAll=false)
 		navigation.next();
 		
-		expect(goto).toHaveBeenCalledWith('/life/next-drill');
+		// Should return to origin, not drill into next-drill
+		expect(goto).toHaveBeenCalledWith('/life');
 	});
 
 	it('respects returnHere flag when auto-drilling with autoDrillAll', () => {

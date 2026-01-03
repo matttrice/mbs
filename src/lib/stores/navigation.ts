@@ -337,7 +337,9 @@ function createNavigationStore() {
 				const drillKey = `${ctx.current.slide}:${ctx.maxFragment}`;
 				const drillInfo = ctx.drillTargets[drillKey];
 				
-				if (drillInfo) {
+				// Only auto-drill if autoDrillAll is enabled
+				// If disabled, arrow right at a drillTo fragment skips the drill
+				if (drillInfo && ctx.autoDrillAll) {
 					// Last fragment has a drillTo - auto drill into it
 					const { target, returnHere } = drillInfo;
 					console.log('[Navigation] Auto-drilling to:', target, returnHere ? '(returnHere)' : '');

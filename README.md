@@ -196,6 +196,24 @@ The `<Slide>` component is the foundation for both presentations and drills:
 
 **Note:** You don't need to declare drillTo targets separately - just use `drillTo` on your Fragment components. They auto-register with the navigation store.
 
+### Drill Behavior (autoDrillAll)
+
+The `autoDrillAll` setting controls whether arrow keys auto-execute drills:
+
+| Setting | Arrow Behavior | Click Behavior |
+|---------|---------------|----------------|
+| `autoDrillAll=true` (default) | Executes drills automatically | Always drills |
+| `autoDrillAll=false` | Skips all drills | Always drills |
+
+**Multi-level drills**: When drills chain (drill-01 → drill-02 → drill-03), completing the deepest drill returns **directly to the origin** presentation, not back through each level.
+
+**returnHere prop**: Use `returnHere` on a Fragment to return to the parent drill instead of origin:
+```svelte
+<Fragment step={2} drillTo="demo/nested" returnHere>
+  Returns to THIS drill after nested completes
+</Fragment>
+```
+
 ### `Slide` Auto-Registration
 
 The `Slide` component uses Svelte context to collect step values from child `Fragment` components:
@@ -251,13 +269,15 @@ navigation.reset();                    // Reset everything
 
 ## Testing
 
-Unit tests cover all core navigation functionality:
+Unit tests and E2E tests cover all core navigation functionality:
 
 ```bash
-npm run test:unit
+npm run test:unit      # 114 unit tests
+npx playwright test    # 11 E2E tests
 ```
 
-- **36 tests** covering navigation store and Fragment component
+- **114 unit tests** covering navigation store and Fragment component
+- **11 E2E tests** covering drill navigation, multi-level drills, and autoDrillAll behavior
 - Tests are content-agnostic - they test mechanics, not specific presentations
 
 ## State Persistence
@@ -285,5 +305,11 @@ The menu's Reset button clears this state.
 4. **Fragment steps are 1-indexed** - Start with `step={1}`, not `step={0}`.
 
 5. **`drillTo` routes are relative** - Use `"life/ecclesiastes.3.19"` not `"/life/ecclesiastes.3.19"`.
+
+6. **Auto-return at end of drill** - When `next()` is called on the last fragment and there's a stack, it auto-returns to origin (not the immediate parent).
+
+7. **autoDrillAll affects ALL drills** - When disabled, arrow keys skip drills even at the last fragment. Users must click to drill.
+
+8. **Multi-level drills return to origin** - A 3-level drill chain (A → B → C) returns directly to A when C completes, not back through B.
 
 6. **Auto-return at end of drill** - When `next()` is called on the last step and there's a stack, it auto-returns to origin.

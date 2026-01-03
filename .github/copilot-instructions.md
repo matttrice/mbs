@@ -397,6 +397,77 @@ routes/demo/ecclesiastes.3.19/     # Drill route (scripture reference as folder 
 routes/demo/slides/Slide1.svelte   # Slide components
 ```
 
+## Drill Behavior (Custom Shows)
+
+Drills replicate PowerPoint's Custom Show functionality. Understanding the drill lifecycle is critical for correct implementation.
+
+### autoDrillAll Setting
+
+The navigation store has an `autoDrillAll` setting (persisted to localStorage as `mbs-drillto`):
+
+| Setting | Arrow Key Behavior | Click Behavior |
+|---------|-------------------|----------------|
+| `autoDrillAll=true` (default) | Arrow right executes drills automatically | Click always drills |
+| `autoDrillAll=false` | Arrow right **skips** all drills | Click always drills |
+
+**Key behavior**: When `autoDrillAll=false`, arrow keys skip drills entirely—this applies to ALL drillTo fragments, including ones at the last fragment of a slide/drill. The user must click on drillable fragments to drill.
+
+### Multi-Level Drill Chains
+
+Drills can chain to other drills (e.g., `hebrews-3-14` → `hebrews-4-1`). When the deepest drill completes, navigation returns **directly to the origin** (the original presentation slide), not back through each intermediate drill.
+
+**Example 3-level chain:**
+```
+Slide 1 step 1 (drillTo drill-01)
+  └→ drill-01 step 2 (drillTo drill-02)
+      └→ drill-02 step 2 (drillTo drill-03)
+          └→ drill-03 completes → Returns to Slide 1 step 1
+```
+
+**Implementation**: Each drill pushes state to a stack. On return, the entire stack is popped and navigation returns to the first (origin) entry.
+
+### returnHere Prop
+
+The `returnHere` prop changes return behavior for specific drill chains:
+
+| Prop | Return Behavior |
+|------|----------------|
+| `returnHere={false}` (default) | Return to origin (pop entire stack) |
+| `returnHere={true}` | Return to parent drill (pop one level) |
+
+**Use case**: When a drill has multiple branches and you want to return to the parent drill to continue, not all the way to the origin.
+
+```svelte
+<!-- In parent drill: return HERE after nested drill completes -->
+<Fragment step={2} drillTo="demo/nested-scripture" returnHere>
+  Scripture reference (returns here, not to origin)
+</Fragment>
+
+<!-- Continue in parent drill after nested returns -->
+<Fragment step={3}>More content after nested drill</Fragment>
+```
+
+### Pending Drill Approach
+
+Drills use a "pending drill" approach to ensure content is visible before drilling:
+
+1. **Step N**: Fragment with `drillTo` becomes visible, pending drill is set
+2. **Next arrow**: Pending drill executes, navigating to the drill route
+
+This ensures users always see the drillable content before the navigation happens.
+
+### End-of-Drill Behavior
+
+When at the last fragment of a drill:
+
+| Condition | Arrow Right Behavior |
+|-----------|---------------------|
+| Last fragment has `drillTo` + `autoDrillAll=true` | Execute the drill |
+| Last fragment has `drillTo` + `autoDrillAll=false` | **Skip drill**, return to origin |
+| Last fragment, no drillTo, in drill stack | Return to origin |
+| Last fragment, no drillTo, `returnHere=true` | Return to parent (one level) |
+| Last fragment, no drillTo, main presentation | Do nothing (end of presentation) |
+
 ## Commands
 
 ```bash
@@ -617,3 +688,5 @@ Navigation state persists to `localStorage` key `mbs-nav-state`. The Reset butto
 - Using absolute paths in `drillTo` (use `"demo/ref"` not `"/demo/ref"`)
 - Using `display: none` for inactive slides (breaks step registration)
 - Using Svelte transitions on positioned Fragments (use `animate` prop instead)
+- Expecting `returnHere` behavior by default (drills return to origin, not parent)
+- Expecting drills to execute when `autoDrillAll=false` (arrow keys skip ALL drills)
