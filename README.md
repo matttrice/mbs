@@ -197,6 +197,10 @@ The `<Slide>` component is the foundation for both presentations and drills:
 **Note:** You don't need to declare drillTo targets separately - just use `drillTo` on your Fragment components. They auto-register with the navigation store.
 
 ### Drill Behavior (autoDrillAll)
+ **autoDrillAll Setting**: MBS has an `autoDrillAll` toggle:
+   - `autoDrillAll=true` (default): Arrow keys execute drills automatically in animation sequence
+   - `autoDrillAll=false`: Arrow keys skip drills; user must click to drill
+   - This applies to ALL drillTo fragments, including ones at the last fragment
 
 The `autoDrillAll` setting controls whether arrow keys auto-execute drills:
 

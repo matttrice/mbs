@@ -4,27 +4,28 @@
 	import type { StrokeStyle } from './types';
 
 	/**
-	 * Ellipse: SVG ellipse shape.
-	 * Uses svg.js for rendering. Integrates with Fragment's animation system.
+	 * Ellipse: Self-positioning SVG ellipse shape.
+	 * Uses canvas coordinates (960×540) and renders its own absolutely-positioned SVG.
+	 * Integrates with Fragment's animation system.
 	 *
 	 * @example Filled ellipse
 	 * ```svelte
-	 * <Fragment step={5} layout={{ x: 100, y: 100, width: 200, height: 100 }}>
-	 *   <Ellipse cx={100} cy={50} rx={98} ry={48} fill="#FFD700" />
+	 * <Fragment step={5} animate="fade">
+	 *   <Ellipse cx={200} cy={150} rx={98} ry={48} fill="#FFD700" />
 	 * </Fragment>
 	 * ```
 	 *
 	 * @example Ellipse with stroke
 	 * ```svelte
-	 * <Fragment step={5} layout={{ x: 100, y: 100, width: 200, height: 100 }} animate="draw">
-	 *   <Ellipse cx={100} cy={50} rx={95} ry={45} stroke={{ width: 3, color: '#0000FF' }} />
+	 * <Fragment step={5} animate="draw">
+	 *   <Ellipse cx={200} cy={150} rx={95} ry={45} stroke={{ width: 3, color: '#0000FF' }} zIndex={10} />
 	 * </Fragment>
 	 * ```
 	 */
 	interface Props {
-		/** Center X coordinate (relative to Fragment's layout) */
+		/** Center X coordinate in canvas coordinates (960×540) */
 		cx: number;
-		/** Center Y coordinate (relative to Fragment's layout) */
+		/** Center Y coordinate in canvas coordinates (960×540) */
 		cy: number;
 		/** Horizontal radius */
 		rx: number;
@@ -34,20 +35,34 @@
 		fill?: string;
 		/** Stroke styling */
 		stroke?: StrokeStyle;
+		/** Z-index for stacking order */
+		zIndex?: number;
 	}
 
-	let { cx, cy, rx, ry, fill, stroke }: Props = $props();
+	let { cx, cy, rx, ry, fill, stroke, zIndex = 1 }: Props = $props();
 
 	let svgEl: SVGSVGElement;
 	let draw: Container | null = null;
+
+	// Calculate bounding box with padding for stroke
+	const padding = (stroke?.width ?? 2) + 2;
+	const minX = cx - rx - padding;
+	const minY = cy - ry - padding;
+	const width = (rx + padding) * 2;
+	const height = (ry + padding) * 2;
+
+	// Local coordinates for the ellipse center within the SVG
+	const localCx = rx + padding;
+	const localCy = ry + padding;
 
 	onMount(() => {
 		if (!svgEl) return;
 
 		draw = SVG(svgEl) as Container;
+		draw.viewbox(0, 0, width, height);
 
-		// Create ellipse
-		const ellipse = draw.ellipse(rx * 2, ry * 2).center(cx, cy);
+		// Create ellipse at local center
+		const ellipse = draw.ellipse(rx * 2, ry * 2).center(localCx, localCy);
 
 		// Apply fill
 		if (fill) {
@@ -77,13 +92,30 @@
 	});
 </script>
 
-<svg
-	bind:this={svgEl}
-	class="svg-shape svg-ellipse"
-	style="width: 100%; height: 100%; overflow: visible;"
-></svg>
+<div
+	class="svg-ellipse-container"
+	style="
+		position: absolute;
+		left: {minX}px;
+		top: {minY}px;
+		width: {width}px;
+		height: {height}px;
+		z-index: {zIndex};
+		pointer-events: none;
+	"
+>
+	<svg
+		bind:this={svgEl}
+		class="svg-shape svg-ellipse"
+		style="width: 100%; height: 100%; overflow: visible;"
+	></svg>
+</div>
 
 <style>
+	.svg-ellipse-container {
+		overflow: visible;
+	}
+
 	.svg-shape {
 		display: block;
 	}

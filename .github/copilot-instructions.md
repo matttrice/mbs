@@ -583,6 +583,8 @@ npm run check        # TypeScript type checking
 
 The [hsu-extractor](../../hsu-extractor/) parses `.pptx` files into JSON. See [hsu-extractor/README.md](../../hsu-extractor/README.md) for full JSON structure reference.
 
+> **CRITICAL**: The JSON is the single source of truth. Use EXACT values from the JSON for all `text`, `layout` (x, y, width, height), `font`, and `fill` properties. Never invent coordinates or estimate positions based on conceptual understanding of what the slide "should" look like. The JSON coordinates define the actual PowerPoint layout. Use batch conversion scripts or automated tools to ensure accuracy.
+
 #### Font Size Conversion
 PowerPoint uses points (72 DPI), CSS uses pixels (96 DPI):
 ```
@@ -803,3 +805,5 @@ Navigation state persists to `localStorage` key `mbs-nav-state`. The Reset butto
 - Using Svelte transitions on positioned Fragments (use `animate` prop instead)
 - Expecting `returnHere` behavior by default (drills return to origin, not parent)
 - Expecting drills to execute when `autoDrillAll=false` (arrow keys skip ALL drills)
+- **Inventing or modifying text content** when converting from PowerPoint JSON—use ONLY the exact `text` values from the JSON; never add, remove, or paraphrase content
+- **Inventing or estimating layout coordinates**—always use the EXACT `layout` values (x, y, width, height) from the JSON; the coordinates define the actual slide layout and must not be guessed based on conceptual understanding. Do this is batches to ensure accuracy and consistency across all slide conversions.
