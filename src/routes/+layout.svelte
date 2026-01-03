@@ -8,9 +8,23 @@
 	import ReturnButton from '$lib/components/ReturnButton.svelte';
 	import DebugOverlay from '$lib/components/DebugOverlay.svelte';
 	import { onMount } from 'svelte';
+	import { onNavigate } from '$app/navigation';
 	import { dev } from '$app/environment';
 
 	let { children } = $props();
+
+	// Enable smooth view transitions for drill navigation
+	onNavigate((navigation) => {
+		// Only apply view transition if browser supports it
+		if (!document.startViewTransition) return;
+
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 
 	onMount(() => {
 		// Expose navigation for E2E tests in development
