@@ -17,7 +17,6 @@
 	</Fragment>
 
 	<Fragment
-		step={1}
 		layout={{ x: 62.5, y: 100, width: 835, height: 325 }}
 		font={{ font_size: 22, v_align: 'top', wrap: true }}
 	>

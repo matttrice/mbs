@@ -23,8 +23,8 @@
 	<!-- Title: Genesis 1:1, 26-27 -->
 	<!-- Original: x: 184.8, y: 23.2, font_size: 37.3 -->
 	<Fragment
-		layout={{ x: 115, y: 14, width: 287, height: 44 }}
-		font={{ font_size: 23.3, bold: true }}
+		layout={{ x: 15, y: 14, width: 287, height: 44 }}
+		font={{ font_size: 23.3, bold: true, wrap: true, align: 'left' }}
 		zIndex={2}
 	>
 		Genesis 1:1, 26-27
@@ -33,8 +33,8 @@
 	<!-- Genesis 1 text (static) -->
 	<!-- Original: x: 184.8, y: 82.2, width: 1153.5, height: 255.1, font_size: 24 -->
 	<Fragment
-		layout={{ x: 115, y: 51, width: 721, height: 159 }}
-		font={{ font_size: 15 }}
+		layout={{ x: 15, y: 51, width: 850, height: 159 }}
+		font={{ font_size: 15, wrap: true }}
 		zIndex={0}
 	>
 		<p style="margin: 0; line-height: 1.5;">
@@ -48,8 +48,8 @@
 	<!-- Original: x: 179.2, y: 337.2, font_size: 37.3 -->
 	<Fragment
 		step={1}
-		layout={{ x: 112, y: 211, width: 728, height: 301 }}
-		font={{ font_size: 23.3, bold: true }}
+		layout={{ x: 15, y: 225, width: 850, height: 301 }}
+		font={{ font_size: 15, wrap: true, align: 'left' }}
 		zIndex={1}
 	>
 		<p style="margin: 0; line-height: 1.5;">

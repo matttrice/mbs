@@ -47,7 +47,7 @@
 	<Fragment
 		step={1.1}
 		layout={{ x: 153.6, y: 60.2, width: 127.4, height: 61.4 }}
-		font={{ font_size: 50 }}
+		font={{ font_size: 50, bold: true }}
 		zIndex={6}
 	>
 		Body
@@ -57,7 +57,7 @@
 	<Fragment
 		step={1.2}
 		layout={{ x: 413.9, y: 60.2, width: 130.3, height: 61.4 }}
-		font={{ font_size: 50, align: 'center', color: '#0000FF' }}
+		font={{ font_size: 50, align: 'center', color: '#0000FF', bold: true }}
 		zIndex={7}
 	>
 		Spirit
@@ -67,7 +67,7 @@
 	<Fragment
 		step={1.3}
 		layout={{ x: 683.3, y: 60.2, width: 112.5, height: 61.4 }}
-		font={{ font_size: 50, align: 'center', color: '#0000FF' }}
+		font={{ font_size: 50, align: 'center', color: '#0000FF', bold: true }}
 		zIndex={8}
 	>
 		Soul
@@ -76,8 +76,8 @@
 	<!-- Step 2: "ORIGINS" label -->
 	<Fragment
 		step={2}
-		layout={{ x: 79.3, y: 205.8, width: 183.8, height: 34.3 }}
-		font={{ font_size: 26.7, v_align: 'middle' }}
+		layout={{ x: 54, y: 205, width: 185, height: 34.3 }}
+		font={{ font_size: 26.7, v_align: 'middle', bold: true }}
 		line={{ width: 0.6 }}
 		zIndex={33}
 	>
@@ -86,24 +86,24 @@
 
 	<!-- Step 2 (after): Dashed divider line -->
 	<Fragment step={2} animate="draw">
-		<Line from={{ x: 89.9, y: 238.6 }} to={{ x: 877.2, y: 238.6 }} stroke={{ width: 7, color: '#000000', dash: '10,5' }} zIndex={40} />
+		<Line from={{ x: 85, y: 238.6 }} to={{ x: 877.2, y: 238.6 }} stroke={{ width: 7, color: '#000000', dash: '10,5' }} zIndex={40} />
 	</Fragment>
 
 	<!-- Step 2 (with): Body column (gray) -->
 	<Fragment step={2} animate="wipe-down">
-		<Rect x={81.1} y={68.3} width={259} height={283.3} fill="var(--color-level1)" stroke={{ width: 0.6 }} zIndex={1} />
+		<Rect x={81.1} y={68} width={259} height={282} fill="var(--color-level1)" stroke={{ width: 0.6 }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 2 (with): Spirit/Soul column (blue) -->
 	<Fragment step={2} animate="wipe-down">
-		<Rect x={340} y={68.3} width={538.9} height={281.9} fill="#3BCCFD" stroke={{ width: 0.6 }} zIndex={3} />
+		<Rect x={340} y={68} width={538.9} height={282} fill="var(--color-level2)" stroke={{ width: 0.6 }} zIndex={3} />
 	</Fragment>
 
 	<!-- Step 2 (with): "DESTINATIONS" label -->
 	<Fragment
 		step={2}
-		layout={{ x: 78.8, y: 311.4, width: 184.9, height: 41 }}
-		font={{ font_size: 26.7, v_align: 'middle' }}
+		layout={{ x: 90, y: 311, width: 185, height: 41 }}
+		font={{ font_size: 26.7, v_align: 'middle', bold: true }}
 		line={{ width: 0.6 }}
 		zIndex={43}
 	>
@@ -115,7 +115,7 @@
 		step={3}
 		drillTo="life/genesis-3-19"
 		layout={{ x: 126.3, y: 114.4, width: 182.1, height: 40.3 }}
-		font={{ font_size: 26.7, align: 'center' }}
+		font={{ font_size: 26.7, align: 'center', bold: true }}
 		zIndex={9}
 	>
 		Genesis 3:19
@@ -125,14 +125,14 @@
 	<Fragment
 		step={4}
 		layout={{ x: 148.6, y: 156.1, width: 137.4, height: 42.2 }}
-		font={{ font_size: 50, v_align: 'middle' }}
+		font={{ font_size: 50, v_align: 'middle', bold: true }}
 		zIndex={12}
 	>
 		Earth
 	</Fragment>
 
 	<!-- Step 4.1: Arrow Earth→Earth -->
-	<Fragment step={4.1} animate="wipe">
+	<Fragment step={4.1} animate="wipe-down">
 		<Arrow from={{ x: 217.3, y: 211.8 }} to={{ x: 217.3, y: 271.8 }} stroke={{ width: 8.3, color: '#000000' }} zIndex={41} />
 	</Fragment>
 
@@ -140,7 +140,7 @@
 	<Fragment
 		step={5}
 		layout={{ x: 152.4, y: 253.1, width: 129.9, height: 61.4 }}
-		font={{ font_size: 50 }}
+		font={{ font_size: 50, bold: true }}
 		zIndex={13}
 	>
 		Earth
@@ -151,7 +151,7 @@
 		step={6}
 		drillTo="life/ecclesiastes-12-7"
 		layout={{ x: 359.6, y: 114.4, width: 238.9, height: 40.3 }}
-		font={{ font_size: 26.7, align: 'center' }}
+		font={{ font_size: 26.7, align: 'center', bold: true }}
 		zIndex={10}
 	>
 		Ecclesiastes 12:7
@@ -161,22 +161,22 @@
 	<Fragment
 		step={7}
 		layout={{ x: 423.6, y: 156.2, width: 111.1, height: 42.1 }}
-		font={{ font_size: 50, v_align: 'middle', align: 'center', color: '#0099CC' }}
+		font={{ font_size: 50, v_align: 'middle', align: 'center', color: 'var(--color-level3)', bold: true }}
 		zIndex={14}
 	>
 		God
 	</Fragment>
 
 	<!-- Step 7.1: Arrow God→God (Spirit) -->
-	<Fragment step={7.1} animate="wipe">
-		<Arrow from={{ x: 476.1, y: 211.8 }} to={{ x: 476.1, y: 271.8 }} stroke={{ width: 8.3, color: '#0099CC' }} zIndex={44} />
+	<Fragment step={7.1} animate="wipe-down">
+		<Arrow from={{ x: 476.1, y: 211.8 }} to={{ x: 476.1, y: 271.8 }} stroke={{ width: 8.3, color: 'var(--color-level3)' }} zIndex={44} />
 	</Fragment>
 
 	<!-- Step 8: "God" (Spirit destination) -->
 	<Fragment
 		step={8}
 		layout={{ x: 426.6, y: 253.1, width: 105.1, height: 61.4 }}
-		font={{ font_size: 50, align: 'center', color: '#0000FF' }}
+		font={{ font_size: 50, align: 'center', color: 'var(--color-level3)', bold: true }}
 		zIndex={15}
 	>
 		God
@@ -187,7 +187,7 @@
 		step={9}
 		drillTo="life/ezekiel-18-4"
 		layout={{ x: 670.1, y: 114.4, width: 168.6, height: 40.3 }}
-		font={{ font_size: 26.7, align: 'center' }}
+		font={{ font_size: 26.7, align: 'center', bold: true }}
 		zIndex={18}
 	>
 		Ezekiel 18:4
@@ -197,15 +197,15 @@
 	<Fragment
 		step={10}
 		layout={{ x: 681.4, y: 156.2, width: 111.1, height: 42.1 }}
-		font={{ font_size: 50, v_align: 'middle', align: 'center', color: '#0099CC' }}
+		font={{ font_size: 50, v_align: 'middle', align: 'center', color: 'var(--color-level3)', bold: true }}
 		zIndex={16}
 	>
 		God
 	</Fragment>
 
 	<!-- Step 11: Arrow God→Judgment (Soul) -->
-	<Fragment step={11} animate="wipe">
-		<Arrow from={{ x: 730.9, y: 211.8 }} to={{ x: 730.9, y: 271.8 }} stroke={{ width: 8.3, color: '#0099CC' }} zIndex={42} />
+	<Fragment step={11} animate="wipe-down">
+		<Arrow from={{ x: 730.9, y: 211.8 }} to={{ x: 730.9, y: 271.8 }} stroke={{ width: 8.3, color: 'var(--color-level3)' }} zIndex={42} />
 	</Fragment>
 
 	<!-- Step 11.1: Hebrews 9:27 (drill) -->
@@ -213,7 +213,7 @@
 		step={11.1}
 		drillTo="life/hebrews-9-27"
 		layout={{ x: 658.4, y: 311.3, width: 189.6, height: 40.3 }}
-		font={{ font_size: 26.7, align: 'center', color: '#000000' }}
+		font={{ font_size: 26.7, align: 'center', color: '#000000', bold: true }}
 		zIndex={11}
 	>
 		Hebrews 9:27
@@ -223,7 +223,7 @@
 	<Fragment
 		step={12}
 		layout={{ x: 622.9, y: 253.1, width: 229.7, height: 61.4 }}
-		font={{ font_size: 45, align: 'center', color: '#0000FF' }}
+		font={{ font_size: 45, align: 'center', color: '#0000FF', bold: true }}
 		zIndex={17}
 	>
 		Judgment
@@ -234,7 +234,7 @@
 		step={13}
 		drillTo="life/matthew-16-26"
 		layout={{ x: 58.3, y: 437.6, width: 256.4, height: 48.3 }}
-		font={{ font_size: 30.8, align: 'center' }}
+		font={{ font_size: 30.8, align: 'center', bold: true }}
 		zIndex={25}
 	>
 		Matthew 16:26
@@ -244,9 +244,9 @@
 	<Fragment
 		step={14}
 		layout={{ x: 78.3, y: 355.8, width: 205, height: 85 }}
-		font={{ font_size: 30.8, color: '#0000FF' }}
+		font={{ font_size: 30.8, color: 'var(--color-level3)', bold: true, wrap: true }}
 		fill="var(--color-bg-ghost)"
-		line={{ width: 0.8, color: '#000000' }}
+		line={{ width: 0.8, color: 'var(--color-stroke-dark)' }}
 		zIndex={32}
 	>
 		Rank of Importance?
@@ -256,7 +256,7 @@
 	<Fragment
 		step={15}
 		layout={{ x: 447, y: 363.3, width: 50.5, height: 45.3 }}
-		font={{ font_size: 36.7 }}
+		font={{ font_size: 36.7, bold: true }}
 		zIndex={19}
 	>
 		#1
@@ -266,7 +266,7 @@
 	<Fragment
 		step={16}
 		layout={{ x: 504.4, y: 363.3, width: 83.3, height: 45.3 }}
-		font={{ font_size: 36.7 }}
+		font={{ font_size: 36.7, bold: true }}
 		zIndex={20}
 	>
 		Soul
@@ -276,7 +276,7 @@
 	<Fragment
 		step={17}
 		layout={{ x: 450.3, y: 399.8, width: 50.5, height: 45.4 }}
-		font={{ font_size: 36.7 }}
+		font={{ font_size: 36.7, bold: true }}
 		zIndex={21}
 	>
 		#2
@@ -286,7 +286,7 @@
 	<Fragment
 		step={18}
 		layout={{ x: 504.4, y: 399.9, width: 95.4, height: 45.3 }}
-		font={{ font_size: 36.7 }}
+		font={{ font_size: 36.7, bold: true }}
 		zIndex={22}
 	>
 		Spirit
@@ -296,7 +296,7 @@
 	<Fragment
 		step={19}
 		layout={{ x: 450.3, y: 435.6, width: 50.5, height: 45.3 }}
-		font={{ font_size: 36.7 }}
+		font={{ font_size: 36.7, bold: true }}
 		zIndex={23}
 	>
 		#3
@@ -305,8 +305,8 @@
 	<!-- Step 20: "Body" (#3 rank) -->
 	<Fragment
 		step={20}
-		layout={{ x: 504.4, y: 435.6, width: 94.2, height: 45.3 }}
-		font={{ font_size: 36.7 }}
+		layout={{ x: 505, y: 435, width: 94.2, height: 45.3 }}
+		font={{ font_size: 36.7, bold: true }}
 		zIndex={24}
 	>
 		Body
@@ -315,8 +315,8 @@
 	<!-- Step 21: "Dominant" label -->
 	<Fragment
 		step={21}
-		layout={{ x: 678.6, y: 374, width: 210.6, height: 38.6 }}
-		font={{ font_size: 36.7 }}
+		layout={{ x: 653, y: 370, width: 210.6, height: 38.6 }}
+		font={{ font_size: 36.7, bold: true }}
 		zIndex={31}
 	>
 		Dominant
@@ -324,14 +324,14 @@
 
 	<!-- Step 21.1: Arrow to Dominant -->
 	<Fragment step={21.1} animate="wipe">
-		<Arrow from={{ x: 594.7, y: 397.1 }} to={{ x: 685.6, y: 397.1 }} stroke={{ width: 5 }} zIndex={26} />
+		<Arrow from={{ x: 594, y: 392 }} to={{ x: 670, y: 392 }} stroke={{ width: 5 }} zIndex={26} />
 	</Fragment>
 
 	<!-- Step 22: "Submissive" (Spirit) -->
 	<Fragment
 		step={22}
-		layout={{ x: 678.6, y: 399.9, width: 188.9, height: 45.3 }}
-		font={{ font_size: 36.7 }}
+		layout={{ x: 678.6, y: 400, width: 188.9, height: 45.3 }}
+		font={{ font_size: 36.7, bold: true }}
 		zIndex={30}
 	>
 		Submissive
@@ -339,14 +339,14 @@
 
 	<!-- Step 22.1: Arrow to Submissive (Spirit) -->
 	<Fragment step={22.1} animate="wipe">
-		<Arrow from={{ x: 606.4, y: 426.7 }} to={{ x: 683.4, y: 426.7 }} stroke={{ width: 5 }} zIndex={27} />
+		<Arrow from={{ x: 606.4, y: 426.7 }} to={{ x: 670, y: 426.7 }} stroke={{ width: 5 }} zIndex={27} />
 	</Fragment>
 
 	<!-- Step 23: "Submissive" (Body) -->
 	<Fragment
 		step={23}
 		layout={{ x: 678.6, y: 435.6, width: 188.9, height: 45.3 }}
-		font={{ font_size: 36.7 }}
+		font={{ font_size: 36.7, bold: true }}
 		zIndex={29}
 	>
 		Submissive
@@ -354,7 +354,7 @@
 
 	<!-- Step 23.1: Arrow to Submissive (Body) -->
 	<Fragment step={23.1} animate="wipe">
-		<Arrow from={{ x: 606.4, y: 465.8 }} to={{ x: 683.4, y: 465.8 }} stroke={{ width: 5 }} zIndex={2} />
+		<Arrow from={{ x: 604, y: 463 }} to={{ x: 670, y: 463 }} stroke={{ width: 5 }} zIndex={2} />
 	</Fragment>
 
 	<!-- Step 24: Luke 11:24-26 (drill) -->
@@ -362,7 +362,7 @@
 		step={24}
 		drillTo="life/luke-11-24"
 		layout={{ x: 452.1, y: 485.1, width: 220.2, height: 45.3 }}
-		font={{ font_size: 30.8, color: '#000000' }}
+		font={{ font_size: 30.8, bold: true }}
 		zIndex={34}
 	>
 		Luke 11:24-26
@@ -373,39 +373,39 @@
 		step={25}
 		drillTo="life/house-for-spirits"
 		layout={{ x: 301.9, y: 355.8, width: 143.3, height: 173.3 }}
-		font={{ font_size: 36.7 }}
+		font={{ font_size: 36.7, bold: true, align: 'center', wrap: true }}
 		fill="var(--color-bg-ghost)"
 		line={{ width: 0.8, color: '#000000' }}
 		zIndex={36}
 	>
-		House<br/>Spirits<br/>Person<br/>("the man")
+		House<br/>Spirits<br/>Person<br/><span style="font-size: 18px; position: relative; top: -15px;">("the man")</span>
 	</Fragment>
 
-	<!-- Step 26: Red arrow (vertical down) -->
+	<!-- Step 26: Red arrow House → Body -->
 	<Fragment step={26} animate="wipe">
-		<Arrow from={{ x: 467.5, y: 389.2 }} to={{ x: 467.5, y: 465 }} stroke={{ width: 5.8, color: '#FF0000' }} zIndex={37} />
+		<Arrow from={{ x: 428, y: 389 }} to={{ x: 505, y: 450 }} stroke={{ width: 5.8, color: '#FF0000' }} zIndex={37} />
 	</Fragment>
 
-	<!-- Step 27: Red arrow (horizontal) -->
+	<!-- Step 27: Red arrow Spirits → Spirit -->
 	<Fragment step={27} animate="wipe">
-		<Arrow from={{ x: 427.5, y: 430 }} to={{ x: 513.3, y: 430 }} stroke={{ width: 5.8, color: '#FF0000' }} zIndex={38} />
+		<Arrow from={{ x: 430, y: 422 }} to={{ x: 504, y: 422 }} stroke={{ width: 5.8, color: '#FF0000' }} zIndex={38} />
 	</Fragment>
 
-	<!-- Step 28: Red arrow (diagonal down) -->
+	<!-- Step 28: Red arrow Person → Soul -->
 	<Fragment step={28} animate="wipe">
-		<Arrow from={{ x: 475.1, y: 392.5 }} to={{ x: 475.1, y: 473.3 }} stroke={{ width: 5.8, color: '#FF0000' }} zIndex={39} />
+		<Arrow from={{ x: 435, y: 463 }} to={{ x: 510, y: 390 }} stroke={{ width: 5.8, color: '#FF0000' }} zIndex={39} />
 	</Fragment>
 
-	<!-- Step 29: Red arrow (judgment connection) -->
+	<!-- Step 29: Red arrow Soul → Judgment -->
 	<Fragment step={29} animate="wipe">
-		<Arrow from={{ x: 584.3, y: 309 }} to={{ x: 584.3, y: 377.2 }} stroke={{ width: 8.3, color: '#FF0000' }} zIndex={35} />
+		<Arrow from={{ x: 540, y: 375 }} to={{ x: 623, y: 300 }} stroke={{ width: 5.8, color: '#FF0000' }} zIndex={35} />
 	</Fragment>
 
 	<!-- Step 30: Question about characteristics -->
 	<Fragment
 		step={30}
 		layout={{ x: 610.9, y: 0.8, width: 277.4, height: 60.8 }}
-		font={{ font_size: 15, wrap: true }}
+		font={{ font_size: 15, wrap: true, bold: true }}
 		line={{ width: 0.8 }}
 		zIndex={28}
 	>

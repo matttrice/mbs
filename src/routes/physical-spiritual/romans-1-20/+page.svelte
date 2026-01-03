@@ -18,19 +18,14 @@
 			</blockquote>
 		</Fragment>
 
-		<Fragment step={1}>
-			<p class="study-question">How can invisible qualities be clearly seen?</p>
+		<Fragment 
+		step={1}
+		layout={{ x: 73, y: 49, width: 796, height: 476 }}
+		font={{ font_size: 33, align: 'center', wrap: true, color: 'var(--color-level3)', bold: true }}
+
+		>
+			How can invisible qualities be clearly seen?
 		</Fragment>
 	</div>
 </div>
 </Slide>
-
-<style>
-	.study-question {
-		font-size: 1.3em;
-		font-weight: bold;
-		color: var(--color-level2);
-		margin-top: 1.5em;
-		text-align: center;
-	}
-</style>

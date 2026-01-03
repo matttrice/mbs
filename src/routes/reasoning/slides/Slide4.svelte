@@ -36,7 +36,7 @@
 	<!-- Scripture text - static base version -->
 	<!-- Original: x: 143.8, y: 77.7, width: 1273.5, height: 762.3, font_size: 38.7 -->
 	<Fragment
-		layout={{ x: 90, y: 49, width: 796, height: 476 }}
+		layout={{ x: 73, y: 49, width: 796, height: 476 }}
 		font={{ font_size: 20, align: 'left', wrap: true }}
 		zIndex={0}
 	>
@@ -51,9 +51,8 @@
 
 	<Fragment
 		step={1}
-		layout={{ x: 90, y: 49, width: 796, height: 476 }}
+		layout={{ x: 73, y: 49, width: 796, height: 476 }}
 		font={{ font_size: 20, align: 'left', wrap: true }}
-		fill="var(--color-bg-ghost)"
 		zIndex={2}
 	>
 		<div class="scripture-text highlighted">
@@ -63,9 +62,8 @@
 
 	<Fragment
 		step={2}
-		layout={{ x: 90, y: 49, width: 796, height: 476 }}
+		layout={{ x: 73, y: 49, width: 796, height: 476 }}
 		font={{ font_size: 20, align: 'left', wrap: true }}
-		fill="var(--color-bg-ghost)"
 		zIndex={3}
 	>
 		<div class="scripture-text highlighted">
@@ -75,9 +73,8 @@
 
 	<Fragment
 		step={3}
-		layout={{ x: 90, y: 49, width: 796, height: 476 }}
+		layout={{ x: 73, y: 49, width: 796, height: 476 }}
 		font={{ font_size: 20, align: 'left', wrap: true }}
-		fill="var(--color-bg-ghost)"
 		zIndex={4}
 	>
 		<div class="scripture-text highlighted final">

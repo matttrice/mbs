@@ -38,7 +38,7 @@
 		<a href="/reasoning" class="lesson-card">
 			<div class="lesson-content">
 				<h2>1. Methods of Reason</h2>
-				<p>Inductive vs. Deductive thinking in Scripture</p>
+				<p>Inductive vs. Deductive Thinking in Scripture</p>
 			</div>
 			<div class="lesson-actions">
 				<button 
@@ -158,14 +158,14 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		padding: 60px 40px;
+		padding: 20px 40px;
 		box-sizing: border-box;
 		overflow-y: auto;
 	}
 
 	header {
 		text-align: center;
-		margin-bottom: 10px;
+		margin-bottom: 0px;
 		flex-shrink: 0;
 		position: relative;
 	}

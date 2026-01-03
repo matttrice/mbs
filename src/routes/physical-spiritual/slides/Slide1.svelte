@@ -466,33 +466,9 @@
 		Genesis 1:1-3
 	</Fragment>
 
-	<!-- Step 34: "What gives matter stability?" + diagonal line -->
+	<!-- Step 34: "Creation Equation" + diagonal line to Genesis -->
 	<Fragment
 		step={34}
-		layout={{ x: 760.4, y: 365.8, width: 147.1, height: 48 }}
-		font={{ font_size: 17.5, wrap: true }}
-		zIndex={37}
-	>
-		What gives matter stability?
-	</Fragment>
-
-	<Fragment step={34} animate="wipe-left">
-		<Arrow from={{ x: 754, y: 379 }} to={{ x: 583, y: 361 }} stroke={{ width: 4 }} zIndex={38} />
-	</Fragment>
-
-	<!-- Step 35: "c²" -->
-	<Fragment
-		step={35}
-		layout={{ x: 525.6, y: 338.4, width: 63, height: 45.6 }}
-		font={{ font_size: 50, color: 'var(--color-level3)' }}
-		zIndex={71}
-	>
-		c²
-	</Fragment>
-
-	<!-- Step 36: "Creation Equation" + diagonal line to Genesis -->
-	<Fragment
-		step={36}
 		layout={{ x: 228.8, y: 348.3, width: 204.9, height: 36.3 }}
 		font={{ font_size: 23.3, italic: true }}
 		zIndex={67}
@@ -500,8 +476,32 @@
 		Creation Equation
 	</Fragment>
 
-	<Fragment step={36} animate="wipe">
+	<Fragment step={34} animate="wipe">
 		<Arrow from={{ x: 169, y: 447 }} to={{ x: 234, y: 373 }} stroke={{ width: 4 }} zIndex={72} />
+	</Fragment>
+
+	<!-- Step 34: "What gives matter stability?" + diagonal line -->
+	<Fragment
+		step={35}
+		layout={{ x: 760.4, y: 365.8, width: 147.1, height: 48 }}
+		font={{ font_size: 17.5, wrap: true }}
+		zIndex={37}
+	>
+		What gives matter stability?
+	</Fragment>
+
+	<Fragment step={35} animate="wipe-left">
+		<Arrow from={{ x: 754, y: 379 }} to={{ x: 583, y: 361 }} stroke={{ width: 4 }} zIndex={38} />
+	</Fragment>
+
+	<!-- Step 35: "c²" -->
+	<Fragment
+		step={36}
+		layout={{ x: 525.6, y: 338.4, width: 63, height: 45.6 }}
+		font={{ font_size: 50, color: 'var(--color-level3)' }}
+		zIndex={71}
+	>
+		c²
 	</Fragment>
 
 	<!-- Step 37: 1 Corinthians 15:40-45 (hyperlink) -->
@@ -509,12 +509,12 @@
 		step={37}
 		drillTo="physical-spiritual/1corinthians-15-40"
 		layout={{ x: 33.3, y: 470.4, width: 140, height: 53.9 }}
-		font={{ font_size: 20, bold: true, color: 'var(--color-level3)', wrap: true }}
+		font={{ font_size: 20, bold: true, color: 'var(--color-level3)', wrap: true, align: 'center' }}
 		fill="var(--color-bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={40}
 	>
-		1Corinthians 15:40-45
+		1 Corinthians 15:40-45
 	</Fragment>
 
 	<!-- Step 38: "perishable" -->
@@ -671,12 +671,12 @@
 	<!-- Step 43: "Spiritual & Physical: Equal..." summary box -->
 	<Fragment
 		step={43}
-		layout={{ x: 715.6, y: 431.6, width: 196.1, height: 96.1 }}
+		layout={{ x: 715.6, y: 431.6, width: 196.1, height: 108 }}
 		font={{ font_size: 17.5, bold: true, align: 'left', v_align: 'top', wrap: true }}
 		fill="var(--color-level1)"
 		zIndex={44}
 	>
-		Spiritual & Physical:<br />Equal, but in different<br />forms, same as energy<br />& matter
+		Spiritual & Physical are equal, but in different forms, same as energy & matter
 	</Fragment>
 </Slide>
 
