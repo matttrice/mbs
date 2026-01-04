@@ -358,7 +358,7 @@
 	</Fragment>
 
 	<Fragment step={24.3} layout={{ x: 125, y: 290, width: 200, height: 200 }} animate="fade" zIndex={39}>
-		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 800 800"><g fill="hsl(356, 77%, 50%)" stroke-width="10" stroke="hsl(356, 77%, 40%)" id="heart"><path d="M409.7902255825229 338.46151840103255C596.8531592309057 141.25873880453042 800 400 409.79021427181215 669.2307397802393 0 400 203.1468407690943 141.25873880453042 409.7902255825229 338.46151840103255Z" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 800 800"><g fill="var(--color-bg-blood)" stroke-width="10" stroke="hsl(356, 77%, 40%)" id="heart"><path d="M409.7902255825229 338.46151840103255C596.8531592309057 141.25873880453042 800 400 409.79021427181215 669.2307397802393 0 400 203.1468407690943 141.25873880453042 409.7902255825229 338.46151840103255Z" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
 	</Fragment>
 
 	<!-- Step 25: Arc 104 (return arc) -->

@@ -147,6 +147,22 @@
 				<span class="arrow">→</span>
 			</div>
 		</a>
+		<a href="/ark" class="lesson-card">
+			<div class="lesson-content">
+				<h2>8. The Ark</h2>
+				<p>Pattern of Salvation: Judgment, Wrath, Plan of Salvation, Blood</p>
+			</div>
+			<div class="lesson-actions">
+				<button 
+					class="reset-btn" 
+					onclick={(e) => startFresh(e, 'ark', '/ark')}
+					title="Reset progress and start fresh"
+				>
+					Reset
+				</button>
+				<span class="arrow">→</span>
+			</div>
+		</a>
 		<a href="/promises" class="lesson-card">
 			<div class="lesson-content">
 				<h2>9. The Promises</h2>

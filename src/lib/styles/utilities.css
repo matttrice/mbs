@@ -50,6 +50,12 @@
 	background: var(--color-bg-light);
 }
 
+.slide-bg-ghost {
+	position: absolute;
+	inset: 0;
+	background: var(--color-bg-ghost);
+}
+
 /* Scripture reference links (drillable) */
 .scripture-link {
 	color: var(--color-level3);
