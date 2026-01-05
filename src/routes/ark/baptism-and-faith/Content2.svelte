@@ -3,13 +3,6 @@
 	import { Arrow } from '$lib/components/svg';
 </script>
 
-<!--
-	Slide content component for Ephesians 2:8-9.
-	This is the content without the Slide wrapper - can be used:
-	1. Standalone: wrapped by +page.svelte in <Slide>
-	2. In CustomShowProvider: aggregated with other slide content (e.g., romans-6-3 custom show)
--->
-
 <div class="slide-bg"></div>
 
 <!-- Static: Title -->

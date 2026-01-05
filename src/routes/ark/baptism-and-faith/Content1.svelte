@@ -4,13 +4,6 @@
 	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
 </script>
 
-<!--
-	Slide content component for Romans 6:3-7,17-18, 22-23 (baptism and faith).
-	This is the content without the Slide wrapper - can be used:
-	1. Standalone: wrapped by +page.svelte in <Slide>
-	2. In CustomShowProvider: aggregated with other slide content (e.g., romans-6-3 custom show)
--->
-
 <div class="slide-bg"></div>
 <ReferenceOverlay src="/export/08-The_Ark/Slide8.png" />
 
@@ -19,7 +12,7 @@
 	layout={{ x: 58, y: 11, width: 366, height: 36 }}
 	font={{ font_size: 26.7, bold: true, color: '#000000', align: 'left' }}
 >
-	Romans 6:3-7,17-18, 22-23
+	Romans 6:3-7, 17-18, 22-23
 </Fragment>
 
 <!-- Static: Main scripture -->
@@ -55,7 +48,6 @@
 <Fragment
 	step={1}
 	layout={{ x: 396, y: 433, width: 208, height: 40 }}
-	fill="#F4F4F4"
 	font={{ font_size: 30, bold: true, color: '#000000', align: 'left' }}
 	line={{ width: 1 }}
 >
@@ -71,7 +63,6 @@
 <Fragment
 	step={2}
 	layout={{ x: 617, y: 398, width: 331, height: 34 }}
-	fill="#F4F4F4"
 	font={{ font_size: 20, v_align: 'middle', align: 'left' }}
 	line={{ width: 1 }}
 >
@@ -82,7 +73,6 @@
 <Fragment
 	step={2.1}
 	layout={{ x: 642, y: 449, width: 299, height: 29 }}
-	fill="#F4F4F4"
 	font={{ font_size: 20, v_align: 'middle', align: 'left' }}
 >
 	Person Who Dies = Free from Sin
@@ -92,7 +82,7 @@
 <Fragment
 	step={3}
 	layout={{ x: 58, y: 228, width: 846, height: 81 }}
-	font={{ font_size: 20, italic: true, color: '#000000', v_align: 'middle', align: 'left', wrap: true }}
+	font={{ font_size: 20, italic: true, v_align: 'middle', align: 'left', wrap: true }}
 >
 	17...though you were slaves of sin, you became obedient from the heart to that form of teaching to which you were committed, 18 and having been freed from sin, you became slaves of righteousness…
 </Fragment>
@@ -101,7 +91,6 @@
 <Fragment
 	step={4}
 	layout={{ x: 654, y: 494, width: 256, height: 30 }}
-	fill="#F4F4F4"
 	font={{ font_size: 20, v_align: 'middle', align: 'center' }}
 >
 	Freed of Sin = Slave of Righteousness
@@ -111,21 +100,20 @@
 <Fragment
 	step={5}
 	layout={{ x: 58, y: 314, width: 875, height: 81 }}
-	font={{ font_size: 20, italic: true, color: '#000000', v_align: 'middle', align: 'left', wrap: true }}
+	font={{ font_size: 20, italic: true, v_align: 'middle', align: 'left', wrap: true }}
 >
 	22 But now having been freed from sin and enslaved to God, you derive your benefit, resulting in sanctification, and the outcome, eternal life. 23 For the wages of sin is death, but the free gift of God is eternal life in Christ Jesus our Lord.
 </Fragment>
 
 <!-- Step 6: Arc arrow returning (timing: click) -->
 <Fragment step={6} animate="draw">
-	<Arc from={{ x: 423, y: 417 }} to={{ x: 465, y: 500 }} curve={-66} stroke={{ width: 17, color: '#000000' }} arrow headSize={0} zIndex={2} />
+	<Arc from={{ x: 300, y: 417 }} to={{ x: 465, y: 500 }} curve={-66} stroke={{ width: 17, color: '#000000' }} arrow headSize={2} zIndex={2} />
 </Fragment>
 
 <!-- Step 6.1: Slave's Benefit = Sanctification (timing: after 500ms) -->
 <Fragment
 	step={6.1}
 	layout={{ x: 91, y: 488, width: 189, height: 24 }}
-	fill="#F4F4F4"
 	font={{ font_size: 20, v_align: 'middle', align: 'center' }}
 >
 	Slave's Benefit = Sanctification
@@ -135,7 +123,6 @@
 <Fragment
 	step={6.2}
 	layout={{ x: 18, y: 457, width: 242, height: 24 }}
-	fill="#F4F4F4"
 	font={{ font_size: 20, v_align: 'middle', align: 'left' }}
 >
 	Sanctification = Eternal life
@@ -145,7 +132,6 @@
 <Fragment
 	step={6.3}
 	layout={{ x: 28, y: 394, width: 298, height: 59 }}
-	fill="#F4F4F4"
 	font={{ font_size: 20, bold: true, color: '#0000FF', v_align: 'middle' }}
 	line={{ width: 1 }}
 >

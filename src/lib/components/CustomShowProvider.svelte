@@ -36,6 +36,11 @@
 	import { navigation, currentFragment } from '$lib/stores/navigation';
 	import Slide from './Slide.svelte';
 	import type { Component } from 'svelte';
+	import {
+		getSlideFragmentOffsets,
+		getTotalFragments,
+		getSlideForFragment
+	} from './customShowUtils';
 
 	/**
 	 * Aggregates multiple slide content components into a single custom show (drill).
@@ -52,7 +57,7 @@
 	 * **Usage:**
 	 * ```svelte
 	 * <CustomShowProvider 
-	 *   name="romans-6-3" 
+	 *   name="baptism-and-faith" 
 	 *   slides={[SlideAContent, SlideBContent, SlideCContent]} 
 	 * />
 	 * ```
@@ -77,19 +82,11 @@
 	let initialized = $state(false);
 
 	// Compute total fragments across all slides
-	let totalMaxFragment = $derived(slideMaxSteps.reduce((sum, max) => sum + max, 0));
-	
-	// Compute the starting fragment offset for each slide
-	function getSlideFragmentOffsets(): number[] {
-		const offsets: number[] = [0];
-		for (let i = 1; i < slideMaxSteps.length; i++) {
-			offsets.push(offsets[i - 1] + slideMaxSteps[i - 1]);
-		}
-		return offsets;
-	}
+	// Each slide contributes at least 1 fragment (for static content view)
+	let totalMaxFragment = $derived(getTotalFragments(slideMaxSteps));
 
 	function getSlideOffset(slideIndex: number): number {
-		const offsets = getSlideFragmentOffsets();
+		const offsets = getSlideFragmentOffsets(slideMaxSteps);
 		return offsets[slideIndex] ?? 0;
 	}
 
@@ -128,29 +125,15 @@
 		getSlideOffset
 	});
 
-	// Map global fragment position to slide index and local fragment
-	function getSlideForFragment(globalFragment: number): { slideIndex: number; localFragment: number } {
-		const offsets = getSlideFragmentOffsets();
-		for (let i = slideCount - 1; i >= 0; i--) {
-			if (globalFragment >= offsets[i]) {
-				return {
-					slideIndex: i,
-					localFragment: globalFragment - offsets[i]
-				};
-			}
-		}
-		return { slideIndex: 0, localFragment: 0 };
-	}
-
 	// React to fragment changes to update current slide visibility
 	$effect(() => {
 		if (!initialized) return;
 		
 		const fragment = $currentFragment;
-		const { slideIndex } = getSlideForFragment(fragment);
+		const { slideIndex, localFragment } = getSlideForFragment(fragment, slideMaxSteps);
 		
 		if (slideIndex !== currentSlideIndex) {
-			console.log('[CustomShowProvider] Switching to slide:', slideIndex, 'at global fragment:', fragment);
+			console.log('[CustomShowProvider] Switching to slide:', slideIndex, 'at global fragment:', fragment, 'local fragment:', localFragment );
 			currentSlideIndex = slideIndex;
 		}
 	});

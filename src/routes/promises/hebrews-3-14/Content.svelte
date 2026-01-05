@@ -2,7 +2,6 @@
 	import Fragment from '$lib/components/Fragment.svelte';
 </script>
 
-<div class="drill-content">
 	<header>
 		<h1>Hebrews 3:14-19</h1>
 	</header>
@@ -32,4 +31,3 @@
 			</blockquote>
 		</Fragment>
 	</div>
-</div>

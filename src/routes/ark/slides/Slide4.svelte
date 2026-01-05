@@ -92,7 +92,7 @@
 		font={{ font_size: 26.7, align: 'left' }}
 		line={{ width: 1 }}
 	>
-		Romans 6:3-7,17-18,22-23
+		Romans 6:3-7, 17-18, 22-23
 	</Fragment>
 
 	<Fragment

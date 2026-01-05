@@ -1,8 +1,8 @@
 <script lang="ts">
 	import CustomShowProvider from '$lib/components/CustomShowProvider.svelte';
-	import Content1 from './Content.svelte';
-	import Content2 from '../greek-hebrew-soul-spirit-2/Content.svelte';
-	import Content3 from '../greek-hebrew-soul-spirit-3/Content.svelte';
+	import Content1 from './Content1.svelte';
+	import Content2 from './Content2.svelte';
+	import Content3 from './Content3.svelte';
 </script>
 
 <CustomShowProvider
