@@ -35,7 +35,7 @@
 	import { onMount } from 'svelte';
 	import { navigation, currentFragment } from '$lib/stores/navigation';
 	import Slide from './Slide.svelte';
-	import type { Component, Snippet } from 'svelte';
+	import type { Component } from 'svelte';
 
 	/**
 	 * Aggregates multiple slide content components into a single custom show (drill).
@@ -49,57 +49,24 @@
 	 * - Navigation advances through all slides seamlessly
 	 * - Last fragment of last slide triggers return to origin
 	 * 
-	 * **Usage with snippets (recommended):**
-	 * ```svelte
-	 * <CustomShowProvider name="romans-6-3">
-	 *   {#snippet slide0()}
-	 *     <SlideAContent />
-	 *   {/snippet}
-	 *   {#snippet slide1()}
-	 *     <SlideBContent />
-	 *   {/snippet}
-	 * </CustomShowProvider>
-	 * ```
-	 * 
-	 * **Usage with component array:**
+	 * **Usage:**
 	 * ```svelte
 	 * <CustomShowProvider 
 	 *   name="romans-6-3" 
-	 *   slides={[SlideAContent, SlideBContent]} 
+	 *   slides={[SlideAContent, SlideBContent, SlideCContent]} 
 	 * />
 	 * ```
 	 */
 	interface Props {
 		/** Unique name for this custom show */
 		name: string;
-		/** Array of slide content components (alternative to snippets) */
-		slides?: Component[];
-		/** Individual slide snippets: slide0, slide1, slide2, etc. */
-		slide0?: Snippet;
-		slide1?: Snippet;
-		slide2?: Snippet;
-		slide3?: Snippet;
-		slide4?: Snippet;
-		slide5?: Snippet;
-		slide6?: Snippet;
-		slide7?: Snippet;
-		slide8?: Snippet;
-		slide9?: Snippet;
+		/** Array of slide content components */
+		slides: Component[];
 	}
 
-	let { 
-		name, 
-		slides = [],
-		slide0, slide1, slide2, slide3, slide4,
-		slide5, slide6, slide7, slide8, slide9
-	}: Props = $props();
+	let { name, slides }: Props = $props();
 
-	// Collect snippets into array
-	const snippets = [slide0, slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8, slide9]
-		.filter((s): s is Snippet => s !== undefined);
-	
-	// Determine slide count from either components or snippets
-	const slideCount = slides.length > 0 ? slides.length : snippets.length;
+	const slideCount = slides.length;
 
 	// Track which slide within the custom show we're on
 	let currentSlideIndex = $state(0);
@@ -194,33 +161,17 @@
 </script>
 
 <div class="custom-show">
-	{#if slides.length > 0}
-		<!-- Component array mode -->
-		{#each slides as SlideComponent, index}
-			<div 
-				class="custom-show-slide" 
-				class:active={index === currentSlideIndex}
-				style:visibility={index === currentSlideIndex ? 'visible' : 'hidden'}
-			>
-				<Slide slideIndex={index}>
-					<SlideComponent />
-				</Slide>
-			</div>
-		{/each}
-	{:else}
-		<!-- Snippet mode -->
-		{#each snippets as snippet, index}
-			<div 
-				class="custom-show-slide" 
-				class:active={index === currentSlideIndex}
-				style:visibility={index === currentSlideIndex ? 'visible' : 'hidden'}
-			>
-				<Slide slideIndex={index}>
-					{@render snippet()}
-				</Slide>
-			</div>
-		{/each}
-	{/if}
+	{#each slides as SlideComponent, index}
+		<div 
+			class="custom-show-slide" 
+			class:active={index === currentSlideIndex}
+			style:visibility={index === currentSlideIndex ? 'visible' : 'hidden'}
+		>
+			<Slide slideIndex={index}>
+				<SlideComponent />
+			</Slide>
+		</div>
+	{/each}
 </div>
 
 <style>
