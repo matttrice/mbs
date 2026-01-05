@@ -87,7 +87,7 @@
 
 	<Fragment
 		step={3.1}
-		drillTo="ark/romans-6-3"
+		drillTo="ark/baptism-and-faith"
 		layout={{ x: 119, y: 56, width: 338, height: 40 }}
 		font={{ font_size: 26.7, align: 'left' }}
 		line={{ width: 1 }}

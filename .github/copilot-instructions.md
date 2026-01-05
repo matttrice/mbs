@@ -15,7 +15,8 @@ JSON (hsu-pptx/) → extractor.py → Slide components → navigation store → 
 |-----------|---------|
 | [navigation.ts](src/lib/stores/navigation.ts) | State machine managing slides, fragments, drill stack, and localStorage persistence |
 | [PresentationProvider.svelte](src/lib/components/PresentationProvider.svelte) | Orchestrates multi-slide presentations, collects slide maxSteps, calls `navigation.init()` |
-| [Slide.svelte](src/lib/components/Slide.svelte) | Context provider that auto-registers Fragment steps with parent PresentationProvider |
+| [CustomShowProvider.svelte](src/lib/components/CustomShowProvider.svelte) | Aggregates multiple content components into a single custom show with unified navigation |
+| [Slide.svelte](src/lib/components/Slide.svelte) | Context provider that auto-registers Fragment steps with parent PresentationProvider or CustomShowProvider |
 | [Fragment.svelte](src/lib/components/Fragment.svelte) | Unified component for visibility, positioning, styling, drills, and animations |
 | [SVG Components](src/lib/components/svg/) | svg.js-powered shape components (Arrow, Line, Rect, Circle, Ellipse, Path, Polygon) |
 
@@ -446,9 +447,9 @@ Presentations use `PresentationProvider` to orchestrate slides. Each slide compo
 
 The `.slide-bg` class is defined in `$lib/styles/utilities.css`. All slides must render (use `visibility: hidden` via `.slide-wrapper`, not `display: none`) so Fragments can register steps. Presentation styles are in `$lib/styles/presentation.css`.
 
-### Standalone Drill Pages (Custom Shows + Return)
+### Standalone Drill Pages (Single-Slide Custom Shows)
 
-Drill pages use `<Slide>` without `slideIndex`—this triggers standalone mode where Slide auto-calls `navigation.setMaxFragment()`:
+For single-slide custom shows (linked slides that stand alone), use `<Slide>` without `slideIndex`—this triggers standalone mode where Slide auto-calls `navigation.setMaxFragment()`:
 
 ```svelte
 <!-- routes/my-presentation/genesis-12-1/+page.svelte -->
@@ -464,21 +465,102 @@ Drill pages use `<Slide>` without `slideIndex`—this triggers standalone mode w
     <Fragment step={1}>
       <p>Scripture content here...</p>
     </Fragment>
-    
-    <!-- Chain to another drill -->
-    <Fragment step={2} drillTo="my-presentation/genesis-12-7">
-      <p class="drill-link">Continue to next passage</p>
-    </Fragment>
   </div>
 </Slide>
 ```
 
+### Multi-Slide Custom Shows (CustomShowProvider)
+
+When a custom show contains multiple slides (e.g., PowerPoint's `custom_shows[id].slide_numbers` has 2+ entries), use `CustomShowProvider` to aggregate them into a single navigation sequence.
+
+**Key concepts:**
+- **Content components**: Slide content without `<Slide>` wrapper—just Fragment elements
+- **CustomShowProvider**: Wraps each content component in `<Slide slideIndex={n}>`, manages fragment offsets
+- **Fragment offset**: Each slide's fragments are offset by the sum of previous slides' fragments
+- **Auto-return**: When the last fragment of the last slide is reached, navigation returns to origin
+
+**Structure:**
+```
+routes/ark/
+├── romans-6-3/                    # Multi-slide custom show route
+│   └── +page.svelte               # Uses CustomShowProvider
+├── baptism-and-faith/             # Slide 1 content + standalone route
+│   ├── +page.svelte               # Standalone access (wraps content in Slide)
+│   └── BaptismAndFaithContent.svelte  # Content component (no Slide wrapper)
+└── ephesians-2-8/                 # Slide 2 content + standalone route
+    ├── +page.svelte               # Standalone access
+    └── Ephesians28Content.svelte  # Content component
+```
+
+**Content component (`BaptismAndFaithContent.svelte`):**
+```svelte
+<script lang="ts">
+  import Fragment from '$lib/components/Fragment.svelte';
+</script>
+
+<!-- Content without Slide wrapper - steps are 1-indexed within this content -->
+<div class="slide-bg"></div>
+
+<Fragment layout={{ x: 50, y: 20, width: 200, height: 40 }} font={{ font_size: 24 }}>
+  Title
+</Fragment>
+
+<Fragment step={1} layout={{ x: 50, y: 80, width: 200, height: 40 }}>
+  First step
+</Fragment>
+
+<Fragment step={2} layout={{ x: 50, y: 120, width: 200, height: 40 }}>
+  Second step
+</Fragment>
+```
+
+**Standalone page (`baptism-and-faith/+page.svelte`):**
+```svelte
+<script lang="ts">
+  import Slide from '$lib/components/Slide.svelte';
+  import BaptismAndFaithContent from './BaptismAndFaithContent.svelte';
+</script>
+
+<Slide>
+  <BaptismAndFaithContent />
+</Slide>
+```
+
+**Custom show page (`romans-6-3/+page.svelte`):**
+```svelte
+<script lang="ts">
+  import CustomShowProvider from '$lib/components/CustomShowProvider.svelte';
+  import BaptismAndFaithContent from '../baptism-and-faith/BaptismAndFaithContent.svelte';
+  import Ephesians28Content from '../ephesians-2-8/Ephesians28Content.svelte';
+</script>
+
+<!-- Aggregates slides: total fragments = slide1 + slide2 fragments -->
+<CustomShowProvider 
+  name="romans-6-3" 
+  slides={[BaptismAndFaithContent, Ephesians28Content]} 
+/>
+```
+
+**How it works:**
+1. CustomShowProvider renders each content component wrapped in `<Slide slideIndex={n}>`
+2. Each Slide registers its maxStep with the provider (just like PresentationProvider)
+3. Fragment steps are local to each content component (1, 2, 3...)
+4. CustomShowProvider calculates offsets so global navigation progresses through all slides
+5. When the last fragment of the last slide is reached, auto-return triggers
+
+**Converting from PowerPoint JSON:**
+1. Find custom show: `custom_shows[id]` with `slide_numbers: [8, 9]`
+2. Find linked slides: `linked_slides["8"]` and `linked_slides["9"]`
+3. Create content components for each linked slide (no Slide wrapper, no drillTo on last fragment)
+4. Create CustomShowProvider route that aggregates them
+
 ### Route Structure for Drills
 Drill routes live under their parent presentation:
 ```
-routes/demo/+page.svelte           # Main presentation
-routes/demo/genesis-12-1/+page.svelte  # Drill route (scripture reference as folder name)
-routes/demo/slides/Slide1.svelte   # Slide components
+routes/demo/+page.svelte               # Main presentation
+routes/demo/genesis-12-1/+page.svelte  # Single-slide drill route
+routes/demo/romans-6-3/+page.svelte    # Multi-slide custom show (CustomShowProvider)
+routes/demo/slides/Slide1.svelte       # Main slide components
 ```
 
 ## Drill Behavior (Custom Shows)
@@ -719,7 +801,7 @@ Becomes:
 </Slide>
 ```
 
-**Custom shows** (`custom_shows` object `linked_content`) become **drill routes**:
+**Custom shows** (`custom_shows` object) become **drill routes**:
 ```svelte
 <!-- routes/promises/genesis-12-1/+page.svelte -->
 <script lang="ts">
@@ -860,5 +942,7 @@ Navigation state persists to `localStorage` key `mbs-nav-state`. The Reset butto
 - Using Svelte transitions on positioned Fragments (use `animate` prop instead)
 - Expecting `returnHere` behavior by default (drills return to origin, not parent)
 - Expecting drills to execute when `autoDrillAll=false` (arrow keys skip ALL drills)
+- Adding `<Slide>` wrapper in content components for CustomShowProvider (the provider adds it automatically)
+- Using `drillTo` on the last fragment of content components used with CustomShowProvider (auto-return handles slide transitions)
 - **Inventing or modifying text content** when converting from PowerPoint JSON—use ONLY the exact `text` values from the JSON; never add, remove, or paraphrase content
 - **Inventing or estimating layout coordinates**—always use the EXACT `layout` values (x, y, width, height) from the JSON; the coordinates define the actual slide layout and must not be guessed based on conceptual understanding. Do this is batches to ensure accuracy and consistency across all slide conversions.

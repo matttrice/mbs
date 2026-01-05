@@ -46,6 +46,7 @@
 <script lang="ts">
 	import { navigation, registerOriginalStepLookup, unregisterOriginalStepLookup, currentPresentation } from '$lib/stores/navigation';
 	import { getPresentationContext } from './PresentationProvider.svelte';
+	import { getCustomShowContext } from './CustomShowProvider.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import { get } from 'svelte/store';
 
@@ -85,8 +86,9 @@
 
 	let { slideIndex, width = 960, height = 540, children }: Props = $props();
 
-	// Check if we're inside a PresentationProvider
+	// Check if we're inside a PresentationProvider or CustomShowProvider
 	const presentationContext = getPresentationContext();
+	const customShowContext = getCustomShowContext();
 
 	// Track the highest step number seen
 	const maxStep = writable(0);
@@ -149,8 +151,9 @@
 	});
 
 	// Report maxStep based on context
-	// For PresentationProvider: always register (even with 0 steps) using onMount
-	// For standalone drill: use effect to set maxFragment when > 0
+	// Priority: PresentationProvider > CustomShowProvider > Standalone
+	// For PresentationProvider/CustomShowProvider: register with the provider
+	// For standalone drill: set maxFragment directly
 	// Also register with global original step registry for DebugOverlay
 	let registeredPresentation: string | undefined;
 	let registeredSlideIndex: number | undefined;
@@ -158,7 +161,7 @@
 	onMount(() => {
 		const effectiveSlideIndex = slideIndex ?? 0;
 		// Get presentation name from context (preferred) or navigation store (for drills)
-		const presentation = presentationContext?.presentationName ?? get(currentPresentation);
+		const presentation = presentationContext?.presentationName ?? customShowContext?.name ?? get(currentPresentation);
 
 		if (presentationContext && slideIndex !== undefined) {
 			// Inside PresentationProvider: register immediately with current maxStep
@@ -166,6 +169,9 @@
 			presentationContext.registerSlide(slideIndex, $maxStep);
 			// Also register the original step lookup function (for backward compat)
 			presentationContext.registerOriginalStepLookup(slideIndex, getOriginalStep);
+		} else if (customShowContext && slideIndex !== undefined) {
+			// Inside CustomShowProvider: register with it
+			customShowContext.registerSlide(slideIndex, $maxStep);
 		}
 
 		// Register with global registry for DebugOverlay
@@ -189,6 +195,9 @@
 			if (presentationContext && slideIndex !== undefined) {
 				// Update registration with new maxStep
 				presentationContext.registerSlide(slideIndex, $maxStep);
+			} else if (customShowContext && slideIndex !== undefined) {
+				// Update registration with CustomShowProvider
+				customShowContext.registerSlide(slideIndex, $maxStep);
 			} else {
 				// Standalone drillTo and return: set maxFragment directly
 				navigation.setMaxFragment($maxStep);

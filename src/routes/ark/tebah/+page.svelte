@@ -48,6 +48,7 @@
 	<Fragment
 		step={3}
 		drillTo="ark/exodus-19-5"
+		returnHere
 		layout={{ x: 94, y: 86, width: 311, height: 46 }}
 		font={{ font_size: 16.7, align: 'left' }}
 	>
@@ -58,6 +59,7 @@
 	<Fragment
 		step={4}
 		drillTo="ark/exodus-2-1"
+		returnHere
 		layout={{ x: 94, y: 128, width: 201, height: 26 }}
 		font={{ font_size: 16.7, italic: true, color: '#000000', align: 'left', wrap: true }}
 	>
@@ -124,6 +126,7 @@
 	<Fragment
 		step={9}
 		drillTo="ark/leviticus-17-11"
+		returnHere
 		layout={{ x: 807, y: 21, width: 126, height: 54 }}
 		font={{ font_size: 20, bold: true, align: 'center' }}
 	>

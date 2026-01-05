@@ -70,6 +70,6 @@
 		layout={{ x: 662, y: 410, width: 205, height: 56 }}
 		font={{ font_size: 45, bold: true, align: 'left' }}
 	>
-		BAPTISIM
+		BAPTISM
 	</Fragment>
 </Slide>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { currentFragment, currentSlide, navigation } from '$lib/stores/navigation';
 	import { getSlideContext } from './Slide.svelte';
+	import { getCustomShowContext } from './CustomShowProvider.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
@@ -127,6 +128,9 @@
 	const slideContext = getSlideContext();
 	registerStepWithContext(step, slideContext);
 
+	// Check for CustomShowContext to calculate local fragment offset
+	const customShowContext = getCustomShowContext();
+
 	// Get normalized step for visibility and drill registration
 	// This maps author steps with gaps to consecutive integers
 	let normalizedStep = $derived(getNormalizedStep(step, slideContext));
@@ -146,14 +150,25 @@
 		normalizedStep !== undefined ? getAnimationDelay(normalizedStep, delay) : 0
 	);
 
+	// Get the effective fragment position for visibility calculations
+	// In CustomShowProvider: use local fragment (global - offset for this slide)
+	// Otherwise: use global fragment directly
+	let effectiveFragment = $derived(() => {
+		if (customShowContext && slideContext?.slideIndex !== undefined) {
+			return customShowContext.getLocalFragment(slideContext.slideIndex, $currentFragment);
+		}
+		return $currentFragment;
+	});
+
 	// Always visible if no step defined, otherwise visibility depends on currentFragment
 	// Also check exitStep - hide if we've reached it
 	let visible = $derived(() => {
-		const stepVisible = shouldBeVisible(normalizedStep, $currentFragment);
+		const fragment = effectiveFragment();
+		const stepVisible = shouldBeVisible(normalizedStep, fragment);
 		if (!stepVisible) return false;
 		if (exitStep !== undefined) {
 			const normalizedExit = getNormalizedStep(exitStep, slideContext);
-			if (normalizedExit !== undefined && $currentFragment >= normalizedExit) {
+			if (normalizedExit !== undefined && fragment >= normalizedExit) {
 				return false;
 			}
 		}
@@ -161,7 +176,14 @@
 	});
 
 	// Check if this fragment's slide is the currently active slide
-	let isActiveSlide = $derived(checkIsActiveSlide(slideContext?.slideIndex, $currentSlide));
+	// In CustomShowProvider: use custom show's currentSlideIndex
+	// Otherwise: use global currentSlide from navigation
+	let isActiveSlide = $derived(() => {
+		if (customShowContext && slideContext?.slideIndex !== undefined) {
+			return customShowContext.currentSlideIndex === slideContext.slideIndex;
+		}
+		return checkIsActiveSlide(slideContext?.slideIndex, $currentSlide);
+	});
 
 	// ========== KEYFRAME MOTION ==========
 	//
@@ -249,7 +271,7 @@
 	
 	// Determine if we should show animation classes
 	// Animate if: ready, visible, on active slide, not yet animated
-	let showAnimation = $derived(animationReady && visible() && isActiveSlide && !hasAnimated);
+	let showAnimation = $derived(animationReady && visible() && isActiveSlide() && !hasAnimated);
 	
 	// When animation starts, mark as animated (after animation delay + duration completes)
 	$effect(() => {
@@ -524,6 +546,13 @@
 	}
 
 	/* Revealed state (for drill return - show immediately without animation) */
+	/* Apply to regular elements (opacity for fade/fly animations) */
+	.revealed {
+		opacity: 1 !important;
+		transform: none !important;
+	}
+	
+	/* Apply to SVG elements (clip-path for wipe animations) */
 	.revealed :global(svg) {
 		clip-path: inset(0 0 0 0);
 	}
