@@ -11,9 +11,11 @@ import {
  * Tests the CustomShowProvider component which aggregates multiple slide
  * content components into a single navigation sequence.
  * 
- * Uses:
- * - test-custom-show: SlideA (3 steps) + SlideB (2 steps) = 5 total steps
- * - romans-6-3: BaptismAndFaithContent (6 steps) + Ephesians28Content (6 steps) = 12 total steps
+ * Uses test-custom-show fixture:
+ * - SlideA (3 steps) + SlideB (2 steps) = 5 total steps
+ * 
+ * This test file uses only the test fixture, not production content.
+ * Production content tests are in presentations/*.spec.ts files.
  */
 
 // Test fixture reset helper for CustomShowProvider test route
@@ -150,52 +152,5 @@ test.describe('CustomShowProvider - Drill Integration', () => {
 		// Verify we're still on test-custom-show
 		await expect(page).toHaveURL('/test-custom-show');
 		await expect(page.getByText('B Step 2: More content')).toBeVisible();
-	});
-});
-
-test.describe('CustomShowProvider - Romans 6:3 (Production)', () => {
-	// Tests for the actual romans-6-3 custom show
-	test('loads BaptismAndFaithContent as first slide', async ({ page }) => {
-		await page.goto('/ark/romans-6-3');
-		
-		// Verify we're on the right page
-		await expect(page).toHaveURL('/ark/romans-6-3');
-		
-		// BaptismAndFaithContent static content should be visible
-		await expect(page.getByText('Romans 6:3-7,17-18, 22-23')).toBeVisible();
-	});
-
-	test('navigates through BaptismAndFaith and transitions to Ephesians', async ({ page }) => {
-		await page.goto('/ark/romans-6-3');
-		
-		// Navigate through BaptismAndFaithContent (has 6 steps)
-		// We don't need to verify every step, just that transitions work
-		
-		// Step 1: Baptism, =, Death/Burial, Arc
-		await pressArrowRight(page);
-		await expect(page.getByText('Baptism')).toBeVisible();
-		
-		// Steps 2-6: Continue navigation
-		await pressArrowRight(page); // Step 2
-		await pressArrowRight(page); // Step 3  
-		await pressArrowRight(page); // Step 4
-		await pressArrowRight(page); // Step 5
-		await pressArrowRight(page); // Step 6
-
-		// Next arrow should transition to Ephesians28Content
-		await pressArrowRight(page);
-		await expect(page.getByText('Ephesians 2:8-9')).toBeVisible();
-	});
-
-	test('standalone route still works for individual slides', async ({ page }) => {
-		// baptism-and-faith standalone should still work
-		await page.goto('/ark/baptism-and-faith');
-		await expect(page).toHaveURL('/ark/baptism-and-faith');
-		await expect(page.getByText('Romans 6:3-7,17-18, 22-23')).toBeVisible();
-		
-		// ephesians-2-8 standalone should still work
-		await page.goto('/ark/ephesians-2-8');
-		await expect(page).toHaveURL('/ark/ephesians-2-8');
-		await expect(page.getByText('Ephesians 2:8-9')).toBeVisible();
 	});
 });

@@ -471,73 +471,75 @@ For single-slide custom shows (linked slides that stand alone), use `<Slide>` wi
 
 ### Multi-Slide Custom Shows (CustomShowProvider)
 
-When a custom show contains multiple slides (e.g., PowerPoint's `custom_shows[id].slide_numbers` has 2+ entries), use `CustomShowProvider` to aggregate them into a single navigation sequence.
+When a custom show contains multiple slides (e.g., PowerPoint's `custom_shows[id].slide_numbers` has 2+ entries), use `CustomShowProvider` to aggregate them into a single navigation sequence. This is the **preferred approach** for multi-slide drills.
 
 **Key concepts:**
-- **Content components**: Slide content without `<Slide>` wrapper—just Fragment elements
+- **Content components**: Slide content without `<Slide>` wrapper—just Fragment elements, named `Content.svelte`
 - **CustomShowProvider**: Wraps each content component in `<Slide slideIndex={n}>`, manages fragment offsets
 - **Fragment offset**: Each slide's fragments are offset by the sum of previous slides' fragments
 - **Auto-return**: When the last fragment of the last slide is reached, navigation returns to origin
+- **Flat structure**: Scripture routes live at the presentation level (e.g., `translation/2-kings-2-11/`), not nested under custom show folders
 
-**Structure:**
+**Structure (flat, preferred):**
 ```
-routes/ark/
-├── romans-6-3/                    # Multi-slide custom show route
-│   └── +page.svelte               # Uses CustomShowProvider
-├── baptism-and-faith/             # Slide 1 content + standalone route
-│   ├── +page.svelte               # Standalone access (wraps content in Slide)
-│   └── BaptismAndFaithContent.svelte  # Content component (no Slide wrapper)
-└── ephesians-2-8/                 # Slide 2 content + standalone route
-    ├── +page.svelte               # Standalone access
-    └── Ephesians28Content.svelte  # Content component
+routes/translation/
+├── excarnation/                   # Multi-slide custom show route
+│   ├── +page.svelte               # Uses CustomShowProvider
+│   └── Content.svelte             # First slide content (Genesis 5:21-24)
+├── 2-kings-2-11/                  # Standalone scripture route
+│   ├── +page.svelte               # Wraps content in Slide
+│   └── Content.svelte             # Content component
+├── matthew-17-1/                  # Standalone scripture route
+│   ├── +page.svelte               
+│   └── Content.svelte             
+└── luke-24-50/                    # Standalone scripture route
+    ├── +page.svelte               
+    └── Content.svelte             
 ```
 
-**Content component (`BaptismAndFaithContent.svelte`):**
+**Content component (`Content.svelte`):**
 ```svelte
 <script lang="ts">
   import Fragment from '$lib/components/Fragment.svelte';
 </script>
 
 <!-- Content without Slide wrapper - steps are 1-indexed within this content -->
-<div class="slide-bg"></div>
+<div class="slide-bg scripture"></div>
 
 <Fragment layout={{ x: 50, y: 20, width: 200, height: 40 }} font={{ font_size: 24 }}>
-  Title
+  Scripture Title
 </Fragment>
 
 <Fragment step={1} layout={{ x: 50, y: 80, width: 200, height: 40 }}>
-  First step
-</Fragment>
-
-<Fragment step={2} layout={{ x: 50, y: 120, width: 200, height: 40 }}>
-  Second step
+  Verse text...
 </Fragment>
 ```
 
-**Standalone page (`baptism-and-faith/+page.svelte`):**
+**Standalone page (`2-kings-2-11/+page.svelte`):**
 ```svelte
 <script lang="ts">
   import Slide from '$lib/components/Slide.svelte';
-  import BaptismAndFaithContent from './BaptismAndFaithContent.svelte';
+  import Content from './Content.svelte';
 </script>
 
 <Slide>
-  <BaptismAndFaithContent />
+  <Content />
 </Slide>
 ```
 
-**Custom show page (`romans-6-3/+page.svelte`):**
+**Custom show page (`excarnation/+page.svelte`):**
 ```svelte
 <script lang="ts">
   import CustomShowProvider from '$lib/components/CustomShowProvider.svelte';
-  import BaptismAndFaithContent from '../baptism-and-faith/BaptismAndFaithContent.svelte';
-  import Ephesians28Content from '../ephesians-2-8/Ephesians28Content.svelte';
+  import ExcarnationContent from './Content.svelte';
+  import KingsContent from '../2-kings-2-11/Content.svelte';
+  import MatthewContent from '../matthew-17-1/Content.svelte';
+  import LukeContent from '../luke-24-50/Content.svelte';
 </script>
 
-<!-- Aggregates slides: total fragments = slide1 + slide2 fragments -->
-<CustomShowProvider 
-  name="romans-6-3" 
-  slides={[BaptismAndFaithContent, Ephesians28Content]} 
+<CustomShowProvider
+  name="excarnation"
+  slides={[ExcarnationContent, KingsContent, MatthewContent, LukeContent]}
 />
 ```
 
@@ -549,10 +551,34 @@ routes/ark/
 5. When the last fragment of the last slide is reached, auto-return triggers
 
 **Converting from PowerPoint JSON:**
-1. Find custom show: `custom_shows[id]` with `slide_numbers: [8, 9]`
-2. Find linked slides: `linked_slides["8"]` and `linked_slides["9"]`
-3. Create content components for each linked slide (no Slide wrapper, no drillTo on last fragment)
-4. Create CustomShowProvider route that aggregates them
+1. Find custom show: `custom_shows[id]` with `slide_numbers: [5, 6, 7, 8]`
+2. Find linked slides: `linked_slides["5"]`, `linked_slides["6"]`, etc.
+3. Create `Content.svelte` for each linked slide at the presentation level (flat structure)
+4. Create `+page.svelte` for each that wraps Content in Slide (standalone access)
+5. Create CustomShowProvider route that imports and aggregates all Content components
+6. **Remove any `drillTo` props** from Content.svelte—CustomShowProvider handles slide transitions
+
+### Alternative: DrillTo Chaining (Legacy)
+
+For simpler cases or existing code, drillTo chaining still works. Each slide's last fragment has a `drillTo` prop pointing to the next slide:
+
+```svelte
+<!-- slide-1/+page.svelte -->
+<Fragment step={1} drillTo="presentation/slide-2">
+  Content that drills to next slide
+</Fragment>
+```
+
+**When to use each approach:**
+| Approach | Best For |
+|----------|----------|
+| **CustomShowProvider** | Multi-slide custom shows from PowerPoint, reusable scripture references |
+| **DrillTo chaining** | Simple 2-slide chains, quick implementations |
+
+Both approaches work correctly. CustomShowProvider is preferred for new multi-slide custom shows because:
+- Cleaner separation of content from navigation logic
+- Each scripture is accessible standalone AND as part of a sequence
+- Mirrors PowerPoint's custom show model more closely
 
 ### Route Structure for Drills
 Drill routes live under their parent presentation:
@@ -922,12 +948,13 @@ JSON entries with `shape_type: "picture"` represent embedded images. Images are 
 
 **Drill route naming**: Convert `custom_shows[id].name` to lowercase route folder (e.g., `Gen12.1` → `genesis-12-1/`).
 
-**Multi-slide custom shows**: When `custom_shows[id].slides` has multiple entries, chain them with `drillTo` on the last fragment of each drill page.
+**Multi-slide custom shows**: Use `CustomShowProvider` to aggregate multiple slides. Each scripture gets its own `Content.svelte` and `+page.svelte` at the presentation level for standalone access. The custom show route imports all Content components.
 
 ## Testing Conventions
 - Tests are content-agnostic (test mechanics, not specific presentations)
 - Mock localStorage and `$app/navigation` in tests
-- Test file locations: `src/tests/*.test.ts`
+- Test file locations: `src/tests/*.test.ts` (unit), `tests/*.spec.ts` (E2E)
+- Both drill patterns are tested: drillTo chaining (`drill-navigation.spec.ts`) and CustomShowProvider (`custom-show-provider.spec.ts`)
 
 ## State Persistence
 Navigation state persists to `localStorage` key `mbs-nav-state`. The Reset button in the menu clears this.
@@ -942,6 +969,10 @@ Navigation state persists to `localStorage` key `mbs-nav-state`. The Reset butto
 - Using Svelte transitions on positioned Fragments (use `animate` prop instead)
 - Expecting `returnHere` behavior by default (drills return to origin, not parent)
 - Expecting drills to execute when `autoDrillAll=false` (arrow keys skip ALL drills)
+- Adding `<Slide>` wrapper in content components for CustomShowProvider (the provider adds it automatically)
+- Using `drillTo` on the last fragment of content components used with CustomShowProvider (auto-return handles slide transitions)
+- Nesting scripture routes under custom show folders (use flat structure at presentation level)
+- Using custom names for content files (use `Content.svelte` consistently—folder name provides context)
 - Adding `<Slide>` wrapper in content components for CustomShowProvider (the provider adds it automatically)
 - Using `drillTo` on the last fragment of content components used with CustomShowProvider (auto-return handles slide transitions)
 - **Inventing or modifying text content** when converting from PowerPoint JSON—use ONLY the exact `text` values from the JSON; never add, remove, or paraphrase content
