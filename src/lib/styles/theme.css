@@ -11,7 +11,6 @@
 	--color-level2: #00aaff;
 	--color-level3: #0000cc;
 
-	/* Neutral colors */
 	--color-bg-light: #e8e8e8;
 	--color-bg-ghost: #ffffff;
 	--color-bg-darkest: #000000;
@@ -22,6 +21,7 @@
 	--color-stroke-dark: #000000;
 	--color-text-primary: #000000;
 	--color-text-muted: #666666;
+	--color-text-bright: #f804fc;
 
 	/* Accent colors */
 	--color-highlight: #ffd700;

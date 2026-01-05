@@ -258,7 +258,6 @@
 	<!-- Step 17: Ark link -->
 	<Fragment
 		step={17}
-		drillTo="ark/hebrews-11-7"
 		layout={{ x: 284, y: 446, width: 71, height: 30 }}
 		font={{ font_size: 23.3, bold: true, color: '#0000FF', align: 'left', v_align: 'middle', wrap: true }}
         zIndex={5}

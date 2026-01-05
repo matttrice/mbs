@@ -366,7 +366,7 @@ For other shapes (Circle, etc.), use Fragment with `layout` to position them:
 - **Drill return handling**: Animations skip when returning from drill (content shows fully revealed)
 - **perfect-arrows library**: Arrow uses perfect-arrows for clean arrowhead geometry
 
-## Critical Patterns
+# Critical Patterns
 
 ### Multi-Slide Presentations
 
@@ -471,16 +471,17 @@ For single-slide custom shows (linked slides that stand alone), use `<Slide>` wi
 
 ### Multi-Slide Custom Shows (CustomShowProvider)
 
-When a custom show contains multiple slides (e.g., PowerPoint's `custom_shows[id].slide_numbers` has 2+ entries), use `CustomShowProvider` to aggregate them into a single navigation sequence. This is the **preferred approach** for multi-slide drills.
+A PowerPoint slide may have a hyperlink to a custom show. When a custom show contains multiple slides (e.g., PowerPoint's `custom_shows[id].slide_numbers` has 1+ entries), use `CustomShowProvider` to aggregate them into a single navigation sequence.
+IF A hyperlink custom_show contains a **single slide** use the alternative "DrillTo" approach which navigates directly to that single slide as a standalone drill and returns to the origin slide when complete.
+
 
 **Key concepts:**
 - **Content components**: Slide content without `<Slide>` wrapper—just Fragment elements, named `Content.svelte`
-- **CustomShowProvider**: Wraps each content component in `<Slide slideIndex={n}>`, manages fragment offsets
-- **Fragment offset**: Each slide's fragments are offset by the sum of previous slides' fragments
+- **CustomShowProvider**: Wraps each content component in `<Slide={[Content1,Content2]}>`, manages fragment offsets
 - **Auto-return**: When the last fragment of the last slide is reached, navigation returns to origin
 - **Flat structure**: Scripture routes live at the presentation level (e.g., `translation/2-kings-2-11/`), not nested under custom show folders
 
-**Structure (flat, preferred):**
+**Structure (flat, preferred for multi-slide custom shows):**
 ```
 routes/translation/
 ├── excarnation/                   # Multi-slide custom show route
@@ -558,9 +559,12 @@ routes/translation/
 5. Create CustomShowProvider route that imports and aggregates all Content components
 6. **Remove any `drillTo` props** from Content.svelte—CustomShowProvider handles slide transitions
 
-### Alternative: DrillTo Chaining (Legacy)
 
-For simpler cases or existing code, drillTo chaining still works. Each slide's last fragment has a `drillTo` prop pointing to the next slide:
+### Alternative: DrillTo
+
+For simpler cases of a single slide custom_show, drillTo should be used. This allows a fragment to navigate directly to another slide and return to the origin slide when complete.
+
+Use a `drillTo` prop for most scripture slide references.
 
 ```svelte
 <!-- slide-1/+page.svelte -->
@@ -568,55 +572,30 @@ For simpler cases or existing code, drillTo chaining still works. Each slide's l
   Content that drills to next slide
 </Fragment>
 ```
+### DrillTo Chaining
+DrillTo can mimick multi-slide behavior by chaining each slide's last fragment with a `drillTo` prop pointing to the next slide but CustomShowProvider is still the preferred approach for multi-slide custom shows.
+
+For multi-slide drills, when the deepest drill completes, navigation returns **directly to the origin** (the original presentation slide), not back through each intermediate drill, unless `returnHere={true}` is set on a fragment in the drill chain.
 
 **When to use each approach:**
 | Approach | Best For |
 |----------|----------|
-| **CustomShowProvider** | Multi-slide custom shows from PowerPoint, reusable scripture references |
-| **DrillTo chaining** | Simple 2-slide chains, quick implementations |
+| **CustomShowProvider** | Multi-slide shows from PowerPoint, reusable multi-scripture references |
+| **DrillTo** | Simple 1 slide show and return or conversion from single-slide custom_show |
 
 Both approaches work correctly. CustomShowProvider is preferred for new multi-slide custom shows because:
 - Cleaner separation of content from navigation logic
 - Each scripture is accessible standalone AND as part of a sequence
 - Mirrors PowerPoint's custom show model more closely
 
+
 ### Route Structure for Drills
 Drill routes live under their parent presentation:
 ```
-routes/demo/+page.svelte               # Main presentation
-routes/demo/genesis-12-1/+page.svelte  # Single-slide drill route
-routes/demo/romans-6-3/+page.svelte    # Multi-slide custom show (CustomShowProvider)
-routes/demo/slides/Slide1.svelte       # Main slide components
+routes/ark/+page.svelte                    # Main presentation
+routes/ark/slides/Slide1.svelte            # Main slide components
+routes/ark/revelation-20/+page.svelte      # Single-slide drill route
 ```
-
-## Drill Behavior (Custom Shows)
-
-Drills replicate PowerPoint's Custom Show functionality. Understanding the drill lifecycle is critical for correct implementation.
-
-### autoDrillAll Setting
-
-The navigation store has an `autoDrillAll` setting (persisted to localStorage as `mbs-drillto`):
-
-| Setting | Arrow Key Behavior | Click Behavior |
-|---------|-------------------|----------------|
-| `autoDrillAll=true` (default) | Arrow right executes drills automatically | Click always drills |
-| `autoDrillAll=false` | Arrow right **skips** all drills | Click always drills |
-
-**Key behavior**: When `autoDrillAll=false`, arrow keys skip drills entirely—this applies to ALL drillTo fragments, including ones at the last fragment of a slide/drill. The user must click on drillable fragments to drill.
-
-### Multi-Level Drill Chains
-
-Drills can chain to other drills (e.g., `hebrews-3-14` → `hebrews-4-1`). When the deepest drill completes, navigation returns **directly to the origin** (the original presentation slide), not back through each intermediate drill, unless `returnHere={true}` is set on a fragment in the drill chain.
-
-**Example 3-level chain:**
-```
-Slide 1 step 1 (drillTo drill-01)
-  └→ drill-01 step 2 (drillTo drill-02)
-      └→ drill-02 step 2 (drillTo drill-03)
-          └→ drill-03 completes → Returns to Slide 1 step 1
-```
-
-**Implementation**: Each drill pushes state to a stack. On return, the entire stack is popped and navigation returns to the first (origin) entry.
 
 ### returnHere Prop
 
@@ -647,18 +626,6 @@ Drills use a "pending drill" approach to ensure content is visible before drilli
 2. **Next arrow**: Pending drill executes, navigating to the drill route
 
 This ensures users always see the drillable content before the navigation happens.
-
-### End-of-Drill Behavior
-
-When at the last fragment of a drill:
-
-| Condition | Arrow Right Behavior |
-|-----------|---------------------|
-| Last fragment has `drillTo` + `autoDrillAll=true` | Execute the drill |
-| Last fragment has `drillTo` + `autoDrillAll=false` | **Skip drill**, return to origin |
-| Last fragment, no drillTo, in drill stack | Return to origin |
-| Last fragment, no drillTo, `returnHere=true` | Return to parent (one level) |
-| Last fragment, no drillTo, main presentation | Do nothing (end of presentation) |
 
 ## Commands
 
@@ -967,13 +934,14 @@ Navigation state persists to `localStorage` key `mbs-nav-state`. The Reset butto
 - Using absolute paths in `drillTo` (use `"demo/ref"` not `"/demo/ref"`)
 - Using `display: none` for inactive slides (breaks step registration—use `visibility: hidden` via `.slide-wrapper`)
 - Using Svelte transitions on positioned Fragments (use `animate` prop instead)
+- Using zIndex on Fragment with svg Shapes which have their own zIndex
 - Expecting `returnHere` behavior by default (drills return to origin, not parent)
 - Expecting drills to execute when `autoDrillAll=false` (arrow keys skip ALL drills)
 - Adding `<Slide>` wrapper in content components for CustomShowProvider (the provider adds it automatically)
 - Using `drillTo` on the last fragment of content components used with CustomShowProvider (auto-return handles slide transitions)
 - Nesting scripture routes under custom show folders (use flat structure at presentation level)
 - Using custom names for content files (use `Content.svelte` consistently—folder name provides context)
-- Adding `<Slide>` wrapper in content components for CustomShowProvider (the provider adds it automatically)
 - Using `drillTo` on the last fragment of content components used with CustomShowProvider (auto-return handles slide transitions)
+- Adding `"fade"` animate property when its the default
 - **Inventing or modifying text content** when converting from PowerPoint JSON—use ONLY the exact `text` values from the JSON; never add, remove, or paraphrase content
 - **Inventing or estimating layout coordinates**—always use the EXACT `layout` values (x, y, width, height) from the JSON; the coordinates define the actual slide layout and must not be guessed based on conceptual understanding. Do this is batches to ensure accuracy and consistency across all slide conversions.

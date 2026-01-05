@@ -147,9 +147,25 @@
 				<span class="arrow">→</span>
 			</div>
 		</a>
+		<a href="/kingdoms" class="lesson-card">
+			<div class="lesson-content">
+				<h2>8. Kingdoms</h2>
+				<p>The Kingdom of the World, Kingdom of Christ, and Kingdom of God</p>
+			</div>
+			<div class="lesson-actions">
+				<button 
+					class="reset-btn" 
+					onclick={(e) => startFresh(e, 'kingdoms', '/kingdoms')}
+					title="Reset progress and start fresh"
+				>
+					Reset
+				</button>
+				<span class="arrow">→</span>
+			</div>
+		</a>
 		<a href="/ark" class="lesson-card">
 			<div class="lesson-content">
-				<h2>8. The Ark</h2>
+				<h2>9. The Ark</h2>
 				<p>Pattern of Salvation: Judgment, Wrath, Plan of Salvation, Blood</p>
 			</div>
 			<div class="lesson-actions">
@@ -165,7 +181,7 @@
 		</a>
 		<a href="/promises" class="lesson-card">
 			<div class="lesson-content">
-				<h2>9. The Promises</h2>
+				<h2>10. The Promises</h2>
 				<p>What did God promise Abraham?</p>
 			</div>
 			<div class="lesson-actions">
