@@ -2,7 +2,7 @@
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
 	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
-	import { Rect, Arrow, Line } from '$lib/components/svg';
+	import { Rect, Arrow, Line, Arc } from '$lib/components/svg';
 
 	interface Props {
 		slideIndex: number;
@@ -68,7 +68,7 @@
 	<!-- Step 3: "King:" label -->
 	<Fragment
 		step={3}
-		layout={{ x: 44, y: 65, width: 51, height: 26 }}
+		layout={{ x: 44, y: 60, width: 51, height: 26 }}
 		font={boxQuestion}
 		zIndex={textLayer}
 	>
@@ -78,7 +78,7 @@
 	<!-- Step 3: "Subjects:" label -->
 	<Fragment
 		step={3}
-		layout={{ x: 32, y: 87, width: 120, height: 26 }}
+		layout={{ x: 32, y: 82, width: 120, height: 26 }}
 		font={boxQuestion}
 		zIndex={textLayer}
 	>
@@ -88,7 +88,7 @@
 	<!-- Step 3: "Law:" label -->
 	<Fragment
 		step={3}
-		layout={{ x: 44, y: 108, width: 51, height: 26 }}
+		layout={{ x: 44, y: 103, width: 51, height: 26 }}
 		font={boxQuestion}
 		zIndex={textLayer}
 	>
@@ -108,7 +108,7 @@
 	<!-- Step 4: "God" for King -->
 	<Fragment
 		step={4}
-		layout={{ x: 90, y: 65, width: 65, height: 30 }}
+		layout={{ x: 90, y: 60, width: 65, height: 30 }}
 		font={boxAnswer}
 		zIndex={textLayer}
 	>
@@ -118,7 +118,7 @@
 	<!-- "?" for Subjects -->
 	<Fragment
 		step={5}
-		layout={{ x: 145, y: 88, width: 22, height: 26 }}
+		layout={{ x: 145, y: 83, width: 22, height: 26 }}
 		font={questionMark}
 		zIndex={textLayer}
         exitStep={7}
@@ -140,7 +140,7 @@
 	<!-- Step 7: "Innocent" for Subjects -->
 	<Fragment
 		step={7}
-		layout={{ x: 135, y: 86, width: 120, height: 30 }}
+		layout={{ x: 135, y: 81, width: 120, height: 30 }}
 		font={boxAnswer}
 		zIndex={textLayer}
 	>
@@ -150,7 +150,7 @@
 	<!-- Step 8: Innocent description -->
 	<Fragment
 		step={8}
-		layout={{ x: 300, y: 75, width: 170, height: 40 }}
+		layout={{ x: 300, y: 72, width: 170, height: 40 }}
 		font={{ v_align: 'middle', wrap: true, font_size: 10.0, italic: true, bold: true, color: 'var(--color-level3)' }}
 		zIndex={textLayer}
         line={{ width:2, color: 'var(--color-level3)' }}
@@ -172,7 +172,7 @@
 	<!-- Step 10: "Natural, Innocence" for Law -->
 	<Fragment
 		step={10}
-		layout={{ x: 103, y: 108, width: 202, height: 30 }}
+		layout={{ x: 103, y: 103, width: 202, height: 30 }}
 		font={boxAnswer}
 		zIndex={textLayer}
 	>
@@ -257,7 +257,7 @@
 		font={{ v_align: 'middle', font_name: 'Arial Black', font_size: 24, bold: true, color: 'var(--color-bg-ghost)' }}
 		zIndex={textLayer}
 	>
-		Death
+		DEATH
 	</Fragment>
 
 	<!-- Step 14: 2 Samuel drill -->
@@ -377,7 +377,7 @@
 		<Rect x={-1} y={204} width={962} height={336} fill="var(--color-bg-cmd-law)" zIndex={bgLayer} />
 		<Line from={{ x: 36, y: 211 }} to={{ x: 474, y: 212 }} stroke={{ width: 7, color: 'var(--color-bg-cmd-law', dash: '10,5' }} zIndex={boxLayer} />
 		<Rect x={30} y={237} width={450} height={236} fill="var(--color-bg-ghost)" stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={boxLayer} />
-		<Line from={{ x: 270, y: 231 }} to={{ x: 401, y: 231 }} stroke={{ width: 23, color: 'var(--color-bg-ghost)' }} zIndex={boxLayer} />
+		<Line from={{ x: 270, y: 231 }} to={{ x: 430, y: 231 }} stroke={{ width: 23, color: 'var(--color-bg-ghost)' }} zIndex={boxLayer} />
     </Fragment>
 
 	<!-- Step 20: Romans 3:23 drill -->
@@ -395,7 +395,7 @@
     <!-- Step 21: "(spiritual)" label -->
 	<Fragment
 		step={21}
-		layout={{ x: 286, y: 178, width: 76, height: 22 }}
+		layout={{ x: 345, y: 227, width: 67, height: 20 }}
 		font={{ font_size: 13.3, bold: true }}
 		zIndex={textLayer}
 	>
@@ -408,7 +408,7 @@
             to={{ x: 325, y: 350 }} 
             stroke={{ width: 35, color: 'var(--color-level2)' }}
             headSize={1.5} 
-            zIndex={boxLayer} 
+            zIndex={textLayer+1} 
         />
     </Fragment>
 
@@ -416,7 +416,8 @@
 	<Fragment
 		step={21}
 		layout={{ x: 308, y: 210, width: 35, height: 100 }}
-		zIndex={textLayer}
+		font={{ v_align: 'middle', font_name: 'Arial Black', font_size: 24, bold: true, color: 'var(--color-bg-ghost)' }}
+		zIndex={textLayer+1}
 	>
 		<div style="writing-mode: vertical-lr; text-orientation: upright; font-family: 'Arial Black'; font-size: 24px; font-weight: bold; letter-spacing: -12px; text-align: center; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
         DEATH</div>
@@ -476,7 +477,7 @@
 	<!-- "?" for World Law -->
 	<Fragment
 		step={21.1}
-		layout={{ x: 100, y: 328, width: 22, height: 26 }}
+		layout={{ x: 100, y: 330, width: 22, height: 26 }}
 		font={questionMark}
 		zIndex={textLayer}
         exitStep={25}
@@ -484,11 +485,11 @@
 		?
 	</Fragment>
 
-	<!-- Step 21.2: 2 Corinthians 4:4 drill (after) -->
+	<!-- 2 Corinthians 4:4 drill (after) -->
 	<Fragment
-		step={21.2}
+		step={21.1}
 		drillTo="kingdoms/2-corinthians-4-4"
-		layout={{ x: 355, y: 241, width: 120, height: 34 }}
+		layout={{ x: 355, y: 250, width: 120, height: 20 }}
 		font={{ align: 'right', font_size: 11.7, wrap: true }}
 		zIndex={textLayer}
 	>
@@ -497,8 +498,8 @@
 
 	<!-- Step "Kingdom" label (after) -->
 	<Fragment
-		step={22}
-		layout={{ x: 44, y: 254, width: 127, height: 36 }}
+		step={21.1}
+		layout={{ x: 32, y: 254, width: 127, height: 36 }}
 		font={{ font_size: 25, bold: true }}
 		zIndex={textLayer}
 	>
@@ -508,7 +509,7 @@
 	<!-- Step "of the World" -->
 	<Fragment
 		step={22}
-		layout={{ x: 143, y: 254, width: 182, height: 36 }}
+		layout={{ x: 132, y: 254, width: 182, height: 36 }}
 		font={{ font_size: 25, bold: true }}
 		zIndex={textLayer}
 	>
@@ -527,9 +528,9 @@
 
 	<!-- Step 22: "State of Danger" -->
 	<Fragment
-		step={22.2}
+		step={22}
 		layout={{ x: 71, y: 358, width: 158, height: 30  }}
-		font={{ font_size: 22, bold: true, color: 'var(--color-bg-cmd-law)' }}
+		font={{ font_size: 22, font_name:'Arial Black', bold: true, color: 'var(--color-bg-cmd-law)' }}
 		zIndex={textLayer}
 	>
 		State of Danger
@@ -537,7 +538,7 @@
 
 	<!-- Step 22: Danger description -->
 	<Fragment
-		step={22}
+		step={22.2}
 		layout={{ x: 65, y: 378, width: 186, height: 38 }}
 		font={{ wrap: true, font_size: 13 }}
 		zIndex={textLayer}
@@ -590,7 +591,7 @@
 
 	<!-- Step 26: White line connector below World box -->
 	<Fragment step={26} animate="wipe">
-		<Line from={{ x: 111, y: 469 }} to={{ x: 406, y: 469 }} stroke={{ width: 8, color: 'var(--color-bg-ghost)' }} zIndex={boxLayer} />
+		<Line from={{ x: 270, y: 469 }} to={{ x: 406, y: 469 }} stroke={{ width: 8, color: 'var(--color-bg-ghost)' }} zIndex={boxLayer} />
 	</Fragment>
 
 	<!-- Step 26.1: "(physical)" label -->
@@ -628,7 +629,7 @@
 	<Fragment
 		step={26.1}
 		drillTo="kingdoms/2-peter-2-1"
-		layout={{ x: 183, y: 472, width: 92, height: 22 }}
+		layout={{ x: 100, y: 472, width: 92, height: 22 }}
 		font={{ font_size: 18, bold: true }}
 		zIndex={textLayer}
 	>
@@ -638,7 +639,7 @@
 	<!-- Step 27: "Tartarus/Hades - Hopeless" -->
 	<Fragment
 		step={27}
-		layout={{ x: 132, y: 483, width: 270, height: 30 }}
+		layout={{ x: 40, y: 483, width: 270, height: 30 }}
 		font={{ wrap: true, bold: true }}
 		zIndex={textLayer}
 	>
@@ -667,7 +668,7 @@
 
 	<!-- Step 27: Gray rectangle for 2nd Death -->
 	<Fragment step={27}>
-		<Rect x={516} y={492} width={149} height={49} fill="#969696" zIndex={37} />
+		<Rect x={516} y={492} width={149} height={49} fill="#969696" zIndex={boxLayer} />
 	</Fragment>
 
 	<!-- Step 27: Red down arrow box -->
@@ -675,7 +676,7 @@
 		<Rect x={566} y={482} width={57} height={28} fill="#FD0013" stroke={{ width: 3, color: '#000000' }} zIndex={38} />
 	</Fragment>
 
-	<!-- Step 27: "2nd Death" label -->
+	<!-- "2nd Death" label -->
 	<Fragment
 		step={27}
 		layout={{ x: 531, y: 503, width: 134, height: 38 }}
@@ -685,70 +686,27 @@
 		2nd Death
 	</Fragment>
 
-	<!-- Step 28: Romans 6:1-11 drill (multi-slide custom show) -->
+	<!-- Romans 6:1-11 drill (multi-slide custom show) -->
 	<Fragment
 		step={28}
 		drillTo="kingdoms/die-with-christ"
-		layout={{ x: 552, y: 348, width: 183, height: 49 }}
+		layout={{ x: 560, y: 355, width: 160, height: 49 }}
 		font={{ font_size: 12, wrap: true }}
-		zIndex={85}
+		fill="var(--color-bg-ghost)"
+        line={{width: 2, color: 'var(--color-level3)'}}
+		zIndex={textLayer}
 	>
-		Romans 6:1-11, Ephesians 2:1-5 Colossians 2:8-14, 3:1-4, Romans 8:10
+		Romans 6:1-11, Ephesians 2:1-5, Colossians 2:8-14, 3:1-4, Romans 8:10
 	</Fragment>
 
-	<!-- Step 29: Baptism arrow box (horizontal, entering Kingdom of Christ) -->
-	<Fragment step={29}>
-        <Arrow from={{x: 417, y: 267}} to={{x: 482, y: 267}} stroke={{ width: 3, color: 'var(--color-level3)' }} />
-    </Fragment>
-
-	<!-- Step 29: "Kingdom" label in Kingdom of Christ -->
-	<Fragment
-		step={29}
-		layout={{ x: 498, y: 251, width: 141, height: 38 }}
-		font={{ wrap: true, font_size: 26.7, bold: true }}
-		zIndex={27}
-	>
-		Kingdom
-	</Fragment>
-
-	<!-- Step 29: Kingdom of Christ box -->
+	<!-- Kingdom of Christ box -->
 	<Fragment step={29}>
 		<Rect x={480} y={237} width={450} height={236} fill="var(--color-bg-ghost)" stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={boxLayer} />
 	</Fragment>
 
-	<!-- Step 29: White connector line -->
+	<!-- White connector line -->
 	<Fragment step={29} animate="wipe-down">
-		<Line from={{ x: 480, y: 330 }} to={{ x: 480, y: 404 }} stroke={{ width: 27, color: 'var(--color-bg-ghost' }} zIndex={boxLayer} />
-	</Fragment>
-
-	<!-- Step 29: King label -->
-	<Fragment
-		step={29}
-		layout={{ x: 498, y: 282, width: 50, height: 27 }}
-		font={{ font_size: 20 }}
-		zIndex={textLayer}
-	>
-		King:
-	</Fragment>
-
-	<!-- Step 29: Subjects label -->
-	<Fragment
-		step={29}
-		layout={{ x: 498, y: 302, width: 93, height: 27 }}
-		font={{ font_size: 20 }}
-		zIndex={textLayer}
-	>
-		Subjects:
-	</Fragment>
-
-	<!-- Step 29: Law label -->
-	<Fragment
-		step={29}
-		layout={{ x: 498, y: 323, width: 46, height: 27 }}
-		font={{ font_size: 20 }}
-		zIndex={textLayer}
-	>
-		Law:
+		<Line from={{ x: 480, y: 352 }} to={{ x: 480, y: 404 }} stroke={{ width: 27, color: 'var(--color-bg-ghost' }} zIndex={boxLayer} />
 	</Fragment>
 
     <Fragment step={29} animate="wipe-right">
@@ -761,21 +719,71 @@
         />
     </Fragment>
 
-	<!-- Step 29: "BAPTISM = DEATH" label -->
+	<!-- "BAPTISM = DEATH" label -->
 	<Fragment
 		step={29}
-		layout={{ x: 345, y: 367, width: 223, height: 28 }}
-		font={{ v_align: 'middle', font_name: 'Arial Black', bold: true }}
+		layout={{ x: 340, y: 365, width: 223, height: 28 }}
+		font={{ v_align: 'middle', font_name: 'Arial Black', bold: true, font_size: 17, color: 'var(--color-bg-ghost)' }}
 		zIndex={textLayer}
 	>
-		BAPTISIM = DEATH
+		Baptism = DEATH
 	</Fragment>
 
-	<!-- Step 30: "of Christ" label -->
 	<Fragment
-		step={30}
-		layout={{ x: 616, y: 251, width: 128, height: 38 }}
-		font={{ wrap: true, font_size: 26.7, bold: true }}
+		step={29}
+		layout={{ x: 370, y: 322, width: 146, height: 40 }}
+		font={{ wrap: true, align: 'left', font_size: 13.3, bold: true }}
+		zIndex={textLayer}
+	>
+		<div style="line-height:1;">Gospel:<br/> Narrow Gate<br/>(spiritual)</div>
+	</Fragment>
+
+	<!-- "Kingdom" label in Kingdom of Christ -->
+	<Fragment
+		step={29}
+		layout={{ x: 482, y: 251, width: 141, height: 38 }}
+		font={{font_size: 26.7, bold: true }}
+		zIndex={textLayer}
+	>
+		Kingdom
+	</Fragment>
+	
+
+	<!-- King label -->
+	<Fragment
+		step={29}
+		layout={{ x: 498, y: 282, width: 50, height: 27 }}
+		font={boxQuestion}
+		zIndex={textLayer}
+	>
+		King:
+	</Fragment>
+
+	<!-- Subjects label -->
+	<Fragment
+		step={29}
+		layout={{ x: 498, y: 305, width: 93, height: 27 }}
+		font={boxQuestion}
+		zIndex={textLayer}
+	>
+		Subjects:
+	</Fragment>
+
+	<!-- Law label -->
+	<Fragment
+		step={29}
+		layout={{ x: 498, y: 325, width: 46, height: 27 }}
+		font={boxQuestion}
+		zIndex={textLayer}
+	>
+		Law:
+	</Fragment>
+
+	<!-- "of Christ" label -->
+	<Fragment
+		step={31}
+		layout={{ x: 604, y: 251, width: 128, height: 38 }}
+		font={{ font_size: 26.7, bold: true }}
 		zIndex={textLayer}
 	>
 		of Christ
@@ -785,8 +793,9 @@
 	<Fragment
 		step={31}
 		drillTo="kingdoms/faith-and-baptism"
-		layout={{ x: 521, y: 403, width: 337, height: 20 }}
-		font={{ wrap: true, font_size: 11.7 }}
+		layout={{ x: 521, y: 405, width: 337, height: 20 }}
+		font={{ wrap: true, font_size: 11.7, color: 'var(--color-bg-ghost)' }}
+		fill="var(--color-level3)"
 		zIndex={textLayer}
 	>
 		1 Corinthians 15:1-4 Hebrews 11:6, Romans 10:17, Acts 2:38
@@ -802,47 +811,36 @@
 		Hear, Believe, Repent, Confess, Baptized
 	</Fragment>
 
-	<!-- Step 32: "Gospel: Narrow Gate" -->
-	<Fragment
-		step={32}
-		layout={{ x: 354, y: 328, width: 146, height: 40 }}
-		font={{ wrap: true, align: 'center', font_size: 13.3, bold: true }}
-		zIndex={textLayer}
-	>
-		Gospel: Narrow Gate (spiritual)
-	</Fragment>
-
 	<!-- Step 33: "(Wide Gate)" label -->
 	<Fragment
 		step={33}
-		layout={{ x: 180, y: 290, width: 76, height: 20 }}
-		font={{ font_size: 11.7, italic: true }}
-        fill = "var(--color-bg-danger)"
-        line = {{width: 1, color: 'var(--color-stroke-dark)'}}
+		layout={{ x: 215, y: 290, width: 76, height: 20 }}
+		font={{ font_size: 11.7, italic: true, color: 'var(--color-bg-ghost)', bold: true }}
+        fill = "var(--color-bg-darkest)"
 		zIndex={textLayer}
 	>
-		(Wide Gate)
+		Wide Gate
 	</Fragment>
 
-	<!-- Step 33: Wide gate description -->
+	<!-- Wide gate arrow -->
+	<Fragment step={33} animate="wipe-down">
+		<Arrow from={{ x: 280, y: 308 }} to={{ x: 255, y: 430 }} stroke={{ width: 6, color: '#000000' }} zIndex={boxLayer} />
+	</Fragment>
+
+	<!-- Wide gate description -->
 	<Fragment
 		step={33}
 		layout={{ x: 39, y: 407, width: 260, height: 62 }}
-		font={{ wrap: true, font_size: 12, bold: true }}
+		font={{ wrap: true, font_size: 12 }}
 		zIndex={textLayer}
 	>
-		Believe, but decieved; Saved by grace before of baptism; Baptized but doesn't believe its the gate; Sprinkled as a child; faith only...
-	</Fragment>
-
-	<!-- Step 33: Wide gate arrow -->
-	<Fragment step={33} animate="wipe">
-		<Arrow from={{ x: 245, y: 312 }} to={{ x: 255, y: 411 }} stroke={{ width: 6, color: '#000000' }} zIndex={boxLayer} />
+		<div style="line-height:1;"><strong>Believe, but decieved:</strong><br/> - Saved by grace before of baptism <br/> - Baptized but doesn't believe its the gate<br/> - Sprinkled as a child; faith only...</div>
 	</Fragment>
 
 	<!-- Step 34: "Saved" label -->
 	<Fragment
 		step={34}
-		layout={{ x: 716, y: 295, width: 146, height: 51 }}
+		layout={{ x: 716, y: 302, width: 146, height: 51 }}
 		font={{ wrap: true, font_name: 'Arial Black', font_size: 40.0, bold: true, color: '#0000FF' }}
 		zIndex={textLayer}
 	>
@@ -852,38 +850,38 @@
 	<!-- Step 34: Saved description -->
 	<Fragment
 		step={34}
-		layout={{ x: 729, y: 336, width: 166, height: 58 }}
+		layout={{ x: 720, y: 336, width: 180, height: 58 }}
 		font={{ wrap: true, font_size: 11.7 }}
 		zIndex={textLayer}
 	>
 		Maintaining relationship with God via Christ's sinless blood and the "gift of the Holy Spirit"
 	</Fragment>
 
-	<!-- Step 35: 1 Peter 3:18-22 drill (Conscience Cleaned) -->
+	<!-- 1 Peter 3:18-22 drill (Conscience Cleaned) -->
 	<Fragment
 		step={35}
 		drillTo="kingdoms/1-peter-3-18"
 		layout={{ x: 522, y: 241, width: 222, height: 20 }}
-		font={{ wrap: true, font_size: 11.7, bold: true, color: '#0000FF' }}
+		font={{ wrap: true, font_size: 11.7, bold: true, color: 'var(--color-level3)' }}
 		zIndex={textLayer}
 	>
 		Conscience Cleaned (1 Peter 3:21)
 	</Fragment>
-
-	<!-- Step 35.1: "Must become like children" box (after) -->
-	<Fragment
-		step={35.1}
-		layout={{ x: 274, y: 115, width: 112, height: 51 }}
-		fill="var(--color-level3)"
-		font={{ wrap: true, align: 'center', font_size: 13.3, italic: true, color: '#FFFFFF' }}
-		zIndex={textLayer}
-	>
-		'Must become like children' - not under the law -
+	
+	<!-- Blue arc connector -->
+	<Fragment step={35.1} animate="draw">
+		<Arc from={{ x: 528, y: 253 }} to={{ x: 370, y: 190 }} curve={-60} stroke={{ width: 6, color: '#0000FF' }} arrow zIndex={51} />
 	</Fragment>
 
-	<!-- Step 35.1: Blue arrow connector -->
-	<Fragment step={35.1} animate="wipe">
-		<Arrow from={{ x: 390, y: 133 }} to={{ x: 390, y: 251 }} stroke={{ width: 6, color: '#0000FF' }} zIndex={51} />
+	<!-- "Must become like children" box (after) -->
+	<Fragment
+		step={35.1}
+		layout={{ x: 260, y: 130, width: 112, height: 51 }}
+		fill="var(--color-level3)"
+		font={{ wrap: true, align: 'center', font_size: 11, italic: true, color: 'var(--color-bg-ghost)' }}
+		zIndex={textLayer}
+	>
+		"Must become like children' - not under the law"
 	</Fragment>
 
 	<!-- Step 36: Colossians 1:13-14 drill -->
@@ -900,9 +898,10 @@
 	<!-- Step 36: "?" for Christ King -->
 	<Fragment
 		step={36}
-		layout={{ x: 537, y: 284, width: 22, height: 26 }}
+		layout={{ x: 550, y: 284, width: 22, height: 26 }}
 		font={questionMark}
 		zIndex={textLayer}
+		exitStep={37}
 	>
 		?
 	</Fragment>
@@ -910,8 +909,8 @@
 	<!-- Step 37: "Christ" for King -->
 	<Fragment
 		step={37}
-		layout={{ x: 538, y: 277, width: 82, height: 35 }}
-		font={{ v_align: 'bottom', font_size: 23.3, bold: true }}
+		layout={{ x: 545, y: 280, width: 82, height: 35 }}
+		font={boxAnswer}
 		zIndex={textLayer}
 	>
 		Christ
@@ -920,8 +919,8 @@
 	<!-- Step 38: "Church" for Subjects -->
 	<Fragment
 		step={38}
-		layout={{ x: 587, y: 297, width: 102, height: 35 }}
-		font={{ v_align: 'bottom', font_size: 23.3, bold: true }}
+		layout={{ x: 587, y: 302, width: 102, height: 35 }}
+		font={boxAnswer}
 		zIndex={textLayer}
 	>
 		Church
@@ -930,7 +929,7 @@
 	<!-- Step 38: "(His body)" -->
 	<Fragment
 		step={38}
-		layout={{ x: 615, y: 288, width: 66, height: 20 }}
+		layout={{ x: 620, y: 289, width: 66, height: 20 }}
 		font={{ font_size: 11.7, italic: true }}
 		zIndex={textLayer}
 	>
@@ -951,9 +950,10 @@
 	<!-- Step 39: "?" for Law -->
 	<Fragment
 		step={39}
-		layout={{ x: 536, y: 325, width: 22, height: 26 }}
+		layout={{ x: 550, y: 327, width: 22, height: 26 }}
 		font={questionMark}
 		zIndex={textLayer}
+		exitStep={40}
 	>
 		?
 	</Fragment>
@@ -961,7 +961,7 @@
 	<!-- Step 40: "Faith & Grace" for Law -->
 	<Fragment
 		step={40}
-		layout={{ x: 534, y: 319, width: 178, height: 35 }}
+		layout={{ x: 540, y: 323, width: 178, height: 35 }}
 		font={boxAnswer}
 		zIndex={textLayer}
 	>
@@ -970,34 +970,24 @@
 
 	<!-- Step 41: Dashed line (Unfaithful boundary) -->
 	<Fragment step={41} animate="wipe">
-		<Line from={{ x: 483, y: 426 }} to={{ x: 930, y: 426 }} stroke={{ width: 7, color: '#000000', dash: '10,5' }} zIndex={44} />
+		<Line from={{ x: 483, y: 430 }} to={{ x: 930, y: 430 }} stroke={{ width: 4, color: 'var(--color-stroke-dark)', dash: '10,5' }} zIndex={textLayer} />
 	</Fragment>
 
 	<!-- Step 42: "Unfaithful" label -->
 	<Fragment
 		step={42}
-		layout={{ x: 501, y: 423, width: 153, height: 35 }}
+		layout={{ x: 501, y: 433, width: 153, height: 20 }}
 		font={{ font_name: 'Arial Black', font_size: 23.3, bold: true }}
 		zIndex={textLayer}
 	>
 		Unfaithful
 	</Fragment>
 
-	<!-- Step 42: "(spiritual)" label -->
-	<Fragment
-		step={42}
-		layout={{ x: 851, y: 386, width: 76, height: 22 }}
-		font={{ wrap: true, font_size: 13.3, bold: true }}
-		zIndex={textLayer}
-	>
-		(spiritual)
-	</Fragment>
-
 	<!-- Step 42: John 6:53 drill -->
 	<Fragment
 		step={42}
 		drillTo="kingdoms/john-6-53"
-		layout={{ x: 498, y: 448, width: 242, height: 20 }}
+		layout={{ x: 498, y: 455, width: 250, height: 10 }}
 		font={{ wrap: true, align: 'center', font_size: 11.7 }}
 		zIndex={textLayer}
 	>
@@ -1006,21 +996,37 @@
 
 	<!-- Step 42: White connector line -->
 	<Fragment step={42}>
-		<Line from={{ x: 792, y: 468 }} to={{ x: 858, y: 469 }} stroke={{ width: 18, color: '#F4F4F4' }} zIndex={11} />
+		<Line from={{ x: 820, y: 470 }} to={{ x: 890, y: 470 }} stroke={{ width: 7, color: 'var(--color-bg-ghost)' }} zIndex={boxLayer} />
 	</Fragment>
-
 	<!-- Step 43: Death arrow (diagonal, unfaithful) -->
+		
+	<Fragment step={43} animate="wipe-down">
+        <Arrow 
+			from={{ x: 882, y: 413 }} to={{ x: 817, y: 557 }}
+            stroke={{ width: 35, color: 'var(--color-stroke-dark)' }}
+            headSize={1.5} 
+            zIndex={boxLayer} 
+        />
+    </Fragment>
+
 	<Fragment
 		step={43}
-		layout={{ x: 809, y: 394, width: 60, height: 120 }}
-		fill="#000000"
-		line={{ width: 3, color: '#000000' }}
+		layout={{ x: 808, y: 447, width: 101, height: 28, rotation: -65 }}
 		font={{ v_align: 'middle', font_name: 'Arial Black', font_size: 23.3, color: '#F4F4F4' }}
 		zIndex={textLayer}
 	>
 		Death
 	</Fragment>
 
+	<Fragment
+		step={43}
+		layout={{ x: 851, y: 396, width: 76, height: 22, rotation: 24 }}
+		font={{ wrap: true, font_size: 13.3, bold: true }}
+		zIndex={textLayer}
+	>
+		(physical)
+	</Fragment>
+	
 	<!-- Step 43: 2 Peter 2:20-21 drill -->
 	<Fragment
 		step={43}
@@ -1032,22 +1038,30 @@
 		2 Peter 2:20-21, 3:17
 	</Fragment>
 
+    <Fragment step={44} animate="wipe-up">
+        <Arrow 
+			from={{ x: 792, y: 310 }} to={{ x: 792, y: 175 }}
+            stroke={{ width: 35, color: 'var(--color-bg-darkest)' }}
+            headSize={1.5} 
+            zIndex={textLayer} 
+        />
+    </Fragment>
+
 	<!-- Step 44: Death arrow (up, physical death from Kingdom of Christ) -->
 	<Fragment
 		step={44}
 		layout={{ x: 758, y: 163, width: 70, height: 142 }}
-		fill="var(--color-level2)"
-		line={{ width: 1, color: '#000000' }}
-		font={{ v_align: 'middle', font_name: 'Arial Black', font_size: 23.3, bold: true, color: '#000000' }}
+		font={{ v_align: 'middle', font_name: 'Arial Black', font_size: 23.3, bold: true, color: 'var(--color-bg-ghost)' }}
 		zIndex={textLayer}
 	>
-		Death
+		<div style="writing-mode: vertical-lr; text-orientation: upright; font-family: 'Arial Black'; font-size: 24px; font-weight: bold; letter-spacing: -12px; text-align: center; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+        DEATH</div>
 	</Fragment>
 
 	<!-- Step 44: "(physical)" label -->
 	<Fragment
 		step={44}
-		layout={{ x: 819, y: 196, width: 76, height: 22 }}
+		layout={{ x: 815, y: 214, width: 76, height: 22 }}
 		font={{ wrap: true, font_size: 13.3, bold: true }}
 		zIndex={textLayer}
 	>
@@ -1056,14 +1070,14 @@
 
 	<!-- Step 44: White connector line -->
 	<Fragment step={44}>
-		<Line from={{ x: 764, y: 236 }} to={{ x: 818, y: 237 }} stroke={{ width: 20, color: '#F4F4F4' }} zIndex={13} />
+		<Line from={{ x: 760, y: 237 }} to={{ x: 820, y: 237 }} stroke={{ width: 11, color: 'var(--color-bg-ghost)' }} zIndex={boxLayer} />
 	</Fragment>
 
 	<!-- Step 44: "Perfect Safety" label -->
 	<Fragment
 		step={44}
-		layout={{ x: 518, y: 126, width: 351, height: 51 }}
-		font={{ wrap: true, align: 'center', font_name: 'Arial Black', font_size: 36.7, bold: true, color: '#0000FF' }}
+		layout={{ x: 611, y: 126, width: 300, height: 45 }}
+		font={{ wrap: true, v_align: 'middle', align: 'center', font_name: 'Arial Black', font_size: 36.7, bold: true, color: '#0000FF' }}
 		zIndex={textLayer}
 	>
 		Perfect Safety
@@ -1073,7 +1087,7 @@
 	<Fragment
 		step={44}
 		layout={{ x: 599, y: 182, width: 146, height: 32 }}
-		font={{ align: 'center', font_size: 13.3, bold: true }}
+		font={{ wrap: true, align: 'center', font_size: 13.3, bold: true }}
 		zIndex={textLayer}
 	>
 		Heavenly State State of Eternal Life
@@ -1093,9 +1107,10 @@
 	<!-- Step 45: "?" for Eternal Subjects -->
 	<Fragment
 		step={45}
-		layout={{ x: 682, y: 86, width: 22, height: 26 }}
+		layout={{ x: 702, y: 86, width: 22, height: 26 }}
 		font={questionMark}
 		zIndex={89}
+		exitStep={46}
 	>
 		?
 	</Fragment>
@@ -1122,7 +1137,7 @@
 
 	<!-- Step 46: Blue horizontal line -->
 	<Fragment step={46} animate="wipe">
-		<Line from={{ x: 500, y: 61 }} to={{ x: 708, y: 61 }} stroke={{ width: 4, color: '#0000FF' }} zIndex={91} />
+		<Line from={{ x: 514, y: 61 }} to={{ x: 722, y: 61 }} stroke={{ width: 4, color: '#0000FF' }} zIndex={91} />
 	</Fragment>
 
 	<!-- Step 47: Revelation 21:3-4 drill -->
