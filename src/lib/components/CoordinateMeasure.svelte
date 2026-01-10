@@ -175,7 +175,7 @@
 				rectComponent = `x={${x}} y={${y}} width={${width}} height={${height}}`;
 			}
 			arrowCoords = `from={{ x: ${x}, y: ${y} }} to={{ x: ${x + width}, y: ${y + height} }}`;
-			lineComponent = '';
+			lineComponent = `from={{ x: ${x}, y: ${y} }} to={{ x: ${x + width}, y: ${y + height} }}`;
 			arcComponent = '';
 			ellipseComponent = '';
 			ellipseCoords = null;
@@ -220,7 +220,14 @@
 			}
 			fragmentLayout = '';
 			rectComponent = '';
-			lineComponent = '';
+			// Set lineComponent to same as arrowCoords (without bow/flip) for point-to-point arrows
+			if (coords.from && coords.to) {
+				const from = coords.from as { x: number; y: number };
+				const to = coords.to as { x: number; y: number };
+				lineComponent = `from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }}`;
+			} else {
+				lineComponent = '';
+			}
 			arcComponent = '';
 			ellipseComponent = '';
 			rotation = 0;
@@ -657,17 +664,15 @@
 				<code class="output-code">{rectComponent || '—'}</code>
 			</div>
 
+			<div class="output-section">
+				<div class="output-label">&lt;Line&gt;</div>
+				<code class="output-code">{lineComponent || '—'}</code>
+			</div>
+
 			{#if arcComponent}
 			<div class="output-section">
 				<div class="output-label">&lt;Arc&gt;</div>
 				<code class="output-code">{arcComponent}</code>
-			</div>
-			{/if}
-
-			{#if lineComponent}
-			<div class="output-section">
-				<div class="output-label">&lt;Line&gt;</div>
-				<code class="output-code">{lineComponent}</code>
 			</div>
 			{/if}
 
