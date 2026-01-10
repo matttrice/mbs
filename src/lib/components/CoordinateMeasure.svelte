@@ -151,6 +151,14 @@
 		}
 	}
 
+	function nudge(dx: number, dy: number) {
+		if (startPos && currentPos) {
+			startPos = { x: startPos.x + dx, y: startPos.y + dy };
+			currentPos = { x: currentPos.x + dx, y: currentPos.y + dy };
+			formatOutput(startPos, currentPos, rotation);
+		}
+	}
+
 	function handleMouseDown(e: MouseEvent) {
 		if (!enabled) return;
 		e.preventDefault();
@@ -318,34 +326,44 @@
 				</div>
 			</div>
 
-			<div class="rotation-controls">
-				<button class="rotate-btn" onclick={rotateLeft} aria-label="Rotate left 15°">
-					↶ 15°
-				</button>
-				<button class="rotate-btn rotate-btn-fine" onclick={rotateLeftFine} aria-label="Rotate left 1°">
-					↶ 1°
-				</button>
-				<span class="rotation-value">{rotation}°</span>
-				<button class="rotate-btn rotate-btn-fine" onclick={rotateRightFine} aria-label="Rotate right 1°">
-					1° ↷
-				</button>
-				<button class="rotate-btn" onclick={rotateRight} aria-label="Rotate right 15°">
-					15° ↷
-				</button>
+			<div class="controls-row">
+				<div class="rotation-controls">
+					<button class="rotate-btn" onclick={rotateLeft} aria-label="Rotate left 15°">
+						↶ 15°
+					</button>
+					<button class="rotate-btn rotate-btn-fine" onclick={rotateLeftFine} aria-label="Rotate left 1°">
+						↶ 1°
+					</button>
+					<span class="rotation-value">{rotation}°</span>
+					<button class="rotate-btn rotate-btn-fine" onclick={rotateRightFine} aria-label="Rotate right 1°">
+						1° ↷
+					</button>
+					<button class="rotate-btn" onclick={rotateRight} aria-label="Rotate right 15°">
+						15° ↷
+					</button>
+				</div>
+				<div class="nudge-controls">
+					<button class="nudge-btn" onclick={() => nudge(-10, 0)} aria-label="Nudge left 10px">←10</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => nudge(-1, 0)} aria-label="Nudge left 1px">←</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => nudge(0, -1)} aria-label="Nudge up 1px">↑</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => nudge(0, 1)} aria-label="Nudge down 1px">↓</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => nudge(1, 0)} aria-label="Nudge right 1px">→</button>
+					<button class="nudge-btn" onclick={() => nudge(10, 0)} aria-label="Nudge right 10px">10→</button>
+				</div>
 			</div>
 
 			<div class="output-section">
-				<div class="output-label">Fragment:{rotation !== 0 ? ` (rotated ${rotation}°)` : ''}</div>
+				<div class="output-label">&lt;Fragment&gt;</div>
 				<code class="output-code">{fragmentLayout}</code>
 			</div>
 
 			<div class="output-section">
-				<div class="output-label">Arrow/Line:{rotation !== 0 ? ` (rotated ${rotation}°)` : ''}</div>
+				<div class="output-label">&lt;Arrow&gt;</div>
 				<code class="output-code">{arrowCoords}</code>
 			</div>
 
 			<div class="output-section">
-				<div class="output-label">Rect:{rotation !== 0 ? ` (rotated ${rotation}°)` : ''}</div>
+				<div class="output-label">&lt;Rect&gt;</div>
 				<code class="output-code">{rectComponent}</code>
 			</div>
 
@@ -479,14 +497,46 @@
 		font-size: 12px;
 	}
 
-	.rotation-controls {
+	.controls-row {
 		display: flex;
-		justify-content: center;
+		justify-content: space-between;
 		align-items: center;
-		gap: 12px;
 		padding: 10px 12px;
 		border-bottom: 1px solid rgba(0, 255, 0, 0.3);
 		background: rgba(0, 255, 0, 0.05);
+		gap: 16px;
+	}
+
+	.rotation-controls {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.nudge-controls {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+	}
+
+	.nudge-btn {
+		background: rgba(0, 255, 0, 0.1);
+		border: 1px solid #00ff00;
+		color: #00ff00;
+		font-family: monospace;
+		font-size: 10px;
+		padding: 4px 6px;
+		border-radius: 3px;
+		cursor: pointer;
+		transition: background 0.2s;
+	}
+
+	.nudge-btn:hover {
+		background: rgba(0, 255, 0, 0.25);
+	}
+
+	.nudge-btn-fine {
+		padding: 4px 5px;
 	}
 
 	.rotate-btn {
