@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
 	import type { Point, StrokeStyle, CircleMarker } from './types';
 
 	/**
@@ -75,7 +76,9 @@
 	class="svg-line" 
 	width={svgWidth + markerPadding * 2}
 	height={svgHeight + markerPadding * 2}
-	style="position: absolute; left: {minX - markerPadding}px; top: {minY - markerPadding}px; overflow: visible; pointer-events: none; z-index: {zIndex}; --path-length: {length};"
+	style="position: absolute; left: {minX - markerPadding}px; top: {minY - markerPadding}px; overflow: visible; pointer-events: {dev ? 'auto' : 'none'}; z-index: {zIndex}; --path-length: {length};"
+	data-shape-type={dev ? 'line' : undefined}
+	data-coords={dev ? JSON.stringify({ from, to }) : undefined}
 >
 	<line
 		x1={localFromX + markerPadding}

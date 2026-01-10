@@ -4,8 +4,11 @@
 
 	/**
 	 * Dev tool for measuring coordinates on the 960×540 canvas.
-	 * Toggle with 'M' key, then drag to measure.
-	 * Displays Fragment layout and Arrow from/to formats.
+	 * Toggle with 'M' key, then:
+	 * - Click a shape to detect its coordinates (from data-coords attribute)
+	 * - Shift+click to cycle through overlapping shapes
+	 * - Drag to manually measure a region
+	 * Displays Fragment layout, Arrow from/to, Rect, Arc, and Line formats.
 	 */
 
 	let enabled = $state(false);
@@ -13,13 +16,24 @@
 	let showPanel = $state(false);
 	let startPos = $state<{ x: number; y: number } | null>(null);
 	let currentPos = $state<{ x: number; y: number } | null>(null);
+	let mouseDownPos = $state<{ clientX: number; clientY: number } | null>(null);
 
 	// Output formats
 	let fragmentLayout = $state('');
 	let arrowCoords = $state('');
 	let rectComponent = $state('');
+	let arcComponent = $state('');
+	let lineComponent = $state('');
 	let rotation = $state(0); // degrees
 	let panelCorner = $state<'br' | 'bl' | 'tl' | 'tr'>('br'); // bottom-right, bottom-left, top-left, top-right
+
+	// Shape detection state
+	let detectedShapes = $state<Array<{ type: string; coords: Record<string, unknown>; element: Element }>>([]);
+	let shapeIndex = $state(0);
+	let detectedShapeType = $state<string | null>(null);
+
+	// Threshold to distinguish click from drag (in pixels)
+	const CLICK_THRESHOLD = 5;
 
 	function cycleCorner() {
 		const order: typeof panelCorner[] = ['br', 'bl', 'tl', 'tr'];
@@ -121,6 +135,138 @@
 			rectComponent = `<Rect x={${x}} y={${y}} width={${width}} height={${height}} />`;
 		}
 		arrowCoords = `from={{ x: ${rotatedStart.x}, y: ${rotatedStart.y} }} to={{ x: ${rotatedEnd.x}, y: ${rotatedEnd.y} }}`;
+		lineComponent = `<Line from={{ x: ${rotatedStart.x}, y: ${rotatedStart.y} }} to={{ x: ${rotatedEnd.x}, y: ${rotatedEnd.y} }} />`;
+		arcComponent = '';
+		detectedShapeType = null;
+	}
+
+	function formatFromShapeCoords(type: string, coords: Record<string, unknown>) {
+		detectedShapeType = type;
+		
+		if (type === 'fragment' || type === 'rect') {
+			const x = coords.x as number;
+			const y = coords.y as number;
+			const width = coords.width as number;
+			const height = coords.height as number;
+			const rot = (coords.rotation as number) ?? 0;
+			rotation = rot;
+
+			// Set start/current positions for visual overlay
+			startPos = { x, y };
+			currentPos = { x: x + width, y: y + height };
+
+			if (rot !== 0) {
+				fragmentLayout = `layout={{ x: ${x}, y: ${y}, width: ${width}, height: ${height}, rotation: ${rot} }}`;
+				rectComponent = `<Rect x={${x}} y={${y}} width={${width}} height={${height}} rotation={${rot}} />`;
+			} else {
+				fragmentLayout = `layout={{ x: ${x}, y: ${y}, width: ${width}, height: ${height} }}`;
+				rectComponent = `<Rect x={${x}} y={${y}} width={${width}} height={${height}} />`;
+			}
+			arrowCoords = `from={{ x: ${x}, y: ${y} }} to={{ x: ${x + width}, y: ${y + height} }}`;
+			lineComponent = '';
+			arcComponent = '';
+		} else if (type === 'arrow') {
+			if (coords.fromBox && coords.toBox) {
+				const fromBox = coords.fromBox as { x: number; y: number; width: number; height: number };
+				const toBox = coords.toBox as { x: number; y: number; width: number; height: number };
+				const bow = (coords.bow as number) ?? 0;
+				const flip = coords.flip as boolean;
+				
+				arrowCoords = `fromBox={{ x: ${fromBox.x}, y: ${fromBox.y}, width: ${fromBox.width}, height: ${fromBox.height} }} toBox={{ x: ${toBox.x}, y: ${toBox.y}, width: ${toBox.width}, height: ${toBox.height} }}${bow !== 0 ? ` bow={${bow}}` : ''}${flip ? ' flip' : ''}`;
+				
+				// Visual overlay for box-to-box: show a bounding area
+				const minX = Math.min(fromBox.x, toBox.x);
+				const minY = Math.min(fromBox.y, toBox.y);
+				const maxX = Math.max(fromBox.x + fromBox.width, toBox.x + toBox.width);
+				const maxY = Math.max(fromBox.y + fromBox.height, toBox.y + toBox.height);
+				startPos = { x: minX, y: minY };
+				currentPos = { x: maxX, y: maxY };
+			} else {
+				const from = coords.from as { x: number; y: number };
+				const to = coords.to as { x: number; y: number };
+				const bow = (coords.bow as number) ?? 0;
+				const flip = coords.flip as boolean;
+				
+				arrowCoords = `from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }}${bow !== 0 ? ` bow={${bow}}` : ''}${flip ? ' flip' : ''}`;
+				
+				// Visual overlay for point-to-point: calculate bounding box with padding
+				const padding = 10;
+				const minX = Math.min(from.x, to.x) - padding;
+				const minY = Math.min(from.y, to.y) - padding;
+				const maxX = Math.max(from.x, to.x) + padding;
+				const maxY = Math.max(from.y, to.y) + padding;
+				startPos = { x: minX, y: minY };
+				currentPos = { x: maxX, y: maxY };
+			}
+			fragmentLayout = '';
+			rectComponent = '';
+			lineComponent = '';
+			arcComponent = '';
+			rotation = 0;
+		} else if (type === 'line') {
+			const from = coords.from as { x: number; y: number };
+			const to = coords.to as { x: number; y: number };
+			
+			lineComponent = `<Line from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }} />`;
+			arrowCoords = `from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }}`;
+			
+			// Visual overlay: calculate bounding box with padding
+			const padding = 10;
+			const minX = Math.min(from.x, to.x) - padding;
+			const minY = Math.min(from.y, to.y) - padding;
+			const maxX = Math.max(from.x, to.x) + padding;
+			const maxY = Math.max(from.y, to.y) + padding;
+			startPos = { x: minX, y: minY };
+			currentPos = { x: maxX, y: maxY };
+			fragmentLayout = '';
+			rectComponent = '';
+			arcComponent = '';
+			rotation = 0;
+		} else if (type === 'arc') {
+			const from = coords.from as { x: number; y: number };
+			const to = coords.to as { x: number; y: number };
+			const curve = coords.curve as number;
+			
+			arcComponent = `<Arc from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }} curve={${curve}} />`;
+			arrowCoords = `from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }}`;
+			
+			// Visual overlay: calculate bounding box with padding accounting for curve
+			// Arc peaks at midpoint, so use ~70% of curve for bounding box estimate
+			const padding = 10;
+			const curveExtent = Math.abs(curve) * 0.7;
+			const minX = Math.min(from.x, to.x) - padding;
+			const maxX = Math.max(from.x, to.x) + padding;
+			// Curve extends up (negative) or down (positive)
+			const minY = Math.min(from.y, to.y) - padding - (curve < 0 ? curveExtent : 0);
+			const maxY = Math.max(from.y, to.y) + padding + (curve > 0 ? curveExtent : 0);
+			startPos = { x: minX, y: minY };
+			currentPos = { x: maxX, y: maxY };
+			fragmentLayout = '';
+			rectComponent = '';
+			lineComponent = '';
+			rotation = 0;
+		}
+	}
+
+	function detectShapesAtPoint(clientX: number, clientY: number): Array<{ type: string; coords: Record<string, unknown>; element: Element }> {
+		const elements = document.elementsFromPoint(clientX, clientY);
+		const shapes: Array<{ type: string; coords: Record<string, unknown>; element: Element }> = [];
+		
+		for (const el of elements) {
+			const shapeType = el.getAttribute('data-shape-type');
+			const coordsStr = el.getAttribute('data-coords');
+			
+			if (shapeType && coordsStr) {
+				try {
+					const coords = JSON.parse(coordsStr);
+					shapes.push({ type: shapeType, coords, element: el });
+				} catch {
+					// Invalid JSON, skip
+				}
+			}
+		}
+		
+		return shapes;
 	}
 
 	function rotateLeft() {
@@ -167,11 +313,14 @@
 		const coords = toCanvasCoords(e.clientX, e.clientY);
 		if (!coords) return;
 
+		mouseDownPos = { clientX: e.clientX, clientY: e.clientY };
 		startPos = coords;
 		currentPos = coords;
 		measuring = true;
 		showPanel = false;
 		rotation = 0; // Reset rotation for new measurement
+		detectedShapes = [];
+		shapeIndex = 0;
 	}
 
 	function handleMouseMove(e: MouseEvent) {
@@ -193,9 +342,45 @@
 		e.preventDefault();
 		e.stopPropagation();
 
-		if (!measuring) return;
+		if (!measuring || !mouseDownPos) return;
 		measuring = false;
-		showPanel = true;
+
+		// Check if this was a click (minimal movement) or a drag
+		const dx = e.clientX - mouseDownPos.clientX;
+		const dy = e.clientY - mouseDownPos.clientY;
+		const distance = Math.sqrt(dx * dx + dy * dy);
+
+		if (distance < CLICK_THRESHOLD) {
+			// This is a click - try to detect shapes
+			const shapes = detectShapesAtPoint(e.clientX, e.clientY);
+			
+			if (shapes.length > 0) {
+				detectedShapes = shapes;
+				
+				// Shift+click cycles through shapes, normal click resets to first
+				if (e.shiftKey && detectedShapes.length > 1) {
+					shapeIndex = (shapeIndex + 1) % shapes.length;
+				} else {
+					shapeIndex = 0;
+				}
+				
+				const shape = shapes[shapeIndex];
+				formatFromShapeCoords(shape.type, shape.coords);
+				showPanel = true;
+			} else {
+				// No shape found, don't show panel
+				showPanel = false;
+				startPos = null;
+				currentPos = null;
+			}
+		} else {
+			// This is a drag - use manual measurement
+			detectedShapes = [];
+			shapeIndex = 0;
+			showPanel = true;
+		}
+		
+		mouseDownPos = null;
 	}
 
 	function closePanel() {
@@ -203,6 +388,9 @@
 		startPos = null;
 		currentPos = null;
 		rotation = 0;
+		detectedShapes = [];
+		shapeIndex = 0;
+		detectedShapeType = null;
 	}
 
 	// Calculate rectangle dimensions for overlay
@@ -266,7 +454,7 @@
 		<div class="measure-indicator">
 			<span class="indicator-dot"></span>
 			MEASURE MODE
-			<span class="hint">(DRAG TO MEASURE)</span>
+			<span class="hint">(CLICK SHAPE OR DRAG)</span>
 		</div>
 
 		<!-- SVG overlay for measurement rectangle -->
@@ -319,8 +507,20 @@
 	{#if showPanel}
 		<div class="measure-panel corner-{panelCorner}">
 			<div class="panel-header">
-				<span class="panel-title">Coordinate Measurement</span>
+				<span class="panel-title">
+					{#if detectedShapeType}
+						Detected: <span class="shape-type">{detectedShapeType}</span>
+						{#if detectedShapes.length > 1}
+							<span class="shape-count">({shapeIndex + 1}/{detectedShapes.length})</span>
+						{/if}
+					{:else}
+						Coordinate Measurement
+					{/if}
+				</span>
 				<div class="header-buttons">
+					{#if detectedShapes.length > 1}
+						<button class="cycle-btn" onclick={() => { shapeIndex = (shapeIndex + 1) % detectedShapes.length; formatFromShapeCoords(detectedShapes[shapeIndex].type, detectedShapes[shapeIndex].coords); }} aria-label="Cycle to next shape" title="Next shape (or Shift+click)">⇄</button>
+					{/if}
 					<button class="corner-btn" onclick={cycleCorner} aria-label="Move panel to next corner" title="Move to next corner">{cornerLabels[panelCorner]}</button>
 					<button class="close-btn" onclick={closePanel} aria-label="Close panel">×</button>
 				</div>
@@ -354,20 +554,40 @@
 
 			<div class="output-section">
 				<div class="output-label">&lt;Fragment&gt;</div>
-				<code class="output-code">{fragmentLayout}</code>
+				<code class="output-code">{fragmentLayout || '—'}</code>
 			</div>
 
 			<div class="output-section">
-				<div class="output-label">&lt;Arrow&gt;</div>
-				<code class="output-code">{arrowCoords}</code>
+				<div class="output-label">&lt;Arrow&gt; / from-to</div>
+				<code class="output-code">{arrowCoords || '—'}</code>
 			</div>
 
 			<div class="output-section">
 				<div class="output-label">&lt;Rect&gt;</div>
-				<code class="output-code">{rectComponent}</code>
+				<code class="output-code">{rectComponent || '—'}</code>
 			</div>
 
-			<div class="panel-footer">Click code to select all</div>
+			{#if arcComponent}
+			<div class="output-section">
+				<div class="output-label">&lt;Arc&gt;</div>
+				<code class="output-code">{arcComponent}</code>
+			</div>
+			{/if}
+
+			{#if lineComponent}
+			<div class="output-section">
+				<div class="output-label">&lt;Line&gt;</div>
+				<code class="output-code">{lineComponent}</code>
+			</div>
+			{/if}
+
+			<div class="panel-footer">
+				{#if detectedShapes.length > 1}
+					Shift+click to cycle shapes
+				{:else}
+					Click code to select all
+				{/if}
+			</div>
 		</div>
 	{/if}
 {/if}
@@ -495,6 +715,38 @@
 	.panel-title {
 		font-weight: bold;
 		font-size: 12px;
+	}
+
+	.shape-type {
+		color: #00ffff;
+		text-transform: uppercase;
+	}
+
+	.shape-count {
+		color: #88ff88;
+		font-weight: normal;
+		font-size: 10px;
+		margin-left: 4px;
+	}
+
+	.cycle-btn {
+		background: rgba(0, 255, 255, 0.1);
+		border: 1px solid #00ffff;
+		color: #00ffff;
+		font-size: 14px;
+		cursor: pointer;
+		padding: 0;
+		width: 24px;
+		height: 24px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 3px;
+		transition: background 0.2s;
+	}
+
+	.cycle-btn:hover {
+		background: rgba(0, 255, 255, 0.25);
 	}
 
 	.controls-row {

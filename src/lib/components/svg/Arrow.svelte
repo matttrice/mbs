@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
 	import { getArrow, getBoxToBoxArrow } from 'perfect-arrows';
 	import type { StrokeStyle, CircleMarker } from './types';
 
@@ -154,7 +155,9 @@
 	class="svg-arrow" 
 	width={svgWidth}
 	height={svgHeight}
-	style="position: absolute; left: {minX}px; top: {minY}px; overflow: visible; pointer-events: none; z-index: {zIndex};"
+	style="position: absolute; left: {minX}px; top: {minY}px; overflow: visible; pointer-events: {dev ? 'auto' : 'none'}; z-index: {zIndex};"
+	data-shape-type={dev ? 'arrow' : undefined}
+	data-coords={dev ? JSON.stringify(isBoxMode ? { fromBox, toBox, bow, flip } : { from, to, bow: bow !== 0 ? bow : undefined, flip: flip ? flip : undefined }) : undefined}
 >
 	<path
 		d={pathD}

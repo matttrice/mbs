@@ -2,6 +2,7 @@
 <!-- For original source and attribution, visit: https://github.com/matttrice/mbs -->
 
 <script lang="ts">
+	import { dev } from '$app/environment';
 	import { currentFragment, currentSlide, navigation } from '$lib/stores/navigation';
 	import { getSlideContext } from './Slide.svelte';
 	import { getCustomShowContext } from './CustomShowProvider.svelte';
@@ -419,6 +420,8 @@
 		class:revealed={animationReady && !showAnimation}
 		style="{computedStyle()}--animation-delay: {animationDelay}ms;"
 		onclick={drillTo ? handleClick : undefined}
+		data-shape-type={dev && layout ? 'fragment' : undefined}
+		data-coords={dev && layout ? JSON.stringify({ x: layout.x, y: layout.y, width: layout.width, height: layout.height, rotation: layout.rotation }) : undefined}
 	>
 		{#if font?.wrap}
 			<span class="wrap-content">{@render children()}</span>

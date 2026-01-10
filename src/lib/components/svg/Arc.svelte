@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
 	import { SVG, type Container } from '@svgdotjs/svg.js';
 	import { onMount, onDestroy } from 'svelte';
 	import type { StrokeStyle, Point } from './types';
@@ -162,8 +163,10 @@
 		width: {width}px;
 		height: {height}px;
 		z-index: {zIndex};
-		pointer-events: none;
+		pointer-events: {dev ? 'auto' : 'none'};
 	"
+	data-shape-type={dev ? 'arc' : undefined}
+	data-coords={dev ? JSON.stringify({ from, to, curve }) : undefined}
 >
 	<svg
 		bind:this={svgEl}

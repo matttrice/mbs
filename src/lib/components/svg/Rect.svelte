@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
 	import type { StrokeStyle } from './types';
 
 	/**
@@ -68,7 +69,9 @@
 	class="svg-rect"
 	width={width}
 	height={height}
-	style="position: absolute; left: {x}px; top: {y}px; overflow: visible; pointer-events: none; z-index: {zIndex}; --path-length: {perimeter};{rotation !== 0 ? ` transform: rotate(${rotation}deg); transform-origin: center center;` : ''}"
+	style="position: absolute; left: {x}px; top: {y}px; overflow: visible; pointer-events: {dev ? 'auto' : 'none'}; z-index: {zIndex}; --path-length: {perimeter};{rotation !== 0 ? ` transform: rotate(${rotation}deg); transform-origin: center center;` : ''}"
+	data-shape-type={dev ? 'rect' : undefined}
+	data-coords={dev ? JSON.stringify({ x, y, width, height, rotation: rotation !== 0 ? rotation : undefined }) : undefined}
 >
 	<rect
 		x={strokeWidth / 2}
