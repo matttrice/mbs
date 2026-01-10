@@ -33,6 +33,10 @@
 	let shapeIndex = $state(0);
 	let detectedShapeType = $state<string | null>(null);
 	let ellipseCoords = $state<{ cx: number; cy: number; rx: number; ry: number } | null>(null);
+	// Store actual line/arrow/arc coordinates separately from visual bounding box
+	let lineFromTo = $state<{ from: { x: number; y: number }; to: { x: number; y: number } } | null>(null);
+	let arcCoords = $state<{ from: { x: number; y: number }; to: { x: number; y: number }; curve: number } | null>(null);
+	let arrowFromTo = $state<{ from?: { x: number; y: number }; to?: { x: number; y: number }; fromBox?: { x: number; y: number; width: number; height: number }; toBox?: { x: number; y: number; width: number; height: number }; bow?: number; flip?: boolean } | null>(null);
 
 	// Threshold to distinguish click from drag (in pixels)
 	const CLICK_THRESHOLD = 5;
@@ -131,13 +135,13 @@
 		// Include rotation in Fragment layout and Rect if non-zero
 		if (angleDeg !== 0) {
 			fragmentLayout = `layout={{ x: ${x}, y: ${y}, width: ${width}, height: ${height}, rotation: ${angleDeg} }}`;
-			rectComponent = `<Rect x={${x}} y={${y}} width={${width}} height={${height}} rotation={${angleDeg}} />`;
+			rectComponent = `x={${x}} y={${y}} width={${width}} height={${height}} rotation={${angleDeg}}`;
 		} else {
 			fragmentLayout = `layout={{ x: ${x}, y: ${y}, width: ${width}, height: ${height} }}`;
-			rectComponent = `<Rect x={${x}} y={${y}} width={${width}} height={${height}} />`;
+			rectComponent = `x={${x}} y={${y}} width={${width}} height={${height}}`;
 		}
 		arrowCoords = `from={{ x: ${rotatedStart.x}, y: ${rotatedStart.y} }} to={{ x: ${rotatedEnd.x}, y: ${rotatedEnd.y} }}`;
-		lineComponent = `<Line from={{ x: ${rotatedStart.x}, y: ${rotatedStart.y} }} to={{ x: ${rotatedEnd.x}, y: ${rotatedEnd.y} }} />`;
+		lineComponent = `from={{ x: ${rotatedStart.x}, y: ${rotatedStart.y} }} to={{ x: ${rotatedEnd.x}, y: ${rotatedEnd.y} }}`;
 		arcComponent = '';
 		ellipseComponent = '';
 		detectedShapeType = null;
@@ -145,6 +149,11 @@
 
 	function formatFromShapeCoords(type: string, coords: Record<string, unknown>) {
 		detectedShapeType = type;
+		// Reset shape-specific state
+		lineFromTo = null;
+		arrowFromTo = null;
+		arcCoords = null;
+		ellipseCoords = null;
 		
 		if (type === 'fragment' || type === 'rect') {
 			const x = coords.x as number;
@@ -160,10 +169,10 @@
 
 			if (rot !== 0) {
 				fragmentLayout = `layout={{ x: ${x}, y: ${y}, width: ${width}, height: ${height}, rotation: ${rot} }}`;
-				rectComponent = `<Rect x={${x}} y={${y}} width={${width}} height={${height}} rotation={${rot}} />`;
+				rectComponent = `x={${x}} y={${y}} width={${width}} height={${height}} rotation={${rot}}`;
 			} else {
 				fragmentLayout = `layout={{ x: ${x}, y: ${y}, width: ${width}, height: ${height} }}`;
-				rectComponent = `<Rect x={${x}} y={${y}} width={${width}} height={${height}} />`;
+				rectComponent = `x={${x}} y={${y}} width={${width}} height={${height}}`;
 			}
 			arrowCoords = `from={{ x: ${x}, y: ${y} }} to={{ x: ${x + width}, y: ${y + height} }}`;
 			lineComponent = '';
@@ -176,6 +185,9 @@
 				const toBox = coords.toBox as { x: number; y: number; width: number; height: number };
 				const bow = (coords.bow as number) ?? 0;
 				const flip = coords.flip as boolean;
+				
+				// Store for nudging
+				arrowFromTo = { fromBox, toBox, bow, flip };
 				
 				arrowCoords = `fromBox={{ x: ${fromBox.x}, y: ${fromBox.y}, width: ${fromBox.width}, height: ${fromBox.height} }} toBox={{ x: ${toBox.x}, y: ${toBox.y}, width: ${toBox.width}, height: ${toBox.height} }}${bow !== 0 ? ` bow={${bow}}` : ''}${flip ? ' flip' : ''}`;
 				
@@ -191,6 +203,9 @@
 				const to = coords.to as { x: number; y: number };
 				const bow = (coords.bow as number) ?? 0;
 				const flip = coords.flip as boolean;
+				
+				// Store for nudging
+				arrowFromTo = { from, to, bow, flip };
 				
 				arrowCoords = `from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }}${bow !== 0 ? ` bow={${bow}}` : ''}${flip ? ' flip' : ''}`;
 				
@@ -208,13 +223,15 @@
 			lineComponent = '';
 			arcComponent = '';
 			ellipseComponent = '';
-			ellipseCoords = null;
 			rotation = 0;
 		} else if (type === 'line') {
 			const from = coords.from as { x: number; y: number };
 			const to = coords.to as { x: number; y: number };
 			
-			lineComponent = `<Line from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }} />`;
+			// Store for nudging
+			lineFromTo = { from, to };
+			
+			lineComponent = `from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }}`;
 			arrowCoords = `from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }}`;
 			
 			// Visual overlay: calculate bounding box with padding
@@ -229,12 +246,14 @@
 			rectComponent = '';
 			arcComponent = '';
 			ellipseComponent = '';
-			ellipseCoords = null;
 			rotation = 0;
 		} else if (type === 'arc') {
 			const from = coords.from as { x: number; y: number };
 			const to = coords.to as { x: number; y: number };
 			const curve = coords.curve as number;
+			
+			// Store for nudging
+			arcCoords = { from, to, curve };
 			
 			arcComponent = `<Arc from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }} curve={${curve}} />`;
 			arrowCoords = `from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }}`;
@@ -254,7 +273,6 @@
 			rectComponent = '';
 			lineComponent = '';
 			ellipseComponent = '';
-			ellipseCoords = null;
 			rotation = 0;
 		} else if (type === 'ellipse') {
 			const cx = coords.cx as number;
@@ -263,7 +281,7 @@
 			const ry = coords.ry as number;
 			
 			ellipseCoords = { cx, cy, rx, ry };
-			ellipseComponent = `<Ellipse cx={${cx}} cy={${cy}} rx={${rx}} ry={${ry}} />`;
+			ellipseComponent = `cx={${cx}} cy={${cy}} rx={${rx}} ry={${ry}}`;
 			
 			// Visual overlay: bounding box around ellipse
 			const padding = 5;
@@ -332,10 +350,41 @@
 			startPos = { x: startPos.x + dx, y: startPos.y + dy };
 			currentPos = { x: currentPos.x + dx, y: currentPos.y + dy };
 			
-			// Handle ellipse nudging specially
+			// Handle different shape types that store actual coordinates
 			if (detectedShapeType === 'ellipse' && ellipseCoords) {
 				ellipseCoords = { ...ellipseCoords, cx: ellipseCoords.cx + dx, cy: ellipseCoords.cy + dy };
-				ellipseComponent = `<Ellipse cx={${ellipseCoords.cx}} cy={${ellipseCoords.cy}} rx={${ellipseCoords.rx}} ry={${ellipseCoords.ry}} />`;
+				ellipseComponent = `cx={${ellipseCoords.cx}} cy={${ellipseCoords.cy}} rx={${ellipseCoords.rx}} ry={${ellipseCoords.ry}}`;
+			} else if (detectedShapeType === 'line' && lineFromTo) {
+				lineFromTo = {
+					from: { x: lineFromTo.from.x + dx, y: lineFromTo.from.y + dy },
+					to: { x: lineFromTo.to.x + dx, y: lineFromTo.to.y + dy }
+				};
+				lineComponent = `from={{ x: ${lineFromTo.from.x}, y: ${lineFromTo.from.y} }} to={{ x: ${lineFromTo.to.x}, y: ${lineFromTo.to.y} }}`;
+				arrowCoords = `from={{ x: ${lineFromTo.from.x}, y: ${lineFromTo.from.y} }} to={{ x: ${lineFromTo.to.x}, y: ${lineFromTo.to.y} }}`;
+			} else if (detectedShapeType === 'arrow' && arrowFromTo) {
+				if (arrowFromTo.fromBox && arrowFromTo.toBox) {
+					const newFromBox = { ...arrowFromTo.fromBox, x: arrowFromTo.fromBox.x + dx, y: arrowFromTo.fromBox.y + dy };
+					const newToBox = { ...arrowFromTo.toBox, x: arrowFromTo.toBox.x + dx, y: arrowFromTo.toBox.y + dy };
+					const bow = arrowFromTo.bow ?? 0;
+					const flip = arrowFromTo.flip;
+					arrowFromTo = { ...arrowFromTo, fromBox: newFromBox, toBox: newToBox };
+					arrowCoords = `fromBox={{ x: ${newFromBox.x}, y: ${newFromBox.y}, width: ${newFromBox.width}, height: ${newFromBox.height} }} toBox={{ x: ${newToBox.x}, y: ${newToBox.y}, width: ${newToBox.width}, height: ${newToBox.height} }}${bow !== 0 ? ` bow={${bow}}` : ''}${flip ? ' flip' : ''}`;
+				} else if (arrowFromTo.from && arrowFromTo.to) {
+					const newFrom = { x: arrowFromTo.from.x + dx, y: arrowFromTo.from.y + dy };
+					const newTo = { x: arrowFromTo.to.x + dx, y: arrowFromTo.to.y + dy };
+					const bow = arrowFromTo.bow ?? 0;
+					const flip = arrowFromTo.flip;
+					arrowFromTo = { ...arrowFromTo, from: newFrom, to: newTo };
+					arrowCoords = `from={{ x: ${newFrom.x}, y: ${newFrom.y} }} to={{ x: ${newTo.x}, y: ${newTo.y} }}${bow !== 0 ? ` bow={${bow}}` : ''}${flip ? ' flip' : ''}`;
+				}
+			} else if (detectedShapeType === 'arc' && arcCoords) {
+				arcCoords = {
+					from: { x: arcCoords.from.x + dx, y: arcCoords.from.y + dy },
+					to: { x: arcCoords.to.x + dx, y: arcCoords.to.y + dy },
+					curve: arcCoords.curve
+				};
+				arcComponent = `<Arc from={{ x: ${arcCoords.from.x}, y: ${arcCoords.from.y} }} to={{ x: ${arcCoords.to.x}, y: ${arcCoords.to.y} }} curve={${arcCoords.curve}} />`;
+				arrowCoords = `from={{ x: ${arcCoords.from.x}, y: ${arcCoords.from.y} }} to={{ x: ${arcCoords.to.x}, y: ${arcCoords.to.y} }}`;
 			} else {
 				formatOutput(startPos, currentPos, rotation);
 			}
@@ -429,6 +478,9 @@
 		shapeIndex = 0;
 		detectedShapeType = null;
 		ellipseCoords = null;
+		lineFromTo = null;
+		arrowFromTo = null;
+		arcCoords = null;
 	}
 
 	// Calculate rectangle dimensions for overlay
