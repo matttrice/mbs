@@ -1,3 +1,6 @@
+// Licensed under CC-BY 4.0. See LICENSE file for details.
+// For original source and attribution, visit: https://github.com/matttrice/mbs
+
 import { writable, derived, get } from 'svelte/store';
 import { goto } from '$app/navigation';
 import { browser } from '$app/environment';

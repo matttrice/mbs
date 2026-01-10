@@ -312,3 +312,19 @@ The menu's Reset button clears this state.
 8. **Multi-level drills return to origin** - A 3-level drill chain (A → B → C) returns directly to A when C completes, not back through B.
 
 6. **Auto-return at end of drill** - When `next()` is called on the last step and there's a stack, it auto-returns to origin.
+
+## Theological Framework
+
+Master Bible Study is built on foundational theological truths that shape all its conclusions. Understanding these foundations is essential for accurately using or adapting MBS content.
+
+See [THEOLOGY.md](THEOLOGY.md) for details on the foundational truths and how they inform MBS interpretations and conclusions.
+
+## License
+
+This project is licensed under the Creative Commons Attribution 4.0 International License (CC-BY 4.0).
+
+You are free to use, modify, and distribute this work with proper attribution to the original source.
+
+**How to attribute:** Include a link to this repository and reference the CC-BY 4.0 license. This allows anyone to compare your version with the original if modifications are made.
+
+See the [LICENSE](LICENSE) file for complete details.

@@ -1,3 +1,6 @@
+<!-- Licensed under CC-BY 4.0. See LICENSE file for details. -->
+<!-- For original source and attribution, visit: https://github.com/matttrice/mbs -->
+
 <script lang="ts" module>
 	import { writable, type Writable } from 'svelte/store';
 	import { getContext, setContext } from 'svelte';
