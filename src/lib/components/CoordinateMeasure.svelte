@@ -24,6 +24,7 @@
 	let rectComponent = $state('');
 	let arcComponent = $state('');
 	let lineComponent = $state('');
+	let ellipseComponent = $state('');
 	let rotation = $state(0); // degrees
 	let panelCorner = $state<'br' | 'bl' | 'tl' | 'tr'>('br'); // bottom-right, bottom-left, top-left, top-right
 
@@ -31,6 +32,7 @@
 	let detectedShapes = $state<Array<{ type: string; coords: Record<string, unknown>; element: Element }>>([]);
 	let shapeIndex = $state(0);
 	let detectedShapeType = $state<string | null>(null);
+	let ellipseCoords = $state<{ cx: number; cy: number; rx: number; ry: number } | null>(null);
 
 	// Threshold to distinguish click from drag (in pixels)
 	const CLICK_THRESHOLD = 5;
@@ -137,6 +139,7 @@
 		arrowCoords = `from={{ x: ${rotatedStart.x}, y: ${rotatedStart.y} }} to={{ x: ${rotatedEnd.x}, y: ${rotatedEnd.y} }}`;
 		lineComponent = `<Line from={{ x: ${rotatedStart.x}, y: ${rotatedStart.y} }} to={{ x: ${rotatedEnd.x}, y: ${rotatedEnd.y} }} />`;
 		arcComponent = '';
+		ellipseComponent = '';
 		detectedShapeType = null;
 	}
 
@@ -165,6 +168,8 @@
 			arrowCoords = `from={{ x: ${x}, y: ${y} }} to={{ x: ${x + width}, y: ${y + height} }}`;
 			lineComponent = '';
 			arcComponent = '';
+			ellipseComponent = '';
+			ellipseCoords = null;
 		} else if (type === 'arrow') {
 			if (coords.fromBox && coords.toBox) {
 				const fromBox = coords.fromBox as { x: number; y: number; width: number; height: number };
@@ -202,6 +207,8 @@
 			rectComponent = '';
 			lineComponent = '';
 			arcComponent = '';
+			ellipseComponent = '';
+			ellipseCoords = null;
 			rotation = 0;
 		} else if (type === 'line') {
 			const from = coords.from as { x: number; y: number };
@@ -221,6 +228,8 @@
 			fragmentLayout = '';
 			rectComponent = '';
 			arcComponent = '';
+			ellipseComponent = '';
+			ellipseCoords = null;
 			rotation = 0;
 		} else if (type === 'arc') {
 			const from = coords.from as { x: number; y: number };
@@ -244,6 +253,27 @@
 			fragmentLayout = '';
 			rectComponent = '';
 			lineComponent = '';
+			ellipseComponent = '';
+			ellipseCoords = null;
+			rotation = 0;
+		} else if (type === 'ellipse') {
+			const cx = coords.cx as number;
+			const cy = coords.cy as number;
+			const rx = coords.rx as number;
+			const ry = coords.ry as number;
+			
+			ellipseCoords = { cx, cy, rx, ry };
+			ellipseComponent = `<Ellipse cx={${cx}} cy={${cy}} rx={${rx}} ry={${ry}} />`;
+			
+			// Visual overlay: bounding box around ellipse
+			const padding = 5;
+			startPos = { x: cx - rx - padding, y: cy - ry - padding };
+			currentPos = { x: cx + rx + padding, y: cy + ry + padding };
+			fragmentLayout = '';
+			rectComponent = '';
+			lineComponent = '';
+			arcComponent = '';
+			arrowCoords = '';
 			rotation = 0;
 		}
 	}
@@ -301,7 +331,14 @@
 		if (startPos && currentPos) {
 			startPos = { x: startPos.x + dx, y: startPos.y + dy };
 			currentPos = { x: currentPos.x + dx, y: currentPos.y + dy };
-			formatOutput(startPos, currentPos, rotation);
+			
+			// Handle ellipse nudging specially
+			if (detectedShapeType === 'ellipse' && ellipseCoords) {
+				ellipseCoords = { ...ellipseCoords, cx: ellipseCoords.cx + dx, cy: ellipseCoords.cy + dy };
+				ellipseComponent = `<Ellipse cx={${ellipseCoords.cx}} cy={${ellipseCoords.cy}} rx={${ellipseCoords.rx}} ry={${ellipseCoords.ry}} />`;
+			} else {
+				formatOutput(startPos, currentPos, rotation);
+			}
 		}
 	}
 
@@ -391,6 +428,7 @@
 		detectedShapes = [];
 		shapeIndex = 0;
 		detectedShapeType = null;
+		ellipseCoords = null;
 	}
 
 	// Calculate rectangle dimensions for overlay
@@ -578,6 +616,13 @@
 			<div class="output-section">
 				<div class="output-label">&lt;Line&gt;</div>
 				<code class="output-code">{lineComponent}</code>
+			</div>
+			{/if}
+
+			{#if ellipseComponent}
+			<div class="output-section">
+				<div class="output-label">&lt;Ellipse&gt;</div>
+				<code class="output-code">{ellipseComponent}</code>
 			</div>
 			{/if}
 

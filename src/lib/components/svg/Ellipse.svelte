@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { SVG, type Container } from '@svgdotjs/svg.js';
 	import { onMount, onDestroy } from 'svelte';
+	import { dev } from '$app/environment';
 	import type { StrokeStyle } from './types';
 
 	/**
@@ -94,6 +95,8 @@
 
 <div
 	class="svg-ellipse-container"
+	data-shape-type={dev ? 'ellipse' : undefined}
+	data-coords={dev ? JSON.stringify({ cx, cy, rx, ry }) : undefined}
 	style="
 		position: absolute;
 		left: {minX}px;
@@ -101,7 +104,7 @@
 		width: {width}px;
 		height: {height}px;
 		z-index: {zIndex};
-		pointer-events: none;
+		pointer-events: {dev ? 'auto' : 'none'};
 	"
 >
 	<svg
