@@ -7,6 +7,7 @@
 	import { navigation, canReturn } from '$lib/stores/navigation';
 	import ReturnButton from '$lib/components/ReturnButton.svelte';
 	import DebugOverlay from '$lib/components/DebugOverlay.svelte';
+	import CoordinateMeasure from '$lib/components/CoordinateMeasure.svelte';
 	import { onMount } from 'svelte';
 	import { onNavigate } from '$app/navigation';
 	import { dev } from '$app/environment';
@@ -84,6 +85,9 @@
 	{@render children()}
 	<ReturnButton />
 	<DebugOverlay />
+	{#if dev}
+		<CoordinateMeasure />
+	{/if}
 </div>
 
 <style>

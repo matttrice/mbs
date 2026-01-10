@@ -315,6 +315,8 @@
 
 		// Combine rotation from layout and keyframe
 		const rotation = (layout.rotation ?? 0) + $tweenedRotation;
+		// Always set rotation as CSS variable for animations to use
+		style += `--layout-rotation: ${rotation}deg;`;
 		if (rotation !== 0) {
 			style += `transform: rotate(${rotation}deg);`;
 		}
@@ -464,8 +466,8 @@
 		animation-delay: var(--animation-delay, 0ms);
 	}
 	@keyframes fragmentFlyUp {
-		from { opacity: 0; transform: translateY(20px); }
-		to { opacity: 1; transform: translateY(0); }
+		from { opacity: 0; transform: translateY(20px) rotate(var(--layout-rotation, 0deg)); }
+		to { opacity: 1; transform: translateY(0) rotate(var(--layout-rotation, 0deg)); }
 	}
 
 	/* Fly Down */
@@ -474,8 +476,8 @@
 		animation-delay: var(--animation-delay, 0ms);
 	}
 	@keyframes fragmentFlyDown {
-		from { opacity: 0; transform: translateY(-20px); }
-		to { opacity: 1; transform: translateY(0); }
+		from { opacity: 0; transform: translateY(-20px) rotate(var(--layout-rotation, 0deg)); }
+		to { opacity: 1; transform: translateY(0) rotate(var(--layout-rotation, 0deg)); }
 	}
 
 	/* Fly Left */
@@ -484,8 +486,8 @@
 		animation-delay: var(--animation-delay, 0ms);
 	}
 	@keyframes fragmentFlyLeft {
-		from { opacity: 0; transform: translateX(20px); }
-		to { opacity: 1; transform: translateX(0); }
+		from { opacity: 0; transform: translateX(20px) rotate(var(--layout-rotation, 0deg)); }
+		to { opacity: 1; transform: translateX(0) rotate(var(--layout-rotation, 0deg)); }
 	}
 
 	/* Fly Right */
@@ -494,8 +496,8 @@
 		animation-delay: var(--animation-delay, 0ms);
 	}
 	@keyframes fragmentFlyRight {
-		from { opacity: 0; transform: translateX(-20px); }
-		to { opacity: 1; transform: translateX(0); }
+		from { opacity: 0; transform: translateX(-20px) rotate(var(--layout-rotation, 0deg)); }
+		to { opacity: 1; transform: translateX(0) rotate(var(--layout-rotation, 0deg)); }
 	}
 
 	/* Scale */
@@ -504,8 +506,8 @@
 		animation-delay: var(--animation-delay, 0ms);
 	}
 	@keyframes fragmentScale {
-		from { opacity: 0; transform: scale(0.9); }
-		to { opacity: 1; transform: scale(1); }
+		from { opacity: 0; transform: scale(0.9) rotate(var(--layout-rotation, 0deg)); }
+		to { opacity: 1; transform: scale(1) rotate(var(--layout-rotation, 0deg)); }
 	}
 
 	/* ========== SVG-specific Animations ========== */
@@ -549,7 +551,7 @@
 	/* Apply to regular elements (opacity for fade/fly animations) */
 	.revealed {
 		opacity: 1 !important;
-		transform: none !important;
+		/* Note: Don't reset transform here as it would override layout.rotation */
 	}
 	
 	/* Apply to SVG elements (clip-path for wipe animations) */

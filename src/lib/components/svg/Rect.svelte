@@ -21,6 +21,13 @@
 	 *   <Rect x={100} y={100} width={200} height={100} fill="#E8E8E8" stroke={{ width: 2, color: '#000' }} radius={8} />
 	 * </Fragment>
 	 * ```
+	 *
+	 * @example Rotated rectangle
+	 * ```svelte
+	 * <Fragment step={6} animate="fade">
+	 *   <Rect x={100} y={100} width={200} height={50} fill="#E8E8E8" rotation={45} />
+	 * </Fragment>
+	 * ```
 	 */
 	interface Props {
 		/** X position on canvas (960×540) */
@@ -39,9 +46,11 @@
 		radius?: number;
 		/** Z-index for stacking order */
 		zIndex?: number;
+		/** Rotation in degrees (rotates around center) */
+		rotation?: number;
 	}
 
-	let { x, y, width, height, fill, stroke, radius = 0, zIndex = 1 }: Props = $props();
+	let { x, y, width, height, fill, stroke, radius = 0, zIndex = 1, rotation = 0 }: Props = $props();
 
 	const strokeWidth = $derived(stroke?.width ?? 0);
 	const strokeColor = $derived(stroke?.color ?? '#000000');
@@ -49,13 +58,17 @@
 
 	// Calculate perimeter for draw animation
 	const perimeter = $derived(2 * (width + height));
+
+	// Calculate center point for rotation
+	const centerX = $derived(width / 2);
+	const centerY = $derived(height / 2);
 </script>
 
 <svg
 	class="svg-rect"
 	width={width}
 	height={height}
-	style="position: absolute; left: {x}px; top: {y}px; overflow: visible; pointer-events: none; z-index: {zIndex}; --path-length: {perimeter};"
+	style="position: absolute; left: {x}px; top: {y}px; overflow: visible; pointer-events: none; z-index: {zIndex}; --path-length: {perimeter};{rotation !== 0 ? ` transform: rotate(${rotation}deg); transform-origin: center center;` : ''}"
 >
 	<rect
 		x={strokeWidth / 2}
