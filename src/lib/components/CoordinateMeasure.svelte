@@ -210,7 +210,7 @@
 				arrowCoords = `from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }}${bow !== 0 ? ` bow={${bow}}` : ''}${flip ? ' flip' : ''}`;
 				
 				// Visual overlay for point-to-point: calculate bounding box with padding
-				const padding = 10;
+				const padding = 2;
 				const minX = Math.min(from.x, to.x) - padding;
 				const minY = Math.min(from.y, to.y) - padding;
 				const maxX = Math.max(from.x, to.x) + padding;
@@ -242,7 +242,7 @@
 			arrowCoords = `from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }}`;
 			
 			// Visual overlay: calculate bounding box with padding
-			const padding = 10;
+			const padding = 2;
 			const minX = Math.min(from.x, to.x) - padding;
 			const minY = Math.min(from.y, to.y) - padding;
 			const maxX = Math.max(from.x, to.x) + padding;
@@ -267,7 +267,7 @@
 			
 			// Visual overlay: calculate bounding box with padding accounting for curve
 			// Arc peaks at midpoint, so use ~70% of curve for bounding box estimate
-			const padding = 10;
+			const padding = 2;
 			const curveExtent = Math.abs(curve) * 0.7;
 			const minX = Math.min(from.x, to.x) - padding;
 			const maxX = Math.max(from.x, to.x) + padding;
@@ -291,7 +291,7 @@
 			ellipseComponent = `cx={${cx}} cy={${cy}} rx={${rx}} ry={${ry}}`;
 			
 			// Visual overlay: bounding box around ellipse
-			const padding = 5;
+			const padding = 2;
 			startPos = { x: cx - rx - padding, y: cy - ry - padding };
 			currentPos = { x: cx + rx + padding, y: cy + ry + padding };
 			fragmentLayout = '';
