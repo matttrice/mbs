@@ -17,7 +17,7 @@
 <!-- Static scripture text -->
 <Fragment
 	layout={{ x: 102, y: 60, width: 762, height: 148 }}
-	font={{ font_size: 23.3 }}
+	font={{ font_size: 23.3, wrap: true}}
 	zIndex={1}
 >
 	But if Christ is in you, your body is dead because of sin, yet your spiritis alive because of righteousness. 11 And if the Spirit of him who raised Jesus from the dead is living in you, he who raised Christ from the dead will also give life to your mortal bodies through his Spirit,who lives in you.

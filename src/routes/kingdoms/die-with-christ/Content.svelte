@@ -8,7 +8,7 @@
 
 <!-- Title: Romans 6:1-11 -->
 <Fragment
-	layout={{ x: 49, y: 8, width: 864, height: 44 }}
+	layout={{ x: 50, y: 25, width: 200, height: 44 }}
 	font={{ font_size: 26.7, bold: true }}
 	zIndex={0}
 >
@@ -17,8 +17,8 @@
 
 <!-- Static scripture text -->
 <Fragment
-	layout={{ x: 102, y: 42, width: 774, height: 272 }}
-	font={{ wrap: true, font_size: 18.3, color: '#000000' }}
+	layout={{ x: 50, y: 42, width: 800, height: 272 }}
+	font={{ wrap: true, font_size: 18, color: '#000000' }}
 	zIndex={1}
 >
 	What shall we say then? Are we to continue in sin so that grace may increase? 2 May it never be! How shall we who died to sin still live in it? 3 Or do you not know that all of us who have been baptized into Christ Jesus have been baptized into His death? 4 Therefore we have been buried with Him through baptism into death, so that as Christ was raised from the dead through the glory of the Father, so we too might walk in newness of life. 5 For if we have become united with Him in the likeness of His death, certainly we shall also be in the likeness of His resurrection,8 Now if we have died with Christ, we believe that we shall also live with Him,9 knowing that Christ, having been raised from the dead, is never to die again; death no longer is master over Him. 10 For the death that He died, He died to sin once for all; but the life that He lives, He lives to God. 11 Even so consider yourselves to be dead to sin, but alive to God in Christ Jesus.
@@ -48,12 +48,11 @@
 <!-- Step 3: Ephesians 2:1-5 -->
 <Fragment
 	step={3}
-	layout={{ x: 102, y: 321, width: 762, height: 190 }}
-	font={{ wrap: true, font_size: 23.3, bold: true }}
+	layout={{ x: 50, y: 321, width: 800, height: 190 }}
+	font={{ wrap: true, font_size: 18 }}
 	zIndex={2}
-	animate="fade"
 >
-	Ephesians 2:1-5And you were dead in your trespasses and sins, 2 in which you formerly walked according to the course of this world, according to the prince of the power of the air, of the spirit that is now working in the sons of disobedience.3 Among them we too all formerly lived in the lusts of our flesh, indulging the desires of the flesh and of the mind, and were by nature children of wrath, even as the rest. 4 But God, being rich in mercy, because of His great love with which He loved us, 5 even when we were dead in our transgressions, made us alive together with Christ (by grace you have been saved),
+	Ephesians 2:1-5 And you were dead in your trespasses and sins, 2 in which you formerly walked according to the course of this world, according to the prince of the power of the air, of the spirit that is now working in the sons of disobedience.3 Among them we too all formerly lived in the lusts of our flesh, indulging the desires of the flesh and of the mind, and were by nature children of wrath, even as the rest. 4 But God, being rich in mercy, because of His great love with which He loved us, 5 even when we were dead in our transgressions, made us alive together with Christ (by grace you have been saved),
 </Fragment>
 
 <!-- Step 4: Question: Dead in sins; Saved by grace; Alive with Christ – how? -->
