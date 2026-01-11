@@ -195,6 +195,22 @@
 				<span class="arrow">→</span>
 			</div>
 		</a>
+		<a href="/priesthood" class="lesson-card">
+			<div class="lesson-content">
+				<h2>11. The Priesthood</h2>
+				<p>Levitical vs. Melchizedekian: Physical and Spiritual Priesthoods</p>
+			</div>
+			<div class="lesson-actions">
+				<button 
+					class="reset-btn" 
+					onclick={(e) => startFresh(e, 'priesthood', '/priesthood')}
+					title="Reset progress and start fresh"
+				>
+					Reset
+				</button>
+				<span class="arrow">→</span>
+			</div>
+		</a>
 	</nav>
 </div>
 
