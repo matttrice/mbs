@@ -211,6 +211,22 @@
 				<span class="arrow">→</span>
 			</div>
 		</a>
+		<a href="/birthrights" class="lesson-card">
+			<div class="lesson-content">
+				<h2>12. Birthrights</h2>
+				<p>Physical and Spiritual Birth - Esau vs Jacob, 1st Adam vs 2nd Adam</p>
+			</div>
+			<div class="lesson-actions">
+				<button 
+					class="reset-btn" 
+					onclick={(e) => startFresh(e, 'birthrights', '/birthrights')}
+					title="Reset progress and start fresh"
+				>
+					Reset
+				</button>
+				<span class="arrow">→</span>
+			</div>
+		</a>
 	</nav>
 </div>
 

@@ -12,7 +12,7 @@ Details explaining the extracted json data is in [hsu-extractor copilot-instruct
 ## Your approch to planning the json to svelte conversion:
 First analyze the json structure to identify all the custom shows, linked slides and main slides.
 Plan to begin with the `custom_shows.{N}.slide_numbers` which is a list of ids to the linked_slides object and most dependent in relational model.
-- **json: `custom_shows{}`** are Multi-slide sequences but maybe single slides in which case create simple +page.svelte route. For multiple slide references, Create +page.svelte [CustomShowProvider](../../src/lib/components/CustomShowProvider.svelte) to aggregate route slides components. This is the **Content.svelte pattern** documented in copilot-instructions.
+- **json: `custom_shows{}`** are Define multi-slide sequences but may contain only a single slide reference in which case create simple +page.svelte route with the customshow name. When multiple slides are referenced you have 2 options: Create its associated slides as separate routes using the +page.svelte [CustomShowProvider](../../src/lib/components/CustomShowProvider.svelte) **Content.svelte pattern** to aggregate many slide routes to the custom show route, or optionally create each slide in a Content{N}.svelte files in the same route and aggregate to the +page.svelte file in the same route. 
 
 With the reamaining linked_slides define individual slide routes:
 - **json:`linked_slides{}`** - Individual scripture/drill slides → create`routes/{lesson}/{reference}/+page.svelte` These may have already been crreated with custom_shows Content.svelte. If not, create the standard +page.svelte with <Slide> object and any fragments.

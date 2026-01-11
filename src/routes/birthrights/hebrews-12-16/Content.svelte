@@ -1,0 +1,22 @@
+<script lang="ts">
+	import Fragment from '$lib/components/Fragment.svelte';
+</script>
+
+<div class="slide-bg scripture"></div>
+
+<!-- Title -->
+<Fragment
+	layout={{ x: 91, y: 8, width: 756, height: 44 }}
+	font={{ font_size: 36, bold: true }}
+>
+	Hebrews 12:16
+</Fragment>
+
+<!-- Step 1: Scripture text -->
+<Fragment
+	step={1}
+	layout={{ x: 91, y: 48, width: 762, height: 454 }}
+	font={{ font_size: 26.7, wrap: true }}
+>
+	See that no one is sexually immoral, or is godless like Esau, who for a single meal sold his inheritance rights as the oldest son. 17Afterward, as you know, when he wanted to inherit this blessing, he was rejected. He could bring about no change of mind, though he sought the blessing with tears.
+</Fragment>
