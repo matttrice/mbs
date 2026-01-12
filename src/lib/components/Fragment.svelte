@@ -86,6 +86,12 @@
 		 * Use for nested drills that should return to their caller.
 		 */
 		returnHere?: boolean;
+		/**
+		 * If true, this fragment auto-drills on next click after being revealed.
+		 * Works independently of the global autoDrillAll toggle.
+		 * When autoDrillAll is enabled, all drillTo fragments auto-drill regardless of this prop.
+		 */
+		autoDrill?: boolean;
 		/** Position and dimensions for absolute placement within the slide canvas. */
 		layout?: BoxLayout;
 		/** Font styling (size, weight, color, alignment). */
@@ -117,6 +123,7 @@
 		delay,
 		drillTo,
 		returnHere = false,
+		autoDrill = false,
 		layout,
 		font,
 		fill,
@@ -245,16 +252,24 @@
 	
 	onMount(() => {
 		// Handle drill registration (needs setTimeout for step normalization)
-		if (drillTo && step !== undefined) {
+		// Register if: has drillTo AND (has step OR autoDrill for static content)
+		if (drillTo && (step !== undefined || autoDrill)) {
 			setTimeout(() => {
-				const normalized = getNormalizedStep(step, slideContext);
-				if (normalized !== undefined) {
-					const effectiveNormalized = getEffectiveStep(normalized);
-					// Use slideIndex for slide-aware drill target registration (0 for drills)
-					const slideIdx = slideContext?.slideIndex ?? 0;
-					navigation.registerDrillTarget(slideIdx, effectiveNormalized, drillTo, returnHere);
-					registeredNormalizedStep = effectiveNormalized;
-					registeredSlideIndex = slideIdx;
+				// For static content (no step), register at step 0
+				const effectiveNormalized = step !== undefined 
+					? getEffectiveStep(getNormalizedStep(step, slideContext) ?? step)
+					: 0;
+				// Use slideIndex for slide-aware drill target registration (0 for drills)
+				const slideIdx = slideContext?.slideIndex ?? 0;
+				navigation.registerDrillTarget(slideIdx, effectiveNormalized, drillTo, returnHere, autoDrill);
+				registeredNormalizedStep = effectiveNormalized;
+				registeredSlideIndex = slideIdx;
+				
+				// For static content or any autoDrill target, check if we're at the current position
+				// and set pending drill if needed. This handles the case where content is already
+				// visible at fragment 0 and should auto-drill on first click.
+				if (autoDrill || step === undefined) {
+					navigation.checkAutoDrillAtCurrentPosition(slideIdx, effectiveNormalized);
 				}
 			}, 0);
 		}

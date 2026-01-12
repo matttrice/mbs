@@ -29,6 +29,7 @@
 
 	<!-- Genesis 25:27-34 (top left hyperlink) -->
 	<Fragment
+		autoDrill
 		drillTo="birthrights/genesis-25-27"
 		layout={{ x: 69, y: 2, width: 190, height: 32 }}
 		font={{ font_size: 20, bold: true, align: 'center', v_align: 'middle' }}
@@ -906,15 +907,9 @@
 	>
 		Baptism = Death, Burial & Resurrection1John 5:7, Rev. 20:6
 	</Fragment>
-
-	<!-- Step 39 (with): Arrow from box to John 3:3 area -->
-	<Fragment step={39} animate="fade">
-		<Arrow from={{ x: 634, y: 65 }} to={{ x: 634, y: 84 }} stroke={{ width: 8, color: '#0000FF' }} zIndex={103} />
-	</Fragment>
 	<!-- Step 39: Birth-process to receive the Holy Spirit -->
     <Fragment
         step={39}
-        drillTo="birthrights/body-complete"
         layout={{ x: 635, y: 41, width: 260, height: 44 }}
         line={{ color: '#000000' }}
         font={{ font_size: 15, bold: true, wrap: true, align: 'center', v_align: 'middle' }}
@@ -922,4 +917,8 @@
     >
         Birth-process to receive the Holy Spirit is always the same!
     </Fragment>
+	<!-- Step 39 (with): Arrow from box to John 3:3 area -->
+	<Fragment step={39} animate="fade">
+		<Arrow from={{ x: 634, y: 65 }} to={{ x: 634, y: 84 }} stroke={{ width: 8, color: '#0000FF' }} zIndex={103} />
+	</Fragment>
 </Slide>

@@ -18,6 +18,7 @@
 	<!-- Drill into the body-complete custom show -->
 	<Fragment
 		drillTo="birthrights/body-complete"
+		autoDrill
 		layout={{ x: 280, y: 220, width: 400, height: 100 }}
 		font={{ font_size: 32, bold: true, color: '#0000CC' }}
 		fill="var(--color-bg-light)"

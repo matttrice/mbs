@@ -122,12 +122,14 @@ export interface NavigationContext {
 	returnHere: boolean;                // If true, this drill returns to its caller, not origin
 	autoDrillAll: boolean;              // If true, all drillTo fragments auto-drill on next click (not just last)
 	pendingAutoDrill: DrillTargetInfo | null;  // Pending drill to execute on next click (fragment shown first)
+	lastCompletedDrill: string | null;  // The last drill target that was completed (prevents re-triggering)
 }
 
 // Drill target info registered by Fragment components
 export interface DrillTargetInfo {
 	target: string;         // The route to drill into
-	returnHere: boolean;     // If true, the drilled content returns to this drill, not origin
+	returnHere: boolean;    // If true, the drilled content returns to this drill, not origin
+	autoDrill: boolean;     // If true, this fragment auto-drills on next click (independent of autoDrillAll)
 }
 
 // Slide definition for a presentation

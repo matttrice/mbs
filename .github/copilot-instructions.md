@@ -73,6 +73,7 @@ The `Fragment` component handles all slide content - from simple text to fully-p
 | `keyframes` | `Keyframe[]` | Step-based motion: `[{ step: 2, x: 100 }, { step: 3, x: 200 }]` |
 | `transition` | `TransitionConfig` | Motion config: `{ duration?: number, easing?: function }` |
 | `returnHere` | `boolean` | Return to this drill (not origin) after nested drill completes |
+| `autoDrill` | `boolean` | Auto-drill on next click after being revealed (independent of global autoDrillAll toggle). Defaults to `false`. |
 
 ### BoxFont Properties
 

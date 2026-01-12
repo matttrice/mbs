@@ -487,7 +487,7 @@ describe('Navigation Store - Auto-Drill Functionality', () => {
 		navigation.registerDrillTarget(0, 5, 'life/1thessalonians.5.23');
 		
 		const state = get(navigation);
-		expect(state.drillTargets['0:5']).toEqual({ target: 'life/1thessalonians.5.23', returnHere: false });
+		expect(state.drillTargets['0:5']).toEqual({ target: 'life/1thessalonians.5.23', returnHere: false, autoDrill: false });
 	});
 
 	it('unregisters drill target when unregisterDrillTarget is called', () => {
@@ -677,7 +677,7 @@ describe('Navigation Store - Return to Parent Functionality', () => {
 		navigation.registerDrillTarget(0, 5, 'life/nested', true);
 		
 		const state = get(navigation);
-		expect(state.drillTargets['0:5']).toEqual({ target: 'life/nested', returnHere: true });
+		expect(state.drillTargets['0:5']).toEqual({ target: 'life/nested', returnHere: true, autoDrill: false });
 	});
 
 	it('returns here instead of origin when returnHere is true', () => {
@@ -934,7 +934,7 @@ describe('Navigation Store - Auto-Drill All Mode', () => {
 		expect(get(navigation).current.fragment).toBe(3);
 		
 		// Check that pendingAutoDrill is set
-		expect(get(navigation).pendingAutoDrill).toEqual({ target: 'life/test-drill', returnHere: false });
+		expect(get(navigation).pendingAutoDrill).toEqual({ target: 'life/test-drill', returnHere: false, autoDrill: false });
 		
 		// Next click should execute the pending drill
 		navigation.next();
@@ -967,10 +967,345 @@ describe('Navigation Store - Auto-Drill All Mode', () => {
 		navigation.registerDrillTarget(0, 5, 'life/another-drill');
 		navigation.next(); // 5 - sets pending for fragment 5
 		expect(get(navigation).current.fragment).toBe(5);
-		expect(get(navigation).pendingAutoDrill).toEqual({ target: 'life/another-drill', returnHere: false });
+		expect(get(navigation).pendingAutoDrill).toEqual({ target: 'life/another-drill', returnHere: false, autoDrill: false });
 		
 		// Next should execute the pending drill
 		navigation.next();
 		expect(get(navigation).current.presentation).toBe('life/another-drill');
+	});
+});
+
+describe('Navigation Store - Per-Fragment autoDrill', () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		localStorage.clear();
+		// Disable global autoDrillAll to test per-fragment behavior
+		navigation.setAutoDrillAll(false);
+		navigation.init('life', [9, 15, 12]);
+	});
+
+	it('registers autoDrill flag when registerDrillTarget is called with autoDrill=true', () => {
+		navigation.registerDrillTarget(0, 5, 'life/test', false, true);
+		
+		const state = get(navigation);
+		expect(state.drillTargets['0:5']).toEqual({ target: 'life/test', returnHere: false, autoDrill: true });
+	});
+
+	it('auto-drills at mid-slide step when per-fragment autoDrill is true (and autoDrillAll is false)', () => {
+		// Register a drillTo with autoDrill=true
+		navigation.registerDrillTarget(0, 5, 'life/per-fragment-drill', false, true);
+		
+		// Navigate to fragment 5
+		navigation.next(); // 1
+		navigation.next(); // 2
+		navigation.next(); // 3
+		navigation.next(); // 4
+		navigation.next(); // 5 - sets pending auto-drill because per-fragment autoDrill is true
+		expect(get(navigation).current.fragment).toBe(5);
+		expect(get(navigation).pendingAutoDrill).toEqual({ target: 'life/per-fragment-drill', returnHere: false, autoDrill: true });
+		
+		// Next click should execute the pending drill
+		navigation.next();
+		expect(get(navigation).current.presentation).toBe('life/per-fragment-drill');
+	});
+
+	it('does NOT auto-drill when per-fragment autoDrill is false (and autoDrillAll is false)', () => {
+		// Register a drillTo with autoDrill=false (default)
+		navigation.registerDrillTarget(0, 5, 'life/no-auto-drill', false, false);
+		
+		// Navigate to fragment 5
+		navigation.next(); // 1
+		navigation.next(); // 2
+		navigation.next(); // 3
+		navigation.next(); // 4
+		navigation.next(); // 5 - should NOT set pending auto-drill
+		expect(get(navigation).current.fragment).toBe(5);
+		expect(get(navigation).pendingAutoDrill).toBeNull();
+	});
+
+	it('auto-drills at end of slide when per-fragment autoDrill is true at maxFragment', () => {
+		// Re-init with 5 fragments so we can test at maxFragment
+		navigation.init('life', [5]);
+		
+		// Register at maxFragment (5) with autoDrill=true
+		navigation.registerDrillTarget(0, 5, 'life/end-drill', false, true);
+		
+		// Navigate to fragment 5 (maxFragment)
+		navigation.next(); // 1
+		navigation.next(); // 2
+		navigation.next(); // 3
+		navigation.next(); // 4
+		navigation.next(); // 5 - sets pending for autoDrill
+		expect(get(navigation).current.fragment).toBe(5);
+		
+		// Next should execute the auto-drill
+		navigation.next();
+		expect(get(navigation).current.presentation).toBe('life/end-drill');
+	});
+
+	it('global autoDrillAll overrides per-fragment autoDrill=false', () => {
+		// Enable global autoDrillAll
+		navigation.setAutoDrillAll(true);
+		
+		// Register a drillTo with autoDrill=false
+		navigation.registerDrillTarget(0, 5, 'life/override-drill', false, false);
+		
+		// Navigate to fragment 5
+		navigation.next(); // 1
+		navigation.next(); // 2
+		navigation.next(); // 3
+		navigation.next(); // 4
+		navigation.next(); // 5 - should still set pending because autoDrillAll is enabled
+		expect(get(navigation).current.fragment).toBe(5);
+		expect(get(navigation).pendingAutoDrill).toEqual({ target: 'life/override-drill', returnHere: false, autoDrill: false });
+	});
+
+	it('checkAutoDrillAtCurrentPosition sets pending for static content (step 0) with autoDrill', () => {
+		// Start at fragment 0 (default init state)
+		expect(get(navigation).current.fragment).toBe(0);
+		
+		// Register a drillTo at step 0 with autoDrill=true (like static content)
+		navigation.registerDrillTarget(0, 0, 'life/static-drill', false, true);
+		
+		// Call checkAutoDrillAtCurrentPosition (this is what Fragment does after registration)
+		navigation.checkAutoDrillAtCurrentPosition(0, 0);
+		
+		// Pending should be set immediately since we're at position 0:0
+		expect(get(navigation).pendingAutoDrill).toEqual({ target: 'life/static-drill', returnHere: false, autoDrill: true });
+		
+		// Next click should execute the pending drill
+		navigation.next();
+		expect(get(navigation).current.presentation).toBe('life/static-drill');
+	});
+
+	it('checkAutoDrillAtCurrentPosition does NOT set pending when not at matching position', () => {
+		// Navigate to fragment 3 first
+		navigation.next(); // 1
+		navigation.next(); // 2
+		navigation.next(); // 3
+		expect(get(navigation).current.fragment).toBe(3);
+		
+		// Register a drillTo at step 0 with autoDrill=true
+		navigation.registerDrillTarget(0, 0, 'life/static-drill', false, true);
+		
+		// Call checkAutoDrillAtCurrentPosition for step 0 - should not set pending since we're at step 3
+		navigation.checkAutoDrillAtCurrentPosition(0, 0);
+		
+		// Pending should NOT be set because we're at fragment 3, not 0
+		expect(get(navigation).pendingAutoDrill).toBeNull();
+	});
+
+	it('checkAutoDrillAtCurrentPosition sets pending when autoDrillAll is enabled (even if per-fragment autoDrill is false)', () => {
+		// Enable global autoDrillAll
+		navigation.setAutoDrillAll(true);
+		
+		// Start at fragment 0
+		expect(get(navigation).current.fragment).toBe(0);
+		
+		// Register a drillTo at step 0 with autoDrill=false
+		navigation.registerDrillTarget(0, 0, 'life/global-auto-drill', false, false);
+		
+		// Call checkAutoDrillAtCurrentPosition
+		navigation.checkAutoDrillAtCurrentPosition(0, 0);
+		
+		// Pending should be set because autoDrillAll is enabled
+		expect(get(navigation).pendingAutoDrill).toEqual({ target: 'life/global-auto-drill', returnHere: false, autoDrill: false });
+	});
+
+	it('checkAutoDrillAtCurrentPosition does NOT set pending when both autoDrillAll and autoDrill are false', () => {
+		// autoDrillAll is already false from beforeEach
+		expect(get(navigation).current.fragment).toBe(0);
+		
+		// Register a drillTo at step 0 with autoDrill=false
+		navigation.registerDrillTarget(0, 0, 'life/no-auto', false, false);
+		
+		// Call checkAutoDrillAtCurrentPosition
+		navigation.checkAutoDrillAtCurrentPosition(0, 0);
+		
+		// Pending should NOT be set
+		expect(get(navigation).pendingAutoDrill).toBeNull();
+	});
+
+	it('does NOT re-trigger drill after returning from it (lastCompletedDrill check)', () => {
+		// This test simulates the EXACT flow that caused the infinite loop bug:
+		// 1. Advance to slide with autoDrill at fragment 0
+		// 2. Execute the drill
+		// 3. Return from drill
+		// 4. init() is called (as page component would)
+		// 5. Fragment re-registers and calls checkAutoDrillAtCurrentPosition
+		// 6. Should NOT re-trigger the same drill
+		
+		// Set up: slide 0 has 3 fragments, slide 1 has 5 fragments
+		navigation.init('life', [3, 5]);
+		
+		// Register autoDrill at slide 1, fragment 0 (static content)
+		navigation.registerDrillTarget(1, 0, 'life/slide2-drill', false, true);
+		
+		// Navigate through slide 0 to reach slide 1
+		for (let i = 0; i < 3; i++) navigation.next();
+		navigation.next(); // Advance to slide 1 - sets pending auto-drill
+		
+		expect(get(navigation).current.slide).toBe(1);
+		expect(get(navigation).pendingAutoDrill).toEqual({ target: 'life/slide2-drill', returnHere: false, autoDrill: true });
+		
+		// Execute the pending drill
+		navigation.next();
+		expect(get(navigation).current.presentation).toBe('life/slide2-drill');
+		
+		// Set up drill state and return
+		navigation.setMaxFragment(2);
+		navigation.next(); // 1
+		navigation.next(); // 2
+		navigation.next(); // End - triggers return to origin
+		
+		// After return, we're back at life on slide 1, fragment 0
+		expect(get(navigation).current.presentation).toBe('life');
+		expect(get(navigation).current.slide).toBe(1);
+		expect(get(navigation).current.fragment).toBe(0);
+		
+		// Simulate what page component does: init() and Fragment re-registration
+		navigation.init('life', [3, 5]);
+		
+		// Fragment re-registers the drill target
+		navigation.registerDrillTarget(1, 0, 'life/slide2-drill', false, true);
+		
+		// Fragment calls checkAutoDrillAtCurrentPosition after registration
+		navigation.checkAutoDrillAtCurrentPosition(1, 0);
+		
+		// CRITICAL: pendingAutoDrill should NOT be set because we just returned from this drill
+		expect(get(navigation).pendingAutoDrill).toBeNull();
+		
+		// Verify lastCompletedDrill is set
+		expect(get(navigation).lastCompletedDrill).toBe('life/slide2-drill');
+	});
+
+	it('allows re-triggering drill after navigating away and back', () => {
+		// After returning from a drill, if user navigates away and comes back,
+		// the drill should be triggerable again
+		
+		navigation.init('life', [3, 5]);
+		
+		// Register autoDrill at slide 1, fragment 0
+		navigation.registerDrillTarget(1, 0, 'life/slide2-drill', false, true);
+		
+		// Navigate to slide 1 and trigger the drill
+		for (let i = 0; i < 3; i++) navigation.next();
+		navigation.next(); // Advance to slide 1
+		navigation.next(); // Execute pending drill
+		
+		expect(get(navigation).current.presentation).toBe('life/slide2-drill');
+		
+		// Return from drill
+		navigation.setMaxFragment(1);
+		navigation.next();
+		navigation.next();
+		
+		// Back at life, slide 1
+		expect(get(navigation).current.presentation).toBe('life');
+		expect(get(navigation).lastCompletedDrill).toBe('life/slide2-drill');
+		
+		// Simulate re-init
+		navigation.init('life', [3, 5]);
+		navigation.registerDrillTarget(1, 0, 'life/slide2-drill', false, true);
+		navigation.checkAutoDrillAtCurrentPosition(1, 0);
+		
+		// Drill should NOT trigger (we just returned)
+		expect(get(navigation).pendingAutoDrill).toBeNull();
+		
+		// User navigates to next fragment
+		navigation.next();
+		expect(get(navigation).current.fragment).toBe(1);
+		
+		// lastCompletedDrill should be cleared
+		expect(get(navigation).lastCompletedDrill).toBeNull();
+		
+		// User goes back to fragment 0 (via prev)
+		navigation.prev();
+		expect(get(navigation).current.fragment).toBe(0);
+		
+		// Re-register and check - NOW it should set pending
+		navigation.registerDrillTarget(1, 0, 'life/slide2-drill', false, true);
+		navigation.checkAutoDrillAtCurrentPosition(1, 0);
+		
+		expect(get(navigation).pendingAutoDrill).toEqual({ target: 'life/slide2-drill', returnHere: false, autoDrill: true });
+	});
+
+	it('clears lastCompletedDrill when advancing to next fragment', () => {
+		navigation.init('life', [5]);
+		
+		// Manually set lastCompletedDrill (simulating return from drill)
+		// We need to use the store's internals for this test
+		navigation.registerDrillTarget(0, 0, 'life/test-drill', false, true);
+		navigation.checkAutoDrillAtCurrentPosition(0, 0);
+		navigation.next(); // Execute pending
+		
+		expect(get(navigation).current.presentation).toBe('life/test-drill');
+		
+		// Return
+		navigation.setMaxFragment(1);
+		navigation.next();
+		navigation.next();
+		
+		expect(get(navigation).lastCompletedDrill).toBe('life/test-drill');
+		
+		// Re-init and advance
+		navigation.init('life', [5]);
+		navigation.next();
+		
+		// lastCompletedDrill should be cleared
+		expect(get(navigation).lastCompletedDrill).toBeNull();
+	});
+
+	it('clears lastCompletedDrill when advancing to next slide', () => {
+		navigation.init('life', [3, 5]);
+		
+		// Navigate to slide 1, trigger drill, return
+		navigation.registerDrillTarget(1, 0, 'life/slide2-drill', false, true);
+		for (let i = 0; i < 3; i++) navigation.next();
+		navigation.next(); // To slide 1
+		navigation.next(); // Execute drill
+		
+		navigation.setMaxFragment(1);
+		navigation.next();
+		navigation.next(); // Return
+		
+		expect(get(navigation).lastCompletedDrill).toBe('life/slide2-drill');
+		
+		// Re-init and go through slide 1 to slide 2 (if we had one)
+		navigation.init('life', [3, 5, 3]);
+		
+		// Advance through slide 1's fragments
+		for (let i = 0; i < 5; i++) navigation.next();
+		
+		// Advance to slide 2
+		navigation.next();
+		
+		// lastCompletedDrill should be cleared
+		expect(get(navigation).lastCompletedDrill).toBeNull();
+	});
+
+	it('sets pending auto-drill when advancing to a new slide with autoDrill at fragment 0', () => {
+		// Start at slide 0
+		expect(get(navigation).current.slide).toBe(0);
+		
+		// Register a drillTo at slide 1, step 0 with autoDrill=true (like static content on Slide2)
+		navigation.registerDrillTarget(1, 0, 'life/slide2-drill', false, true);
+		
+		// Navigate through slide 0 to reach its end (maxFragment is 9 for slide 0)
+		for (let i = 0; i < 9; i++) {
+			navigation.next();
+		}
+		expect(get(navigation).current.slide).toBe(0);
+		expect(get(navigation).current.fragment).toBe(9);
+		
+		// Next click should advance to slide 1 and set pending auto-drill
+		navigation.next();
+		expect(get(navigation).current.slide).toBe(1);
+		expect(get(navigation).current.fragment).toBe(0);
+		expect(get(navigation).pendingAutoDrill).toEqual({ target: 'life/slide2-drill', returnHere: false, autoDrill: true });
+		
+		// Next click should execute the pending drill
+		navigation.next();
+		expect(get(navigation).current.presentation).toBe('life/slide2-drill');
 	});
 });
