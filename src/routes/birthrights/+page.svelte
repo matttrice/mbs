@@ -5,9 +5,10 @@
 	// Import slide components
 	import Slide1 from './slides/Slide1.svelte';
 	import Slide2 from './slides/Slide2.svelte';
+	import Slide3 from './slides/Slide3.svelte';
 </script>
 
-<PresentationProvider name="birthrights" slideCount={2}>
+<PresentationProvider name="birthrights" slideCount={3}>
 	<div class="presentation">
 
 		<div class="slide-container">
@@ -18,11 +19,14 @@
 			<div class="slide-wrapper" class:active={$currentSlide === 1}>
 				<Slide2 slideIndex={1} />
 			</div>
+			<div class="slide-wrapper" class:active={$currentSlide === 2}>
+				<Slide3 slideIndex={2} />
+			</div>
 		</div>
 
 		<!-- Slide indicator dots -->
 		<div class="slide-indicators">
-			{#each {length: 2} as _, index}
+			{#each {length: 3} as _, index}
 				<button 
 					class="indicator-dot"
 					class:active={$currentSlide === index}
@@ -35,7 +39,3 @@
 		</div>
 	</div>
 </PresentationProvider>
-
-<style>
-	/* All presentation styles now in $lib/styles/presentation.css */
-</style>

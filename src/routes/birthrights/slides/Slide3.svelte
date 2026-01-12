@@ -1,8 +1,7 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
-
+	
 	/**
 	 * Slide 4: The End
 	 * Canvas: 960 x 540 pixels (16:9 aspect ratio)
@@ -18,7 +17,6 @@
 
 <Slide {slideIndex}>
 	<div class="slide-bg"></div>
-	<ReferenceOverlay src="/export/03-Biblical_Time/Slide4.png" />
 
 	<!-- ===== STATIC CONTENT ===== -->
 	<!-- The End -->

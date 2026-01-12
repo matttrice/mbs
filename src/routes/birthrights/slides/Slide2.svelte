@@ -9,14 +9,19 @@
 	let { slideIndex }: Props = $props();
 </script>
 
+<!--
+	Slide 3: Entry point that drills into the body-complete custom show.
+-->
 <Slide {slideIndex}>
 	<div class="slide-bg"></div>
 
-	<!-- Static: End of lesson -->
+	<!-- Drill into the body-complete custom show -->
 	<Fragment
-		layout={{ x: 99, y: 33, width: 633, height: 72 }}
-		font={{ font_size: 59.2, bold: true }}
+		drillTo="birthrights/body-complete"
+		layout={{ x: 280, y: 220, width: 400, height: 100 }}
+		font={{ font_size: 32, bold: true, color: '#0000CC' }}
+		fill="var(--color-bg-light)"
 	>
-		End of lesson
+		Formation of the Body →
 	</Fragment>
 </Slide>
