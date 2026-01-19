@@ -15,6 +15,7 @@
 	--color-bg-ghost: #ffffff;
 	--color-bg-darkest: #000000;
 	--color-bg-cmd-law: #FD8017;
+	--color-bg-muted: #666666;
 	--color-bg-danger: #FF0000;
 	--color-bg-danger-dark: #cc0000;
 	--color-bg-blood: #b01a1a;
@@ -22,9 +23,11 @@
 	--color-text-primary: #000000;
 	--color-text-muted: #666666;
 	--color-text-bright: #f804fc;
+	--color-text-light: #ffffff;
 
 	/* Accent colors */
-	--color-highlight: #ffd700;
+	--color-highlight: #ffff00;
+	--color-highlight-dark: #ccaa00;
 
 
 	--color-success: #00aa00;

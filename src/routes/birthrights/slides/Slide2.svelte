@@ -23,6 +23,7 @@
 		font={{ font_size: 32, bold: true, color: '#0000CC' }}
 		fill="var(--color-bg-light)"
 	>
-		Formation of the Body →
+		Formation of the Body → <br/>
+		1 Corinthians 15:45-49
 	</Fragment>
 </Slide>

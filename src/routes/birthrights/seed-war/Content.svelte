@@ -1,13 +1,16 @@
 <script lang="ts">
 	import Fragment from '$lib/components/Fragment.svelte';
+    import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
 	import { Arrow } from '$lib/components/svg';
 </script>
 
 <div class="slide-bg scripture"></div>
 
+<ReferenceOverlay src="/export/11-Birthrights/Slide8.png" />	
+
 <!-- Title -->
 <Fragment
-	layout={{ x: 72, y: 5, width: 276, height: 49 }}
+	layout={{ x: 80, y: 5, width: 200, height: 49 }}
 	font={{ font_size: 36, bold: true }}
 >
 	Genesis 3:13
@@ -25,29 +28,29 @@
 <!-- Step 2: Genesis 3:14 verse -->
 <Fragment
 	step={2}
-	layout={{ x: 76, y: 113, width: 781, height: 210 }}
+	layout={{ x: 76, y: 127, width: 400, height: 200 }}
 	font={{ font_size: 26.7, wrap: true }}
 >
-	14 So the LORD God said to the serpent, "Because you have done this, "Cursed are you above all the livestock and all the wild animals! You will crawl on your belly and you will eat dust all the days of your life.
+	<sup>14</sup> So the LORD God said to the serpent, "Because you have done this, "Cursed are you above all the livestock and all the wild animals! You will crawl on your belly and you will eat dust all the days of your life.
 </Fragment>
 
 <!-- Step 3: Genesis 3:15 first part -->
 <Fragment
 	step={3}
-	layout={{ x: 72, y: 309, width: 538, height: 95 }}
+	layout={{ x: 74, y: 309, width: 554, height: 90 }}
 	font={{ font_size: 26.7, wrap: true }}
 	fill="var(--color-bg-light)"
 >
-	15 And I will put enmity between you and the woman, and between your offspring and hers;
+	<sup>15</sup> And I will put enmity between you and the woman, and between your offspring and hers;
 </Fragment>
 
 <!-- Step 4: Genesis 3:15 second part -->
 <Fragment
 	step={4}
-	layout={{ x: 129, y: 397, width: 420, height: 66 }}
+	layout={{ x: 129, y: 430, width: 400, height: 66 }}
 	font={{ font_size: 26.7, wrap: true }}
 >
-	he will crush your head, and you will strike his heel."
+	he will crush your head, and<br>you will strike his heel."
 </Fragment>
 
 <!-- Step 5: Overlay first verse -->
@@ -63,11 +66,11 @@
 <!-- Step 6: Overlay Genesis 3:15 -->
 <Fragment
 	step={6}
-	layout={{ x: 74, y: 309, width: 554, height: 101 }}
+	layout={{ x: 74, y: 309, width: 554, height: 90 }}
 	font={{ font_size: 26.7, wrap: true }}
 	fill="var(--color-bg-light)"
 >
-	15 And I will put enmity between you and the woman, and between your offspring and hers;
+	<sup>15</sup> And I will put enmity between you and the woman, and between your offspring and hers;
 </Fragment>
 
 <!-- Step 7: Highlight "crush your head" -->
@@ -77,7 +80,7 @@
 	font={{ font_size: 30.8, bold: true, color: '#0000FF', v_align: 'middle' }}
 	fill="var(--color-bg-light)"
 >
-	he will crush your head, and you will strike his heel."
+	he will crush your head, and<br>you will strike his heel."
 </Fragment>
 
 <!-- Step 8: Who is the Woman? -->
