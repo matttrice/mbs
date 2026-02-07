@@ -342,7 +342,7 @@ describe('Navigation Store - Complete Drill Flow (Bug Fix Verification)', () => 
 
 describe('Navigation Store - Persistence', () => {
 	it('restores from localStorage on init if matching presentation', () => {
-		// Simulate saved state using single key format
+		// Simulate saved state using per-presentation key
 		const savedState = {
 			current: { presentation: 'life', slide: 1, fragment: 7 },
 			stack: [],
@@ -350,8 +350,7 @@ describe('Navigation Store - Persistence', () => {
 			slideFragmentCounts: [9, 15, 12],
 			maxSlide: 2
 		};
-		// Use the single key format: mbs-nav-state
-		localStorage.setItem('mbs-nav-state', JSON.stringify(savedState));
+		localStorage.setItem('mbs-nav-life', JSON.stringify(savedState));
 		
 		navigation.init('life', [9, 15, 12]);
 		
@@ -362,7 +361,7 @@ describe('Navigation Store - Persistence', () => {
 	});
 
 	it('does not restore from localStorage for different presentation', () => {
-		// State for salvation presentation
+		// State for salvation stored under its own key
 		const savedState = {
 			current: { presentation: 'salvation', slide: 2, fragment: 3 },
 			stack: [],
@@ -370,13 +369,12 @@ describe('Navigation Store - Persistence', () => {
 			slideFragmentCounts: [5, 5, 5],
 			maxSlide: 2
 		};
-		// This is stored but for a different presentation
-		localStorage.setItem('mbs-nav-state', JSON.stringify(savedState));
+		localStorage.setItem('mbs-nav-salvation', JSON.stringify(savedState));
 		
-		navigation.init('life', [9, 15, 12]); // Different presentation
+		navigation.init('life', [9, 15, 12]); // Different presentation - no mbs-nav-life key exists
 		
 		const state = get(navigation);
-		expect(state.current.slide).toBe(0); // Fresh start - state is for 'salvation', not 'life'
+		expect(state.current.slide).toBe(0); // Fresh start - no persisted state for 'life'
 		expect(state.current.fragment).toBe(0);
 	});
 
@@ -385,16 +383,16 @@ describe('Navigation Store - Persistence', () => {
 		navigation.next();
 		navigation.next();
 		
-		// Verify state was stored
+		// Verify state was stored under per-presentation key
 		expect(localStorage.setItem).toHaveBeenCalledWith(
-			'mbs-nav-state',
+			'mbs-nav-life',
 			expect.any(String)
 		);
 		
 		navigation.clearPresentation('life');
 		
-		// Verify localStorage was cleared
-		expect(localStorage.removeItem).toHaveBeenCalledWith('mbs-nav-state');
+		// Verify localStorage was cleared for this presentation
+		expect(localStorage.removeItem).toHaveBeenCalledWith('mbs-nav-life');
 		
 		// Verify state is reset
 		const state = get(navigation);
@@ -409,13 +407,13 @@ describe('Navigation Store - Persistence', () => {
 		navigation.next();
 		navigation.next();
 		
-		// Verify life state was persisted using single key
+		// Verify life state was persisted under its own key
 		expect(localStorage.setItem).toHaveBeenCalledWith(
-			'mbs-nav-state',
+			'mbs-nav-life',
 			expect.stringContaining('"fragment":3')
 		);
 		
-		// Clear mocks and reset for different presentation
+		// Switch to a different presentation (no reset needed - separate keys)
 		vi.clearAllMocks();
 		navigation.reset();
 		
@@ -423,13 +421,18 @@ describe('Navigation Store - Persistence', () => {
 		navigation.init('promises', [5, 5, 5]);
 		navigation.next();
 		
-		// Verify promises state was persisted to different key
+		// Verify promises state was persisted under its own key
 		expect(localStorage.setItem).toHaveBeenCalledWith(
-			'mbs-nav-state',
+			'mbs-nav-promises',
 			expect.stringContaining('"fragment":1')
 		);
 		
-		// Note: In single-key mode, switching presentations overwrites the stored state
+		// Verify life state is still preserved (not overwritten)
+		const lifeStored = localStorage.getItem('mbs-nav-life');
+		expect(lifeStored).not.toBeNull();
+		const lifeState = JSON.parse(lifeStored!);
+		expect(lifeState.current.fragment).toBe(3);
+		expect(lifeState.current.presentation).toBe('life');
 	});
 });
 

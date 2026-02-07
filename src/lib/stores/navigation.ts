@@ -6,8 +6,13 @@ import { goto } from '$app/navigation';
 import { browser } from '$app/environment';
 import type { NavigationContext } from '$lib/types';
 
-const STORAGE_KEY = 'mbs-nav-state';
+const STORAGE_KEY_PREFIX = 'mbs-nav-';
 const DRILLTO_STORAGE_KEY = 'mbs-drillto';
+
+// Get the localStorage key for a specific presentation
+function getStorageKey(presentation: string): string {
+	return `${STORAGE_KEY_PREFIX}${presentation}`;
+}
 
 // Load autoDrillAll preference from localStorage
 function loadAutoDrillAll(): boolean {
@@ -54,14 +59,15 @@ function createNavigationStore() {
 		lastCompletedDrill: null         // The last drill target that was completed (prevents re-triggering)
 	};
 
-	// Load persisted state from localStorage
-	function loadPersistedState(): Partial<NavigationContext> | null {
+	// Load persisted state from localStorage for a specific presentation
+	function loadPersistedState(presentation: string): Partial<NavigationContext> | null {
 		if (!browser) return null;
 		try {
-			const stored = localStorage.getItem(STORAGE_KEY);
+			const key = getStorageKey(presentation);
+			const stored = localStorage.getItem(key);
 			if (stored) {
 				const parsed = JSON.parse(stored);
-				console.log('[Navigation] Loaded persisted state:', parsed);
+				console.log('[Navigation] Loaded persisted state for', presentation, ':', parsed);
 				return parsed;
 			}
 		} catch (e) {
@@ -71,8 +77,13 @@ function createNavigationStore() {
 	}
 
 	// Save state to localStorage (only the parts we need to persist)
+	// State is always stored under the root (origin) presentation's key
 	function persistState(ctx: NavigationContext) {
 		if (!browser) return;
+		const rootPresentation = ctx.stack.length > 0
+			? ctx.stack[0].presentation
+			: ctx.current.presentation;
+		if (!rootPresentation) return; // Don't persist empty/initial state
 		try {
 			const toPersist = {
 				current: ctx.current,
@@ -81,7 +92,7 @@ function createNavigationStore() {
 				slideFragmentCounts: ctx.slideFragmentCounts,
 				maxSlide: ctx.maxSlide
 			};
-			localStorage.setItem(STORAGE_KEY, JSON.stringify(toPersist));
+			localStorage.setItem(getStorageKey(rootPresentation), JSON.stringify(toPersist));
 		} catch (e) {
 			console.warn('[Navigation] Failed to persist state:', e);
 		}
@@ -92,14 +103,18 @@ function createNavigationStore() {
 		if (!browser) return;
 		try {
 			if (presentation) {
-				// Only clear if the stored state is for this presentation
-				const stored = loadPersistedState();
-				if (stored?.current?.presentation === presentation) {
-					localStorage.removeItem(STORAGE_KEY);
-					console.log('[Navigation] Cleared persisted state for:', presentation);
-				}
+				localStorage.removeItem(getStorageKey(presentation));
+				console.log('[Navigation] Cleared persisted state for:', presentation);
 			} else {
-				localStorage.removeItem(STORAGE_KEY);
+				// Clear all presentation keys
+				const keysToRemove: string[] = [];
+				for (let i = 0; i < localStorage.length; i++) {
+					const key = localStorage.key(i);
+					if (key && key.startsWith(STORAGE_KEY_PREFIX)) {
+						keysToRemove.push(key);
+					}
+				}
+				keysToRemove.forEach(key => localStorage.removeItem(key));
 				console.log('[Navigation] Cleared all persisted state');
 			}
 		} catch (e) {
@@ -144,18 +159,17 @@ function createNavigationStore() {
 					return newState;
 				}
 
-				// Check for persisted state on page refresh
-				const persisted = loadPersistedState();
+				// Check for persisted state on page refresh (per-presentation key)
+				const persisted = loadPersistedState(presentation);
 				
-				// Check if persisted state is for this presentation (either directly or via drill stack)
-				const isDirectMatch = persisted?.current?.presentation === presentation;
-				const isInDrillStack = (persisted?.stack?.length ?? 0) > 0 && 
-					persisted?.stack?.[0]?.presentation === presentation;
-				
-				if ((isDirectMatch || isInDrillStack) && persisted?.slideFragments?.length) {
+				if (persisted?.slideFragments?.length) {
 					console.log('[Navigation] Restoring from localStorage:', persisted);
 					
 					// If we were in a drill, restore to the stack's origin position
+					const isInDrillStack = (persisted.stack?.length ?? 0) > 0 &&
+						persisted.stack?.[0]?.presentation === presentation;
+					const isDirectMatch = persisted.current?.presentation === presentation;
+					
 					if (isInDrillStack && !isDirectMatch && persisted.stack) {
 						const originState = persisted.stack[0];
 						console.log('[Navigation] Was in drill, restoring to origin:', originState);
@@ -177,7 +191,7 @@ function createNavigationStore() {
 						return restoredState;
 					}
 					
-					// persisted.current is guaranteed to exist here due to isDirectMatch check
+					// Direct match - restore to saved position
 					const currentSlide = persisted.current!.slide;
 					const restoredState = {
 						...ctx,
