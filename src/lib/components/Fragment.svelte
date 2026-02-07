@@ -252,8 +252,8 @@
 	
 	onMount(() => {
 		// Handle drill registration (needs setTimeout for step normalization)
-		// Register if: has drillTo AND (has step OR autoDrill for static content)
-		if (drillTo && (step !== undefined || autoDrill)) {
+		// Register ALL drillTo fragments - autoDrillAll toggle in nav store gates execution
+		if (drillTo) {
 			setTimeout(() => {
 				// For static content (no step), register at step 0
 				const effectiveNormalized = step !== undefined 
@@ -265,10 +265,11 @@
 				registeredNormalizedStep = effectiveNormalized;
 				registeredSlideIndex = slideIdx;
 				
-				// For static content or any autoDrill target, check if we're at the current position
+				// For static content (no step), check if we're at the current position
 				// and set pending drill if needed. This handles the case where content is already
 				// visible at fragment 0 and should auto-drill on first click.
-				if (autoDrill || step === undefined) {
+				// The nav store gates on autoDrillAll || per-fragment autoDrill.
+				if (step === undefined) {
 					navigation.checkAutoDrillAtCurrentPosition(slideIdx, effectiveNormalized);
 				}
 			}, 0);

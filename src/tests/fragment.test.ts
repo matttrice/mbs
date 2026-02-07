@@ -28,6 +28,7 @@ vi.mock('$lib/stores/navigation', () => {
 	const drillFn = vi.fn();
 	const registerDrillTargetFn = vi.fn();
 	const unregisterDrillTargetFn = vi.fn();
+	const checkAutoDrillAtCurrentPositionFn = vi.fn();
 	return {
 		currentFragment: fragmentStore,
 		currentSlide: slideStore,
@@ -35,6 +36,7 @@ vi.mock('$lib/stores/navigation', () => {
 			drillInto: drillFn,
 			registerDrillTarget: registerDrillTargetFn,
 			unregisterDrillTarget: unregisterDrillTargetFn,
+			checkAutoDrillAtCurrentPosition: checkAutoDrillAtCurrentPositionFn,
 			subscribe: vi.fn(),
 			next: vi.fn(),
 			prev: vi.fn()

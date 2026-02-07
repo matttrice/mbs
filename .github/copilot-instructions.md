@@ -4,7 +4,7 @@
 
 MBS is a SvelteKit presentation system replicating PowerPoint's **Custom Show "drillTo and return"** functionality. The core innovation is a stack-based navigation system that preserves exact fragment position when drilling into scripture references or sequences of slides.
 
-### Core Data Flow
+### Core Presentation Conversion Data Flow
 ```
 JSON (hsu-pptx/) → extractor.py → Slide components → navigation store → localStorage
 ```

@@ -34,7 +34,6 @@
 
 	<!-- Genesis 25:27-34 (top left hyperlink) -->
 	<Fragment
-		autoDrill
 		drillTo="birthrights/genesis-25-27"
 		layout={{ x: 40, y: 8, width: 190, height: 15 }}
 		font={{ font_size: 20, bold: true, align: 'center', v_align: 'middle' }}
@@ -78,7 +77,7 @@
 	<!-- Step 3: Romans 8:5-8, Genesis 25:23 -->
 	<Fragment
 		step={3}
-		drillTo="birthrights/romans-8-5"
+		drillTo="birthrights/sin-of-esau"
 		layout={{ x: 38, y: 55, width: 305, height: 15 }}
 		font={{ font_size: 20, bold: true, align: 'center', wrap: true }}
 		zIndex={textLayer}

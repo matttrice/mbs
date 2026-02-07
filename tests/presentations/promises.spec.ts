@@ -19,7 +19,7 @@ async function resetPromises(page: import('@playwright/test').Page, options?: { 
 		route: '/promises',
 		autoDrillAll: options?.autoDrillAll ?? true,
 		readyText: 'The Promises',
-		notVisibleText: 'Genesis 12:1-3'
+		notVisibleText: 'Great Nation'  // Step-controlled content (step 3) that shouldn't be visible at start
 	});
 }
 
@@ -29,16 +29,11 @@ test.describe('Promises - autoDrillAll enabled (default)', () => {
 	});
 
 	test('drills into correct route from slide 1 step 1', async ({ page }) => {
-		// Click next to reveal step 1 (Genesis 12:1-3)
-		await pressArrowRight(page);
-		
-		// Wait for fragment to be visible (Playwright auto-waits)
+		// Genesis 12:1-3 is visible on page load (no step = static content)
 		await expect(page.getByText('Genesis 12:1-3')).toBeVisible();
 		
-		// Verify URL hasn't changed yet (fragment is shown, pending drill set)
-		await expect(page).toHaveURL('/promises');
-		
-		// Click next again to execute the pending drill
+		// With autoDrillAll enabled, stepless drillTo fragments set a pending drill on mount.
+		// First ArrowRight executes the pending drill directly.
 		await pressArrowRight(page);
 		
 		// Should navigate to the genesis-12-1 drill route
@@ -46,11 +41,10 @@ test.describe('Promises - autoDrillAll enabled (default)', () => {
 	});
 
 	test('returns to exact position after drill completes', async ({ page }) => {
-		// Navigate to step 1 (Genesis 12:1-3)
-		await pressArrowRight(page);
+		// Genesis 12:1-3 is visible on load (static content)
 		await expect(page.getByText('Genesis 12:1-3')).toBeVisible();
 		
-		// Execute drill
+		// Execute drill (pending from mount)
 		await pressArrowRight(page);
 		await expect(page).toHaveURL('/promises/genesis-12-1');
 		
@@ -63,7 +57,7 @@ test.describe('Promises - autoDrillAll enabled (default)', () => {
 			expect(url).not.toContain('genesis-12-1');
 		}).toPass({ timeout: 10000 });
 		
-		// Should be back at promises, at fragment 1 (exact position)
+		// Should be back at promises, at fragment 0 (exact position)
 		await expect(page).toHaveURL('/promises');
 		// The Genesis 12:1-3 fragment should still be visible
 		await expect(page.getByText('Genesis 12:1-3')).toBeVisible();
@@ -76,25 +70,22 @@ test.describe('Promises - autoDrillAll disabled', () => {
 	});
 
 	test('does not auto-drill at mid-slide fragments when autoDrillAll is disabled', async ({ page }) => {
-		// Navigate to step 1 (Genesis 12:1-3)
-		await pressArrowRight(page);
+		// Genesis 12:1-3 is visible (no step, always visible)
 		await expect(page.getByText('Genesis 12:1-3')).toBeVisible();
 		
-		// With autoDrillAll disabled, next click should advance to step 2, not drill
+		// With autoDrillAll disabled, no pending drill is set for stepless fragments.
+		// First ArrowRight advances to step 2 (grey background), no drill occurs.
 		await pressArrowRight(page);
-		
-		// Should still be on promises (not drilled)
 		await expect(page).toHaveURL('/promises');
 		
-		// Step 3 content should appear (Great Nation)
+		// Next click advances to step 3 (Great Nation)
 		await pressArrowRight(page);
 		await expect(page.getByText('Great Nation')).toBeVisible();
 		await expect(page).toHaveURL('/promises');
 	});
 
 	test('clicking on drillable fragment still drills when autoDrillAll is disabled', async ({ page }) => {
-		// Navigate to step 1 to reveal Genesis 12:1-3
-		await pressArrowRight(page);
+		// Genesis 12:1-3 is visible on load (static content)
 		const drillable = page.getByText('Genesis 12:1-3');
 		await expect(drillable).toBeVisible();
 		
@@ -112,11 +103,10 @@ test.describe('Promises - slide position preservation', () => {
 	});
 
 	test('preserves slide fragment position when navigating between slides', async ({ page }) => {
-		// Advance to step 1
-		await pressArrowRight(page);
+		// Genesis 12:1-3 is visible on load (static content)
 		await expect(page.getByText('Genesis 12:1-3')).toBeVisible();
 		
-		// This will set pending drill, next click executes it
+		// First ArrowRight executes the pending drill (autoDrillAll on)
 		await pressArrowRight(page);
 		await expect(page).toHaveURL('/promises/genesis-12-1');
 		

@@ -39,7 +39,6 @@
 	<!-- Step 1: Genesis 12:1-3 -->
 	<Fragment
 		drillTo="promises/genesis-12-1"
-		autoDrill
 		layout={{ x: 59.9, y: 9, width: 259.2, height: 36 }}
 		font={{ font_size: 33.6, bold: true }}
 		zIndex={1}
