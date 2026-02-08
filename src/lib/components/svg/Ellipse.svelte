@@ -46,15 +46,15 @@
 	let draw: Container | null = null;
 
 	// Calculate bounding box with padding for stroke
-	const padding = (stroke?.width ?? 2) + 2;
-	const minX = cx - rx - padding;
-	const minY = cy - ry - padding;
-	const width = (rx + padding) * 2;
-	const height = (ry + padding) * 2;
+	const padding = $derived((stroke?.width ?? 2) + 2);
+	const minX = $derived(cx - rx - padding);
+	const minY = $derived(cy - ry - padding);
+	const width = $derived((rx + padding) * 2);
+	const height = $derived((ry + padding) * 2);
 
 	// Local coordinates for the ellipse center within the SVG
-	const localCx = rx + padding;
-	const localCy = ry + padding;
+	const localCx = $derived(rx + padding);
+	const localCy = $derived(ry + padding);
 
 	onMount(() => {
 		if (!svgEl) return;

@@ -51,37 +51,37 @@
 	let draw: Container | null = null;
 
 	// Calculate bounding box with padding for the arc
-	const padding = Math.abs(curve) + (stroke?.width ?? 2) * 2 + 20;
-	const minX = Math.min(from.x, to.x) - padding;
-	const minY = Math.min(from.y, to.y) - padding;
-	const maxX = Math.max(from.x, to.x) + padding;
-	const maxY = Math.max(from.y, to.y) + padding;
-	const width = maxX - minX;
-	const height = maxY - minY;
+	const padding = $derived(Math.abs(curve) + (stroke?.width ?? 2) * 2 + 20);
+	const minX = $derived(Math.min(from.x, to.x) - padding);
+	const minY = $derived(Math.min(from.y, to.y) - padding);
+	const maxX = $derived(Math.max(from.x, to.x) + padding);
+	const maxY = $derived(Math.max(from.y, to.y) + padding);
+	const width = $derived(maxX - minX);
+	const height = $derived(maxY - minY);
 
 	// Translate points to local SVG coordinates
-	const localFrom = { x: from.x - minX, y: from.y - minY };
-	const localTo = { x: to.x - minX, y: to.y - minY };
+	const localFrom = $derived({ x: from.x - minX, y: from.y - minY });
+	const localTo = $derived({ x: to.x - minX, y: to.y - minY });
 
 	// Calculate control point perpendicular to the line between from and to
 	// This centers the curve in the middle of the arc regardless of angle
-	const midX = (localFrom.x + localTo.x) / 2;
-	const midY = (localFrom.y + localTo.y) / 2;
+	const midX = $derived((localFrom.x + localTo.x) / 2);
+	const midY = $derived((localFrom.y + localTo.y) / 2);
 	
 	// Calculate perpendicular direction (rotate line direction by 90 degrees)
-	const dx = localTo.x - localFrom.x;
-	const dy = localTo.y - localFrom.y;
-	const lineLength = Math.sqrt(dx * dx + dy * dy);
+	const dx = $derived(localTo.x - localFrom.x);
+	const dy = $derived(localTo.y - localFrom.y);
+	const lineLength = $derived(Math.sqrt(dx * dx + dy * dy));
 	
 	// Perpendicular unit vector (rotated 90 degrees counterclockwise)
-	const perpX = -dy / lineLength;
-	const perpY = dx / lineLength;
+	const perpX = $derived(-dy / lineLength);
+	const perpY = $derived(dx / lineLength);
 	
 	// Offset control point perpendicular to the line
-	const controlPoint = { 
+	const controlPoint = $derived({ 
 		x: midX + perpX * curve, 
 		y: midY + perpY * curve 
-	};
+	});
 
 	onMount(() => {
 		if (!svgEl) return;
