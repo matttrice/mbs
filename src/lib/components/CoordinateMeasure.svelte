@@ -41,6 +41,11 @@
 	// Threshold to distinguish click from drag (in pixels)
 	const CLICK_THRESHOLD = 5;
 
+	/** Round to at most 2 decimal places, strip trailing zeros */
+	function fmt(n: number): string {
+		return parseFloat(n.toFixed(2)).toString();
+	}
+
 	function cycleCorner() {
 		const order: typeof panelCorner[] = ['br', 'bl', 'tl', 'tr'];
 		const idx = order.indexOf(panelCorner);
@@ -134,14 +139,14 @@
 
 		// Include rotation in Fragment layout and Rect if non-zero
 		if (angleDeg !== 0) {
-			fragmentLayout = `layout={{ x: ${x}, y: ${y}, width: ${width}, height: ${height}, rotation: ${angleDeg} }}`;
-			rectComponent = `x={${x}} y={${y}} width={${width}} height={${height}} rotation={${angleDeg}}`;
+			fragmentLayout = `layout={{ x: ${fmt(x)}, y: ${fmt(y)}, width: ${fmt(width)}, height: ${fmt(height)}, rotation: ${fmt(angleDeg)} }}`;
+			rectComponent = `x={${fmt(x)}} y={${fmt(y)}} width={${fmt(width)}} height={${fmt(height)}} rotation={${fmt(angleDeg)}}`;
 		} else {
-			fragmentLayout = `layout={{ x: ${x}, y: ${y}, width: ${width}, height: ${height} }}`;
-			rectComponent = `x={${x}} y={${y}} width={${width}} height={${height}}`;
+			fragmentLayout = `layout={{ x: ${fmt(x)}, y: ${fmt(y)}, width: ${fmt(width)}, height: ${fmt(height)} }}`;
+			rectComponent = `x={${fmt(x)}} y={${fmt(y)}} width={${fmt(width)}} height={${fmt(height)}}`;
 		}
-		arrowCoords = `from={{ x: ${rotatedStart.x}, y: ${rotatedStart.y} }} to={{ x: ${rotatedEnd.x}, y: ${rotatedEnd.y} }}`;
-		lineComponent = `from={{ x: ${rotatedStart.x}, y: ${rotatedStart.y} }} to={{ x: ${rotatedEnd.x}, y: ${rotatedEnd.y} }}`;
+		arrowCoords = `from={{ x: ${fmt(rotatedStart.x)}, y: ${fmt(rotatedStart.y)} }} to={{ x: ${fmt(rotatedEnd.x)}, y: ${fmt(rotatedEnd.y)} }}`;
+		lineComponent = `from={{ x: ${fmt(rotatedStart.x)}, y: ${fmt(rotatedStart.y)} }} to={{ x: ${fmt(rotatedEnd.x)}, y: ${fmt(rotatedEnd.y)} }}`;
 		arcComponent = '';
 		ellipseComponent = '';
 		detectedShapeType = null;
@@ -168,14 +173,14 @@
 			currentPos = { x: x + width, y: y + height };
 
 			if (rot !== 0) {
-				fragmentLayout = `layout={{ x: ${x}, y: ${y}, width: ${width}, height: ${height}, rotation: ${rot} }}`;
-				rectComponent = `x={${x}} y={${y}} width={${width}} height={${height}} rotation={${rot}}`;
+				fragmentLayout = `layout={{ x: ${fmt(x)}, y: ${fmt(y)}, width: ${fmt(width)}, height: ${fmt(height)}, rotation: ${fmt(rot)} }}`;
+				rectComponent = `x={${fmt(x)}} y={${fmt(y)}} width={${fmt(width)}} height={${fmt(height)}} rotation={${fmt(rot)}}`;
 			} else {
-				fragmentLayout = `layout={{ x: ${x}, y: ${y}, width: ${width}, height: ${height} }}`;
-				rectComponent = `x={${x}} y={${y}} width={${width}} height={${height}}`;
+				fragmentLayout = `layout={{ x: ${fmt(x)}, y: ${fmt(y)}, width: ${fmt(width)}, height: ${fmt(height)} }}`;
+				rectComponent = `x={${fmt(x)}} y={${fmt(y)}} width={${fmt(width)}} height={${fmt(height)}}`;
 			}
-			arrowCoords = `from={{ x: ${x}, y: ${y} }} to={{ x: ${x + width}, y: ${y + height} }}`;
-			lineComponent = `from={{ x: ${x}, y: ${y} }} to={{ x: ${x + width}, y: ${y + height} }}`;
+			arrowCoords = `from={{ x: ${fmt(x)}, y: ${fmt(y)} }} to={{ x: ${fmt(x + width)}, y: ${fmt(y + height)} }}`;
+			lineComponent = `from={{ x: ${fmt(x)}, y: ${fmt(y)} }} to={{ x: ${fmt(x + width)}, y: ${fmt(y + height)} }}`;
 			arcComponent = '';
 			ellipseComponent = '';
 			ellipseCoords = null;
@@ -642,8 +647,10 @@
 				<div class="nudge-controls">
 					<button class="nudge-btn" onclick={() => nudge(-10, 0)} aria-label="Nudge left 10px">←10</button>
 					<button class="nudge-btn nudge-btn-fine" onclick={() => nudge(-1, 0)} aria-label="Nudge left 1px">←</button>
+					<button class="nudge-btn" onclick={() => nudge(0, -10)} aria-label="Nudge up 10px">↑10</button>
 					<button class="nudge-btn nudge-btn-fine" onclick={() => nudge(0, -1)} aria-label="Nudge up 1px">↑</button>
 					<button class="nudge-btn nudge-btn-fine" onclick={() => nudge(0, 1)} aria-label="Nudge down 1px">↓</button>
+					<button class="nudge-btn" onclick={() => nudge(0, 10)} aria-label="Nudge down 10px">10↓</button>
 					<button class="nudge-btn nudge-btn-fine" onclick={() => nudge(1, 0)} aria-label="Nudge right 1px">→</button>
 					<button class="nudge-btn" onclick={() => nudge(10, 0)} aria-label="Nudge right 10px">10→</button>
 				</div>
@@ -969,8 +976,8 @@
 		user-select: all;
 		cursor: text;
 		line-height: 1.4;
-		white-space: pre-wrap;
-		word-break: break-all;
+		white-space: nowrap;
+		overflow-x: auto;
 	}
 
 	.output-code:hover {
