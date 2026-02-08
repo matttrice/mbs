@@ -425,8 +425,11 @@ function createNavigationStore() {
 						console.log('[Navigation] End of drill sequence - returning to origin');
 						this.returnFromDrill(true);  // Return to origin
 					}
+				} else {
+					// At end of main presentation - return to menu without resetting
+					console.log('[Navigation] End of presentation - returning to menu');
+					goto('/');
 				}
-				// else: At end of main presentation - do nothing
 			}
 		},
 
