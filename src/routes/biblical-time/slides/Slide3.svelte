@@ -15,6 +15,7 @@
 	}
 
 	let { slideIndex }: Props = $props();
+	const linkLayer = 100;
 </script>
 
 <Slide {slideIndex}>
@@ -72,7 +73,7 @@
 		drillTo="biblical-time/ephesians-1-3"
 		layout={{ x: 71.8, y: 352.8, width: 152.8, height: 88.8 }}
 		font={{ font_size: 16.7, bold: true }}
-		zIndex={0}
+		zIndex={linkLayer}
 	>
 		Ephesians 1:4<br/>John 17:24<br/>1 Peter 1:20<br/>Jude 24-25
 	</Fragment>
@@ -116,14 +117,30 @@
 		Angels<br/>Gospel
 	</Fragment>
 
+	<Fragment step={6}>
+		<Line from={{ x: 196, y: 225.5 }} to={{ x: 196, y: 285.7 }} 
+			  stroke={{ width: 6.7, color: 'var(--color-stroke-dark)' }} 
+			  startMarker={{ radius: 8 }}  
+			  endMarker={{ radius: 8 }} 
+			  zIndex={34} />
+	</Fragment>
+
 	<!-- Step 6 (click): Horizontal timeline arrow (pointing right across full width) -->
-	<Fragment step={6} animate="wipe">
-		<Arrow from={{ x: 0, y: 285 }} to={{ x: 960, y: 285 }} stroke={{ width: 9.4, color: '#000000' }} zIndex={30} />
+	<Fragment 
+		step={6} 
+		animate="wipe"
+		exitStep={14}
+		>
+		<Arrow from={{ x: 195, y: 260 }} to={{ x: 744, y: 260 }} stroke={{ width: 7, color: 'var(--color-stroke-dark)' }} zIndex={30} />
 	</Fragment>
 
 	<!-- Step 7 (click): End vertical line + End label -->
 	<Fragment step={7} animate="wipe-down">
-		<Line from={{ x: 748.9, y: 225.5 }} to={{ x: 748.9, y: 285.7 }} stroke={{ width: 6.7, color: '#000000' }} zIndex={34} />
+		<Line from={{ x: 748.9, y: 225.5 }} to={{ x: 748.9, y: 285.7 }} 
+			  stroke={{ width: 6.7, color: 'var(--color-stroke-dark)' }} 
+			  startMarker={{ radius: 8 }}  
+			  endMarker={{ radius: 8 }} 
+			  zIndex={34} />
 	</Fragment>
 
 	<Fragment
@@ -151,7 +168,7 @@
 		drillTo="biblical-time/revelation-1-8"
 		layout={{ x: 65.4, y: 279.6, width: 136.1, height: 31.6 }}
 		font={{ font_size: 21.7, bold: true, align: 'center' }}
-		zIndex={2}
+		zIndex={linkLayer}
 	>
 		Revelation
 	</Fragment>
@@ -198,10 +215,6 @@
 		PHYSICAL
 	</Fragment>
 
-	<Fragment step={10} animate="wipe">
-		<Line from={{ x: 287.4, y: 161.8 }} to={{ x: 443.5, y: 161.8 }} stroke={{ width: 8.3, color: '#000000' }} zIndex={33} />
-	</Fragment>
-
 	<!-- Step 11 (click): ISRAEL -->
 	<Fragment
 		step={11}
@@ -215,7 +228,7 @@
 	<!-- Step 12 (click): Israel description box -->
 	<Fragment
 		step={12}
-		layout={{ x: 205.3, y: 265.5, width: 242, height: 81.7 }}
+		layout={{ x: 205.3, y: 265.5, width: 250, height: 100 }}
 		font={{ font_size: 16.7, wrap: true }}
 		zIndex={36}
 	>
@@ -226,9 +239,9 @@
 	<Fragment
 		step={13}
 		drillTo="biblical-time/hebrews-8-13"
-		layout={{ x: 476.1, y: 271.4, width: 168.9, height: 24.6 }}
+		layout={{ x: 465, y: 271.4, width: 168.9, height: 24.6 }}
 		font={{ font_size: 21.7, bold: true, v_align: 'middle' }}
-		zIndex={27}
+		zIndex={linkLayer}
 	>
 		Hebrews 8:13
 	</Fragment>
@@ -236,16 +249,20 @@
 	<!-- Step 14 (click): Transition label (rotated) -->
 	<Fragment
 		step={14}
-		layout={{ x: 345.7, y: 183, width: 128.6, height: 36.1 }}
+		layout={{ x: 346, y: 190, width: 128.6, height: 36.1, rotation: -55 }}
 		font={{ font_size: 23.3, bold: true, color: '#0000FF', align: 'center' }}
 		zIndex={49}
 	>
 		Transition
 	</Fragment>
+	
+	<Fragment step={14}>
+		<Line from={{ x: 191.4, y: 260.8 }} to={{ x: 400, y: 260 }} stroke={{ width: 7, color: 'var(--color-stroke-dark)' }} zIndex={33} />
+	</Fragment>
 
 	<!-- Step 14 (after 500ms): Diagonal DASHED line + Matthew -->
 	<Fragment step={14.1} animate="draw">
-		<Line from={{ x: 418.3, y: 151.4 }} to={{ x: 496.8, y: 243.9 }} stroke={{ width: 3.8, color: '#000000', dash: '8,4' }} zIndex={60} />
+		<Line from={{ x: 396, y: 256 }} to={{ x: 467, y: 160 }} stroke={{ width: 3.8, color: '#000000', dash: '8,4' }} zIndex={60} />
 	</Fragment>
 
 	<Fragment
@@ -297,9 +314,9 @@
 		drillTo="biblical-time/matthew-5"
 		layout={{ x: 177.2, y: 49.9, width: 177.8, height: 39.2 }}
 		font={{ font_size: 28, v_align: 'middle' }}
-		zIndex={13}
+		zIndex={linkLayer}
 	>
-		◻︎ Jesus...
+		Jesus...
 	</Fragment>
 
 	<!-- Step 15 (after 500ms): "you heard it said" + vertical line -->
@@ -313,21 +330,21 @@
 		"you heard it said"
 	</Fragment>
 
-	<Fragment step={15.1} animate="draw">
-		<Arrow from={{ x: 221.4, y: 115.6 }} to={{ x: 228.8, y: 181.3 }} stroke={{ width: 5, color: '#000000' }} zIndex={11} />
+	<Fragment step={15.1} animate="wipe-down">
+		<Arrow from={{ x: 211.4, y: 115.6 }} to={{ x: 219, y: 181.3 }} stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={11} />
 	</Fragment>
 
 	<!-- Step 16 (click): "now I say to you" + connector line -->
 	<Fragment
 		step={16}
-		layout={{ x: 313.3, y: 54.8, width: 241.4, height: 36.4 }}
+		layout={{ x: 303, y: 51, width: 220, height: 36 }}
 		font={{ font_size: 26.7, italic: true }}
 		zIndex={14}
 	>
 		"now I say to you"
 	</Fragment>
 
-	<Fragment step={16} animate="draw">
+	<Fragment step={16} animate="wipe-right">
 		<Arrow from={{ x: 390.9, y: 91.1 }} to={{ x: 513.1, y: 119.7 }} stroke={{ width: 5, color: '#000000' }} zIndex={15} />
 	</Fragment>
 
@@ -343,11 +360,11 @@
 	</Fragment>
 
 	<Fragment step={16.1} animate="draw">
-		<Line from={{ x: 459.4, y: 165.2 }} to={{ x: 712.1, y: 165.2 }} stroke={{ width: 3.8, color: '#000000', dash: '10,5' }} zIndex={31} />
+		<Line from={{ x: 462, y: 165.2 }} to={{ x: 712.1, y: 165.2 }} stroke={{ width: 3.8, color: '#000000', dash: '10,5' }} zIndex={31} />
 	</Fragment>
 
 	<Fragment step={16.1} animate="draw">
-		<Line from={{ x: 454.4, y: 173.4 }} to={{ x: 717.3, y: 173.4 }} stroke={{ width: 3.8, color: '#AA00FF', dash: '10,5' }} zIndex={56} />
+		<Line from={{ x: 454.4, y: 173.4 }} to={{ x: 717.3, y: 173.4 }} stroke={{ width: 3.8, color: 'var(--color-level3', dash: '10,5' }} zIndex={56} />
 	</Fragment>
 
 	<!-- Step 17 (click): SPIRITUAL + 2 Corinthians 3:7-11 link -->
@@ -363,9 +380,9 @@
 	<Fragment
 		step={17}
 		drillTo="biblical-time/2corinthians-3-7"
-		layout={{ x: 476.1, y: 289.9, width: 242.9, height: 60.1 }}
+		layout={{ x: 476.1, y: 295, width: 210, height: 50 }}
 		font={{ font_size: 21.7, bold: true, v_align: 'middle' }}
-		zIndex={26}
+		zIndex={linkLayer}
 	>
 		2 Corinthians 3:7-11<br/>1 Peter 1:10-11
 	</Fragment>
@@ -393,8 +410,8 @@
 	<!-- Step 20 (click): Church description box -->
 	<Fragment
 		step={20}
-		layout={{ x: 502.1, y: 174.8, width: 244.8, height: 74.7 }}
-		font={{ font_size: 16.7, color: '#0000FF', wrap: true }}
+		layout={{ x: 502.1, y: 180, width: 250, height: 74.7 }}
+		font={{ font_size: 16.7, color: 'var(--color-level3)', wrap: true }}
 		zIndex={37}
 	>
 		Church Nation, Promise land,<br/>Battle, Birthrights, Circumcision,<br/>Blood, Sacrifice, Worship,<br/>Heavenly Jerusalem
@@ -406,19 +423,19 @@
 		drillTo="biblical-time/romans-8-18"
 		layout={{ x: 732.2, y: 135.8, width: 143.4, height: 72.7 }}
 		font={{ font_size: 20, bold: true, v_align: 'middle' }}
-		zIndex={28}
+		zIndex={linkLayer}
 	>
 		Romans 8:18<br/>2 Cor. 4:17<br/>2 Timothy 2:8
 	</Fragment>
 
 	<!-- Step 22 (click): Diagonal DASHED purple line to Eternal + ETERNAL label -->
-	<Fragment step={22} animate="draw">
-		<Line from={{ x: 697.3, y: 123.9 }} to={{ x: 734.8, y: 161.5 }} stroke={{ width: 3.8, color: '#AA00FF', dash: '10,5' }} zIndex={59} />
+	<Fragment step={22} animate="wipe-up">
+		<Line from={{ x: 716, y: 113 }} to={{ x: 716, y: 172 }} stroke={{ width: 3.8, color: 'var(--color-level3)', dash: '10,5' }} zIndex={59} />
 	</Fragment>
 
 	<!-- Step 22 (after): Blue DASHED vertical line to Eternal + ETERNAL -->
 	<Fragment step={22.1} animate="wipe">
-		<Line from={{ x: 836.2, y: 0 }} to={{ x: 836.2, y: 245.8 }} stroke={{ width: 4.4, color: '#0000FF', dash: '10,5' }} zIndex={32} />
+		<Line from={{ x: 715, y: 115 }} to={{ x: 958, y: 115 }} stroke={{ width: 4.4, color: 'var(--color-level3)', dash: '10,5' }} zIndex={32} />
 	</Fragment>
 
 	<Fragment
@@ -454,7 +471,7 @@
 	<!-- Step 25 (click): 2 Corinthians 3:18 + full text -->
 	<Fragment
 		step={25}
-		layout={{ x: 82.3, y: 442.6, width: 252.6, height: 30.3 }}
+		layout={{ x: 75, y: 442.6, width: 252.6, height: 30.3 }}
 		font={{ font_size: 26.7, bold: true, v_align: 'middle' }}
 		line={{ width: 0.6 }}
 		zIndex={47}
@@ -465,10 +482,10 @@
 	<Fragment
 		step={25}
 		layout={{ x: 82.4, y: 469.8, width: 795.3, height: 56.4 }}
-		font={{ font_size: 20 }}
+		font={{ font_size: 20, wrap: true }}
 		zIndex={48}
 	>
-		And we, who with unveiled faces all reflect the Lord's glory, are being<br/>transformed into his likeness with ever-increasing glory, which comes from the Lord, who is the Spirit.
+		And we, who with unveiled faces all reflect the Lord's glory, are being transformed into his likeness with ever-increasing glory, which comes from the Lord, who is the Spirit.
 	</Fragment>
 
 	<!-- Step 26 (click): Does God Change? link -->
@@ -478,7 +495,7 @@
 		layout={{ x: 770.6, y: 403.1, width: 115.8, height: 50.4 }}
 		font={{ font_size: 17.5, bold: true }}
 		line={{ width: 0.8 }}
-		zIndex={38}
+		zIndex={linkLayer}
 	>
 		Does God<br/>Change?
 	</Fragment>
@@ -486,27 +503,25 @@
 	<!-- Step 27 (click): Romans 7:14 box -->
 	<Fragment
 		step={27}
-		layout={{ x: 196.4, y: 353.9, width: 504.4, height: 58.6 }}
-		font={{ font_size: 21.7, bold: true }}
-		fill="var(--color-bg-ghost)"
-		zIndex={29}
+		layout={{ x: 220, y: 354, width: 550, height: 58.6 }}
+		font={{ font_size: 22, bold: true, align: 'left' }}
 	>
 		Romans 7:14 We know that the Law is spiritual;<br/>but I am unspiritual, sold as a slave to sin.
 	</Fragment>
 
 	<!-- Step 28 (click): Connector ARROW lines to Romans 7:14 -->
-	<Fragment step={28} animate="draw">
-		<Arrow from={{ x: 414.2, y: 312.4 }} to={{ x: 527.8, y: 364.6 }} stroke={{ width: 5, color: '#000000' }} zIndex={50} />
+	<Fragment step={28} animate="wipe-down">
+		<Arrow from={{ x: 414.2, y: 320 }} to={{ x: 530, y: 364 }} stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={50} />
 	</Fragment>
 
-	<Fragment step={28} animate="draw">
-		<Arrow from={{ x: 669, y: 234.2 }} to={{ x: 683.8, y: 358.6 }} stroke={{ width: 5, color: '#000000' }} zIndex={57} />
+	<Fragment step={28} animate="wipe-down">
+		<Arrow from={{ x: 669, y: 234.2 }} to={{ x: 683.8, y: 358.6 }} stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={57} />
 	</Fragment>
 
 	<!-- Step 29 (click): ...How? -->
 	<Fragment
 		step={29}
-		layout={{ x: 692.4, y: 363.1, width: 125.9, height: 38.4 }}
+		layout={{ x: 650, y: 375, width: 125.9, height: 38.4 }}
 		font={{ font_size: 26.7, bold: true }}
 		zIndex={58}
 	>
@@ -517,9 +532,9 @@
 	<Fragment
 		step={30}
 		drillTo="biblical-time/galatians-3-24"
-		layout={{ x: 304.7, y: 413.4, width: 79.6, height: 34.3 }}
+		layout={{ x: 290, y: 413.4, width: 79.6, height: 34.3 }}
 		font={{ font_size: 23.3, bold: true }}
-		zIndex={55}
+		zIndex={linkLayer}
 	>
 		Tutor:
 	</Fragment>
@@ -527,10 +542,10 @@
 	<Fragment
 		step={30}
 		drillTo="biblical-time/galatians-3-24"
-		layout={{ x: 377.9, y: 417.8, width: 368.9, height: 46.4 }}
+		layout={{ x: 377.9, y: 417.8, width: 385, height: 46.4 }}
 		font={{ font_size: 16.7 }}
 		line={{ width: 1 }}
-		zIndex={54}
+		zIndex={linkLayer}
 	>
 		Galatians 3:24-25, Romans 15:4, 1Corinthians 10:11,<br/>Colossians 2:16-17, Hebrews 10:1
 	</Fragment>

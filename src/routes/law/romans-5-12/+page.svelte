@@ -46,7 +46,7 @@
 	</Fragment>
 
 	<Fragment step={1.1} animate="wipe-left">
-		<Arrow to={{ x: 213, y: 292 }} from={{ x: 690, y: 292 }} stroke={{ width: 18.3 }} zIndex={1} startMarker={{ radius: 28 }} />
+		<Arrow to={{ x: 213, y: 292 }} from={{ x: 709, y: 292 }} stroke={{ width: 18.3 }} zIndex={1} />
 	</Fragment>
 
 	<Fragment

@@ -17,7 +17,7 @@
 		step={1}
 		layout={{ x: 107.1, y: 57.9, width: 740, height: 157.4 }}
 		line={{ width: 1 }}
-		font={{ font_size: 30.8 }}
+		font={{  font_size: 30.8, wrap: true }}
 		animate="fade"
 	>
 		'Moreover, your little ones who you said would become a prey, and your sons, who this day have no knowledge of good or evil, shall enter there, and I will give it to them and they shall possess it.

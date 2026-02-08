@@ -17,7 +17,7 @@
 		step={1}
 		layout={{ x: 107.8, y: 55.5, width: 744.4, height: 120 }}
 		line={{ width: 1 }}
-		font={{ font_size: 30.8 }}
+		font={{ font_size: 30.8, wrap: true }}
 		animate="fade"
 		drillTo="sin-and-death/ephesians-2-1"
 	>

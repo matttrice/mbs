@@ -260,8 +260,7 @@
 	<!-- Step 18: Nature of Death -->
 	<Fragment
 		step={18}
-		drillTo="sin-and-death/death-states"
-		layout={{ x: 66.2, y: 322.2, width: 266.1, height: 52.1 }}
+		layout={{ x: 70, y: 340, width: 225, height: 30 }}
 		line={{ width: 1 }}
 		font={{ align: 'center', font_size: 30.8 }}
 		zIndex={24}
@@ -286,7 +285,6 @@
 	<!-- Step 19.1: "Event Ezekiel 18:4" -->
 	<Fragment
 		step={19.1}
-		drillTo="sin-and-death/death-states"
 		layout={{ x: 98.1, y: 416.6, width: 193.8, height: 79.2 }}
 		line={{ width: 1 }}
 		font={{ font_size: 33.3, color: '#FF8000' }}
@@ -299,7 +297,6 @@
 	<!-- Step 19.2: "State Ephesians 2:1" -->
 	<Fragment
 		step={19.2}
-		drillTo="sin-and-death/death-states"
 		layout={{ x: 98.1, y: 472.9, width: 189.1, height: 66.1 }}
 		line={{ width: 1 }}
 		font={{ font_size: 33.3, color: '#FD8017' }}

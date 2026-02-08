@@ -82,7 +82,7 @@
 
 	<!-- Step 3 (after): Horizontal line to End + OMEGA label -->
 	<Fragment step={3.1} animate="wipe">
-		<Line from={{ x: 190.3, y: 285 }} to={{ x: 749.2, y: 285 }} stroke={{ width: 6.7, color: '#000000' }} zIndex={24} />
+		<Line from={{ x: 190.3, y: 260 }} to={{ x: 749.2, y: 260 }} stroke={{ width: 6.7, color: '#000000' }} zIndex={24} />
 	</Fragment>
 
 	<Fragment
@@ -117,11 +117,11 @@
 	</Fragment>
 
 	<Fragment step={5} animate="wipe-down">
-		<Rect x={460} y={0} width={270.7} height={540} fill="var(--color-level2)" zIndex={0} />
+		<Rect x={460} y={0} width={263} height={540} fill="var(--color-level2)" zIndex={0} />
 	</Fragment>
 
 	<Fragment step={5} animate="wipe-down">
-		<Rect x={196.4} y={0} width={263.3} height={540} fill="var(--color-level1)" zIndex={1} />
+		<Rect x={198} y={0} width={263} height={540} fill="var(--color-level1)" zIndex={1} />
 	</Fragment>
 
 	<!-- Step 6 (click): Eternal Unseen + Imperishable/Powerful/Glorified -->

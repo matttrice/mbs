@@ -41,7 +41,7 @@
 	layout={{ x: 521, y: 17, width: 359, height: 82 }}
 	font={{ font_size: 15, align: 'center', wrap: true }}
 	fill="var(--color-level2)"
-	line={{ color: 'var(--color-stroke-darkest)' }}
+	line={{ color: 'var(--color-stroke-dark)' }}
 >
 	The true seed, gospel message, places a major conditional on being baptized into Christ. Any message (seed) that teaches less is simply false doctrine, from a false Jesus that cannot save.
 </Fragment>
@@ -51,7 +51,7 @@
 	step={4}
 	layout={{ x: 521, y: 103, width: 359, height: 160 }}
 	font={{ font_size: 16.7, wrap: true }}
-	line={{ color: 'var(--color-stroke-darkest)', width: 1 }}
+	line={{ color: 'var(--color-stroke-dark)', width: 1 }}
 >
 	<strong>Quoted from large evangelical church:</strong><br><i>"One last thing we need to be careful of, Making baptism something that it's not. You need to remind yourself that baptism is not a work that you do in order to earn salvation. It's simply a gift, a public, outward act that shows the change that has happened in your heart"</i>
 </Fragment>

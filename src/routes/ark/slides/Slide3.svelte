@@ -31,9 +31,7 @@
 		Ark
 	</Fragment>
 
-	<!-- Step 1.1: Dimensions (timing: after) -->
 	<Fragment
-		step={1.1}
 		layout={{ x: 768, y: 274, width: 76, height: 34 }}
 		font={{ font_size: 23.3, bold: true, color: '#F4F4F4', align: 'center', wrap: true }}
 	>
@@ -41,7 +39,6 @@
 	</Fragment>
 
 	<Fragment
-		step={1.1}
 		layout={{ x: 778, y: 201, width: 76, height: 34 }}
 		font={{ font_size: 23.3, bold: true, color: '#F4F4F4', align: 'center', wrap: true }}
 	>
@@ -49,7 +46,6 @@
 	</Fragment>
 
 	<Fragment
-		step={1.1}
 		layout={{ x: 731, y: 149, width: 76, height: 34 }}
 		font={{ font_size: 23.3, bold: true, color: '#F4F4F4', align: 'center', wrap: true }}
 	>
@@ -58,9 +54,9 @@
 
 	<!-- Step 1.2: Door image (timing: after) -->
 	<Fragment
-		step={1.2}
+		step={1}
 		layout={{ x: 399, y: 241, width: 129, height: 78 }}
-		line={{ width: 2, color: 'var(--color-stroke-darkest)' }}
+		line={{ width: 2, color: 'var(--color-stroke-dark)' }}
 		animate="fade"
 	>
 		<img src="/export/08-The_Ark/image2.png" alt="Door" class="slide-image" />
@@ -219,7 +215,7 @@
 		layout={{ x: 532, y: 448, width: 376, height: 81 }}
 		fill="var(--color-bg-blood)"
 		font={{ font_size: 30, bold: true, align: 'left', wrap: true }}
-		line={{ width: 1, color: 'var(--color-stroke-darkest)' }}
+		line={{ width: 1, color: 'var(--color-stroke-dark)' }}
         zIndex={2}
 	>
 		Spiritually, (symbolic) What is covering the ark?
@@ -249,7 +245,7 @@
 		layout={{ x: 344, y: 444, width: 163, height: 34 }}
         fill="var(--color-bg-ghost)"
 		font={{ font_size: 23.3, bold: true, align: 'center' }}
-		line={{ width: 3, color: 'var(--color-stroke-darkest)' }}
+		line={{ width: 3, color: 'var(--color-stroke-dark)' }}
         zIndex={5}
 	>
 		Hebrews 11:7

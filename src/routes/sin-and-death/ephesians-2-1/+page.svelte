@@ -17,7 +17,7 @@
 		step={1}
 		layout={{ x: 107.8, y: 55.5, width: 744.4, height: 169.5 }}
 		line={{ width: 1 }}
-		font={{ font_size: 30.8 }}
+		font={{ font_size: 30.8, wrap: true }}
 		animate="fade"
 	>
 		And you were dead in your trespasses and sins, 2 in which you formerly walked according to the course of this world, according to the prince of the power of the air, of the spirit that is now working in the sons of disobedience.

@@ -130,7 +130,7 @@
 
 	<!-- Step 1.1 (after): Gray rectangle (PHYSICAL column) + "PHYSICAL" title -->
 	<Fragment step={1.1} animate="wipe-down">
-		<Rect x={460} y={0} width={270.7} height={540} fill="var(--color-level2)" zIndex={0} />
+		<Rect x={460} y={0} width={270.7} height={540} fill="var(--color-level1)" zIndex={0} />
 	</Fragment>
 
 	<Fragment
