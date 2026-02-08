@@ -32,7 +32,7 @@
 </script>
 
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, untrack } from 'svelte';
 	import { navigation, currentFragment } from '$lib/stores/navigation';
 	import Slide from './Slide.svelte';
 	import type { Component } from 'svelte';
@@ -71,7 +71,7 @@
 
 	let { name, slides }: Props = $props();
 
-	const slideCount = slides.length;
+	const slideCount = untrack(() => slides.length);
 
 	// Track which slide within the custom show we're on
 	let currentSlideIndex = $state(0);
@@ -117,7 +117,7 @@
 
 	// Set up context for child Slide components
 	setContext<CustomShowContext>(CUSTOM_SHOW_CONTEXT_KEY, {
-		name,
+		name: untrack(() => name),
 		registerSlide,
 		get currentSlideIndex() { return currentSlideIndex; },
 		slideCount,
