@@ -3,7 +3,7 @@
 
 <script lang="ts" module>
 	import { writable, type Writable } from 'svelte/store';
-	import { getContext, setContext } from 'svelte';
+	import { getContext, setContext, untrack } from 'svelte';
 
 	const SLIDE_CONTEXT_KEY = 'slide-step-tracker';
 
@@ -150,7 +150,7 @@
 		maxStep,
 		getNormalizedStep,
 		getOriginalStep,
-		slideIndex
+		slideIndex: untrack(() => slideIndex)
 	});
 
 	// Report maxStep based on context

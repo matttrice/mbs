@@ -6,8 +6,8 @@
 	import { currentFragment, currentSlide, navigation } from '$lib/stores/navigation';
 	import { getSlideContext } from './Slide.svelte';
 	import { getCustomShowContext } from './CustomShowProvider.svelte';
-	import { onMount, onDestroy } from 'svelte';
-	import { tweened } from 'svelte/motion';
+	import { onMount, onDestroy, untrack } from 'svelte';
+	import { Tween } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
 	import type { BoxLayout, BoxFont, BoxLine, AnimationType, Keyframe, TransitionConfig } from '$lib/types';
 	import { 
@@ -137,7 +137,7 @@
 
 	// Register this step with the slide context (integer part only)
 	const slideContext = getSlideContext();
-	registerStepWithContext(step, slideContext);
+	untrack(() => registerStepWithContext(step, slideContext));
 
 	// Check for CustomShowContext to calculate local fragment offset
 	const customShowContext = getCustomShowContext();
@@ -201,16 +201,14 @@
 	// When keyframes are provided, interpolate position/opacity between them
 	// based on the current fragment step.
 
-	const transitionDuration = transition?.duration ?? 300;
-	const transitionEasing = transition?.easing ?? 'ease-out';
-
 	// Tweened values for smooth interpolation
-	const tweenedX = tweened(0, { duration: transitionDuration, easing: cubicOut });
-	const tweenedY = tweened(0, { duration: transitionDuration, easing: cubicOut });
-	const tweenedWidth = tweened(0, { duration: transitionDuration, easing: cubicOut });
-	const tweenedHeight = tweened(0, { duration: transitionDuration, easing: cubicOut });
-	const tweenedRotation = tweened(0, { duration: transitionDuration, easing: cubicOut });
-	const tweenedOpacity = tweened(1, { duration: transitionDuration, easing: cubicOut });
+	const tweenOpts = untrack(() => ({ duration: transition?.duration ?? 300, easing: cubicOut }));
+	const tweenedX = new Tween(0, tweenOpts);
+	const tweenedY = new Tween(0, tweenOpts);
+	const tweenedWidth = new Tween(0, tweenOpts);
+	const tweenedHeight = new Tween(0, tweenOpts);
+	const tweenedRotation = new Tween(0, tweenOpts);
+	const tweenedOpacity = new Tween(1, tweenOpts);
 
 	// Find the active keyframe based on current fragment
 	$effect(() => {
@@ -319,10 +317,10 @@
 		if (!layout) return '';
 
 		// Base position from layout, adjusted by keyframe tweens
-		const x = layout.x + $tweenedX;
-		const y = layout.y + $tweenedY;
-		const width = layout.width + $tweenedWidth;
-		const height = layout.height + $tweenedHeight;
+		const x = layout.x + tweenedX.current;
+		const y = layout.y + tweenedY.current;
+		const width = layout.width + tweenedWidth.current;
+		const height = layout.height + tweenedHeight.current;
 
 		let style = `
 			position: absolute;
@@ -334,7 +332,7 @@
 		`;
 
 		// Combine rotation from layout and keyframe
-		const rotation = (layout.rotation ?? 0) + $tweenedRotation;
+		const rotation = (layout.rotation ?? 0) + tweenedRotation.current;
 		// Always set rotation as CSS variable for animations to use
 		style += `--layout-rotation: ${rotation}deg;`;
 		if (rotation !== 0) {
@@ -342,8 +340,8 @@
 		}
 
 		// Apply keyframe opacity
-		if ($tweenedOpacity !== 1) {
-			style += `opacity: ${$tweenedOpacity};`;
+		if (tweenedOpacity.current !== 1) {
+			style += `opacity: ${tweenedOpacity.current};`;
 		}
 
 		// Flex alignment - defaults to center/center, can be overridden by font properties

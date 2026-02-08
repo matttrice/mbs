@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import { getContext, setContext } from 'svelte';
+	import { getContext, setContext, untrack } from 'svelte';
 
 	const PRESENTATION_CONTEXT_KEY = 'presentation-provider';
 
@@ -55,9 +55,9 @@
 	let { name, slideCount, getOriginalStep: getOriginalStepBind = $bindable(), children }: Props = $props();
 
 	// Track maxSteps for each slide
-	let slideMaxSteps = $state<number[]>(Array(slideCount).fill(0));
+	let slideMaxSteps = $state<number[]>(untrack(() => Array(slideCount).fill(0)));
 	// Track which slides have registered (separate from maxStep value)
-	let slideRegistered = $state<boolean[]>(Array(slideCount).fill(false));
+	let slideRegistered = $state<boolean[]>(untrack(() => Array(slideCount).fill(false)));
 	// Track original step lookup functions for each slide
 	let originalStepLookups = $state<Map<number, (normalizedStep: number) => number>>(new Map());
 	let initialized = $state(false);
@@ -87,13 +87,13 @@
 		// Init once all slides have registered (even those with 0 steps)
 		if (!initialized && slideRegistered.every(registered => registered)) {
 			initialized = true;
-			navigation.init(name, slideMaxSteps);
+			untrack(() => navigation.init(name, slideMaxSteps));
 		}
 	}
 
 	// Set up context for child Slide components
 	setContext<PresentationContext>(PRESENTATION_CONTEXT_KEY, {
-		presentationName: name,
+		presentationName: untrack(() => name),
 		registerSlide,
 		registerOriginalStepLookup,
 		currentSlide,
