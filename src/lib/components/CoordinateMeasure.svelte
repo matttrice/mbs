@@ -194,7 +194,7 @@
 				// Store for nudging
 				arrowFromTo = { fromBox, toBox, bow, flip };
 				
-				arrowCoords = `fromBox={{ x: ${fromBox.x}, y: ${fromBox.y}, width: ${fromBox.width}, height: ${fromBox.height} }} toBox={{ x: ${toBox.x}, y: ${toBox.y}, width: ${toBox.width}, height: ${toBox.height} }}${bow !== 0 ? ` bow={${bow}}` : ''}${flip ? ' flip' : ''}`;
+				arrowCoords = `fromBox={{ x: ${fmt(fromBox.x)}, y: ${fmt(fromBox.y)}, width: ${fmt(fromBox.width)}, height: ${fmt(fromBox.height)} }} toBox={{ x: ${fmt(toBox.x)}, y: ${fmt(toBox.y)}, width: ${fmt(toBox.width)}, height: ${fmt(toBox.height)} }}${bow !== 0 ? ` bow={${fmt(bow)}}` : ''}${flip ? ' flip' : ''}`;
 				
 				// Visual overlay for box-to-box: show a bounding area
 				const minX = Math.min(fromBox.x, toBox.x);
@@ -212,7 +212,7 @@
 				// Store for nudging
 				arrowFromTo = { from, to, bow, flip };
 				
-				arrowCoords = `from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }}${bow !== 0 ? ` bow={${bow}}` : ''}${flip ? ' flip' : ''}`;
+				arrowCoords = `from={{ x: ${fmt(from.x)}, y: ${fmt(from.y)} }} to={{ x: ${fmt(to.x)}, y: ${fmt(to.y)} }}${bow !== 0 ? ` bow={${fmt(bow)}}` : ''}${flip ? ' flip' : ''}`;
 				
 				// Visual overlay for point-to-point: calculate bounding box with padding
 				const padding = 2;
@@ -229,7 +229,7 @@
 			if (coords.from && coords.to) {
 				const from = coords.from as { x: number; y: number };
 				const to = coords.to as { x: number; y: number };
-				lineComponent = `from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }}`;
+				lineComponent = `from={{ x: ${fmt(from.x)}, y: ${fmt(from.y)} }} to={{ x: ${fmt(to.x)}, y: ${fmt(to.y)} }}`;
 			} else {
 				lineComponent = '';
 			}
@@ -243,8 +243,8 @@
 			// Store for nudging
 			lineFromTo = { from, to };
 			
-			lineComponent = `from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }}`;
-			arrowCoords = `from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }}`;
+			lineComponent = `from={{ x: ${fmt(from.x)}, y: ${fmt(from.y)} }} to={{ x: ${fmt(to.x)}, y: ${fmt(to.y)} }}`;
+			arrowCoords = `from={{ x: ${fmt(from.x)}, y: ${fmt(from.y)} }} to={{ x: ${fmt(to.x)}, y: ${fmt(to.y)} }}`;
 			
 			// Visual overlay: calculate bounding box with padding
 			const padding = 2;
@@ -267,8 +267,8 @@
 			// Store for nudging
 			arcCoords = { from, to, curve };
 			
-			arcComponent = `<Arc from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }} curve={${curve}} />`;
-			arrowCoords = `from={{ x: ${from.x}, y: ${from.y} }} to={{ x: ${to.x}, y: ${to.y} }}`;
+			arcComponent = `<Arc from={{ x: ${fmt(from.x)}, y: ${fmt(from.y)} }} to={{ x: ${fmt(to.x)}, y: ${fmt(to.y)} }} curve={${fmt(curve)}} />`;
+			arrowCoords = `from={{ x: ${fmt(from.x)}, y: ${fmt(from.y)} }} to={{ x: ${fmt(to.x)}, y: ${fmt(to.y)} }}`;
 			
 			// Visual overlay: calculate bounding box with padding accounting for curve
 			// Arc peaks at midpoint, so use ~70% of curve for bounding box estimate
@@ -293,7 +293,7 @@
 			const ry = coords.ry as number;
 			
 			ellipseCoords = { cx, cy, rx, ry };
-			ellipseComponent = `cx={${cx}} cy={${cy}} rx={${rx}} ry={${ry}}`;
+			ellipseComponent = `cx={${fmt(cx)}} cy={${fmt(cy)}} rx={${fmt(rx)}} ry={${fmt(ry)}}`;
 			
 			// Visual overlay: bounding box around ellipse
 			const padding = 2;
@@ -365,14 +365,14 @@
 			// Handle different shape types that store actual coordinates
 			if (detectedShapeType === 'ellipse' && ellipseCoords) {
 				ellipseCoords = { ...ellipseCoords, cx: ellipseCoords.cx + dx, cy: ellipseCoords.cy + dy };
-				ellipseComponent = `cx={${ellipseCoords.cx}} cy={${ellipseCoords.cy}} rx={${ellipseCoords.rx}} ry={${ellipseCoords.ry}}`;
+				ellipseComponent = `cx={${fmt(ellipseCoords.cx)}} cy={${fmt(ellipseCoords.cy)}} rx={${fmt(ellipseCoords.rx)}} ry={${fmt(ellipseCoords.ry)}}`;
 			} else if (detectedShapeType === 'line' && lineFromTo) {
 				lineFromTo = {
 					from: { x: lineFromTo.from.x + dx, y: lineFromTo.from.y + dy },
 					to: { x: lineFromTo.to.x + dx, y: lineFromTo.to.y + dy }
 				};
-				lineComponent = `from={{ x: ${lineFromTo.from.x}, y: ${lineFromTo.from.y} }} to={{ x: ${lineFromTo.to.x}, y: ${lineFromTo.to.y} }}`;
-				arrowCoords = `from={{ x: ${lineFromTo.from.x}, y: ${lineFromTo.from.y} }} to={{ x: ${lineFromTo.to.x}, y: ${lineFromTo.to.y} }}`;
+				lineComponent = `from={{ x: ${fmt(lineFromTo.from.x)}, y: ${fmt(lineFromTo.from.y)} }} to={{ x: ${fmt(lineFromTo.to.x)}, y: ${fmt(lineFromTo.to.y)} }}`;
+				arrowCoords = `from={{ x: ${fmt(lineFromTo.from.x)}, y: ${fmt(lineFromTo.from.y)} }} to={{ x: ${fmt(lineFromTo.to.x)}, y: ${fmt(lineFromTo.to.y)} }}`;
 			} else if (detectedShapeType === 'arrow' && arrowFromTo) {
 				if (arrowFromTo.fromBox && arrowFromTo.toBox) {
 					const newFromBox = { ...arrowFromTo.fromBox, x: arrowFromTo.fromBox.x + dx, y: arrowFromTo.fromBox.y + dy };
@@ -380,14 +380,14 @@
 					const bow = arrowFromTo.bow ?? 0;
 					const flip = arrowFromTo.flip;
 					arrowFromTo = { ...arrowFromTo, fromBox: newFromBox, toBox: newToBox };
-					arrowCoords = `fromBox={{ x: ${newFromBox.x}, y: ${newFromBox.y}, width: ${newFromBox.width}, height: ${newFromBox.height} }} toBox={{ x: ${newToBox.x}, y: ${newToBox.y}, width: ${newToBox.width}, height: ${newToBox.height} }}${bow !== 0 ? ` bow={${bow}}` : ''}${flip ? ' flip' : ''}`;
+					arrowCoords = `fromBox={{ x: ${fmt(newFromBox.x)}, y: ${fmt(newFromBox.y)}, width: ${fmt(newFromBox.width)}, height: ${fmt(newFromBox.height)} }} toBox={{ x: ${fmt(newToBox.x)}, y: ${fmt(newToBox.y)}, width: ${fmt(newToBox.width)}, height: ${fmt(newToBox.height)} }}${bow !== 0 ? ` bow={${fmt(bow)}}` : ''}${flip ? ' flip' : ''}`;
 				} else if (arrowFromTo.from && arrowFromTo.to) {
 					const newFrom = { x: arrowFromTo.from.x + dx, y: arrowFromTo.from.y + dy };
 					const newTo = { x: arrowFromTo.to.x + dx, y: arrowFromTo.to.y + dy };
 					const bow = arrowFromTo.bow ?? 0;
 					const flip = arrowFromTo.flip;
 					arrowFromTo = { ...arrowFromTo, from: newFrom, to: newTo };
-					arrowCoords = `from={{ x: ${newFrom.x}, y: ${newFrom.y} }} to={{ x: ${newTo.x}, y: ${newTo.y} }}${bow !== 0 ? ` bow={${bow}}` : ''}${flip ? ' flip' : ''}`;
+					arrowCoords = `from={{ x: ${fmt(newFrom.x)}, y: ${fmt(newFrom.y)} }} to={{ x: ${fmt(newTo.x)}, y: ${fmt(newTo.y)} }}${bow !== 0 ? ` bow={${fmt(bow)}}` : ''}${flip ? ' flip' : ''}`;
 				}
 			} else if (detectedShapeType === 'arc' && arcCoords) {
 				arcCoords = {
@@ -395,8 +395,8 @@
 					to: { x: arcCoords.to.x + dx, y: arcCoords.to.y + dy },
 					curve: arcCoords.curve
 				};
-				arcComponent = `<Arc from={{ x: ${arcCoords.from.x}, y: ${arcCoords.from.y} }} to={{ x: ${arcCoords.to.x}, y: ${arcCoords.to.y} }} curve={${arcCoords.curve}} />`;
-				arrowCoords = `from={{ x: ${arcCoords.from.x}, y: ${arcCoords.from.y} }} to={{ x: ${arcCoords.to.x}, y: ${arcCoords.to.y} }}`;
+				arcComponent = `<Arc from={{ x: ${fmt(arcCoords.from.x)}, y: ${fmt(arcCoords.from.y)} }} to={{ x: ${fmt(arcCoords.to.x)}, y: ${fmt(arcCoords.to.y)} }} curve={${fmt(arcCoords.curve)}} />`;
+				arrowCoords = `from={{ x: ${fmt(arcCoords.from.x)}, y: ${fmt(arcCoords.from.y)} }} to={{ x: ${fmt(arcCoords.to.x)}, y: ${fmt(arcCoords.to.y)} }}`;
 			} else {
 				formatOutput(startPos, currentPos, rotation);
 			}
