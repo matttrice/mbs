@@ -951,7 +951,9 @@
 	<!-- Step 39: Birth-process to receive the Holy Spirit -->
     <Fragment
         step={39}
-        layout={{ x: 680, y: 41, width: 260, height: 44 }}
+		drillTo="birthrights/body-complete"
+		autoDrill
+        layout={{ x: 680, y: 51, width: 260, height: 20 }}
         font={{ font_size: 15, bold: true, wrap: true, align: 'center', v_align: 'middle' }}
         zIndex={91}
     >

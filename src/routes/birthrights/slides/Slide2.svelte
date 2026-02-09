@@ -1,6 +1,12 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
+	
+	/**
+	 * Slide 4: The End
+	 * Canvas: 960 x 540 pixels (16:9 aspect ratio)
+	 * Scale factor: 0.625 (960/1536)
+	 */
 
 	interface Props {
 		slideIndex?: number;
@@ -9,21 +15,16 @@
 	let { slideIndex }: Props = $props();
 </script>
 
-<!--
-	Slide 3: Entry point that drills into the body-complete custom show.
--->
 <Slide {slideIndex}>
 	<div class="slide-bg"></div>
 
-	<!-- Drill into the body-complete custom show -->
+	<!-- ===== STATIC CONTENT ===== -->
+	<!-- The End -->
 	<Fragment
-		drillTo="birthrights/body-complete"
-		autoDrill
-		layout={{ x: 280, y: 220, width: 400, height: 100 }}
-		font={{ font_size: 32, bold: true, color: '#0000CC' }}
-		fill="var(--color-bg-light)"
+		layout={{ x: 109.9, y: 115.4, width: 302.3, height: 44.4 }}
+		font={{ font_size: 39.2 }}
+		zIndex={1}
 	>
-		Formation of the Body → <br/>
-		1 Corinthians 15:45-49
+		The End
 	</Fragment>
 </Slide>
