@@ -54,16 +54,16 @@
 	Death, Burial
 </Fragment>
 
-<!-- Step 1: Arc arrow (timing: with) -->
-<Fragment step={1} animate="draw">
-	<Arc from={{ x: 609, y: 416 }} to={{ x: 519, y: 500 }} curve={-68} stroke={{ width: 17, color: '#000000' }} arrow zIndex={1} />
+<Fragment step={1} animate="wipe-down">
+	<Arc from={{ x: 609, y: 416 }} to={{ x: 529, y: 500 }} curve={-168} shift={-140} stroke={{ width: 7, color: 'var(--color-text-muted)' }} arrow zIndex={0} />
 </Fragment>
 
 <!-- Step 2: United in Death & Resurrection (timing: click) -->
 <Fragment
 	step={2}
-	layout={{ x: 617, y: 398, width: 331, height: 34 }}
+	layout={{ x: 635, y: 398, width: 281, height: 23 }}
 	font={{ font_size: 20, v_align: 'middle', align: 'left' }}
+	fill="var(--color-bg-light)"
 	line={{ width: 1 }}
 >
 	United in Death & Resurrection
@@ -74,6 +74,7 @@
 	step={2.1}
 	layout={{ x: 642, y: 449, width: 299, height: 29 }}
 	font={{ font_size: 20, v_align: 'middle', align: 'left' }}
+	fill="var(--color-bg-light)"
 >
 	Person Who Dies = Free from Sin
 </Fragment>
@@ -107,7 +108,7 @@
 
 <!-- Step 6: Arc arrow returning (timing: click) -->
 <Fragment step={6} animate="draw">
-	<Arc from={{ x: 300, y: 417 }} to={{ x: 465, y: 500 }} curve={-66} stroke={{ width: 17, color: '#000000' }} arrow headSize={2} zIndex={2} />
+	<Arc from={{ x: 406, y: 507 }} to={{ x: 406, y: 420 }} curve={-346} stroke={{ width: 7, color: 'var(--color-text-muted)' }} arrow />
 </Fragment>
 
 <!-- Step 6.1: Slave's Benefit = Sanctification (timing: after 500ms) -->
@@ -122,9 +123,11 @@
 <!-- Step 6.2: Sanctification = Eternal life (timing: after 1000ms) -->
 <Fragment
 	step={6.2}
-	layout={{ x: 18, y: 457, width: 242, height: 24 }}
+	layout={{ x: 18, y: 457, width: 236, height: 24 }}
 	font={{ font_size: 20, v_align: 'middle', align: 'left' }}
->
+	fill="var(--color-bg-light)"
+	zIndex={1}
+	>
 	Sanctification = Eternal life
 </Fragment>
 
@@ -132,8 +135,9 @@
 <Fragment
 	step={6.3}
 	layout={{ x: 28, y: 394, width: 298, height: 59 }}
-	font={{ font_size: 20, bold: true, color: '#0000FF', v_align: 'middle' }}
-	line={{ width: 1 }}
->
-	Resurrection = Free Gift of God = Eternal life
+	font={{ font_size: 20, bold: true, color: 'var(--color-level3)', align: 'right', v_align: 'middle', wrap: true }}
+	fill="var(--color-bg-light)"
+	zIndex={1}
+	>
+	Resurrection = <br/> Free Gift of God = Eternal life
 </Fragment>

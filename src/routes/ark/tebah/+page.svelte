@@ -2,19 +2,20 @@
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
 	import { Arrow, Line, Rect } from '$lib/components/svg';
+    import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
 </script>
 
 <Slide>
 	<div class="slide-bg"></div>
-
+	<ReferenceOverlay src="/export/08-The_Ark/Slide7.png" />
 	<!-- Static: Genesis 6:14 quote -->
 	<Fragment
 		layout={{ x: 53, y: 189, width: 819, height: 54 }}
-		fill="#969696"
+		fill="var(--color-level1)"
 		font={{ font_size: 20, align: 'center', wrap: true }}
-		line={{ width: 6, color: '#000000' }}
+		line={{ width: 2, color: 'var(--color-stroke-dark)' }}
 	>
-		"Make for yourself an *ark of gopher wood; you shall make the ark with rooms, and shall *cover it inside and out with *pitch.
+		"Make for yourself an *ark of gopher wood; you shall make the <strong>ark</strong> with rooms, and shall <strong>*cover it inside and out with *pitch</strong>.
 	</Fragment>
 
 	<!-- Step 1: *Ark = Tebah title (timing: with = step 1) -->
@@ -49,8 +50,8 @@
 		step={3}
 		drillTo="ark/exodus-19-5"
 		returnHere
-		layout={{ x: 94, y: 86, width: 311, height: 46 }}
-		font={{ font_size: 16.7, align: 'left' }}
+		layout={{ x: 94, y: 91, width: 311, height: 36 }}
+		font={{ font_size: 16.7, align: 'left', wrap: true }}
 	>
 		Treasured Possession: Exodus 19:5, Exodus 25:10 Malachi. 3:17, 1 Peter 2:9
 	</Fragment>
@@ -60,8 +61,8 @@
 		step={4}
 		drillTo="ark/exodus-2-1"
 		returnHere
-		layout={{ x: 94, y: 128, width: 201, height: 26 }}
-		font={{ font_size: 16.7, italic: true, color: '#000000', align: 'left', wrap: true }}
+		layout={{ x: 94, y: 131, width: 185, height: 21 }}
+		font={{ font_size: 16.7, italic: true, align: 'left'}}
 	>
 		(Moses - Exodus 2:1-6)
 	</Fragment>
@@ -107,7 +108,7 @@
 	<!-- Step 7: 2. The price of life, ransom, bribe (timing: click) -->
 	<Fragment
 		step={7}
-		layout={{ x: 498, y: 64, width: 313, height: 26 }}
+		layout={{ x: 502, y: 64, width: 313, height: 26 }}
 		font={{ font_size: 20, color: '#0000FF', align: 'left' }}
 	>
 		2. The price of life, ransom, bribe
@@ -117,7 +118,7 @@
 	<Fragment
 		step={8}
 		layout={{ x: 498, y: 132, width: 456, height: 48 }}
-		font={{ font_size: 20, color: '#0000FF', align: 'left' }}
+		font={{ font_size: 20, color: '#0000FF', align: 'left', wrap: true }}
 	>
 		2. Purge, make an atonement, make propitiation, reconciliation, cover over with pitch
 	</Fragment>
@@ -127,15 +128,19 @@
 		step={9}
 		drillTo="ark/leviticus-17-11"
 		returnHere
-		layout={{ x: 807, y: 21, width: 126, height: 54 }}
-		font={{ font_size: 20, bold: true, align: 'center' }}
+		layout={{ x: 807, y: 27, width: 126, height: 44 }}
+		font={{ font_size: 20, bold: true, align: 'center', wrap: true }}
 	>
 		Leviticus 17:11, 16:15
 	</Fragment>
 
 	<!-- Step 9: Left brace shape (timing: with) - using line approximation -->
 	<Fragment step={9} animate="fade">
-		<Line from={{ x: 791, y: 18 }} to={{ x: 791, y: 137 }} stroke={{ width: 6, color: '#000000' }} zIndex={1} />
+		<Line from={{ x: 799, y: 19 }} to={{ x: 799, y: 129 }} stroke={{ width: 6, color: 'var(--color-stroke-dark)' }} />
+		<Line from={{ x: 779, y: 19 }} to={{ x: 799, y: 22 }} stroke={{ width: 6, color: 'var(--color-stroke-dark)' }} />
+		<Line from={{ x: 779, y: 130 }} to={{ x: 799, y: 126 }} stroke={{ width: 6, color: 'var(--color-stroke-dark)' }} />
+		<Line from={{ x: 800, y: 64 }} to={{ x: 810, y: 64 }} stroke={{ width: 6, color: 'var(--color-stroke-dark)' }} />
+
 	</Fragment>
 
 	<!-- Step 10: Life of flesh is in the blood (timing: click) -->
@@ -150,24 +155,30 @@
 	<!-- Step 11: Romans 3:24 scripture (timing: click) -->
 	<Fragment
 		step={11}
-		layout={{ x: 44, y: 243, width: 446, height: 224 }}
-		font={{ font_size: 23.3, bold: true, color: '#000000', align: 'left', wrap: true }}
-		line={{ width: 1 }}
+		layout={{ x: 40, y: 250, width: 100, height: 20 }}
+		font={{ font_size: 25, align: 'left', bold: true}}
 	>
-		Romans 3:24 …and all are justified freely by his grace through the redemption that came by Christ Jesus. 25 God presented Christ as a sacrifice of *atonement, through the shedding of his blood—to be received by faith. He did this to demonstrate his righteousness, because in his forbearance he had left the sins committed beforehand unpunished. (NIV)[*propitiation NASB, KJV = atone, appease]
+		Romans 3:24
+	</Fragment>
+	<Fragment
+		step={11}
+		layout={{ x: 36, y: 260, width: 500, height: 224 }}
+		font={{ font_size: 20, align: 'left', wrap: true }}
+	>
+		…and all are justified freely by his grace through the redemption that came by Christ Jesus. <sup>25</sup> God presented Christ as a sacrifice of *atonement, through the shedding of his blood—to be received by faith. He did this to demonstrate his righteousness, because in his forbearance he had left the sins committed beforehand unpunished. <br/>(NIV)[*propitiation NASB, KJV = atone, appease]
 	</Fragment>
 
 	<!-- Step 12: Red underlines and Atonement/kaphar labels (timing: click with arrows) -->
 	<Fragment step={12} animate="draw">
-		<Line from={{ x: 685, y: 159 }} to={{ x: 591, y: 159 }} stroke={{ width: 4, color: '#C00000' }} zIndex={2} />
+		<Line from={{ x: 760, y: 157 }} to={{ x: 585, y: 157 }} stroke={{ width: 4, color: '#C00000' }} zIndex={2} />
 	</Fragment>
 
 	<Fragment step={12} animate="wipe-down">
-		<Arrow from={{ x: 168, y: 179 }} to={{ x: 168, y: 331 }} stroke={{ width: 6, color: '#000000' }} zIndex={3} />
+		<Arrow from={{ x: 168, y: 179 }} to={{ x: 168, y: 331 }} stroke={{ width: 3, color: 'var(--color-stroke-dark)' }} />
 	</Fragment>
 
 	<Fragment step={12} animate="draw">
-		<Line from={{ x: 870, y: 127 }} to={{ x: 818, y: 127 }} stroke={{ width: 4, color: '#C00000' }} zIndex={2} />
+		<Line from={{ x: 910, y: 127 }} to={{ x: 838, y: 127 }} stroke={{ width: 4, color: '#C00000' }} zIndex={2} />
 	</Fragment>
 
 	<Fragment
@@ -190,7 +201,7 @@
 
 	<!-- Step 13: Blood = arrow (timing: click) -->
 	<Fragment step={13} animate="wipe-down">
-		<Arrow from={{ x: 318, y: 97 }} to={{ x: 318, y: 351 }} stroke={{ width: 6, color: '#000000' }} zIndex={4} />
+		<Arrow from={{ x: 408, y: 97 }} to={{ x: 258, y: 351 }} stroke={{ width: 3, color: 'var(--color-stroke-dark)' }} />
 	</Fragment>
 
 	<Fragment
@@ -204,34 +215,34 @@
 
 	<!-- Step 13.1: Red underline (timing: after) -->
 	<Fragment step={13.1} animate="draw">
-		<Line from={{ x: 597, y: 90 }} to={{ x: 527, y: 90 }} stroke={{ width: 4, color: '#C00000' }} zIndex={2} />
+		<Line from={{ x: 665, y: 90 }} to={{ x: 527, y: 90 }} stroke={{ width: 4, color: '#C00000' }} zIndex={2} />
 	</Fragment>
 
 	<!-- Step 14: 1 John 2:2 (timing: click) -->
 	<Fragment
 		step={14}
-		layout={{ x: 491, y: 243, width: 416, height: 89 }}
-		font={{ font_size: 23.3, bold: true, color: '#000000', align: 'left', wrap: true }}
+		layout={{ x: 521, y: 243, width: 416, height: 89 }}
+		font={{ font_size: 23, align: 'left', wrap: true }}
 		line={{ width: 1 }}
 	>
-		1 John 2:2  He is the atoning sacrifice for our sins, and not only for ours but also for the sins of the whole world.
+		<strong>1 John 2:2</strong> He is the atoning sacrifice for our sins, and not only for ours but also for the sins of the whole world.
 	</Fragment>
 
 	<!-- Step 15: 1 John 1:7 (timing: click) -->
 	<Fragment
 		step={15}
-		layout={{ x: 17, y: 453, width: 925, height: 80 }}
-		font={{ font_size: 23.3, bold: true, color: '#000000', v_align: 'middle', align: 'left' }}
+		layout={{ x: 60, y: 478, width: 835, height: 52 }}
+		font={{ font_size: 23, v_align: 'middle', align: 'left', wrap: true }}
 		line={{ width: 1 }}
 	>
-		1 John1:7… but if we walk in the Light as He Himself is in the Light, we have fellowship                with one another, and the blood of Jesus His Son cleanses us from all sin.
+		<strong>1 John1:7</strong>...but if we walk in the Light as He Himself is in the Light, we have fellowship with one another, and the blood of Jesus His Son cleanses us from all sin.
 	</Fragment>
 
 	<!-- Step 16: Propitiation question (timing: click) -->
 	<Fragment
 		step={16}
 		layout={{ x: 524, y: 331, width: 350, height: 69 }}
-		font={{ font_size: 21.7, bold: true, color: '#0000FF', align: 'left' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--color-level3)', align: 'left', wrap: true }}
 		line={{ width: 1 }}
 	>
 		Propitiation (atoning sacrifice) of sin is accomplished how?
@@ -248,7 +259,7 @@
 	</Fragment>
 
 	<Fragment step={17} animate="wipe">
-		<Arrow from={{ x: 661, y: 410 }} to={{ x: 738, y: 410 }} stroke={{ width: 8, color: '#000000' }} zIndex={5} />
+		<Arrow from={{ x: 645, y: 410 }} to={{ x: 722, y: 410 }} stroke={{ width: 8, color: '#000000' }} zIndex={5} />
 	</Fragment>
 
 	<!-- Step 17.1: BLOOD and kaphar equation (timing: after) -->
@@ -264,13 +275,13 @@
 	<Fragment
 		step={17.1}
 		layout={{ x: 484, y: 427, width: 431, height: 40 }}
-		font={{ font_size: 26.7, bold: true, italic: true, color: '#000000', align: 'left' }}
+		font={{ font_size: 26.7, bold: true, italic: true, align: 'left' }}
 		line={{ width: 1 }}
 	>
 		kaphar = cover = kopher = blood
 	</Fragment>
 
 	<Fragment step={17.1} animate="wipe-down">
-		<Arrow from={{ x: 663, y: 92 }} to={{ x: 663, y: 393 }} stroke={{ width: 6, color: '#000000' }} zIndex={6} />
+		<Arrow from={{ x: 573, y: 92 }} to={{ x: 733, y: 393 }} stroke={{ width: 3, color: 'var(--color-stroke-dark)' }} zIndex={6} />
 	</Fragment>
 </Slide>

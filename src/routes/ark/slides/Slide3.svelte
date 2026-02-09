@@ -154,7 +154,7 @@
 	<Fragment
 		step={10}
 		drillTo="ark/tebah"
-		layout={{ x: 410, y: 6, width: 546, height: 36 }}
+		layout={{ x: 410, y: 6, width: 496, height: 36 }}
 		font={{ font_size: 26.7, align: 'left' }}
 		line={{ width: 1 }}
 	>
@@ -226,7 +226,7 @@
         step={15}
         animate="wipe-left"
     >
-        <Arrow to={{ x: 230, y: 489 }} from={{ x: 532, y: 489 }} stroke={{ color: "var(--color-bg-blood)", width: 10 }} />
+        <Arrow from={{ x: 532, y: 489 }} to={{ x: 230, y: 489 }}  stroke={{ color: "var(--color-bg-blood)", width: 10 }} />
     </Fragment>
 	
     <Fragment
@@ -265,7 +265,7 @@
 	<Fragment
 		step={18}
 		drillTo="ark/1-peter-3-20"
-		layout={{ x: 100, y: 60, width: 198, height: 40 }}
+		layout={{ x: 100, y: 65, width: 186, height: 29 }}
 		font={{ font_size: 26.7, bold: true, align: 'left' }}
 		line={{ width: 1 }}
 	>
@@ -295,7 +295,7 @@
 	<Fragment
 		step={20}
 		drillTo="ark/genesis-7-11"
-		layout={{ x: 100, y: 114, width: 180, height: 40 }}
+		layout={{ x: 100, y: 119, width: 160, height: 30 }}
 		font={{ font_size: 26.7, bold: true, align: 'left' }}
 		line={{ width: 1 }}
 	>
