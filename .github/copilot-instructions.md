@@ -325,16 +325,30 @@ Arc is a self-positioning curved line/arrow for drawing half-circle arcs above o
 |------|------|-------------|
 | `from` | `{ x, y }` | Start point in canvas coordinates (960×540) |
 | `to` | `{ x, y }` | End point in canvas coordinates |
-| `curve` | `number` | Vertical offset: negative = curves up, positive = curves down |
+| `curve` | `number` | Perpendicular offset: negative = curves up, positive = curves down |
+| `shift` | `number` | Parallel offset along from→to axis. Positive = toward 'to', negative = toward 'from'. Default: 0 |
 | `stroke` | `StrokeStyle` | Stroke styling (width, color, dash) |
 | `arrow` | `boolean` | Show arrowhead at end (default: false) |
 | `headSize` | `number` | Arrow head size multiplier (default: 3) |
 | `zIndex` | `number` | Stacking order (default: 1) |
 
+**How curve and shift work together:**
+- `curve` moves the bezier control point **perpendicular** to the from→to line (how far the arc bulges)
+- `shift` moves the control point **parallel** to the from→to line (where along the line the peak sits)
+- With `shift={0}` (default), the arc peak is centered between from and to
+- Positive `shift` moves the peak toward the `to` endpoint, negative toward `from`
+
 **Arc curving upward (e.g., Poetry → Ezra):**
 ```svelte
 <Fragment step={48} animate="draw">
   <Arc from={{ x: 364, y: 382 }} to={{ x: 242, y: 382 }} curve={-34} stroke={{ width: 5, color: '#0000FF' }} arrow />
+</Fragment>
+```
+
+**Arc with shifted peak (asymmetric arc):**
+```svelte
+<Fragment step={49} animate="draw">
+  <Arc from={{ x: 100, y: 300 }} to={{ x: 500, y: 300 }} curve={-80} shift={50} stroke={{ width: 4 }} arrow />
 </Fragment>
 ```
 

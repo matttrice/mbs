@@ -12,18 +12,9 @@
 	],
 	"settings": {
 		"diffEditor.maxComputationTime":5000,
-		"mcp": {
-			"servers": {
-				"svelte": {
-					"type": "stdio",
-					"command": "npx",
-					"args": [
-						"-y",
-						"@sveltejs/mcp"
-					]
-				}
-			},
-			"inputs": []
-		}
+		  "cssvar.files": [
+    		"src/lib/styles/theme.css"
+  			],
+		  "cssvar.extensions": ["svelte", "css", "ts"]
 	}
 }

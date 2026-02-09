@@ -31,8 +31,10 @@
 		from: Point;
 		/** End point in canvas coordinates (960×540) */
 		to: Point;
-		/** Curve height: negative = curve up, positive = curve down */
+		/** Curve height: negative = curve up, positive = curve down (perpendicular offset) */
 		curve?: number;
+		/** Shift the curve peak along the from→to axis (parallel offset). Positive = toward 'to', negative = toward 'from'. Default: 0 */
+		shift?: number;
 		/** Stroke styling */
 		stroke?: StrokeStyle;
 		/** Fill color (typically 'none' for arcs) */
@@ -45,13 +47,13 @@
 		zIndex?: number;
 	}
 
-	let { from, to, curve = -50, stroke, fill, arrow = false, headSize = 3, zIndex = 1 }: Props = $props();
+	let { from, to, curve = -50, shift = 0, stroke, fill, arrow = false, headSize = 3, zIndex = 1 }: Props = $props();
 
 	let svgEl: SVGSVGElement;
 	let draw: Container | null = null;
 
 	// Calculate bounding box with padding for the arc
-	const padding = $derived(Math.abs(curve) + (stroke?.width ?? 2) * 2 + 20);
+	const padding = $derived(Math.max(Math.abs(curve), Math.abs(shift)) + (stroke?.width ?? 2) * 2 + 20);
 	const minX = $derived(Math.min(from.x, to.x) - padding);
 	const minY = $derived(Math.min(from.y, to.y) - padding);
 	const maxX = $derived(Math.max(from.x, to.x) + padding);
@@ -77,10 +79,14 @@
 	const perpX = $derived(-dy / lineLength);
 	const perpY = $derived(dx / lineLength);
 	
-	// Offset control point perpendicular to the line
+	// Parallel unit vector (along from→to direction)
+	const parX = $derived(dx / lineLength);
+	const parY = $derived(dy / lineLength);
+	
+	// Offset control point: curve = perpendicular, shift = parallel to from→to line
 	const controlPoint = $derived({ 
-		x: midX + perpX * curve, 
-		y: midY + perpY * curve 
+		x: midX + perpX * curve + parX * shift, 
+		y: midY + perpY * curve + parY * shift 
 	});
 
 	onMount(() => {
@@ -166,7 +172,7 @@
 		pointer-events: {dev ? 'auto' : 'none'};
 	"
 	data-shape-type={dev ? 'arc' : undefined}
-	data-coords={dev ? JSON.stringify({ from, to, curve }) : undefined}
+	data-coords={dev ? JSON.stringify({ from, to, curve, shift }) : undefined}
 >
 	<svg
 		bind:this={svgEl}

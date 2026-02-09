@@ -21,7 +21,7 @@
 	type RectShape = { type: 'rect'; x: number; y: number; width: number; height: number; rotation: number };
 	type ArrowShape = { type: 'arrow'; from?: Point; to?: Point; fromBox?: Box; toBox?: Box; bow: number; flip: boolean };
 	type LineShape = { type: 'line'; from: Point; to: Point };
-	type ArcShape = { type: 'arc'; from: Point; to: Point; curve: number };
+	type ArcShape = { type: 'arc'; from: Point; to: Point; curve: number; shift: number };
 	type EllipseShape = { type: 'ellipse'; cx: number; cy: number; rx: number; ry: number };
 
 	type ShapeState = FragmentShape | RectShape | ArrowShape | LineShape | ArcShape | EllipseShape;
@@ -91,7 +91,7 @@
 			case 'line':
 				return `from={{ x: ${fmt(s.from.x)}, y: ${fmt(s.from.y)} }} to={{ x: ${fmt(s.to.x)}, y: ${fmt(s.to.y)} }}`;
 			case 'arc':
-				return `from={{ x: ${fmt(s.from.x)}, y: ${fmt(s.from.y)} }} to={{ x: ${fmt(s.to.x)}, y: ${fmt(s.to.y)} }} curve={${fmt(s.curve)}}`;
+				return `from={{ x: ${fmt(s.from.x)}, y: ${fmt(s.from.y)} }} to={{ x: ${fmt(s.to.x)}, y: ${fmt(s.to.y)} }} curve={${fmt(s.curve)}}${s.shift !== 0 ? ` shift={${fmt(s.shift)}}` : ''}`;
 			case 'ellipse':
 				return `cx={${fmt(s.cx)}} cy={${fmt(s.cy)}} rx={${fmt(s.rx)}} ry={${fmt(s.ry)}}`;
 		}
@@ -196,7 +196,7 @@
 		} else if (type === 'line') {
 			return { type: 'line', from: coords.from as Point, to: coords.to as Point };
 		} else if (type === 'arc') {
-			return { type: 'arc', from: coords.from as Point, to: coords.to as Point, curve: coords.curve as number };
+			return { type: 'arc', from: coords.from as Point, to: coords.to as Point, curve: coords.curve as number, shift: (coords.shift as number) ?? 0 };
 		} else if (type === 'ellipse') {
 			return { type: 'ellipse', cx: coords.cx as number, cy: coords.cy as number, rx: coords.rx as number, ry: coords.ry as number };
 		}
@@ -220,7 +220,7 @@
 			case 'line':
 				return { type: 'line', from: { ...start }, to: { ...end } };
 			case 'arc':
-				return { type: 'arc', from: { ...start }, to: { ...end }, curve: 0 };
+				return { type: 'arc', from: { ...start }, to: { ...end }, curve: 0, shift: 0 };
 			case 'ellipse':
 				return { type: 'ellipse', cx: x + width / 2, cy: y + height / 2, rx: width / 2, ry: height / 2 };
 		}
@@ -257,7 +257,7 @@
 			if (newType === 'line') {
 				shape = { type: 'line', from: { ...from }, to: { ...to } };
 			} else if (newType === 'arc') {
-				shape = { type: 'arc', from: { ...from }, to: { ...to }, curve: 0 };
+				shape = { type: 'arc', from: { ...from }, to: { ...to }, curve: 0, shift: 0 };
 			} else {
 				shape = { type: 'arrow', from: { ...from }, to: { ...to }, bow: 0, flip: false };
 			}
@@ -297,8 +297,9 @@
 			}
 			case 'arc': {
 				const curveExtent = Math.abs(s.curve) * 0.7;
-				const minX = Math.min(s.from.x, s.to.x) - P;
-				const maxX = Math.max(s.from.x, s.to.x) + P;
+				const shiftExtent = Math.abs(s.shift) * 0.5;
+				const minX = Math.min(s.from.x, s.to.x) - P - shiftExtent;
+				const maxX = Math.max(s.from.x, s.to.x) + P + shiftExtent;
 				const minY = Math.min(s.from.y, s.to.y) - P - (s.curve < 0 ? curveExtent : 0);
 				const maxY = Math.max(s.from.y, s.to.y) + P + (s.curve > 0 ? curveExtent : 0);
 				return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
@@ -391,6 +392,11 @@
 	function adjustCurve(delta: number) {
 		if (!shape || shape.type !== 'arc') return;
 		shape = { ...shape, curve: parseFloat((shape.curve + delta).toFixed(1)) };
+	}
+
+	function adjustShift(delta: number) {
+		if (!shape || shape.type !== 'arc') return;
+		shape = { ...shape, shift: parseFloat((shape.shift + delta).toFixed(1)) };
 	}
 
 	// --- Mouse handlers ---
@@ -609,9 +615,12 @@
 						{@const alen = Math.sqrt(adx * adx + ady * ady)}
 						{@const perpX = alen > 0 ? -ady / alen : 0}
 						{@const perpY = alen > 0 ? adx / alen : 0}
+						{@const parX = alen > 0 ? adx / alen : 0}
+						{@const parY = alen > 0 ? ady / alen : 0}
 						{@const scaledCurve = shape.curve * canvasScale}
-						{@const cpx = mx + perpX * scaledCurve}
-						{@const cpy = my + perpY * scaledCurve}
+						{@const scaledShift = shape.shift * canvasScale}
+						{@const cpx = mx + perpX * scaledCurve + parX * scaledShift}
+						{@const cpy = my + perpY * scaledCurve + parY * scaledShift}
 						<path d="M{vf.x},{vf.y} Q{cpx},{cpy} {vt.x},{vt.y}" stroke="#00ff00" stroke-width="3" fill="none" />
 						{@const endAngle = Math.atan2(vt.y - cpy, vt.x - cpx) * 180 / Math.PI}
 						<polygon points="0,-5 12,0 0,5" fill="#00ff00" transform="translate({vt.x},{vt.y}) rotate({endAngle})" />
@@ -800,7 +809,7 @@
 			</div>
 			{/if}
 
-			<!-- Arc: curve -->
+			<!-- Arc: curve + shift -->
 			{#if shape.type === 'arc'}
 			<div class="controls-row">
 				<div class="curve-controls">
@@ -812,6 +821,18 @@
 					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustCurve(1)}>+1</button>
 					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustCurve(5)}>+5</button>
 					<button class="nudge-btn" onclick={() => adjustCurve(10)}>+10</button>
+				</div>
+			</div>
+			<div class="controls-row">
+				<div class="curve-controls">
+					<span class="curve-label">shift</span>
+					<button class="nudge-btn" onclick={() => adjustShift(-10)}>−10</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustShift(-5)}>−5</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustShift(-1)}>−1</button>
+					<span class="curve-value">{fmt(shape.shift)}</span>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustShift(1)}>+1</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustShift(5)}>+5</button>
+					<button class="nudge-btn" onclick={() => adjustShift(10)}>+10</button>
 				</div>
 			</div>
 			{/if}
@@ -841,11 +862,13 @@
 			<!-- Output sections -->
 			<div class="output-section">
 				<div class="output-label">ORIGINAL</div>
-				<code class="output-code">{originalCode || '—'}</code>
+				<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
+				<code class="output-code" onclick={(e) => { const text = e.currentTarget.textContent || ''; if (text !== '—') navigator.clipboard.writeText(text); }}>{originalCode || '—'}</code>
 			</div>
 			<div class="output-section">
 				<div class="output-label">ADJUSTED</div>
-				<code class="output-code">{originalCode && originalCode !== outputCode ? outputCode : '—'}</code>
+				<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
+				<code class="output-code" onclick={(e) => { const text = e.currentTarget.textContent || ''; if (text !== '—') navigator.clipboard.writeText(text); }}>{originalCode && originalCode !== outputCode ? outputCode : '—'}</code>
 			</div>
 
 			<div class="panel-footer">
