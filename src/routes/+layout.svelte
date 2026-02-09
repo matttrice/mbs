@@ -9,7 +9,7 @@
 	import DebugOverlay from '$lib/components/DebugOverlay.svelte';
 	import CoordinateMeasure from '$lib/components/CoordinateMeasure.svelte';
 	import { onMount } from 'svelte';
-	import { onNavigate } from '$app/navigation';
+	import { goto, onNavigate } from '$app/navigation';
 	import { dev } from '$app/environment';
 
 	let { children } = $props();
@@ -54,15 +54,13 @@
 					break;
 
 				case 'Escape':
-					if (navigation.canReturn()) {
-						e.preventDefault();
-						navigation.returnFromDrill();
-					}
-					break;
-
 				case 'q':
 					e.preventDefault();
-					window.location.href = '/';
+					if (navigation.canReturn()) {
+						navigation.returnFromDrill();
+					} else {
+						goto('/');
+					}
 					break;
 
 				case 'Home':

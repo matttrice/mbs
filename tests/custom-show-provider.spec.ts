@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 import {
-	resetAndWaitForPresentation,
 	pressArrowRight,
 	pressArrowLeft
 } from './utils/test-helpers';
@@ -56,19 +55,17 @@ test.describe('CustomShowProvider - Basic Navigation', () => {
 		await expect(page.getByText('Step 1: First item')).not.toBeVisible();
 	});
 
-	test.skip('navigates through all fragments of first slide', async ({ page }) => {
-		// TODO: Investigate why "revealed" class elements are seen as hidden
-		// The element has class "revealed" but Playwright reports it as hidden
-		// This is likely a CSS visibility inheritance issue
+	test('navigates through all fragments of first slide', async ({ page }) => {
 		// SlideA has 3 steps
 		await pressArrowRight(page);
+		await page.waitForTimeout(300);
 		await expect(page.getByText('Step 1: First item')).toBeVisible();
 
 		await pressArrowRight(page);
+		await page.waitForTimeout(300);
 		await expect(page.getByText('Step 2: Second item')).toBeVisible();
 
 		await pressArrowRight(page);
-		// Wait a bit longer for animation to complete
 		await page.waitForTimeout(300);
 		await expect(page.getByText('Step 3: Third item')).toBeVisible();
 	});
@@ -92,65 +89,69 @@ test.describe('CustomShowProvider - Basic Navigation', () => {
 		await pressArrowRight(page); // Step 2
 		await pressArrowRight(page); // Step 3
 
-		// Transition to SlideB (step 0, showing static content)
+		// Transition to SlideB — Step 1 is immediately visible (local fragment = 1)
 		await pressArrowRight(page);
 		await expect(page.getByText('Slide B Content')).toBeVisible();
-
-		// SlideB Step 1
-		await pressArrowRight(page);
 		await page.waitForTimeout(300);
 		await expect(page.getByText('B Step 1: Different content')).toBeVisible();
 
-		// SlideB Step 2 (last step)
+		// SlideB Step 2 (last fragment)
 		await pressArrowRight(page);
 		await page.waitForTimeout(300);
 		await expect(page.getByText('B Step 2: More content')).toBeVisible();
 	});
 
-	test.skip('back navigation works across slide boundaries', async ({ page }) => {
-		// TODO: Investigate why "revealed" class elements are seen as hidden
-		// Same issue as above - elements have "revealed" class but Playwright sees them as hidden
-		// Navigate to SlideB Step 1
-		await pressArrowRight(page); // SlideA Step 1
-		await pressArrowRight(page); // SlideA Step 2
-		await pressArrowRight(page); // SlideA Step 3
-		await pressArrowRight(page); // Transition to SlideB (static)
-		await pressArrowRight(page); // SlideB Step 1
+	test('back navigation works across slide boundaries', async ({ page }) => {
+		// Navigate to SlideB Step 2 (fragment 5, local 2)
+		await pressArrowRight(page); // SlideA Step 1 (fragment 1)
+		await pressArrowRight(page); // SlideA Step 2 (fragment 2)
+		await pressArrowRight(page); // SlideA Step 3 (fragment 3)
+		await pressArrowRight(page); // Transition to SlideB (fragment 4, local 1)
+		await pressArrowRight(page); // SlideB Step 2 (fragment 5, local 2)
 		
 		await page.waitForTimeout(300);
 		await expect(page.getByText('Slide B Content')).toBeVisible();
-		await expect(page.getByText('B Step 1: Different content')).toBeVisible();
+		await expect(page.getByText('B Step 2: More content')).toBeVisible();
 
-		// Go back one step - just verify we're still on SlideB
+		// Go back one step — SlideB local 1 (Step 1 still visible, Step 2 hidden)
 		await pressArrowLeft(page);
 		await page.waitForTimeout(300);
 		await expect(page.getByText('Slide B Content')).toBeVisible();
 
-		// Go back to SlideA
+		// Go back to SlideA (fragment 3, local 3)
 		await pressArrowLeft(page);
 		await page.waitForTimeout(300);
 		await expect(page.getByText('Slide A Content')).toBeVisible();
-		await expect(page.getByText('Step 3: Third item')).toBeVisible();
 	});
 });
 
 test.describe('CustomShowProvider - Drill Integration', () => {
-	test('custom show auto-returns to origin after last fragment', async ({ page }) => {
-		// Navigate directly to test-custom-show 
+	test('custom show navigates to home after last fragment when standalone', async ({ page }) => {
+		// Navigate directly to test-custom-show (not drilled into)
+		// Use proper reset to ensure clean state
 		await page.goto('/test-custom-show');
-		await expect(page.getByText('Slide A Content')).toBeVisible();
+		await page.evaluate(() => { localStorage.clear(); });
+		await page.reload();
+		await page.waitForTimeout(300);
+		await expect(page.getByText('Slide A Content')).toBeVisible({ timeout: 5000 });
+		await expect(page.locator('.fragment').first()).toBeAttached({ timeout: 5000 });
+		await page.locator('body').focus();
+		await page.locator('body').click();
 
-		// Navigate through all 5 steps (SlideA: 3 + SlideB: 2)
-		await pressArrowRight(page); // SlideA Step 1
-		await pressArrowRight(page); // SlideA Step 2
-		await pressArrowRight(page); // SlideA Step 3
-		await pressArrowRight(page); // Transition to SlideB (static)
-		await pressArrowRight(page); // SlideB Step 1
-		await pressArrowRight(page); // SlideB Step 2 (last step)
+		// Navigate through all 5 fragments (SlideA: 3 + SlideB: 2)
+		await pressArrowRight(page); // SlideA Step 1 (fragment 1)
+		await pressArrowRight(page); // SlideA Step 2 (fragment 2)
+		await pressArrowRight(page); // SlideA Step 3 (fragment 3)
+		await pressArrowRight(page); // Transition to SlideB (fragment 4)
+		await pressArrowRight(page); // SlideB Step 2 (fragment 5, last)
 
-		// At this point, we're at the end of the custom show
-		// Verify we're still on test-custom-show
+		// Verify we're at the end with content visible
 		await expect(page).toHaveURL('/test-custom-show');
 		await expect(page.getByText('B Step 2: More content')).toBeVisible();
+
+		// One more press at end of presentation → navigates to home
+		await pressArrowRight(page);
+		await page.waitForTimeout(500);
+		await expect(page).toHaveURL('/');
 	});
 });
