@@ -22,7 +22,7 @@
 	type ArrowShape = { type: 'arrow'; from?: Point; to?: Point; fromBox?: Box; toBox?: Box; bow: number; flip: boolean };
 	type LineShape = { type: 'line'; from: Point; to: Point };
 	type ArcShape = { type: 'arc'; from: Point; to: Point; curve: number; shift: number };
-	type EllipseShape = { type: 'ellipse'; cx: number; cy: number; rx: number; ry: number };
+	type EllipseShape = { type: 'ellipse'; cx: number; cy: number; rx: number; ry: number; rotation: number };
 
 	type ShapeState = FragmentShape | RectShape | ArrowShape | LineShape | ArcShape | EllipseShape;
 
@@ -66,6 +66,51 @@
 		return s.type === 'line' || s.type === 'arc' || (s.type === 'arrow' && !!s.from && !!s.to);
 	}
 
+	/** Compute midpoint between two points */
+	function midpoint(a: Point, b: Point): Point {
+		return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+	}
+
+	/** Rotate a point around a center by angleDeg degrees */
+	function rotatePointAround(p: Point, center: Point, angleDeg: number): Point {
+		const rad = (angleDeg * Math.PI) / 180;
+		const cos = Math.cos(rad);
+		const sin = Math.sin(rad);
+		const dx = p.x - center.x;
+		const dy = p.y - center.y;
+		return {
+			x: Math.round(center.x + dx * cos - dy * sin),
+			y: Math.round(center.y + dx * sin + dy * cos)
+		};
+	}
+
+	/** Get the angle (in degrees) of the vector from→to */
+	function getEndpointAngle(from: Point, to: Point): number {
+		return Math.round(Math.atan2(to.y - from.y, to.x - from.x) * 180 / Math.PI);
+	}
+
+	/** Get the display angle for any shape */
+	function getDisplayAngle(s: ShapeState): number {
+		switch (s.type) {
+			case 'fragment':
+			case 'rect':
+			case 'ellipse':
+				return s.rotation;
+			case 'line':
+				return getEndpointAngle(s.from, s.to);
+			case 'arc':
+				return getEndpointAngle(s.from, s.to);
+			case 'arrow':
+				if (s.from && s.to) return getEndpointAngle(s.from, s.to);
+				if (s.fromBox && s.toBox) {
+					const fc = { x: s.fromBox.x + s.fromBox.width / 2, y: s.fromBox.y + s.fromBox.height / 2 };
+					const tc = { x: s.toBox.x + s.toBox.width / 2, y: s.toBox.y + s.toBox.height / 2 };
+					return getEndpointAngle(fc, tc);
+				}
+				return 0;
+		}
+	}
+
 	// --- Generate output code string from a shape ---
 	function generateOutputCode(s: ShapeState | null): string {
 		if (!s) return '—';
@@ -92,8 +137,10 @@
 				return `from={{ x: ${fmt(s.from.x)}, y: ${fmt(s.from.y)} }} to={{ x: ${fmt(s.to.x)}, y: ${fmt(s.to.y)} }}`;
 			case 'arc':
 				return `from={{ x: ${fmt(s.from.x)}, y: ${fmt(s.from.y)} }} to={{ x: ${fmt(s.to.x)}, y: ${fmt(s.to.y)} }} curve={${fmt(s.curve)}}${s.shift !== 0 ? ` shift={${fmt(s.shift)}}` : ''}`;
-			case 'ellipse':
-				return `cx={${fmt(s.cx)}} cy={${fmt(s.cy)}} rx={${fmt(s.rx)}} ry={${fmt(s.ry)}}`;
+			case 'ellipse': {
+				const rot = s.rotation !== 0 ? ` rotation={${fmt(s.rotation)}}` : '';
+				return `cx={${fmt(s.cx)}} cy={${fmt(s.cy)}} rx={${fmt(s.rx)}} ry={${fmt(s.ry)}}${rot}`;
+			}
 		}
 	}
 
@@ -198,7 +245,7 @@
 		} else if (type === 'arc') {
 			return { type: 'arc', from: coords.from as Point, to: coords.to as Point, curve: coords.curve as number, shift: (coords.shift as number) ?? 0 };
 		} else if (type === 'ellipse') {
-			return { type: 'ellipse', cx: coords.cx as number, cy: coords.cy as number, rx: coords.rx as number, ry: coords.ry as number };
+			return { type: 'ellipse', cx: coords.cx as number, cy: coords.cy as number, rx: coords.rx as number, ry: coords.ry as number, rotation: (coords.rotation as number) ?? 0 };
 		}
 		return null;
 	}
@@ -222,7 +269,7 @@
 			case 'arc':
 				return { type: 'arc', from: { ...start }, to: { ...end }, curve: 0, shift: 0 };
 			case 'ellipse':
-				return { type: 'ellipse', cx: x + width / 2, cy: y + height / 2, rx: width / 2, ry: height / 2 };
+				return { type: 'ellipse', cx: x + width / 2, cy: y + height / 2, rx: width / 2, ry: height / 2, rotation: 0 };
 		}
 	}
 
@@ -312,8 +359,34 @@
 	// --- Adjustment functions ---
 
 	function adjustRotation(delta: number) {
-		if (!shape || (shape.type !== 'fragment' && shape.type !== 'rect')) return;
-		shape = { ...shape, rotation: shape.rotation + delta };
+		if (!shape) return;
+		if (shape.type === 'fragment' || shape.type === 'rect') {
+			shape = { ...shape, rotation: shape.rotation + delta };
+		} else if (shape.type === 'ellipse') {
+			shape = { ...shape, rotation: shape.rotation + delta };
+		} else if (shape.type === 'line') {
+			const mid = midpoint(shape.from, shape.to);
+			shape = { ...shape, from: rotatePointAround(shape.from, mid, delta), to: rotatePointAround(shape.to, mid, delta) };
+		} else if (shape.type === 'arc') {
+			const mid = midpoint(shape.from, shape.to);
+			shape = { ...shape, from: rotatePointAround(shape.from, mid, delta), to: rotatePointAround(shape.to, mid, delta) };
+		} else if (shape.type === 'arrow') {
+			if (shape.fromBox && shape.toBox) {
+				const fbCenter: Point = { x: shape.fromBox.x + shape.fromBox.width / 2, y: shape.fromBox.y + shape.fromBox.height / 2 };
+				const tbCenter: Point = { x: shape.toBox.x + shape.toBox.width / 2, y: shape.toBox.y + shape.toBox.height / 2 };
+				const center = midpoint(fbCenter, tbCenter);
+				const newFb = rotatePointAround(fbCenter, center, delta);
+				const newTb = rotatePointAround(tbCenter, center, delta);
+				shape = {
+					...shape,
+					fromBox: { ...shape.fromBox, x: newFb.x - shape.fromBox.width / 2, y: newFb.y - shape.fromBox.height / 2 },
+					toBox: { ...shape.toBox, x: newTb.x - shape.toBox.width / 2, y: newTb.y - shape.toBox.height / 2 }
+				};
+			} else if (shape.from && shape.to) {
+				const mid = midpoint(shape.from, shape.to);
+				shape = { ...shape, from: rotatePointAround(shape.from, mid, delta), to: rotatePointAround(shape.to, mid, delta) };
+			}
+		}
 	}
 
 	function nudge(dx: number, dy: number) {
@@ -640,8 +713,14 @@
 						{@const vc = canvasToViewport(shape.cx, shape.cy)}
 						{@const srx = shape.rx * canvasScale}
 						{@const sry = shape.ry * canvasScale}
-						<ellipse cx={vc.x} cy={vc.y} rx={srx} ry={sry} stroke="#00ff00" stroke-width="2" fill="rgba(0, 255, 0, 0.1)" />
+						<ellipse cx={vc.x} cy={vc.y} rx={srx} ry={sry} stroke="#00ff00" stroke-width="2" fill="rgba(0, 255, 0, 0.1)" transform="rotate({shape.rotation} {vc.x} {vc.y})" />
 						<circle cx={vc.x} cy={vc.y} r="3" fill="#00ff00" opacity="0.7" />
+						{#if shape.rotation !== 0}
+							{@const angleRad = (shape.rotation * Math.PI) / 180}
+							{@const indicatorX = vc.x + srx * Math.cos(angleRad)}
+							{@const indicatorY = vc.y + srx * Math.sin(angleRad)}
+							<line x1={vc.x} y1={vc.y} x2={indicatorX} y2={indicatorY} stroke="#ff00ff" stroke-width="2" marker-end="url(#rotation-arrowhead)" />
+						{/if}
 
 					{:else if shape.type === 'rect'}
 						{@const vp = canvasToViewport(shape.x, shape.y)}
@@ -763,6 +842,19 @@
 			</div>
 			{/if}
 
+			<!-- Rotation controls for line/arrow/arc (rotates endpoints around midpoint) -->
+			{#if shape.type === 'line' || shape.type === 'arc' || shape.type === 'arrow'}
+			<div class="controls-row">
+				<div class="rotation-controls">
+					<button class="rotate-btn" onclick={() => adjustRotation(-15)} aria-label="Rotate left 15°">↶ 15°</button>
+					<button class="rotate-btn rotate-btn-fine" onclick={() => adjustRotation(-1)} aria-label="Rotate left 1°">↶ 1°</button>
+					<span class="rotation-value">{getDisplayAngle(shape)}°</span>
+					<button class="rotate-btn rotate-btn-fine" onclick={() => adjustRotation(1)} aria-label="Rotate right 1°">1° ↷</button>
+					<button class="rotate-btn" onclick={() => adjustRotation(15)} aria-label="Rotate right 15°">15° ↷</button>
+				</div>
+			</div>
+			{/if}
+
 			<!-- Fragment/Rect: rotation + size controls -->
 			{#if shape.type === 'fragment' || shape.type === 'rect'}
 			<div class="controls-row">
@@ -837,8 +929,17 @@
 			</div>
 			{/if}
 
-			<!-- Ellipse: rx/ry -->
+			<!-- Ellipse: rotation + rx/ry -->
 			{#if shape.type === 'ellipse'}
+			<div class="controls-row">
+				<div class="rotation-controls">
+					<button class="rotate-btn" onclick={() => adjustRotation(-15)} aria-label="Rotate left 15°">↶ 15°</button>
+					<button class="rotate-btn rotate-btn-fine" onclick={() => adjustRotation(-1)} aria-label="Rotate left 1°">↶ 1°</button>
+					<span class="rotation-value">{shape.rotation}°</span>
+					<button class="rotate-btn rotate-btn-fine" onclick={() => adjustRotation(1)} aria-label="Rotate right 1°">1° ↷</button>
+					<button class="rotate-btn" onclick={() => adjustRotation(15)} aria-label="Rotate right 15°">15° ↷</button>
+				</div>
+			</div>
 			<div class="controls-row">
 				<div class="size-controls">
 					<span class="curve-label">rx</span>
