@@ -1,45 +1,52 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import { getArrow, getBoxToBoxArrow } from 'perfect-arrows';
 
 	/**
 	 * Dev tool for measuring coordinates on the 960×540 canvas.
 	 * Toggle with 'M' key, then:
 	 * - Click a shape to detect its coordinates (from data-coords attribute)
 	 * - Shift+click to cycle through overlapping shapes
-	 * - Drag to manually measure a region
-	 * Displays Fragment layout, Arrow from/to, Rect, Arc, and Line formats.
+	 * - Drag to manually measure a region (defaults to Fragment, switchable)
+	 * Shows only the selected shape type's output and live preview.
 	 */
 
+	// --- Discriminated union for shape state ---
+	type Point = { x: number; y: number };
+	type Box = { x: number; y: number; width: number; height: number };
+	type ShapeType = 'fragment' | 'rect' | 'arrow' | 'line' | 'arc' | 'ellipse';
+
+	type FragmentShape = { type: 'fragment'; x: number; y: number; width: number; height: number; rotation: number };
+	type RectShape = { type: 'rect'; x: number; y: number; width: number; height: number; rotation: number };
+	type ArrowShape = { type: 'arrow'; from?: Point; to?: Point; fromBox?: Box; toBox?: Box; bow: number; flip: boolean };
+	type LineShape = { type: 'line'; from: Point; to: Point };
+	type ArcShape = { type: 'arc'; from: Point; to: Point; curve: number };
+	type EllipseShape = { type: 'ellipse'; cx: number; cy: number; rx: number; ry: number };
+
+	type ShapeState = FragmentShape | RectShape | ArrowShape | LineShape | ArcShape | EllipseShape;
+
+	// --- Core state ---
 	let enabled = $state(false);
 	let measuring = $state(false);
 	let showPanel = $state(false);
-	let startPos = $state<{ x: number; y: number } | null>(null);
-	let currentPos = $state<{ x: number; y: number } | null>(null);
 	let mouseDownPos = $state<{ clientX: number; clientY: number } | null>(null);
+	let dragStart = $state<Point | null>(null); // canvas coords of drag start (for live drag preview)
+	let dragCurrent = $state<Point | null>(null); // canvas coords of drag current
 
-	// Output formats
-	let fragmentLayout = $state('');
-	let arrowCoords = $state('');
-	let rectComponent = $state('');
-	let arcComponent = $state('');
-	let lineComponent = $state('');
-	let ellipseComponent = $state('');
-	let rotation = $state(0); // degrees
-	let panelCorner = $state<'br' | 'bl' | 'tl' | 'tr'>('br'); // bottom-right, bottom-left, top-left, top-right
+	let shape = $state<ShapeState | null>(null); // single source of truth
+	let originalCode = $state<string>(''); // snapshot of outputCode at initial detection (before nudging)
+	let activeEndpoint = $state<'from' | 'to' | 'both'>('both'); // for line/arrow/arc endpoint toggle
+	let panelCorner = $state<'br' | 'bl' | 'tl' | 'tr'>('br');
 
 	// Shape detection state
 	let detectedShapes = $state<Array<{ type: string; coords: Record<string, unknown>; element: Element }>>([]);
 	let shapeIndex = $state(0);
-	let detectedShapeType = $state<string | null>(null);
-	let ellipseCoords = $state<{ cx: number; cy: number; rx: number; ry: number } | null>(null);
-	// Store actual line/arrow/arc coordinates separately from visual bounding box
-	let lineFromTo = $state<{ from: { x: number; y: number }; to: { x: number; y: number } } | null>(null);
-	let arcCoords = $state<{ from: { x: number; y: number }; to: { x: number; y: number }; curve: number } | null>(null);
-	let arrowFromTo = $state<{ from?: { x: number; y: number }; to?: { x: number; y: number }; fromBox?: { x: number; y: number; width: number; height: number }; toBox?: { x: number; y: number; width: number; height: number }; bow?: number; flip?: boolean } | null>(null);
 
-	// Threshold to distinguish click from drag (in pixels)
 	const CLICK_THRESHOLD = 5;
+	const ALL_SHAPE_TYPES: ShapeType[] = ['fragment', 'rect', 'arrow', 'line', 'arc', 'ellipse'];
+
+	// --- Helpers ---
 
 	/** Round to at most 2 decimal places, strip trailing zeros */
 	function fmt(n: number): string {
@@ -54,6 +61,59 @@
 
 	const cornerLabels = { br: '↘', bl: '↙', tl: '↖', tr: '↗' };
 
+	/** True if the shape type has from/to endpoints */
+	function hasEndpoints(s: ShapeState): s is LineShape | ArcShape | (ArrowShape & { from: Point; to: Point }) {
+		return s.type === 'line' || s.type === 'arc' || (s.type === 'arrow' && !!s.from && !!s.to);
+	}
+
+	// --- Generate output code string from a shape ---
+	function generateOutputCode(s: ShapeState | null): string {
+		if (!s) return '—';
+		switch (s.type) {
+			case 'fragment': {
+				const rot = s.rotation !== 0 ? `, rotation: ${fmt(s.rotation)}` : '';
+				return `layout={{ x: ${fmt(s.x)}, y: ${fmt(s.y)}, width: ${fmt(s.width)}, height: ${fmt(s.height)}${rot} }}`;
+			}
+			case 'rect': {
+				const rot = s.rotation !== 0 ? ` rotation={${fmt(s.rotation)}}` : '';
+				return `x={${fmt(s.x)}} y={${fmt(s.y)}} width={${fmt(s.width)}} height={${fmt(s.height)}}${rot}`;
+			}
+			case 'arrow': {
+				if (s.fromBox && s.toBox) {
+					const fb = s.fromBox;
+					const tb = s.toBox;
+					return `fromBox={{ x: ${fmt(fb.x)}, y: ${fmt(fb.y)}, width: ${fmt(fb.width)}, height: ${fmt(fb.height)} }} toBox={{ x: ${fmt(tb.x)}, y: ${fmt(tb.y)}, width: ${fmt(tb.width)}, height: ${fmt(tb.height)} }}${s.bow !== 0 ? ` bow={${fmt(s.bow)}}` : ''}${s.flip ? ' flip' : ''}`;
+				} else if (s.from && s.to) {
+					return `from={{ x: ${fmt(s.from.x)}, y: ${fmt(s.from.y)} }} to={{ x: ${fmt(s.to.x)}, y: ${fmt(s.to.y)} }}${s.bow !== 0 ? ` bow={${fmt(s.bow)}}` : ''}${s.flip ? ' flip' : ''}`;
+				}
+				return '—';
+			}
+			case 'line':
+				return `from={{ x: ${fmt(s.from.x)}, y: ${fmt(s.from.y)} }} to={{ x: ${fmt(s.to.x)}, y: ${fmt(s.to.y)} }}`;
+			case 'arc':
+				return `from={{ x: ${fmt(s.from.x)}, y: ${fmt(s.from.y)} }} to={{ x: ${fmt(s.to.x)}, y: ${fmt(s.to.y)} }} curve={${fmt(s.curve)}}`;
+			case 'ellipse':
+				return `cx={${fmt(s.cx)}} cy={${fmt(s.cy)}} rx={${fmt(s.rx)}} ry={${fmt(s.ry)}}`;
+		}
+	}
+
+	let outputCode = $derived(generateOutputCode(shape));
+
+	// --- Derived: component label ---
+	let shapeLabel = $derived.by(() => {
+		if (!shape) return '';
+		const labels: Record<ShapeType, string> = {
+			fragment: 'Fragment',
+			rect: 'Rect',
+			arrow: 'Arrow',
+			line: 'Line',
+			arc: 'Arc',
+			ellipse: 'Ellipse'
+		};
+		return labels[shape.type];
+	});
+
+	// --- Canvas helpers ---
 	onMount(() => {
 		if (!browser) return;
 
@@ -61,11 +121,11 @@
 			if (e.key.toLowerCase() === 'm') {
 				enabled = !enabled;
 				if (!enabled) {
-					// Clean up when disabled
 					measuring = false;
 					showPanel = false;
-					startPos = null;
-					currentPos = null;
+					shape = null;
+					dragStart = null;
+					dragCurrent = null;
 				}
 			}
 		}
@@ -85,323 +145,255 @@
 		return matrix ? parseFloat(matrix[1]) : 1;
 	}
 
-	function toCanvasCoords(clientX: number, clientY: number): { x: number; y: number } | null {
+	function toCanvasCoords(clientX: number, clientY: number): Point | null {
 		const canvas = getCanvasElement();
 		if (!canvas) return null;
 
 		const rect = canvas.getBoundingClientRect();
 		const scale = getScale(canvas);
-
-		// Canvas dimensions
 		const canvasWidth = 960;
 		const canvasHeight = 540;
 		const scaledWidth = canvasWidth * scale;
 		const scaledHeight = canvasHeight * scale;
-
-		// Canvas is centered in viewport
 		const canvasLeft = rect.left + (rect.width - scaledWidth) / 2;
 		const canvasTop = rect.top + (rect.height - scaledHeight) / 2;
 
-		// Convert to canvas coordinates
-		const x = Math.round((clientX - canvasLeft) / scale);
-		const y = Math.round((clientY - canvasTop) / scale);
-
-		return { x, y };
+		return {
+			x: Math.round((clientX - canvasLeft) / scale),
+			y: Math.round((clientY - canvasTop) / scale)
+		};
 	}
 
-	function formatOutput(start: { x: number; y: number }, end: { x: number; y: number }, angleDeg: number = 0) {
-		// Calculate center point
-		const centerX = (start.x + end.x) / 2;
-		const centerY = (start.y + end.y) / 2;
-
-		// Rotate points around center
-		const angleRad = (angleDeg * Math.PI) / 180;
-		const cos = Math.cos(angleRad);
-		const sin = Math.sin(angleRad);
-
-		function rotatePoint(px: number, py: number) {
-			const dx = px - centerX;
-			const dy = py - centerY;
+	// --- Build ShapeState from detected coords ---
+	function buildShape(type: string, coords: Record<string, unknown>): ShapeState | null {
+		if (type === 'fragment' || type === 'rect') {
 			return {
-				x: Math.round(centerX + dx * cos - dy * sin),
-				y: Math.round(centerY + dx * sin + dy * cos)
+				type: type as 'fragment' | 'rect',
+				x: coords.x as number,
+				y: coords.y as number,
+				width: coords.width as number,
+				height: coords.height as number,
+				rotation: (coords.rotation as number) ?? 0
 			};
+		} else if (type === 'arrow') {
+			if (coords.fromBox && coords.toBox) {
+				return {
+					type: 'arrow',
+					fromBox: coords.fromBox as Box,
+					toBox: coords.toBox as Box,
+					bow: (coords.bow as number) ?? 0,
+					flip: (coords.flip as boolean) ?? false
+				};
+			} else {
+				return {
+					type: 'arrow',
+					from: coords.from as Point,
+					to: coords.to as Point,
+					bow: (coords.bow as number) ?? 0,
+					flip: (coords.flip as boolean) ?? false
+				};
+			}
+		} else if (type === 'line') {
+			return { type: 'line', from: coords.from as Point, to: coords.to as Point };
+		} else if (type === 'arc') {
+			return { type: 'arc', from: coords.from as Point, to: coords.to as Point, curve: coords.curve as number };
+		} else if (type === 'ellipse') {
+			return { type: 'ellipse', cx: coords.cx as number, cy: coords.cy as number, rx: coords.rx as number, ry: coords.ry as number };
 		}
+		return null;
+	}
 
-		const rotatedStart = rotatePoint(start.x, start.y);
-		const rotatedEnd = rotatePoint(end.x, end.y);
-
-		// For layout (bounding box), use original unrotated values
+	/** Build a shape from a drag rectangle, using the given type */
+	function buildShapeFromDrag(start: Point, end: Point, targetType: ShapeType): ShapeState {
 		const x = Math.min(start.x, end.x);
 		const y = Math.min(start.y, end.y);
 		const width = Math.abs(end.x - start.x);
 		const height = Math.abs(end.y - start.y);
 
-		// Include rotation in Fragment layout and Rect if non-zero
-		if (angleDeg !== 0) {
-			fragmentLayout = `layout={{ x: ${fmt(x)}, y: ${fmt(y)}, width: ${fmt(width)}, height: ${fmt(height)}, rotation: ${fmt(angleDeg)} }}`;
-			rectComponent = `x={${fmt(x)}} y={${fmt(y)}} width={${fmt(width)}} height={${fmt(height)}} rotation={${fmt(angleDeg)}}`;
-		} else {
-			fragmentLayout = `layout={{ x: ${fmt(x)}, y: ${fmt(y)}, width: ${fmt(width)}, height: ${fmt(height)} }}`;
-			rectComponent = `x={${fmt(x)}} y={${fmt(y)}} width={${fmt(width)}} height={${fmt(height)}}`;
-		}
-		arrowCoords = `from={{ x: ${fmt(rotatedStart.x)}, y: ${fmt(rotatedStart.y)} }} to={{ x: ${fmt(rotatedEnd.x)}, y: ${fmt(rotatedEnd.y)} }}`;
-		lineComponent = `from={{ x: ${fmt(rotatedStart.x)}, y: ${fmt(rotatedStart.y)} }} to={{ x: ${fmt(rotatedEnd.x)}, y: ${fmt(rotatedEnd.y)} }}`;
-		arcComponent = '';
-		ellipseComponent = '';
-		detectedShapeType = null;
-	}
-
-	function formatFromShapeCoords(type: string, coords: Record<string, unknown>) {
-		detectedShapeType = type;
-		// Reset shape-specific state
-		lineFromTo = null;
-		arrowFromTo = null;
-		arcCoords = null;
-		ellipseCoords = null;
-		
-		if (type === 'fragment' || type === 'rect') {
-			const x = coords.x as number;
-			const y = coords.y as number;
-			const width = coords.width as number;
-			const height = coords.height as number;
-			const rot = (coords.rotation as number) ?? 0;
-			rotation = rot;
-
-			// Set start/current positions for visual overlay
-			startPos = { x, y };
-			currentPos = { x: x + width, y: y + height };
-
-			if (rot !== 0) {
-				fragmentLayout = `layout={{ x: ${fmt(x)}, y: ${fmt(y)}, width: ${fmt(width)}, height: ${fmt(height)}, rotation: ${fmt(rot)} }}`;
-				rectComponent = `x={${fmt(x)}} y={${fmt(y)}} width={${fmt(width)}} height={${fmt(height)}} rotation={${fmt(rot)}}`;
-			} else {
-				fragmentLayout = `layout={{ x: ${fmt(x)}, y: ${fmt(y)}, width: ${fmt(width)}, height: ${fmt(height)} }}`;
-				rectComponent = `x={${fmt(x)}} y={${fmt(y)}} width={${fmt(width)}} height={${fmt(height)}}`;
-			}
-			arrowCoords = `from={{ x: ${fmt(x)}, y: ${fmt(y)} }} to={{ x: ${fmt(x + width)}, y: ${fmt(y + height)} }}`;
-			lineComponent = `from={{ x: ${fmt(x)}, y: ${fmt(y)} }} to={{ x: ${fmt(x + width)}, y: ${fmt(y + height)} }}`;
-			arcComponent = '';
-			ellipseComponent = '';
-			ellipseCoords = null;
-		} else if (type === 'arrow') {
-			if (coords.fromBox && coords.toBox) {
-				const fromBox = coords.fromBox as { x: number; y: number; width: number; height: number };
-				const toBox = coords.toBox as { x: number; y: number; width: number; height: number };
-				const bow = (coords.bow as number) ?? 0;
-				const flip = coords.flip as boolean;
-				
-				// Store for nudging
-				arrowFromTo = { fromBox, toBox, bow, flip };
-				
-				arrowCoords = `fromBox={{ x: ${fmt(fromBox.x)}, y: ${fmt(fromBox.y)}, width: ${fmt(fromBox.width)}, height: ${fmt(fromBox.height)} }} toBox={{ x: ${fmt(toBox.x)}, y: ${fmt(toBox.y)}, width: ${fmt(toBox.width)}, height: ${fmt(toBox.height)} }}${bow !== 0 ? ` bow={${fmt(bow)}}` : ''}${flip ? ' flip' : ''}`;
-				
-				// Visual overlay for box-to-box: show a bounding area
-				const minX = Math.min(fromBox.x, toBox.x);
-				const minY = Math.min(fromBox.y, toBox.y);
-				const maxX = Math.max(fromBox.x + fromBox.width, toBox.x + toBox.width);
-				const maxY = Math.max(fromBox.y + fromBox.height, toBox.y + toBox.height);
-				startPos = { x: minX, y: minY };
-				currentPos = { x: maxX, y: maxY };
-			} else {
-				const from = coords.from as { x: number; y: number };
-				const to = coords.to as { x: number; y: number };
-				const bow = (coords.bow as number) ?? 0;
-				const flip = coords.flip as boolean;
-				
-				// Store for nudging
-				arrowFromTo = { from, to, bow, flip };
-				
-				arrowCoords = `from={{ x: ${fmt(from.x)}, y: ${fmt(from.y)} }} to={{ x: ${fmt(to.x)}, y: ${fmt(to.y)} }}${bow !== 0 ? ` bow={${fmt(bow)}}` : ''}${flip ? ' flip' : ''}`;
-				
-				// Visual overlay for point-to-point: calculate bounding box with padding
-				const padding = 2;
-				const minX = Math.min(from.x, to.x) - padding;
-				const minY = Math.min(from.y, to.y) - padding;
-				const maxX = Math.max(from.x, to.x) + padding;
-				const maxY = Math.max(from.y, to.y) + padding;
-				startPos = { x: minX, y: minY };
-				currentPos = { x: maxX, y: maxY };
-			}
-			fragmentLayout = '';
-			rectComponent = '';
-			// Set lineComponent to same as arrowCoords (without bow/flip) for point-to-point arrows
-			if (coords.from && coords.to) {
-				const from = coords.from as { x: number; y: number };
-				const to = coords.to as { x: number; y: number };
-				lineComponent = `from={{ x: ${fmt(from.x)}, y: ${fmt(from.y)} }} to={{ x: ${fmt(to.x)}, y: ${fmt(to.y)} }}`;
-			} else {
-				lineComponent = '';
-			}
-			arcComponent = '';
-			ellipseComponent = '';
-			rotation = 0;
-		} else if (type === 'line') {
-			const from = coords.from as { x: number; y: number };
-			const to = coords.to as { x: number; y: number };
-			
-			// Store for nudging
-			lineFromTo = { from, to };
-			
-			lineComponent = `from={{ x: ${fmt(from.x)}, y: ${fmt(from.y)} }} to={{ x: ${fmt(to.x)}, y: ${fmt(to.y)} }}`;
-			arrowCoords = `from={{ x: ${fmt(from.x)}, y: ${fmt(from.y)} }} to={{ x: ${fmt(to.x)}, y: ${fmt(to.y)} }}`;
-			
-			// Visual overlay: calculate bounding box with padding
-			const padding = 2;
-			const minX = Math.min(from.x, to.x) - padding;
-			const minY = Math.min(from.y, to.y) - padding;
-			const maxX = Math.max(from.x, to.x) + padding;
-			const maxY = Math.max(from.y, to.y) + padding;
-			startPos = { x: minX, y: minY };
-			currentPos = { x: maxX, y: maxY };
-			fragmentLayout = '';
-			rectComponent = '';
-			arcComponent = '';
-			ellipseComponent = '';
-			rotation = 0;
-		} else if (type === 'arc') {
-			const from = coords.from as { x: number; y: number };
-			const to = coords.to as { x: number; y: number };
-			const curve = coords.curve as number;
-			
-			// Store for nudging
-			arcCoords = { from, to, curve };
-			
-			arcComponent = `<Arc from={{ x: ${fmt(from.x)}, y: ${fmt(from.y)} }} to={{ x: ${fmt(to.x)}, y: ${fmt(to.y)} }} curve={${fmt(curve)}} />`;
-			arrowCoords = `from={{ x: ${fmt(from.x)}, y: ${fmt(from.y)} }} to={{ x: ${fmt(to.x)}, y: ${fmt(to.y)} }}`;
-			
-			// Visual overlay: calculate bounding box with padding accounting for curve
-			// Arc peaks at midpoint, so use ~70% of curve for bounding box estimate
-			const padding = 2;
-			const curveExtent = Math.abs(curve) * 0.7;
-			const minX = Math.min(from.x, to.x) - padding;
-			const maxX = Math.max(from.x, to.x) + padding;
-			// Curve extends up (negative) or down (positive)
-			const minY = Math.min(from.y, to.y) - padding - (curve < 0 ? curveExtent : 0);
-			const maxY = Math.max(from.y, to.y) + padding + (curve > 0 ? curveExtent : 0);
-			startPos = { x: minX, y: minY };
-			currentPos = { x: maxX, y: maxY };
-			fragmentLayout = '';
-			rectComponent = '';
-			lineComponent = '';
-			ellipseComponent = '';
-			rotation = 0;
-		} else if (type === 'ellipse') {
-			const cx = coords.cx as number;
-			const cy = coords.cy as number;
-			const rx = coords.rx as number;
-			const ry = coords.ry as number;
-			
-			ellipseCoords = { cx, cy, rx, ry };
-			ellipseComponent = `cx={${fmt(cx)}} cy={${fmt(cy)}} rx={${fmt(rx)}} ry={${fmt(ry)}}`;
-			
-			// Visual overlay: bounding box around ellipse
-			const padding = 2;
-			startPos = { x: cx - rx - padding, y: cy - ry - padding };
-			currentPos = { x: cx + rx + padding, y: cy + ry + padding };
-			fragmentLayout = '';
-			rectComponent = '';
-			lineComponent = '';
-			arcComponent = '';
-			arrowCoords = '';
-			rotation = 0;
+		switch (targetType) {
+			case 'fragment':
+				return { type: 'fragment', x, y, width, height, rotation: 0 };
+			case 'rect':
+				return { type: 'rect', x, y, width, height, rotation: 0 };
+			case 'arrow':
+				return { type: 'arrow', from: { ...start }, to: { ...end }, bow: 0, flip: false };
+			case 'line':
+				return { type: 'line', from: { ...start }, to: { ...end } };
+			case 'arc':
+				return { type: 'arc', from: { ...start }, to: { ...end }, curve: 0 };
+			case 'ellipse':
+				return { type: 'ellipse', cx: x + width / 2, cy: y + height / 2, rx: width / 2, ry: height / 2 };
 		}
 	}
 
 	function detectShapesAtPoint(clientX: number, clientY: number): Array<{ type: string; coords: Record<string, unknown>; element: Element }> {
 		const elements = document.elementsFromPoint(clientX, clientY);
 		const shapes: Array<{ type: string; coords: Record<string, unknown>; element: Element }> = [];
-		
 		for (const el of elements) {
 			const shapeType = el.getAttribute('data-shape-type');
 			const coordsStr = el.getAttribute('data-coords');
-			
 			if (shapeType && coordsStr) {
 				try {
-					const coords = JSON.parse(coordsStr);
-					shapes.push({ type: shapeType, coords, element: el });
-				} catch {
-					// Invalid JSON, skip
-				}
+					shapes.push({ type: shapeType, coords: JSON.parse(coordsStr), element: el });
+				} catch { /* skip */ }
 			}
 		}
-		
 		return shapes;
 	}
 
-	function rotateLeft() {
-		rotation -= 15;
-		if (startPos && currentPos) {
-			formatOutput(startPos, currentPos, rotation);
+	// --- Switch shape type (for drag-to-measure) ---
+	function switchShapeType(newType: ShapeType) {
+		if (!shape || shape.type === newType) return;
+		// Convert current shape to new type, preserving geometry
+		const bb = shapeBoundingBox(shape);
+		if (!bb) return;
+		const start: Point = { x: bb.x, y: bb.y };
+		const end: Point = { x: bb.x + bb.width, y: bb.y + bb.height };
+
+		// For types with from/to, try to preserve original from/to if available
+		if (hasEndpoints(shape) && (newType === 'line' || newType === 'arc' || newType === 'arrow')) {
+			const from = 'from' in shape && shape.from ? shape.from : start;
+			const to = 'to' in shape && shape.to ? shape.to : end;
+			if (newType === 'line') {
+				shape = { type: 'line', from: { ...from }, to: { ...to } };
+			} else if (newType === 'arc') {
+				shape = { type: 'arc', from: { ...from }, to: { ...to }, curve: 0 };
+			} else {
+				shape = { type: 'arrow', from: { ...from }, to: { ...to }, bow: 0, flip: false };
+			}
+		} else {
+			shape = buildShapeFromDrag(start, end, newType);
+		}
+		activeEndpoint = 'both';
+	}
+
+	// --- Bounding box for showShape guard ---
+	function shapeBoundingBox(s: ShapeState): Box | null {
+		const P = 2; // padding
+		switch (s.type) {
+			case 'fragment':
+			case 'rect':
+				return { x: s.x, y: s.y, width: s.width, height: s.height };
+			case 'arrow': {
+				if (s.fromBox && s.toBox) {
+					const minX = Math.min(s.fromBox.x, s.toBox.x);
+					const minY = Math.min(s.fromBox.y, s.toBox.y);
+					const maxX = Math.max(s.fromBox.x + s.fromBox.width, s.toBox.x + s.toBox.width);
+					const maxY = Math.max(s.fromBox.y + s.fromBox.height, s.toBox.y + s.toBox.height);
+					return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
+				} else if (s.from && s.to) {
+					const minX = Math.min(s.from.x, s.to.x) - P;
+					const minY = Math.min(s.from.y, s.to.y) - P;
+					const maxX = Math.max(s.from.x, s.to.x) + P;
+					const maxY = Math.max(s.from.y, s.to.y) + P;
+					return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
+				}
+				return null;
+			}
+			case 'line': {
+				const minX = Math.min(s.from.x, s.to.x) - P;
+				const minY = Math.min(s.from.y, s.to.y) - P;
+				return { x: minX, y: minY, width: Math.max(s.from.x, s.to.x) + P - minX, height: Math.max(s.from.y, s.to.y) + P - minY };
+			}
+			case 'arc': {
+				const curveExtent = Math.abs(s.curve) * 0.7;
+				const minX = Math.min(s.from.x, s.to.x) - P;
+				const maxX = Math.max(s.from.x, s.to.x) + P;
+				const minY = Math.min(s.from.y, s.to.y) - P - (s.curve < 0 ? curveExtent : 0);
+				const maxY = Math.max(s.from.y, s.to.y) + P + (s.curve > 0 ? curveExtent : 0);
+				return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
+			}
+			case 'ellipse':
+				return { x: s.cx - s.rx - P, y: s.cy - s.ry - P, width: (s.rx + P) * 2, height: (s.ry + P) * 2 };
 		}
 	}
 
-	function rotateRight() {
-		rotation += 15;
-		if (startPos && currentPos) {
-			formatOutput(startPos, currentPos, rotation);
-		}
-	}
+	// --- Adjustment functions ---
 
-	function rotateLeftFine() {
-		rotation -= 1;
-		if (startPos && currentPos) {
-			formatOutput(startPos, currentPos, rotation);
-		}
-	}
-
-	function rotateRightFine() {
-		rotation += 1;
-		if (startPos && currentPos) {
-			formatOutput(startPos, currentPos, rotation);
-		}
+	function adjustRotation(delta: number) {
+		if (!shape || (shape.type !== 'fragment' && shape.type !== 'rect')) return;
+		shape = { ...shape, rotation: shape.rotation + delta };
 	}
 
 	function nudge(dx: number, dy: number) {
-		if (startPos && currentPos) {
-			startPos = { x: startPos.x + dx, y: startPos.y + dy };
-			currentPos = { x: currentPos.x + dx, y: currentPos.y + dy };
-			
-			// Handle different shape types that store actual coordinates
-			if (detectedShapeType === 'ellipse' && ellipseCoords) {
-				ellipseCoords = { ...ellipseCoords, cx: ellipseCoords.cx + dx, cy: ellipseCoords.cy + dy };
-				ellipseComponent = `cx={${fmt(ellipseCoords.cx)}} cy={${fmt(ellipseCoords.cy)}} rx={${fmt(ellipseCoords.rx)}} ry={${fmt(ellipseCoords.ry)}}`;
-			} else if (detectedShapeType === 'line' && lineFromTo) {
-				lineFromTo = {
-					from: { x: lineFromTo.from.x + dx, y: lineFromTo.from.y + dy },
-					to: { x: lineFromTo.to.x + dx, y: lineFromTo.to.y + dy }
-				};
-				lineComponent = `from={{ x: ${fmt(lineFromTo.from.x)}, y: ${fmt(lineFromTo.from.y)} }} to={{ x: ${fmt(lineFromTo.to.x)}, y: ${fmt(lineFromTo.to.y)} }}`;
-				arrowCoords = `from={{ x: ${fmt(lineFromTo.from.x)}, y: ${fmt(lineFromTo.from.y)} }} to={{ x: ${fmt(lineFromTo.to.x)}, y: ${fmt(lineFromTo.to.y)} }}`;
-			} else if (detectedShapeType === 'arrow' && arrowFromTo) {
-				if (arrowFromTo.fromBox && arrowFromTo.toBox) {
-					const newFromBox = { ...arrowFromTo.fromBox, x: arrowFromTo.fromBox.x + dx, y: arrowFromTo.fromBox.y + dy };
-					const newToBox = { ...arrowFromTo.toBox, x: arrowFromTo.toBox.x + dx, y: arrowFromTo.toBox.y + dy };
-					const bow = arrowFromTo.bow ?? 0;
-					const flip = arrowFromTo.flip;
-					arrowFromTo = { ...arrowFromTo, fromBox: newFromBox, toBox: newToBox };
-					arrowCoords = `fromBox={{ x: ${fmt(newFromBox.x)}, y: ${fmt(newFromBox.y)}, width: ${fmt(newFromBox.width)}, height: ${fmt(newFromBox.height)} }} toBox={{ x: ${fmt(newToBox.x)}, y: ${fmt(newToBox.y)}, width: ${fmt(newToBox.width)}, height: ${fmt(newToBox.height)} }}${bow !== 0 ? ` bow={${fmt(bow)}}` : ''}${flip ? ' flip' : ''}`;
-				} else if (arrowFromTo.from && arrowFromTo.to) {
-					const newFrom = { x: arrowFromTo.from.x + dx, y: arrowFromTo.from.y + dy };
-					const newTo = { x: arrowFromTo.to.x + dx, y: arrowFromTo.to.y + dy };
-					const bow = arrowFromTo.bow ?? 0;
-					const flip = arrowFromTo.flip;
-					arrowFromTo = { ...arrowFromTo, from: newFrom, to: newTo };
-					arrowCoords = `from={{ x: ${fmt(newFrom.x)}, y: ${fmt(newFrom.y)} }} to={{ x: ${fmt(newTo.x)}, y: ${fmt(newTo.y)} }}${bow !== 0 ? ` bow={${fmt(bow)}}` : ''}${flip ? ' flip' : ''}`;
+		if (!shape) return;
+
+		switch (shape.type) {
+			case 'fragment':
+			case 'rect':
+				shape = { ...shape, x: shape.x + dx, y: shape.y + dy };
+				break;
+			case 'ellipse':
+				shape = { ...shape, cx: shape.cx + dx, cy: shape.cy + dy };
+				break;
+			case 'line':
+				if (activeEndpoint === 'from') {
+					shape = { ...shape, from: { x: shape.from.x + dx, y: shape.from.y + dy } };
+				} else if (activeEndpoint === 'to') {
+					shape = { ...shape, to: { x: shape.to.x + dx, y: shape.to.y + dy } };
+				} else {
+					shape = { ...shape, from: { x: shape.from.x + dx, y: shape.from.y + dy }, to: { x: shape.to.x + dx, y: shape.to.y + dy } };
 				}
-			} else if (detectedShapeType === 'arc' && arcCoords) {
-				arcCoords = {
-					from: { x: arcCoords.from.x + dx, y: arcCoords.from.y + dy },
-					to: { x: arcCoords.to.x + dx, y: arcCoords.to.y + dy },
-					curve: arcCoords.curve
-				};
-				arcComponent = `<Arc from={{ x: ${fmt(arcCoords.from.x)}, y: ${fmt(arcCoords.from.y)} }} to={{ x: ${fmt(arcCoords.to.x)}, y: ${fmt(arcCoords.to.y)} }} curve={${fmt(arcCoords.curve)}} />`;
-				arrowCoords = `from={{ x: ${fmt(arcCoords.from.x)}, y: ${fmt(arcCoords.from.y)} }} to={{ x: ${fmt(arcCoords.to.x)}, y: ${fmt(arcCoords.to.y)} }}`;
-			} else {
-				formatOutput(startPos, currentPos, rotation);
-			}
+				break;
+			case 'arc':
+				if (activeEndpoint === 'from') {
+					shape = { ...shape, from: { x: shape.from.x + dx, y: shape.from.y + dy } };
+				} else if (activeEndpoint === 'to') {
+					shape = { ...shape, to: { x: shape.to.x + dx, y: shape.to.y + dy } };
+				} else {
+					shape = { ...shape, from: { x: shape.from.x + dx, y: shape.from.y + dy }, to: { x: shape.to.x + dx, y: shape.to.y + dy } };
+				}
+				break;
+			case 'arrow':
+				if (shape.fromBox && shape.toBox) {
+					if (activeEndpoint === 'from') {
+						shape = { ...shape, fromBox: { ...shape.fromBox, x: shape.fromBox.x + dx, y: shape.fromBox.y + dy } };
+					} else if (activeEndpoint === 'to') {
+						shape = { ...shape, toBox: { ...shape.toBox, x: shape.toBox.x + dx, y: shape.toBox.y + dy } };
+					} else {
+						shape = { ...shape, fromBox: { ...shape.fromBox, x: shape.fromBox.x + dx, y: shape.fromBox.y + dy }, toBox: { ...shape.toBox, x: shape.toBox.x + dx, y: shape.toBox.y + dy } };
+					}
+				} else if (shape.from && shape.to) {
+					if (activeEndpoint === 'from') {
+						shape = { ...shape, from: { x: shape.from.x + dx, y: shape.from.y + dy } };
+					} else if (activeEndpoint === 'to') {
+						shape = { ...shape, to: { x: shape.to.x + dx, y: shape.to.y + dy } };
+					} else {
+						shape = { ...shape, from: { x: shape.from.x + dx, y: shape.from.y + dy }, to: { x: shape.to.x + dx, y: shape.to.y + dy } };
+					}
+				}
+				break;
 		}
 	}
+
+	function adjustSize(prop: 'width' | 'height', delta: number) {
+		if (!shape || (shape.type !== 'fragment' && shape.type !== 'rect')) return;
+		const newVal = Math.max(1, shape[prop] + delta);
+		shape = { ...shape, [prop]: newVal };
+	}
+
+	function adjustRadius(prop: 'rx' | 'ry', delta: number) {
+		if (!shape || shape.type !== 'ellipse') return;
+		const newVal = Math.max(1, shape[prop] + delta);
+		shape = { ...shape, [prop]: newVal };
+	}
+
+	function adjustBow(delta: number) {
+		if (!shape || shape.type !== 'arrow') return;
+		shape = { ...shape, bow: parseFloat((shape.bow + delta).toFixed(2)) };
+	}
+
+	function toggleFlip() {
+		if (!shape || shape.type !== 'arrow') return;
+		shape = { ...shape, flip: !shape.flip };
+	}
+
+	function adjustCurve(delta: number) {
+		if (!shape || shape.type !== 'arc') return;
+		shape = { ...shape, curve: parseFloat((shape.curve + delta).toFixed(1)) };
+	}
+
+	// --- Mouse handlers ---
 
 	function handleMouseDown(e: MouseEvent) {
 		if (!enabled) return;
@@ -412,11 +404,10 @@
 		if (!coords) return;
 
 		mouseDownPos = { clientX: e.clientX, clientY: e.clientY };
-		startPos = coords;
-		currentPos = coords;
+		dragStart = coords;
+		dragCurrent = coords;
 		measuring = true;
 		showPanel = false;
-		rotation = 0; // Reset rotation for new measurement
 		detectedShapes = [];
 		shapeIndex = 0;
 	}
@@ -426,13 +417,10 @@
 		e.preventDefault();
 		e.stopPropagation();
 
-		if (!measuring || !startPos) return;
-
+		if (!measuring || !dragStart) return;
 		const coords = toCanvasCoords(e.clientX, e.clientY);
 		if (!coords) return;
-
-		currentPos = coords;
-		formatOutput(startPos, coords);
+		dragCurrent = coords;
 	}
 
 	function handleMouseUp(e: MouseEvent) {
@@ -440,78 +428,61 @@
 		e.preventDefault();
 		e.stopPropagation();
 
-		if (!measuring || !mouseDownPos) return;
+		if (!measuring || !mouseDownPos || !dragStart || !dragCurrent) return;
 		measuring = false;
 
-		// Check if this was a click (minimal movement) or a drag
 		const dx = e.clientX - mouseDownPos.clientX;
 		const dy = e.clientY - mouseDownPos.clientY;
 		const distance = Math.sqrt(dx * dx + dy * dy);
 
 		if (distance < CLICK_THRESHOLD) {
-			// This is a click - try to detect shapes
+			// Click — detect shapes
 			const shapes = detectShapesAtPoint(e.clientX, e.clientY);
-			
 			if (shapes.length > 0) {
 				detectedShapes = shapes;
-				
-				// Shift+click cycles through shapes, normal click resets to first
 				if (e.shiftKey && detectedShapes.length > 1) {
 					shapeIndex = (shapeIndex + 1) % shapes.length;
 				} else {
 					shapeIndex = 0;
 				}
-				
-				const shape = shapes[shapeIndex];
-				formatFromShapeCoords(shape.type, shape.coords);
+				const detected = shapes[shapeIndex];
+				shape = buildShape(detected.type, detected.coords);
+				originalCode = generateOutputCode(shape);
+				activeEndpoint = 'both';
 				showPanel = true;
 			} else {
-				// No shape found, don't show panel
 				showPanel = false;
-				startPos = null;
-				currentPos = null;
+				shape = null;
 			}
 		} else {
-			// This is a drag - use manual measurement
+			// Drag — manual measurement, default to fragment
+			shape = buildShapeFromDrag(dragStart, dragCurrent, 'fragment');
 			detectedShapes = [];
 			shapeIndex = 0;
+			activeEndpoint = 'both';
+			originalCode = '';
 			showPanel = true;
 		}
-		
+
 		mouseDownPos = null;
+		dragStart = null;
+		dragCurrent = null;
 	}
 
 	function closePanel() {
 		showPanel = false;
-		startPos = null;
-		currentPos = null;
-		rotation = 0;
+		shape = null;
 		detectedShapes = [];
 		shapeIndex = 0;
-		detectedShapeType = null;
-		ellipseCoords = null;
-		lineFromTo = null;
-		arrowFromTo = null;
-		arcCoords = null;
+		activeEndpoint = 'both';
 	}
 
-	// Calculate rectangle dimensions for overlay
-	let rectX = $derived(startPos && currentPos ? Math.min(startPos.x, currentPos.x) : 0);
-	let rectY = $derived(startPos && currentPos ? Math.min(startPos.y, currentPos.y) : 0);
-	let rectWidth = $derived(
-		startPos && currentPos ? Math.abs(currentPos.x - startPos.x) : 0
-	);
-	let rectHeight = $derived(
-		startPos && currentPos ? Math.abs(currentPos.y - startPos.y) : 0
-	);
-
-	// Get canvas element position for SVG overlay
+	// --- Canvas overlay helpers ---
 	let canvasRect = $state<DOMRect | null>(null);
 	let canvasScale = $state(1);
 
 	$effect(() => {
 		if (!enabled || !browser) return;
-
 		const updateCanvasInfo = () => {
 			const canvas = getCanvasElement();
 			if (canvas) {
@@ -519,27 +490,48 @@
 				canvasScale = getScale(canvas);
 			}
 		};
-
 		updateCanvasInfo();
 		window.addEventListener('resize', updateCanvasInfo);
-
-		return () => {
-			window.removeEventListener('resize', updateCanvasInfo);
-		};
+		return () => window.removeEventListener('resize', updateCanvasInfo);
 	});
 
-	// Convert canvas coordinates to viewport pixels for SVG rendering
-	let svgX = $derived(canvasRect ? canvasRect.left + (canvasRect.width - 960 * canvasScale) / 2 + rectX * canvasScale : 0);
-	let svgY = $derived(canvasRect ? canvasRect.top + (canvasRect.height - 540 * canvasScale) / 2 + rectY * canvasScale : 0);
-	let svgWidth = $derived(rectWidth * canvasScale);
-	let svgHeight = $derived(rectHeight * canvasScale);
+	/** Convert a canvas coordinate to viewport pixel coordinate */
+	function canvasToViewport(cx: number, cy: number): Point {
+		if (!canvasRect) return { x: 0, y: 0 };
+		const offsetX = canvasRect.left + (canvasRect.width - 960 * canvasScale) / 2;
+		const offsetY = canvasRect.top + (canvasRect.height - 540 * canvasScale) / 2;
+		return { x: offsetX + cx * canvasScale, y: offsetY + cy * canvasScale };
+	}
 
-	// Center point for rotation (in viewport pixels)
-	let svgCenterX = $derived(svgX + svgWidth / 2);
-	let svgCenterY = $derived(svgY + svgHeight / 2);
+	// Show SVG overlay during drag OR when panel is shown with a shape
+	let showShapeOverlay = $derived(
+		(measuring && dragStart && dragCurrent && canvasRect) ||
+		(showPanel && shape && canvasRect)
+	);
 
-	// Show shape during drag OR when panel is shown
-	let showShape = $derived((measuring && startPos && currentPos && canvasRect) || (showPanel && startPos && currentPos && canvasRect));
+	// Drag rectangle for live preview during drag (before shape is created)
+	let dragBox = $derived.by(() => {
+		if (!measuring || !dragStart || !dragCurrent || !canvasRect) return null;
+		const x = Math.min(dragStart.x, dragCurrent.x);
+		const y = Math.min(dragStart.y, dragCurrent.y);
+		const w = Math.abs(dragCurrent.x - dragStart.x);
+		const h = Math.abs(dragCurrent.y - dragStart.y);
+		const vp = canvasToViewport(x, y);
+		return { x: vp.x, y: vp.y, width: w * canvasScale, height: h * canvasScale };
+	});
+
+	// Is the current shape from detection (vs manual drag)?
+	let isDetected = $derived(detectedShapes.length > 0);
+
+	// Get the endpoint color based on active endpoint
+	function endpointColor(which: 'from' | 'to'): string {
+		if (activeEndpoint === 'both') return '#00ff00';
+		return activeEndpoint === which ? '#ffff00' : 'rgba(0, 255, 0, 0.3)';
+	}
+	function endpointRadius(which: 'from' | 'to'): number {
+		if (activeEndpoint === 'both') return 4;
+		return activeEndpoint === which ? 6 : 3;
+	}
 </script>
 
 {#if enabled}
@@ -559,91 +551,185 @@
 			<span class="hint">(CLICK SHAPE OR DRAG)</span>
 		</div>
 
-		<!-- SVG overlay for measurement rectangle -->
-		{#if showShape}
+		<!-- SVG overlay for shape preview -->
+		{#if showShapeOverlay}
 			<svg class="measure-svg-overlay">
-				<rect
-					x={svgX}
-					y={svgY}
-					width={svgWidth}
-					height={svgHeight}
-					stroke="#00ff00"
-					stroke-width="2"
-					fill="rgba(0, 255, 0, 0.1)"
-					stroke-dasharray="5,5"
-					transform="rotate({rotation} {svgCenterX} {svgCenterY})"
-				/>
-				<!-- Show arrow line when rotated -->
-				{#if rotation !== 0}
-					{@const angleRad = (rotation * Math.PI) / 180}
-					{@const cos = Math.cos(angleRad)}
-					{@const sin = Math.sin(angleRad)}
-					{@const dx1 = svgX - svgCenterX}
-					{@const dy1 = svgY - svgCenterY}
-					{@const dx2 = svgX + svgWidth - svgCenterX}
-					{@const dy2 = svgY + svgHeight - svgCenterY}
-					{@const x1 = svgCenterX + dx1 * cos - dy1 * sin}
-					{@const y1 = svgCenterY + dx1 * sin + dy1 * cos}
-					{@const x2 = svgCenterX + dx2 * cos - dy2 * sin}
-					{@const y2 = svgCenterY + dx2 * sin + dy2 * cos}
-					<line
-						x1={x1}
-						y1={y1}
-						x2={x2}
-						y2={y2}
-						stroke="#ff00ff"
-						stroke-width="3"
-						marker-end="url(#arrowhead)"
+				<defs>
+					<marker id="rotation-arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+						<polygon points="0 0, 10 3.5, 0 7" fill="#ff00ff" />
+					</marker>
+				</defs>
+
+				{#if measuring && dragBox}
+					<!-- Live drag preview (dashed green rect) -->
+					<rect
+						x={dragBox.x}
+						y={dragBox.y}
+						width={dragBox.width}
+						height={dragBox.height}
+						stroke="#00ff00"
+						stroke-width="2"
+						fill="rgba(0, 255, 0, 0.1)"
+						stroke-dasharray="5,5"
 					/>
-					<defs>
-						<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-							<polygon points="0 0, 10 3.5, 0 7" fill="#ff00ff" />
-						</marker>
-					</defs>
+				{:else if shape}
+					<!-- Shape-specific preview -->
+					{#if shape.type === 'arrow'}
+						{#if shape.fromBox && shape.toBox}
+							{@const fb = shape.fromBox}
+							{@const tb = shape.toBox}
+							{@const vfb = canvasToViewport(fb.x, fb.y)}
+							{@const vtb = canvasToViewport(tb.x, tb.y)}
+							{@const sfbw = fb.width * canvasScale}
+							{@const sfbh = fb.height * canvasScale}
+							{@const stbw = tb.width * canvasScale}
+							{@const stbh = tb.height * canvasScale}
+							{@const arr = getBoxToBoxArrow(vfb.x, vfb.y, sfbw, sfbh, vtb.x, vtb.y, stbw, stbh, { bow: shape.bow, flip: shape.flip, stretch: 0.5, stretchMin: 40, stretchMax: 420, padStart: 0, padEnd: 8, straights: false })}
+							<path d="M{arr[0]},{arr[1]} Q{arr[2]},{arr[3]} {arr[4]},{arr[5]}" stroke="#00ff00" stroke-width="3" fill="none" />
+							<polygon points="0,-5 12,0 0,5" fill="#00ff00" transform="translate({arr[4]},{arr[5]}) rotate({arr[6] * 180 / Math.PI})" />
+							<rect x={vfb.x} y={vfb.y} width={sfbw} height={sfbh} stroke={endpointColor('from')} stroke-width="1" fill="none" stroke-dasharray="4,4" opacity="0.5" />
+							<rect x={vtb.x} y={vtb.y} width={stbw} height={stbh} stroke={endpointColor('to')} stroke-width="1" fill="none" stroke-dasharray="4,4" opacity="0.5" />
+						{:else if shape.from && shape.to}
+							{@const vf = canvasToViewport(shape.from.x, shape.from.y)}
+							{@const vt = canvasToViewport(shape.to.x, shape.to.y)}
+							{@const arr = getArrow(vf.x, vf.y, vt.x, vt.y, { bow: shape.bow, flip: shape.flip, stretch: shape.bow !== 0 ? 0.5 : 0, straights: shape.bow === 0, padEnd: 8 })}
+							<path d="M{arr[0]},{arr[1]} Q{arr[2]},{arr[3]} {arr[4]},{arr[5]}" stroke="#00ff00" stroke-width="3" fill="none" />
+							<polygon points="0,-5 12,0 0,5" fill="#00ff00" transform="translate({arr[4]},{arr[5]}) rotate({arr[6] * 180 / Math.PI})" />
+							<circle cx={vf.x} cy={vf.y} r={endpointRadius('from')} fill={endpointColor('from')} opacity="0.9" />
+							<circle cx={vt.x} cy={vt.y} r={endpointRadius('to')} fill={endpointColor('to')} opacity="0.9" />
+						{/if}
+
+					{:else if shape.type === 'arc'}
+						{@const vf = canvasToViewport(shape.from.x, shape.from.y)}
+						{@const vt = canvasToViewport(shape.to.x, shape.to.y)}
+						{@const mx = (vf.x + vt.x) / 2}
+						{@const my = (vf.y + vt.y) / 2}
+						{@const adx = vt.x - vf.x}
+						{@const ady = vt.y - vf.y}
+						{@const alen = Math.sqrt(adx * adx + ady * ady)}
+						{@const perpX = alen > 0 ? -ady / alen : 0}
+						{@const perpY = alen > 0 ? adx / alen : 0}
+						{@const scaledCurve = shape.curve * canvasScale}
+						{@const cpx = mx + perpX * scaledCurve}
+						{@const cpy = my + perpY * scaledCurve}
+						<path d="M{vf.x},{vf.y} Q{cpx},{cpy} {vt.x},{vt.y}" stroke="#00ff00" stroke-width="3" fill="none" />
+						{@const endAngle = Math.atan2(vt.y - cpy, vt.x - cpx) * 180 / Math.PI}
+						<polygon points="0,-5 12,0 0,5" fill="#00ff00" transform="translate({vt.x},{vt.y}) rotate({endAngle})" />
+						<circle cx={vf.x} cy={vf.y} r={endpointRadius('from')} fill={endpointColor('from')} opacity="0.9" />
+						<circle cx={vt.x} cy={vt.y} r={endpointRadius('to')} fill={endpointColor('to')} opacity="0.9" />
+						<circle cx={cpx} cy={cpy} r="3" fill="#00ffff" opacity="0.5" />
+						<line x1={mx} y1={my} x2={cpx} y2={cpy} stroke="#00ffff" stroke-width="1" stroke-dasharray="3,3" opacity="0.4" />
+
+					{:else if shape.type === 'line'}
+						{@const vf = canvasToViewport(shape.from.x, shape.from.y)}
+						{@const vt = canvasToViewport(shape.to.x, shape.to.y)}
+						<line x1={vf.x} y1={vf.y} x2={vt.x} y2={vt.y} stroke="#00ff00" stroke-width="3" />
+						<circle cx={vf.x} cy={vf.y} r={endpointRadius('from')} fill={endpointColor('from')} opacity="0.9" />
+						<circle cx={vt.x} cy={vt.y} r={endpointRadius('to')} fill={endpointColor('to')} opacity="0.9" />
+
+					{:else if shape.type === 'ellipse'}
+						{@const vc = canvasToViewport(shape.cx, shape.cy)}
+						{@const srx = shape.rx * canvasScale}
+						{@const sry = shape.ry * canvasScale}
+						<ellipse cx={vc.x} cy={vc.y} rx={srx} ry={sry} stroke="#00ff00" stroke-width="2" fill="rgba(0, 255, 0, 0.1)" />
+						<circle cx={vc.x} cy={vc.y} r="3" fill="#00ff00" opacity="0.7" />
+
+					{:else if shape.type === 'rect'}
+						{@const vp = canvasToViewport(shape.x, shape.y)}
+						{@const sw = shape.width * canvasScale}
+						{@const sh = shape.height * canvasScale}
+						{@const cx = vp.x + sw / 2}
+						{@const cy = vp.y + sh / 2}
+						<rect
+							x={vp.x}
+							y={vp.y}
+							width={sw}
+							height={sh}
+							stroke="#00ff00"
+							stroke-width="2"
+							fill="rgba(0, 255, 0, 0.1)"
+							transform="rotate({shape.rotation} {cx} {cy})"
+						/>
+
+					{:else if shape.type === 'fragment'}
+						{@const vp = canvasToViewport(shape.x, shape.y)}
+						{@const sw = shape.width * canvasScale}
+						{@const sh = shape.height * canvasScale}
+						{@const cx = vp.x + sw / 2}
+						{@const cy = vp.y + sh / 2}
+						<rect
+							x={vp.x}
+							y={vp.y}
+							width={sw}
+							height={sh}
+							stroke="#00ff00"
+							stroke-width="2"
+							fill="rgba(0, 255, 0, 0.1)"
+							stroke-dasharray="5,5"
+							transform="rotate({shape.rotation} {cx} {cy})"
+						/>
+						{#if shape.rotation !== 0}
+							{@const angleRad = (shape.rotation * Math.PI) / 180}
+							{@const cos = Math.cos(angleRad)}
+							{@const sin = Math.sin(angleRad)}
+							{@const dx1 = vp.x - cx}
+							{@const dy1 = vp.y - cy}
+							{@const dx2 = vp.x + sw - cx}
+							{@const dy2 = vp.y + sh - cy}
+							{@const x1 = cx + dx1 * cos - dy1 * sin}
+							{@const y1 = cy + dx1 * sin + dy1 * cos}
+							{@const x2 = cx + dx2 * cos - dy2 * sin}
+							{@const y2 = cy + dx2 * sin + dy2 * cos}
+							<line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#ff00ff" stroke-width="3" marker-end="url(#rotation-arrowhead)" />
+						{/if}
+					{/if}
 				{/if}
 			</svg>
 		{/if}
 	</div>
 
 	<!-- Output panel -->
-	{#if showPanel}
+	{#if showPanel && shape}
 		<div class="measure-panel corner-{panelCorner}">
+			<!-- Header -->
 			<div class="panel-header">
 				<span class="panel-title">
-					{#if detectedShapeType}
-						Detected: <span class="shape-type">{detectedShapeType}</span>
+					{#if isDetected}
+						<span class="shape-type">{shapeLabel}</span>
 						{#if detectedShapes.length > 1}
 							<span class="shape-count">({shapeIndex + 1}/{detectedShapes.length})</span>
 						{/if}
 					{:else}
-						Coordinate Measurement
+						<span class="shape-type">{shapeLabel}</span>
+						<span class="shape-count">(drag)</span>
 					{/if}
 				</span>
 				<div class="header-buttons">
 					{#if detectedShapes.length > 1}
-						<button class="cycle-btn" onclick={() => { shapeIndex = (shapeIndex + 1) % detectedShapes.length; formatFromShapeCoords(detectedShapes[shapeIndex].type, detectedShapes[shapeIndex].coords); }} aria-label="Cycle to next shape" title="Next shape (or Shift+click)">⇄</button>
+						<button class="cycle-btn" onclick={() => { shapeIndex = (shapeIndex + 1) % detectedShapes.length; const s = detectedShapes[shapeIndex]; shape = buildShape(s.type, s.coords); activeEndpoint = 'both'; originalCode = generateOutputCode(shape); }} aria-label="Cycle to next shape" title="Next shape (or Shift+click)">⇄</button>
+					{/if}
+					{#if !isDetected}
+						<!-- Type switcher for drag-to-measure -->
+						<div class="type-switcher">
+							{#each ALL_SHAPE_TYPES as t}
+								<button
+									class="type-btn"
+									class:active={shape.type === t}
+									onclick={() => switchShapeType(t)}
+									title={t}
+								>
+									{t.charAt(0).toUpperCase()}
+								</button>
+							{/each}
+						</div>
 					{/if}
 					<button class="corner-btn" onclick={cycleCorner} aria-label="Move panel to next corner" title="Move to next corner">{cornerLabels[panelCorner]}</button>
 					<button class="close-btn" onclick={closePanel} aria-label="Close panel">×</button>
 				</div>
 			</div>
 
+			<!-- Nudge controls (all shapes) -->
 			<div class="controls-row">
-				<div class="rotation-controls">
-					<button class="rotate-btn" onclick={rotateLeft} aria-label="Rotate left 15°">
-						↶ 15°
-					</button>
-					<button class="rotate-btn rotate-btn-fine" onclick={rotateLeftFine} aria-label="Rotate left 1°">
-						↶ 1°
-					</button>
-					<span class="rotation-value">{rotation}°</span>
-					<button class="rotate-btn rotate-btn-fine" onclick={rotateRightFine} aria-label="Rotate right 1°">
-						1° ↷
-					</button>
-					<button class="rotate-btn" onclick={rotateRight} aria-label="Rotate right 15°">
-						15° ↷
-					</button>
-				</div>
 				<div class="nudge-controls">
 					<button class="nudge-btn" onclick={() => nudge(-10, 0)} aria-label="Nudge left 10px">←10</button>
 					<button class="nudge-btn nudge-btn-fine" onclick={() => nudge(-1, 0)} aria-label="Nudge left 1px">←</button>
@@ -656,45 +742,119 @@
 				</div>
 			</div>
 
-			<div class="output-section">
-				<div class="output-label">&lt;Fragment&gt;</div>
-				<code class="output-code">{fragmentLayout || '—'}</code>
-			</div>
-
-			<div class="output-section">
-				<div class="output-label">&lt;Arrow&gt; / from-to</div>
-				<code class="output-code">{arrowCoords || '—'}</code>
-			</div>
-
-			<div class="output-section">
-				<div class="output-label">&lt;Rect&gt;</div>
-				<code class="output-code">{rectComponent || '—'}</code>
-			</div>
-
-			<div class="output-section">
-				<div class="output-label">&lt;Line&gt;</div>
-				<code class="output-code">{lineComponent || '—'}</code>
-			</div>
-
-			{#if arcComponent}
-			<div class="output-section">
-				<div class="output-label">&lt;Arc&gt;</div>
-				<code class="output-code">{arcComponent}</code>
+			<!-- Endpoint toggle for line/arrow/arc -->
+			{#if shape.type === 'line' || shape.type === 'arc' || (shape.type === 'arrow' && (shape.from || shape.fromBox))}
+			<div class="controls-row">
+				<div class="endpoint-toggle">
+					<span class="curve-label">nudge</span>
+					<button class="endpoint-btn" class:active={activeEndpoint === 'from'} onclick={() => activeEndpoint = activeEndpoint === 'from' ? 'both' : 'from'}>from</button>
+					<button class="endpoint-btn" class:active={activeEndpoint === 'both'} onclick={() => activeEndpoint = 'both'}>both</button>
+					<button class="endpoint-btn" class:active={activeEndpoint === 'to'} onclick={() => activeEndpoint = activeEndpoint === 'to' ? 'both' : 'to'}>to</button>
+				</div>
 			</div>
 			{/if}
 
-			{#if ellipseComponent}
-			<div class="output-section">
-				<div class="output-label">&lt;Ellipse&gt;</div>
-				<code class="output-code">{ellipseComponent}</code>
+			<!-- Fragment/Rect: rotation + size controls -->
+			{#if shape.type === 'fragment' || shape.type === 'rect'}
+			<div class="controls-row">
+				<div class="rotation-controls">
+					<button class="rotate-btn" onclick={() => adjustRotation(-15)} aria-label="Rotate left 15°">↶ 15°</button>
+					<button class="rotate-btn rotate-btn-fine" onclick={() => adjustRotation(-1)} aria-label="Rotate left 1°">↶ 1°</button>
+					<span class="rotation-value">{shape.rotation}°</span>
+					<button class="rotate-btn rotate-btn-fine" onclick={() => adjustRotation(1)} aria-label="Rotate right 1°">1° ↷</button>
+					<button class="rotate-btn" onclick={() => adjustRotation(15)} aria-label="Rotate right 15°">15° ↷</button>
+				</div>
+			</div>
+			<div class="controls-row">
+				<div class="size-controls">
+					<span class="curve-label">w</span>
+					<button class="nudge-btn" onclick={() => adjustSize('width', -10)}>−10</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustSize('width', -1)}>−1</button>
+					<span class="curve-value">{fmt(shape.width)}</span>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustSize('width', 1)}>+1</button>
+					<button class="nudge-btn" onclick={() => adjustSize('width', 10)}>+10</button>
+				</div>
+				<div class="size-controls">
+					<span class="curve-label">h</span>
+					<button class="nudge-btn" onclick={() => adjustSize('height', -10)}>−10</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustSize('height', -1)}>−1</button>
+					<span class="curve-value">{fmt(shape.height)}</span>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustSize('height', 1)}>+1</button>
+					<button class="nudge-btn" onclick={() => adjustSize('height', 10)}>+10</button>
+				</div>
 			</div>
 			{/if}
+
+			<!-- Arrow: bow + flip -->
+			{#if shape.type === 'arrow'}
+			<div class="controls-row">
+				<div class="curve-controls">
+					<span class="curve-label">bow</span>
+					<button class="nudge-btn" onclick={() => adjustBow(-0.1)}>−.1</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustBow(-0.05)}>−.05</button>
+					<span class="curve-value">{fmt(shape.bow)}</span>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustBow(0.05)}>+.05</button>
+					<button class="nudge-btn" onclick={() => adjustBow(0.1)}>+.1</button>
+				</div>
+				<button class="flip-btn" class:active={shape.flip} onclick={toggleFlip}>⇅ flip</button>
+			</div>
+			{/if}
+
+			<!-- Arc: curve -->
+			{#if shape.type === 'arc'}
+			<div class="controls-row">
+				<div class="curve-controls">
+					<span class="curve-label">curve</span>
+					<button class="nudge-btn" onclick={() => adjustCurve(-10)}>−10</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustCurve(-5)}>−5</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustCurve(-1)}>−1</button>
+					<span class="curve-value">{fmt(shape.curve)}</span>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustCurve(1)}>+1</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustCurve(5)}>+5</button>
+					<button class="nudge-btn" onclick={() => adjustCurve(10)}>+10</button>
+				</div>
+			</div>
+			{/if}
+
+			<!-- Ellipse: rx/ry -->
+			{#if shape.type === 'ellipse'}
+			<div class="controls-row">
+				<div class="size-controls">
+					<span class="curve-label">rx</span>
+					<button class="nudge-btn" onclick={() => adjustRadius('rx', -10)}>−10</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustRadius('rx', -1)}>−1</button>
+					<span class="curve-value">{fmt(shape.rx)}</span>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustRadius('rx', 1)}>+1</button>
+					<button class="nudge-btn" onclick={() => adjustRadius('rx', 10)}>+10</button>
+				</div>
+				<div class="size-controls">
+					<span class="curve-label">ry</span>
+					<button class="nudge-btn" onclick={() => adjustRadius('ry', -10)}>−10</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustRadius('ry', -1)}>−1</button>
+					<span class="curve-value">{fmt(shape.ry)}</span>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustRadius('ry', 1)}>+1</button>
+					<button class="nudge-btn" onclick={() => adjustRadius('ry', 10)}>+10</button>
+				</div>
+			</div>
+			{/if}
+
+			<!-- Output sections -->
+			<div class="output-section">
+				<div class="output-label">ORIGINAL</div>
+				<code class="output-code">{originalCode || '—'}</code>
+			</div>
+			<div class="output-section">
+				<div class="output-label">ADJUSTED</div>
+				<code class="output-code">{originalCode && originalCode !== outputCode ? outputCode : '—'}</code>
+			</div>
 
 			<div class="panel-footer">
 				{#if detectedShapes.length > 1}
 					Shift+click to cycle shapes
+				{:else if !isDetected}
+					Use type buttons to switch shape type
 				{:else}
-					Click code to select all
+					Click shape to select · Shift+click to cycle
 				{/if}
 			</div>
 		</div>
@@ -741,13 +901,8 @@
 	}
 
 	@keyframes pulse {
-		0%,
-		100% {
-			opacity: 1;
-		}
-		50% {
-			opacity: 0.4;
-		}
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.4; }
 	}
 
 	.hint {
@@ -779,7 +934,6 @@
 		box-shadow: 0 4px 12px rgba(0, 255, 0, 0.2);
 	}
 
-	/* Corner positioning */
 	.corner-br { bottom: 70px; right: 10px; }
 	.corner-bl { bottom: 70px; left: 10px; }
 	.corner-tl { top: 50px; left: 10px; }
@@ -858,14 +1012,45 @@
 		background: rgba(0, 255, 255, 0.25);
 	}
 
+	.type-switcher {
+		display: flex;
+		gap: 2px;
+	}
+
+	.type-btn {
+		background: rgba(0, 255, 0, 0.1);
+		border: 1px solid rgba(0, 255, 0, 0.3);
+		color: #88ff88;
+		font-family: monospace;
+		font-size: 10px;
+		cursor: pointer;
+		padding: 2px 5px;
+		border-radius: 2px;
+		transition: all 0.15s;
+		min-width: 18px;
+		text-align: center;
+	}
+
+	.type-btn:hover {
+		background: rgba(0, 255, 0, 0.2);
+		border-color: #00ff00;
+	}
+
+	.type-btn.active {
+		background: rgba(0, 255, 255, 0.3);
+		border-color: #00ffff;
+		color: #00ffff;
+		font-weight: bold;
+	}
+
 	.controls-row {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 10px 12px;
+		padding: 8px 12px;
 		border-bottom: 1px solid rgba(0, 255, 0, 0.3);
 		background: rgba(0, 255, 0, 0.05);
-		gap: 16px;
+		gap: 12px;
 	}
 
 	.rotation-controls {
@@ -929,6 +1114,84 @@
 		text-align: center;
 	}
 
+	.endpoint-toggle {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
+
+	.endpoint-btn {
+		background: rgba(0, 255, 0, 0.1);
+		border: 1px solid rgba(0, 255, 0, 0.4);
+		color: #88ff88;
+		font-family: monospace;
+		font-size: 10px;
+		padding: 4px 10px;
+		border-radius: 3px;
+		cursor: pointer;
+		transition: all 0.15s;
+	}
+
+	.endpoint-btn:hover {
+		background: rgba(0, 255, 0, 0.2);
+	}
+
+	.endpoint-btn.active {
+		background: rgba(255, 255, 0, 0.2);
+		border-color: #ffff00;
+		color: #ffff00;
+		font-weight: bold;
+	}
+
+	.size-controls {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+	}
+
+	.curve-controls {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
+
+	.curve-label {
+		color: #00ffff;
+		font-size: 11px;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.curve-value {
+		font-size: 12px;
+		font-weight: bold;
+		min-width: 40px;
+		text-align: center;
+		color: #00ffff;
+	}
+
+	.flip-btn {
+		background: rgba(0, 255, 255, 0.1);
+		border: 1px solid #00ffff;
+		color: #00ffff;
+		font-family: monospace;
+		font-size: 11px;
+		padding: 4px 10px;
+		border-radius: 4px;
+		cursor: pointer;
+		transition: background 0.2s;
+	}
+
+	.flip-btn:hover {
+		background: rgba(0, 255, 255, 0.25);
+	}
+
+	.flip-btn.active {
+		background: rgba(0, 255, 255, 0.4);
+		box-shadow: 0 0 6px rgba(0, 255, 255, 0.4);
+	}
+
 	.close-btn {
 		background: none;
 		border: none;
@@ -952,11 +1215,23 @@
 
 	.output-section {
 		padding: 10px 12px;
-		border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+		border-bottom: 1px solid rgba(0, 255, 0, 0.2);
 	}
 
 	.output-section:last-of-type {
 		border-bottom: none;
+	}
+
+	.output-original {
+		opacity: 0.7;
+	}
+
+	.output-original .output-label {
+		color: #ff8888;
+	}
+
+	.output-original .output-code {
+		border-color: rgba(255, 136, 136, 0.3);
 	}
 
 	.output-label {
