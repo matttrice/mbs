@@ -539,7 +539,7 @@
 			detectedShapes = [];
 			shapeIndex = 0;
 			activeEndpoint = 'both';
-			originalCode = '';
+			originalCode = generateOutputCode(shape);
 			showPanel = true;
 		}
 
@@ -969,7 +969,7 @@
 			<div class="output-section">
 				<div class="output-label">ADJUSTED</div>
 				<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
-				<code class="output-code" onclick={(e) => { const text = e.currentTarget.textContent || ''; if (text !== '—') navigator.clipboard.writeText(text); }}>{originalCode && originalCode !== outputCode ? outputCode : '—'}</code>
+				<code class="output-code" onclick={(e) => { const text = e.currentTarget.textContent || ''; if (text !== '—') navigator.clipboard.writeText(text); }}>{originalCode !== outputCode ? outputCode : '—'}</code>
 			</div>
 
 			<div class="panel-footer">
