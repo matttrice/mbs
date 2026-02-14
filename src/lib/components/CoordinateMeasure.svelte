@@ -21,7 +21,7 @@
 	type RectShape = { type: 'rect'; x: number; y: number; width: number; height: number; rotation: number };
 	type ArrowShape = { type: 'arrow'; from?: Point; to?: Point; fromBox?: Box; toBox?: Box; bow: number; flip: boolean };
 	type LineShape = { type: 'line'; from: Point; to: Point };
-	type ArcShape = { type: 'arc'; from: Point; to: Point; curve: number; shift: number };
+	type ArcShape = { type: 'arc'; from: Point; to: Point; curve: number; shift: number; largeArc: boolean; rx: number; ry: number };
 	type EllipseShape = { type: 'ellipse'; cx: number; cy: number; rx: number; ry: number; rotation: number };
 
 	type ShapeState = FragmentShape | RectShape | ArrowShape | LineShape | ArcShape | EllipseShape;
@@ -135,8 +135,12 @@
 			}
 			case 'line':
 				return `from={{ x: ${fmt(s.from.x)}, y: ${fmt(s.from.y)} }} to={{ x: ${fmt(s.to.x)}, y: ${fmt(s.to.y)} }}`;
-			case 'arc':
+			case 'arc': {
+				if (s.largeArc) {
+					return `from={{ x: ${fmt(s.from.x)}, y: ${fmt(s.from.y)} }} to={{ x: ${fmt(s.to.x)}, y: ${fmt(s.to.y)} }} curve={${fmt(s.curve)}} rx={${fmt(s.rx)}} ry={${fmt(s.ry)}} largeArc`;
+				}
 				return `from={{ x: ${fmt(s.from.x)}, y: ${fmt(s.from.y)} }} to={{ x: ${fmt(s.to.x)}, y: ${fmt(s.to.y)} }} curve={${fmt(s.curve)}}${s.shift !== 0 ? ` shift={${fmt(s.shift)}}` : ''}`;
+			}
 			case 'ellipse': {
 				const rot = s.rotation !== 0 ? ` rotation={${fmt(s.rotation)}}` : '';
 				return `cx={${fmt(s.cx)}} cy={${fmt(s.cy)}} rx={${fmt(s.rx)}} ry={${fmt(s.ry)}}${rot}`;
@@ -243,7 +247,7 @@
 		} else if (type === 'line') {
 			return { type: 'line', from: coords.from as Point, to: coords.to as Point };
 		} else if (type === 'arc') {
-			return { type: 'arc', from: coords.from as Point, to: coords.to as Point, curve: coords.curve as number, shift: (coords.shift as number) ?? 0 };
+			return { type: 'arc', from: coords.from as Point, to: coords.to as Point, curve: coords.curve as number, shift: (coords.shift as number) ?? 0, largeArc: (coords.largeArc as boolean) ?? false, rx: (coords.rx as number) ?? 0, ry: (coords.ry as number) ?? 0 };
 		} else if (type === 'ellipse') {
 			return { type: 'ellipse', cx: coords.cx as number, cy: coords.cy as number, rx: coords.rx as number, ry: coords.ry as number, rotation: (coords.rotation as number) ?? 0 };
 		}
@@ -267,7 +271,7 @@
 			case 'line':
 				return { type: 'line', from: { ...start }, to: { ...end } };
 			case 'arc':
-				return { type: 'arc', from: { ...start }, to: { ...end }, curve: 0, shift: 0 };
+				return { type: 'arc', from: { ...start }, to: { ...end }, curve: 0, shift: 0, largeArc: false, rx: 0, ry: 0 };
 			case 'ellipse':
 				return { type: 'ellipse', cx: x + width / 2, cy: y + height / 2, rx: width / 2, ry: height / 2, rotation: 0 };
 		}
@@ -304,7 +308,7 @@
 			if (newType === 'line') {
 				shape = { type: 'line', from: { ...from }, to: { ...to } };
 			} else if (newType === 'arc') {
-				shape = { type: 'arc', from: { ...from }, to: { ...to }, curve: 0, shift: 0 };
+				shape = { type: 'arc', from: { ...from }, to: { ...to }, curve: 0, shift: 0, largeArc: false, rx: 0, ry: 0 };
 			} else {
 				shape = { type: 'arrow', from: { ...from }, to: { ...to }, bow: 0, flip: false };
 			}
@@ -343,6 +347,13 @@
 				return { x: minX, y: minY, width: Math.max(s.from.x, s.to.x) + P - minX, height: Math.max(s.from.y, s.to.y) + P - minY };
 			}
 			case 'arc': {
+				if (s.largeArc && s.rx > 0 && s.ry > 0) {
+					// For largeArc: bound by arc center ± radii
+					const maxR = Math.max(s.rx, s.ry);
+					const midX = (s.from.x + s.to.x) / 2;
+					const midY = (s.from.y + s.to.y) / 2;
+					return { x: midX - maxR - P, y: midY - maxR - P, width: maxR * 2 + P * 2, height: maxR * 2 + P * 2 };
+				}
 				const curveExtent = Math.abs(s.curve) * 0.7;
 				const shiftExtent = Math.abs(s.shift) * 0.5;
 				const minX = Math.min(s.from.x, s.to.x) - P - shiftExtent;
@@ -470,6 +481,27 @@
 	function adjustShift(delta: number) {
 		if (!shape || shape.type !== 'arc') return;
 		shape = { ...shape, shift: parseFloat((shape.shift + delta).toFixed(1)) };
+	}
+
+	function toggleLargeArc() {
+		if (!shape || shape.type !== 'arc') return;
+		const newLargeArc = !shape.largeArc;
+		if (newLargeArc && shape.rx === 0 && shape.ry === 0) {
+			// Auto-compute initial rx/ry from bounding box of from/to
+			const dx = shape.to.x - shape.from.x;
+			const dy = shape.to.y - shape.from.y;
+			const chord = Math.sqrt(dx * dx + dy * dy);
+			const defaultR = Math.max(chord / 2 + 10, 30);
+			shape = { ...shape, largeArc: true, rx: Math.round(defaultR), ry: Math.round(defaultR), curve: shape.curve || -50 };
+		} else {
+			shape = { ...shape, largeArc: newLargeArc };
+		}
+	}
+
+	function adjustArcRadius(prop: 'rx' | 'ry', delta: number) {
+		if (!shape || shape.type !== 'arc') return;
+		const newVal = Math.max(1, shape[prop] + delta);
+		shape = { ...shape, [prop]: newVal };
 	}
 
 	// --- Mouse handlers ---
@@ -681,26 +713,57 @@
 					{:else if shape.type === 'arc'}
 						{@const vf = canvasToViewport(shape.from.x, shape.from.y)}
 						{@const vt = canvasToViewport(shape.to.x, shape.to.y)}
-						{@const mx = (vf.x + vt.x) / 2}
-						{@const my = (vf.y + vt.y) / 2}
-						{@const adx = vt.x - vf.x}
-						{@const ady = vt.y - vf.y}
-						{@const alen = Math.sqrt(adx * adx + ady * ady)}
-						{@const perpX = alen > 0 ? -ady / alen : 0}
-						{@const perpY = alen > 0 ? adx / alen : 0}
-						{@const parX = alen > 0 ? adx / alen : 0}
-						{@const parY = alen > 0 ? ady / alen : 0}
-						{@const scaledCurve = shape.curve * canvasScale}
-						{@const scaledShift = shape.shift * canvasScale}
-						{@const cpx = mx + perpX * scaledCurve + parX * scaledShift}
-						{@const cpy = my + perpY * scaledCurve + parY * scaledShift}
-						<path d="M{vf.x},{vf.y} Q{cpx},{cpy} {vt.x},{vt.y}" stroke="#00ff00" stroke-width="3" fill="none" />
-						{@const endAngle = Math.atan2(vt.y - cpy, vt.x - cpx) * 180 / Math.PI}
-						<polygon points="0,-5 12,0 0,5" fill="#00ff00" transform="translate({vt.x},{vt.y}) rotate({endAngle})" />
+						{#if shape.largeArc && shape.rx > 0 && shape.ry > 0}
+							{@const srx = shape.rx * canvasScale}
+							{@const sry = shape.ry * canvasScale}
+							{@const sweepFlag = shape.curve >= 0 ? 1 : 0}
+							<path d="M{vf.x},{vf.y} A{srx},{sry} 0 1 {sweepFlag} {vt.x},{vt.y}" stroke="#00ff00" stroke-width="3" fill="none" />
+							<!-- Compute arrowhead tangent for SVG arc using endpoint parameterization -->
+							{@const adx = shape.to.x - shape.from.x}
+							{@const ady = shape.to.y - shape.from.y}
+							{@const mx2 = (shape.from.x - shape.to.x) / 2}
+							{@const my2 = (shape.from.y - shape.to.y) / 2}
+							{@const rx2 = shape.rx * shape.rx}
+							{@const ry2 = shape.ry * shape.ry}
+							{@const x1p2 = mx2 * mx2}
+							{@const y1p2 = my2 * my2}
+							{@const arcDen = rx2 * y1p2 + ry2 * x1p2}
+							{@const arcSq = arcDen > 0 ? Math.sqrt(Math.max(0, (rx2 * ry2 - rx2 * y1p2 - ry2 * x1p2) / arcDen)) : 0}
+							{@const arcSign = (1 === sweepFlag) ? -1 : 1}
+							{@const cxp = arcSign * shape.rx * my2 / shape.ry}
+							{@const cyp = -arcSign * shape.ry * mx2 / shape.rx}
+							{@const arcCx = (cxp * arcSq) + (shape.from.x + shape.to.x) / 2}
+							{@const arcCy = (cyp * arcSq) + (shape.from.y + shape.to.y) / 2}
+							{@const theta2 = Math.atan2((shape.to.y - arcCy) / shape.ry, (shape.to.x - arcCx) / shape.rx)}
+							{@const tanAngle = sweepFlag === 1 ? Math.atan2(shape.rx * Math.cos(theta2), -shape.ry * Math.sin(theta2)) : Math.atan2(-shape.rx * Math.cos(theta2), shape.ry * Math.sin(theta2))}
+							<polygon points="0,-5 12,0 0,5" fill="#00ff00" transform="translate({vt.x},{vt.y}) rotate({tanAngle * 180 / Math.PI})" />
+							<!-- Show arc center -->
+							{@const vc = canvasToViewport(arcCx, arcCy)}
+							<circle cx={vc.x} cy={vc.y} r="3" fill="#ff00ff" opacity="0.6" />
+							<line x1={vc.x} y1={vc.y} x2={vf.x} y2={vf.y} stroke="#ff00ff" stroke-width="1" stroke-dasharray="3,3" opacity="0.3" />
+							<line x1={vc.x} y1={vc.y} x2={vt.x} y2={vt.y} stroke="#ff00ff" stroke-width="1" stroke-dasharray="3,3" opacity="0.3" />
+						{:else}
+							{@const mx = (vf.x + vt.x) / 2}
+							{@const my = (vf.y + vt.y) / 2}
+							{@const adx = vt.x - vf.x}
+							{@const ady = vt.y - vf.y}
+							{@const alen = Math.sqrt(adx * adx + ady * ady)}
+							{@const perpX = alen > 0 ? -ady / alen : 0}
+							{@const perpY = alen > 0 ? adx / alen : 0}
+							{@const parX = alen > 0 ? adx / alen : 0}
+							{@const parY = alen > 0 ? ady / alen : 0}
+							{@const scaledCurve = shape.curve * canvasScale}
+							{@const scaledShift = shape.shift * canvasScale}
+							{@const cpx = mx + perpX * scaledCurve + parX * scaledShift}
+							{@const cpy = my + perpY * scaledCurve + parY * scaledShift}
+							<path d="M{vf.x},{vf.y} Q{cpx},{cpy} {vt.x},{vt.y}" stroke="#00ff00" stroke-width="3" fill="none" />
+							{@const endAngle = Math.atan2(vt.y - cpy, vt.x - cpx) * 180 / Math.PI}
+							<polygon points="0,-5 12,0 0,5" fill="#00ff00" transform="translate({vt.x},{vt.y}) rotate({endAngle})" />
+							<circle cx={cpx} cy={cpy} r="3" fill="#00ffff" opacity="0.5" />
+							<line x1={mx} y1={my} x2={cpx} y2={cpy} stroke="#00ffff" stroke-width="1" stroke-dasharray="3,3" opacity="0.4" />
+						{/if}
 						<circle cx={vf.x} cy={vf.y} r={endpointRadius('from')} fill={endpointColor('from')} opacity="0.9" />
 						<circle cx={vt.x} cy={vt.y} r={endpointRadius('to')} fill={endpointColor('to')} opacity="0.9" />
-						<circle cx={cpx} cy={cpy} r="3" fill="#00ffff" opacity="0.5" />
-						<line x1={mx} y1={my} x2={cpx} y2={cpy} stroke="#00ffff" stroke-width="1" stroke-dasharray="3,3" opacity="0.4" />
 
 					{:else if shape.type === 'line'}
 						{@const vf = canvasToViewport(shape.from.x, shape.from.y)}
@@ -901,9 +964,10 @@
 			</div>
 			{/if}
 
-			<!-- Arc: curve + shift -->
+			<!-- Arc: largeArc toggle + curve + shift/rx/ry -->
 			{#if shape.type === 'arc'}
 			<div class="controls-row">
+				<button class="flip-btn" class:active={shape.largeArc} onclick={toggleLargeArc}>⬭ largeArc</button>
 				<div class="curve-controls">
 					<span class="curve-label">curve</span>
 					<button class="nudge-btn" onclick={() => adjustCurve(-10)}>−10</button>
@@ -915,6 +979,26 @@
 					<button class="nudge-btn" onclick={() => adjustCurve(10)}>+10</button>
 				</div>
 			</div>
+			{#if shape.largeArc}
+			<div class="controls-row">
+				<div class="size-controls">
+					<span class="curve-label">rx</span>
+					<button class="nudge-btn" onclick={() => adjustArcRadius('rx', -10)}>−10</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustArcRadius('rx', -1)}>−1</button>
+					<span class="curve-value">{fmt(shape.rx)}</span>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustArcRadius('rx', 1)}>+1</button>
+					<button class="nudge-btn" onclick={() => adjustArcRadius('rx', 10)}>+10</button>
+				</div>
+				<div class="size-controls">
+					<span class="curve-label">ry</span>
+					<button class="nudge-btn" onclick={() => adjustArcRadius('ry', -10)}>−10</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustArcRadius('ry', -1)}>−1</button>
+					<span class="curve-value">{fmt(shape.ry)}</span>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustArcRadius('ry', 1)}>+1</button>
+					<button class="nudge-btn" onclick={() => adjustArcRadius('ry', 10)}>+10</button>
+				</div>
+			</div>
+			{:else}
 			<div class="controls-row">
 				<div class="curve-controls">
 					<span class="curve-label">shift</span>
@@ -927,6 +1011,7 @@
 					<button class="nudge-btn" onclick={() => adjustShift(10)}>+10</button>
 				</div>
 			</div>
+			{/if}
 			{/if}
 
 			<!-- Ellipse: rotation + rx/ry -->

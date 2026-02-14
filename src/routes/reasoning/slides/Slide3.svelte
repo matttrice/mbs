@@ -597,21 +597,13 @@
 	</Fragment>
 
 	<!-- Vertical oval loops for Genesis pattern - wrap around the timeline -->
-	<Fragment
-		step={32}
-		layout={{ x: 83, y: 336, width: 70, height: 128 }}
-		animate="fade"
-		zIndex={10}
-	>
-		<img src="/images/arc1.png" alt="" style="width: 100%; height: 100%;" />
+	<!-- Arc 97: bounding box {x:121, y:336, w:44, h:114} → rx=22, ry=57 -->
+	<Fragment step={32} animate="fade">
+		<Arc from={{ x: 154, y: 448 }} to={{ x: 132, y: 448 }} curve={-50} rx={22} ry={57} largeArc stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={10} />
 	</Fragment>
-	<Fragment
-		step={32}
-		layout={{ x: 60, y: 336, width: 70, height: 128 }}
-		animate="fade"
-		zIndex={9}
-	>
-		<img src="/images/arc1.png" alt="" style="width: 100%; height: 100%;" />
+	<!-- Arc 96: bounding box {x:98, y:336, w:38, h:114} → rx=19, ry=57 -->
+	<Fragment step={32} animate="fade">
+		<Arc from={{ x: 128, y: 448 }} to={{ x: 106, y: 448 }} curve={-50} rx={19} ry={57} largeArc stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={9} />
 	</Fragment>
 
 	<!-- Step 33: Genesis 1:27 vs Genesis 2:7 (hyperlink) + more vertical arcs -->
@@ -638,29 +630,17 @@
 	</Fragment>
 
 	<!-- More vertical oval loops for Genesis pattern -->
-	<Fragment
-		step={34}
-		layout={{ x: 102, y: 336, width: 70, height: 128 }}
-		animate="fade"
-		zIndex={6}
-	>
-		<img src="/images/arc1.png" alt="" style="width: 100%; height: 100%;" />
+	<!-- Arc 98: bounding box {x:138, y:336, w:64, h:114} → rx=32, ry=57 -->
+	<Fragment step={34} animate="fade">
+		<Arc from={{ x: 185, y: 448 }} to={{ x: 155, y: 448 }} curve={-50} rx={32} ry={57} largeArc stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={6} />
 	</Fragment>
-	<Fragment
-		step={34}
-		layout={{ x: 132, y: 336, width: 70, height: 128 }}
-		animate="fade"
-		zIndex={7}
-	>
-		<img src="/images/arc1.png" alt="" style="width: 100%; height: 100%;" />
+	<!-- Arc 99: bounding box {x:168, y:338, w:64, h:114} → rx=32, ry=57 -->
+	<Fragment step={34} animate="fade">
+		<Arc from={{ x: 215, y: 450 }} to={{ x: 185, y: 450 }} curve={-50} rx={32} ry={57} largeArc stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={7} />
 	</Fragment>
-	<Fragment
-		step={34}
-		layout={{ x: 163, y: 336, width: 70, height: 128 }}
-		animate="fade"
-		zIndex={8}
-	>
-		<img src="/images/arc1.png" alt="" style="width: 100%; height: 100%;" />
+	<!-- Arc 100: bounding box {x:198, y:338, w:64, h:114} → rx=32, ry=57 -->
+	<Fragment step={34} animate="fade">
+		<Arc from={{ x: 245, y: 450 }} to={{ x: 215, y: 450 }} curve={-50} rx={32} ry={57} largeArc stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={8} />
 	</Fragment>
 
 	<Fragment
