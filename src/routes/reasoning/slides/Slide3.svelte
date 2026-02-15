@@ -179,14 +179,8 @@
 	<!-- Puzzle pieces (simplified - scattered gray pieces) -->
 	<Fragment step={8} animate="fade">
 		<Rect x={641} y={72} width={21} height={18} fill="#969696" stroke={{ color: '#000000', width: 1 }} zIndex={83} />
-	</Fragment>
-	<Fragment step={8} animate="fade">
 		<Rect x={620} y={114} width={21} height={18} fill="var(--color-level1)" stroke={{ color: '#000000', width: 1 }} zIndex={86} />
-	</Fragment>
-	<Fragment step={8} animate="fade">
 		<Rect x={650} y={100} width={16} height={13} fill="var(--color-level1)" stroke={{ color: '#000000', width: 1 }} zIndex={101} />
-	</Fragment>
-	<Fragment step={8} animate="fade">
 		<Rect x={604} y={87} width={18} height={15} fill="var(--color-level1)" stroke={{ color: '#000000', width: 1 }} zIndex={102} />
 	</Fragment>
 
@@ -232,8 +226,6 @@
 	<!-- Gray puzzle piece appearing at end of second arc -->
 	<Fragment step={11.1} animate="fade">
 		<Rect x={811} y={86} width={26} height={36} fill="var(--color-level1)" stroke={{ color: '#000000', width: 1 }} zIndex={85} />
-	</Fragment>
-	<Fragment step={11.1} animate="fade">
 		<Rect x={836} y={93} width={10} height={20} fill="var(--color-level1)" stroke={{ color: '#000000', width: 1 }} zIndex={85} />
 	</Fragment>
 	<!-- Step 12: "What if you begin inductively?" -->
@@ -249,9 +241,6 @@
 	<!-- Step 12.1: Wrong piece rejected - arrow pointing outside border with red X -->
 	<Fragment step={12.1} animate="draw">
 		<Arc from={{ x: 658, y: 102 }} to={{ x: 885, y: 55 }} curve={-40} stroke={{ width: 3.3, color: 'var(--color-bg-danger-dark)' }} arrow={true} />
-	</Fragment>
-	<!-- Small gray box outside the border -->
-	<Fragment step={12.1} animate="fade">
 		<Rect x={890} y={45} width={25} height={25} fill="var(--color-level1)" stroke={{ color: 'var(--color-stroke-dark)', width: 1 }} zIndex={86} />
 	</Fragment>
 	<!-- Red ? on the rejected piece -->
@@ -291,7 +280,7 @@
 	<!-- Step 15: "Chronological History Stops" callout -->
 	<Fragment
 		step={15}
-		layout={{ x: 293.1, y: 293.6, width: 112.1, height: 53.1 }}
+		layout={{ x: 260, y: 293.6, width: 112.1, height: 53.1 }}
 		font={{ font_size: 16.7 }}
 		fill="var(--color-bg-light)"
 		line={{ color: '#000000', width: 1 }}
@@ -330,32 +319,21 @@
 		Minor<br/>Prophets
 	</Fragment>
 
-	<!-- Step 17: Curved arcs from Poetry/Prophets back to Ezra (fanned out) -->
+	<!-- Step 17: Curved arcs from Poetry/Prophets back to Ezra -->
+	<!-- Arc 192: Poetry → Ezra (above timeline) -->
 	<Fragment step={17} animate="draw">
-		<Arc from={{ x: 355, y: 365 }} to={{ x: 200, y: 390 }} curve={-75} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={23} />
+		<Arc from={{ x: 374, y: 382 }} to={{ x: 182, y: 382 }} curve={94} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={23} />
+		<Arc from={{ x: 352, y: 458 }} to={{ x: 188, y: 410 }} curve={-98} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={25} />
 	</Fragment>
-	<Fragment step={17} animate="draw">
-		<Arc from={{ x: 355, y: 365 }} to={{ x: 180, y: 375 }} curve={-75} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={23} />
-	</Fragment>
-	<Fragment step={17} animate="draw">
-		<Arc from={{ x: 355, y: 365 }} to={{ x: 185, y: 385 }} curve={-75} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={23} />
-	</Fragment>
+	<!-- Arc 307: Major Prophets → Ezra (below, wider) -->
 	<Fragment step={17.1} animate="draw">
-		<Arc from={{ x: 355, y: 425 }} to={{ x: 175, y: 420 }} curve={85} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={63} />
-	</Fragment>
-	<Fragment step={17.1} animate="draw">
-		<Arc from={{ x: 355, y: 425 }} to={{ x: 190, y: 420 }} curve={85} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={63} />
-	</Fragment>
-	<Fragment step={17} animate="draw">
-		<Arc from={{ x: 360, y: 480 }} to={{ x: 200, y: 405 }} curve={75} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={24} />
-	</Fragment>
-	<Fragment step={17} animate="draw">
-		<Arc from={{ x: 360, y: 480 }} to={{ x: 210, y: 405 }} curve={75} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={24} />
+		<Arc from={{ x: 368, y: 404 }} to={{ x: 216, y: 406 }} curve={-104} shift={30} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={63} />
+		<Arc from={{ x: 367, y: 390 }} to={{ x: 214, y: 382 }} curve={65} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={24} />
 	</Fragment>
 	<!-- Step 18: "What book begins New Testament?" -->
 	<Fragment
 		step={18}
-		layout={{ x: 396.1, y: 262.9, width: 182, height: 42 }}
+		layout={{ x: 396.1, y: 260, width: 182, height: 50 }}
 		font={{ font_size: 18.7, bold: true }}
 		zIndex={89}
 	>
@@ -434,7 +412,7 @@
 	<!-- Step 22: "Transition Books" callout -->
 	<Fragment
 		step={22}
-		layout={{ x: 428.1, y: 473.9, width: 143.1, height: 60.8 }}
+		layout={{ x: 428.1, y: 473.9, width: 143.1, height: 60.8, rotation: -11 }}
 		font={{ font_size: 26.7, bold: true, italic: true, color: '#0000FF' }}
 		fill="var(--color-bg-light)"
 		line={{ color: '#000000', width: 1 }}
@@ -455,26 +433,19 @@
 		Romans<br/>Corinthians<br/>Galatians<br/><br/>Ephesians<br/>Philippians<br/>Colossians<br/>Thessalonians
 	</Fragment>
 
-	<!-- Step 24: Curved arcs from Paul's letters back to Acts (fanned out) -->
-	<!-- Above timeline arcs -->
+	<!-- Step 24: Curved arcs from Paul's letters back to Acts -->
+	<!-- Arc 265: Romans → Acts (above timeline) -->
 	<Fragment step={24} animate="draw">
-		<Arc from={{ x: 564, y: 340 }} to={{ x: 536, y: 340 }} curve={-20} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={17} />
-	</Fragment>
-	<Fragment step={24} animate="draw">
-		<Arc from={{ x: 564, y: 355 }} to={{ x: 536, y: 355 }} curve={-35} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={18} />
-	</Fragment>
-	<Fragment step={24} animate="draw">
-		<Arc from={{ x: 564, y: 370 }} to={{ x: 536, y: 370 }} curve={-50} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={19} />
-	</Fragment>
-	<!-- Below timeline arcs -->
-	<Fragment step={24.1} animate="draw">
-		<Arc from={{ x: 564, y: 420 }} to={{ x: 536, y: 420 }} curve={20} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={14} />
+		<Arc from={{ x: 661, y: 344 }} to={{ x: 559, y: 358 }} curve={103} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={17} />
+		<Arc from={{ x: 573, y: 427 }} to={{ x: 544, y: 409 }} curve={-21} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={14} />
 	</Fragment>
 	<Fragment step={24.1} animate="draw">
-		<Arc from={{ x: 564, y: 440 }} to={{ x: 536, y: 440 }} curve={35} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={15} />
+		<Arc from={{ x: 574, y: 452 }} to={{ x: 530, y: 409 }} curve={-43} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={15} />
 	</Fragment>
+	<!-- Arc 267: Galatians → Acts (above) -->
 	<Fragment step={24.2} animate="draw">
-		<Arc from={{ x: 564, y: 460 }} to={{ x: 536, y: 460 }} curve={50} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={16} />
+		<Arc from={{ x: 612, y: 319 }} to={{ x: 547, y: 355 }} curve={63} shift={-10} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={19} />
+		<Arc from={{ x: 594, y: 495 }} to={{ x: 525, y: 449 }} curve={-38} shift={21} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={16} />
 	</Fragment>
 
 	<!-- Step 25: Timothy, Titus, Philemon, Hebrews, James, Peter, John, Jude -->
@@ -497,26 +468,30 @@
 		</div>
 	</Fragment>
 
-	<!-- Step 26: Curved arcs from General epistles back to Paul's letters (fanned out) -->
-	<!-- Above timeline arcs -->
+	<!-- Step 26: Curved arcs from General epistles back to Paul's letters -->
+	<!-- Arc 300: Timothy → Romans (above timeline) -->
 	<Fragment step={26} animate="draw">
-		<Arc from={{ x: 700, y: 310 }} to={{ x: 640, y: 310 }} curve={-20} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={56} />
+		<Arc from={{ x: 746, y: 309 }} to={{ x: 626, y: 294 }} curve={83} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={56} />
+		<Arc from={{ x: 708, y: 469 }} to={{ x: 613, y: 400 }} curve={-34} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={59} />
 	</Fragment>
+	<!-- Arc 301: Titus → Romans (above) -->
 	<Fragment step={26.1} animate="draw">
-		<Arc from={{ x: 700, y: 330 }} to={{ x: 640, y: 330 }} curve={-35} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={57} />
+		<Arc from={{ x: 704, y: 365 }} to={{ x: 661, y: 342 }} curve={43} shift={15} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={57} />
+		<Arc from={{ x: 707, y: 438 }} to={{ x: 665, y: 405 }} curve={-27} shift={-15} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={60} />
 	</Fragment>
+	<!-- Arc 302: Philemon → Romans (above) -->
 	<Fragment step={26.2} animate="draw">
-		<Arc from={{ x: 700, y: 350 }} to={{ x: 640, y: 350 }} curve={-50} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={58} />
+		<Arc from={{ x: 707, y: 325 }} to={{ x: 648, y: 309 }} curve={48} shift={4} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={58} />
+		<Arc from={{ x: 718, y: 492 }} to={{ x: 619, y: 499 }} curve={-66} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={61} />
 	</Fragment>
-	<!-- Below timeline arcs -->
-	<Fragment step={26} animate="draw">
-		<Arc from={{ x: 679, y: 420 }} to={{ x: 640, y: 420 }} curve={20} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={59} />
-	</Fragment>
-	<Fragment step={26} animate="draw">
-		<Arc from={{ x: 679, y: 440 }} to={{ x: 640, y: 440 }} curve={35} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={60} />
-	</Fragment>
-	<Fragment step={26} animate="draw">
-		<Arc from={{ x: 679, y: 460 }} to={{ x: 640, y: 460 }} curve={50} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={61} />
+	<!-- Back to Gospels -->
+	<Fragment step={26.3} animate="draw">
+		<Arc from={{ x: 450, y: 375 }} to={{ x: 394, y: 354 }} curve={32} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={18} />
+		<Arc from={{ x: 450, y: 435 }} to={{ x: 414, y: 434 }} curve={-32} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={18} />
+		<Arc from={{ x: 623, y: 324 }} to={{ x: 526, y: 350 }} curve={96} shift={-62} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={56} />
+		<Arc from={{ x: 618, y: 492 }} to={{ x: 489, y: 449 }} curve={-66} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={61} />
+		<Arc from={{ x: 462, y: 349 }} to={{ x: 170, y: 379 }} curve={183} shift={-10} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={19} />
+		<Arc from={{ x: 462, y: 443 }} to={{ x: 170, y: 412 }} curve={-183} shift={-10} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={19} />
 	</Fragment>
 
 	<!-- Step 27: Revelation -->
@@ -529,32 +504,41 @@
 		Revelation
 	</Fragment>
 
-	<!-- Step 28: Large curved arcs from Revelation back to Genesis/earlier books (fanned out) -->
-	<!-- Above timeline - arcs going to earlier books -->
+	<!-- Step 28: Revelation cross-reference arcs (alternating above/below timeline) -->
+	<!-- Arc 293: Rev → Genesis (above timeline) -->
 	<Fragment step={28} animate="draw">
-		<Arc from={{ x: 820, y: 356 }} to={{ x: 175, y: 365 }} curve={-200} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={50} />
+		<Arc from={{ x: 843, y: 405 }} to={{ x: 104, y: 411 }} curve={-242} shift={290} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={50} />
 	</Fragment>
-	<Fragment step={28} animate="draw">
-		<Arc from={{ x: 757, y: 356 }} to={{ x: 450, y: 360 }} curve={-70} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={48} />
-	</Fragment>
+	<!-- Arc 294: Genesis → Romans area (below, return) -->
 	<Fragment step={28.1} animate="draw">
-		<Arc from={{ x: 757, y: 356 }} to={{ x: 565, y: 355 }} curve={-50} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={52} />
+		<Arc from={{ x: 436, y: 428 }} to={{ x: 692, y: 405 }} curve={115} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={51} />
 	</Fragment>
+	<!-- Arc 290: Rev → middle OT (above timeline) -->
 	<Fragment step={28.2} animate="draw">
-		<Arc from={{ x: 757, y: 356 }} to={{ x: 640, y: 345 }} curve={-35} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={54} />
+		<Arc from={{ x: 846, y: 410 }} to={{ x: 398, y: 489 }} curve={-176} shift={-95} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={48} />
 	</Fragment>
-	<!-- Below timeline - return arcs -->
+	<!-- Arc 295: Rev → Romans (above timeline) -->
 	<Fragment step={28.3} animate="draw">
-		<Arc from={{ x: 175, y: 430 }} to={{ x: 757, y: 420 }} curve={100} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={51} />
+		<Arc from={{ x: 844, y: 384 }} to={{ x: 675, y: 375 }} curve={-135} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={52} />
 	</Fragment>
+	<!-- Arc 291: middle → Rev (below, return; headEnd → swap from/to, negate curve) -->
+	<Fragment step={28.3} animate="draw">
+		<Arc from={{ x: 415, y: 412 }} to={{ x: 804, y: 362 }} curve={-120} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={49} />
+	</Fragment>
+	<!-- Arc 296: Romans → Rev (below, return; headEnd → swap) -->
 	<Fragment step={28.4} animate="draw">
-		<Arc from={{ x: 450, y: 435 }} to={{ x: 757, y: 425 }} curve={70} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={49} />
+		<Arc from={{ x: 555, y: 394 }} to={{ x: 830, y: 351 }} curve={-193} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={53} />
 	</Fragment>
+	<!-- Arc 297: Rev → middle (above timeline) -->
 	<Fragment step={28.5} animate="draw">
-		<Arc from={{ x: 565, y: 440 }} to={{ x: 757, y: 430 }} curve={50} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={53} />
+		<Arc from={{ x: 844, y: 407 }} to={{ x: 212, y: 430 }} curve={-220} shift={-120} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={54} />
 	</Fragment>
+	<!-- Arc 298: middle → Rev (below, return; headEnd → swap) -->
 	<Fragment step={28.6} animate="draw">
-		<Arc from={{ x: 640, y: 445 }} to={{ x: 757, y: 435 }} curve={35} stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={55} />
+		<Arc from={{ x: 436, y: 380 }} to={{ x: 806, y: 351 }} curve={-130} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={55} />
+	</Fragment>
+	<Fragment step={28.7} animate="draw">
+		<Arc from={{ x: 154, y: 366 }} to={{ x: 843, y: 355 }} curve={-232} shift={190} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={50} />
 	</Fragment>
 
 	<!-- Step 29: "What type of thinker is God?" callout -->
@@ -589,7 +573,7 @@
 	<!-- Step 32: Genesis 1:1 explanation + vertical arcs (Arc 96, 97) -->
 	<Fragment
 		step={32}
-		layout={{ x: 32, y: 275, width: 220, height: 62.5 }}
+		layout={{ x: 28, y: 279, width: 210, height: 62.5 }}
 		font={{ font_size: 14, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={87}
 	>
@@ -597,13 +581,11 @@
 	</Fragment>
 
 	<!-- Vertical oval loops for Genesis pattern - wrap around the timeline -->
-	<!-- Arc 97: bounding box {x:121, y:336, w:44, h:114} → rx=22, ry=57 -->
-	<Fragment step={32} animate="fade">
-		<Arc from={{ x: 154, y: 448 }} to={{ x: 132, y: 448 }} curve={-50} rx={22} ry={57} largeArc stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={10} />
+	<Fragment step={32} animate="draw">
+		<Arc from={{ x: 77, y: 409 }} to={{ x: 77, y: 377 }} curve={-50} rx={19} ry={57} largeArc stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={9} />
 	</Fragment>
-	<!-- Arc 96: bounding box {x:98, y:336, w:38, h:114} → rx=19, ry=57 -->
-	<Fragment step={32} animate="fade">
-		<Arc from={{ x: 128, y: 448 }} to={{ x: 106, y: 448 }} curve={-50} rx={19} ry={57} largeArc stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={9} />
+	<Fragment step={32.1} animate="draw">
+		<Arc from={{ x: 67, y: 409 }} to={{ x: 67, y: 377 }} curve={-50} rx={19} ry={57} largeArc stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={9} />
 	</Fragment>
 
 	<!-- Step 33: Genesis 1:27 vs Genesis 2:7 (hyperlink) + more vertical arcs -->
@@ -631,16 +613,9 @@
 
 	<!-- More vertical oval loops for Genesis pattern -->
 	<!-- Arc 98: bounding box {x:138, y:336, w:64, h:114} → rx=32, ry=57 -->
-	<Fragment step={34} animate="fade">
-		<Arc from={{ x: 185, y: 448 }} to={{ x: 155, y: 448 }} curve={-50} rx={32} ry={57} largeArc stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={6} />
-	</Fragment>
-	<!-- Arc 99: bounding box {x:168, y:338, w:64, h:114} → rx=32, ry=57 -->
-	<Fragment step={34} animate="fade">
-		<Arc from={{ x: 215, y: 450 }} to={{ x: 185, y: 450 }} curve={-50} rx={32} ry={57} largeArc stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={7} />
-	</Fragment>
-	<!-- Arc 100: bounding box {x:198, y:338, w:64, h:114} → rx=32, ry=57 -->
-	<Fragment step={34} animate="fade">
-		<Arc from={{ x: 245, y: 450 }} to={{ x: 215, y: 450 }} curve={-50} rx={32} ry={57} largeArc stroke={{ width: 3, color: '#0000FF' }} arrow zIndex={8} />
+	<Fragment step={34} animate="draw">
+		<Arc from={{ x: 125, y: 408 }} to={{ x: 125, y: 362 }} curve={-80} rx={12} ry={37} largeArc stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={6} />
+		<Arc from={{ x: 135, y: 408 }} to={{ x: 135, y: 362 }} curve={-80} rx={12} ry={37} largeArc stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={7} />
 	</Fragment>
 
 	<Fragment
