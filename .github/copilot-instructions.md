@@ -55,7 +55,7 @@ Use CSS custom properties for semantic colors instead of hardcoded hex values. T
 
 ## Fragment Component
 
-The `Fragment` component handles all slide content - from simple text to fully-positioned PowerPoint boxes.
+The `Fragment` component handles hide/show for all slide content.
 
 ### Fragment Props
 
@@ -69,7 +69,7 @@ The `Fragment` component handles all slide content - from simple text to fully-p
 | `line` | `BoxLine` | Border: `{ color?, width? }` |
 | `zIndex` | `number` | Stacking order |
 | `animate` | `AnimationType` | Entrance animation: `'fade'`, `'fly-up'`, `'fly-down'`, `'fly-left'`, `'fly-right'`, `'scale'`, `'wipe'`, `'wipe-up'`, `'wipe-down'`, `'wipe-left'`, `'wipe-right'`, `'draw'`, `'none'` |
-| `exitStep` | `number` | Step at which this fragment disappears (for temporary content) |
+| `exitStep` | `number` | Step at which this fragment disappears |
 | `keyframes` | `Keyframe[]` | Step-based motion: `[{ step: 2, x: 100 }, { step: 3, x: 200 }]` |
 | `transition` | `TransitionConfig` | Motion config: `{ duration?: number, easing?: function }` |
 | `returnHere` | `boolean` | Return to this drill (not origin) after nested drill completes |
@@ -90,7 +90,7 @@ The `Fragment` component handles all slide content - from simple text to fully-p
 
 ### Usage Patterns
 
-**Static positioned content (always visible):**
+**Static positioned content (always visible, omit step):**
 ```svelte
 <Fragment
   layout={{ x: 100, y: 50, width: 200, height: 40 }}
@@ -101,13 +101,12 @@ The `Fragment` component handles all slide content - from simple text to fully-p
 </Fragment>
 ```
 
-**Animated positioned content:**
+**Animated positioned content (add step):**
 ```svelte
 <Fragment
   step={1}
   layout={{ x: 100, y: 100, width: 180, height: 30 }}
   font={{ font_size: 18, color: '#0000CC' }}
-  animate="fade"
 >
   Genesis 12:1-3
 </Fragment>
@@ -125,13 +124,6 @@ The `Fragment` component handles all slide content - from simple text to fully-p
 </Fragment>
 ```
 
-**Simple fragment (no positioning - for flow-based layouts):**
-```svelte
-<Fragment step={1}>
-  <div class="custom-styled">Content</div>
-</Fragment>
-```
-
 **Multi-line text with alignment (e.g., book lists):**
 ```svelte
 <Fragment
@@ -143,16 +135,16 @@ The `Fragment` component handles all slide content - from simple text to fully-p
 </Fragment>
 ```
 
-**Lines/connectors with SVG components:**
+**SVG shape components:**
 ```svelte
-<Fragment step={5} animate="wipe">
-  <Arrow from={{ x: 200, y: 300 }} to={{ x: 400, y: 300 }} stroke={{ width: 4 }} zIndex={10} />
+<Fragment step={5} animate="draw">
+  		<Arc from={{ x: 125, y: 408 }} to={{ x: 125, y: 362 }} curve={-80} rx={12} ry={37} largeArc stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={6} />
 </Fragment>
 ```
 
 ## SVG Shape Components
 
-Arrow, Line, and Rect are self-positioning components that use **canvas coordinates** (960×540). Fragment only provides step-based visibility and animation timing—no `layout` prop needed for these components.
+Arc, Arrow, Line, and Rect are self-positioning components that use **canvas coordinates** (960×540). Fragment only provides step-based visibility and animation timing—no `layout` prop needed for these components.
 
 **Important:** For shapes without text content (empty rectangles, lines, arrows), use SVG components directly inside Fragment rather than using Fragment's `layout` and `fill` props. Fragment requires children content—using it with layout/fill but no children causes TypeScript errors.
 
@@ -178,7 +170,10 @@ Arrow, Line, and Rect are self-positioning components that use **canvas coordina
 
 ### Arrow Component
 
-Arrow uses the [perfect-arrows](https://github.com/steveruizok/perfect-arrows) library for consistent rendering. Supports two modes:
+Arrow uses the [perfect-arrows](https://github.com/steveruizok/perfect-arrows) library for consistent rendering. 
+Arrow Supports two modes:
+Use Arrow for heavy, main diagram features as it produces a bolder shape and arrow head. 
+Arc can also be used for curved arrows and is better suited for connections between other content.
 
 1. **Point-to-point**: Use `from`/`to` with `{x, y}` coordinates
 2. **Box-to-box**: Use `fromBox`/`toBox` with `{x, y, width, height}` for automatic curved arrows between rectangles
@@ -319,7 +314,10 @@ interface StrokeStyle {
 
 ### Arc Component
 
-Arc is a self-positioning curved line/arrow for drawing half-circle arcs above or below content (like timeline self-references). Uses quadratic bezier curves.
+Arc is a self-positioning curved line/arrow with two rendering modes:
+
+1. **Quadratic bezier** (default): Single control point offset by `curve`/`shift`. Good for simple curved connectors between nearby points.
+2. **SVG elliptical arc** (`largeArc={true}`): Uses SVG `A` command to draw circular/elliptical arcs that can subtend up to 359°. Essential for near-complete circles where `from` and `to` are close together (quadratic bezier produces a sharp V shape in this case).
 
 | Prop | Type | Description |
 |------|------|-------------|
@@ -327,18 +325,21 @@ Arc is a self-positioning curved line/arrow for drawing half-circle arcs above o
 | `to` | `{ x, y }` | End point in canvas coordinates |
 | `curve` | `number` | Perpendicular offset: negative = curves up, positive = curves down |
 | `shift` | `number` | Parallel offset along from→to axis. Positive = toward 'to', negative = toward 'from'. Default: 0 |
+| `largeArc` | `boolean` | Enable SVG elliptical arc mode for near-complete circles (default: false) |
+| `rx` | `number` | Horizontal radius for elliptical arc mode (auto-computed from `curve` if omitted) |
+| `ry` | `number` | Vertical radius for elliptical arc mode (auto-computed from `curve` if omitted) |
 | `stroke` | `StrokeStyle` | Stroke styling (width, color, dash) |
 | `arrow` | `boolean` | Show arrowhead at end (default: false) |
 | `headSize` | `number` | Arrow head size multiplier (default: 3) |
 | `zIndex` | `number` | Stacking order (default: 1) |
 
-**How curve and shift work together:**
+**How curve and shift work together (quadratic bezier mode):**
 - `curve` moves the bezier control point **perpendicular** to the from→to line (how far the arc bulges)
 - `shift` moves the control point **parallel** to the from→to line (where along the line the peak sits)
 - With `shift={0}` (default), the arc peak is centered between from and to
 - Positive `shift` moves the peak toward the `to` endpoint, negative toward `from`
 
-**Arc curving upward (e.g., Poetry → Ezra):**
+**Arc curving upward:**
 ```svelte
 <Fragment step={48} animate="draw">
   <Arc from={{ x: 364, y: 382 }} to={{ x: 242, y: 382 }} curve={-34} stroke={{ width: 5, color: '#0000FF' }} arrow />
@@ -359,6 +360,15 @@ Arc is a self-positioning curved line/arrow for drawing half-circle arcs above o
 </Fragment>
 ```
 
+**Near-complete circle (SVG elliptical arc mode):**
+Use `largeArc` when `from` and `to` are close together and you need a loop/oval shape (e.g., PowerPoint `arc (25)` autoShapes). Provide `rx`/`ry` for elliptical shapes, or let them auto-compute from `curve`.
+```svelte
+<Fragment step={32} animate="fade">
+  <Arc from={{ x: 154, y: 448 }} to={{ x: 132, y: 448 }} curve={-50} rx={22} ry={57} largeArc
+    stroke={{ width: 8, color: '#0000FF' }} arrow zIndex={10} />
+</Fragment>
+```
+
 **Note:** Coordinates from PowerPoint JSON are already scaled to 960×540 by the extractor - use them directly without manual scaling.
 
 ### Other SVG Components
@@ -372,14 +382,6 @@ For other shapes (Circle, etc.), use Fragment with `layout` to position them:
 | `Path` | SVG path | `d`, `fill`, `stroke` |
 | `Polygon` | Multi-point shape | `points`, `fill`, `stroke` |
 
-### Key Features
-
-- **Arrow/Line use canvas coordinates**: `from={{ x: 100, y: 200 }}` is position on the 960×540 canvas
-- **Self-positioning**: Arrow/Line render their own absolutely-positioned SVG—no Fragment layout needed
-- **Animation types**: Use `animate="wipe"` for arrows, `animate="draw"` for lines
-- **Direction inference**: Wipe direction auto-calculated from `from` → `to` direction
-- **Drill return handling**: Animations skip when returning from drill (content shows fully revealed)
-- **perfect-arrows library**: Arrow uses perfect-arrows for clean arrowhead geometry
 
 # Critical Patterns
 
@@ -494,7 +496,7 @@ When `custom_shows[id].slide_numbers` has 1 **single slide** in the array do NOT
 - **Content.svelte components**: Slide content without `<Slide>` wrapper—just Fragment elements, named `Content<number>.svelte` used to differentiate multiple slides in a custom show and aggregated in CustomShowProvider in the `+page.svelte`.
 - **CustomShowProvider**: Wraps each content component in `<Slide={[Content1,Content2]}>`, manages fragment offsets
 - **Auto-return**: When the last fragment of the last slide is reached, navigation returns to origin
-- **Flat structure**: Scripture routes live at the presentation level (e.g., `translation/2-kings-2-11/`), not nested under custom show folders.
+- **Flat structure**: Scripture routes live at the presentation level (e.g., `translation/2-kings-2-11/`).
 
 **Content component (`Content.svelte`):**
 ```svelte
@@ -628,7 +630,7 @@ PowerPoint has three animation timing modes that map to MBS decimal step notatio
 **Example - cascading animation:**
 ```svelte
 <!-- Click 1: Arrow appears -->
-<Fragment step={1} layout={{ x: 100, y: 195, width: 200, height: 10 }} animate="wipe">
+<Fragment step={1} animate="wipe">
   <Arrow from={{ x: 0, y: 5 }} to={{ x: 200, y: 5 }} stroke={{ width: 10 }} />
 </Fragment>
 
@@ -868,7 +870,7 @@ JSON entries with `shape_type: "picture"` represent embedded images. Images are 
 - Both drill patterns are tested: drillTo chaining (`drill-navigation.spec.ts`) and CustomShowProvider (`custom-show-provider.spec.ts`)
 
 ## State Persistence
-Navigation state persists to `localStorage` key `mbs-nav-state`. The Reset button in the menu clears this.
+Navigation state persists to `localStorage` key `mbs-nav-{route-name}`. The Reset button in the menu clears this.
 
 ## Common Mistakes to Avoid
 - Using `step={0}` (steps are 1-indexed)
