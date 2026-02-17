@@ -142,6 +142,103 @@ The `Fragment` component handles hide/show for all slide content.
 </Fragment>
 ```
 
+### Keyframe Motion
+
+Fragment supports **step-based keyframe motion** for animating position, size, rotation, and opacity AFTER a fragment has appeared. This is separate from the `animate` prop (which controls the entrance animation).
+
+**Two distinct animation systems:**
+- **`animate` prop**: Controls how the fragment first appears (fade, fly, wipe, etc.)
+- **`keyframes` + `transition`**: Controls motion to new positions at subsequent steps
+
+**How it works:**
+1. Fragment appears via its `step` and `animate` props (entrance animation)
+2. At later steps specified in `keyframes`, Tween smoothly interpolates to the new values
+3. On drill return or page reload, keyframes snap to correct position instantly (no visible animation)
+4. Stepping backward past all keyframes resets to the original position
+
+**Keyframe properties:**
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `step` | `number` | The step at which this keyframe activates |
+| `x` | `number` | Horizontal offset from layout position (additive, not absolute) |
+| `y` | `number` | Vertical offset from layout position (additive, not absolute) |
+| `width` | `number` | Width offset (additive) |
+| `height` | `number` | Height offset (additive) |
+| `rotation` | `number` | Rotation offset in degrees (additive) |
+| `opacity` | `number` | Absolute opacity value (0-1) |
+
+**Important:** Keyframe `x`, `y`, `width`, `height`, and `rotation` values are **offsets** added to the Fragment's `layout` values, not absolute positions. An `x` of `270` means "shift 270px right from layout position."
+
+**Single keyframe (swap animation):**
+```svelte
+<script>
+  // Calculate swap distance between two column centers
+  const swapDx = center(R, 238.5) - center(L, 230.6);
+</script>
+
+<!-- Appears at step 1 (fade), slides right at step 2 over 800ms -->
+<Fragment
+  step={1}
+  layout={{ x: 210, y: 7, width: 230, height: 52 }}
+  font={{ font_size: 36.7, bold: true, color: 'var(--color-level3)' }}
+  keyframes={[{ step: 2, x: swapDx }]}
+  transition={{ duration: 800 }}
+  zIndex={9}
+>
+  SPIRITUAL
+</Fragment>
+
+<!-- Appears at step 1 (fade), slides left at step 2 over 800ms -->
+<Fragment
+  step={1}
+  layout={{ x: 480, y: 7, width: 238, height: 52 }}
+  font={{ font_size: 36.7, bold: true }}
+  keyframes={[{ step: 2, x: -swapDx }]}
+  transition={{ duration: 800 }}
+  zIndex={9}
+>
+  PHYSICAL
+</Fragment>
+```
+
+**Multiple keyframes (progressive motion):**
+```svelte
+<!-- Moves right at step 3, then further right at step 6 -->
+<Fragment
+  step={1}
+  layout={{ x: 100, y: 200, width: 150, height: 40 }}
+  keyframes={[{ step: 3, x: 200 }, { step: 6, x: 400 }]}
+  transition={{ duration: 500 }}
+>
+  Moving element
+</Fragment>
+```
+
+**Keyframe with opacity:**
+```svelte
+<!-- Fades to 50% opacity at step 4 -->
+<Fragment
+  step={1}
+  layout={{ x: 100, y: 100, width: 200, height: 40 }}
+  keyframes={[{ step: 4, opacity: 0.5 }]}
+>
+  Fading element
+</Fragment>
+```
+
+**exitStep (disappearing content):**
+```svelte
+<!-- Visible from step 2, disappears at step 5 -->
+<Fragment
+  step={2}
+  exitStep={5}
+  layout={{ x: 100, y: 100, width: 200, height: 40 }}
+>
+  Temporary content
+</Fragment>
+```
+
 ## SVG Shape Components
 
 Arc, Arrow, Line, and Rect are self-positioning components that use **canvas coordinates** (960×540). Fragment only provides step-based visibility and animation timing—no `layout` prop needed for these components.
@@ -577,7 +674,8 @@ This ensures users always see the drillable content before the navigation happen
 
 ```bash
 npm run dev          # Dev server at localhost:5173
-npm run test:unit    # Run 70+ navigation and component tests
+npm run test:unit    # Run 154 navigation and component tests
+npm run test:e2e     # Run 19 end-to-end playwright tests
 npm run check        # TypeScript type checking
 ```
 

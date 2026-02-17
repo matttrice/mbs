@@ -210,7 +210,16 @@
 	const tweenedRotation = new Tween(0, tweenOpts);
 	const tweenedOpacity = new Tween(1, tweenOpts);
 
-	// Find the active keyframe based on current fragment
+	// Find the active keyframe based on current fragment.
+	//
+	// Behavior:
+	// - Tracks which keyframe step was last applied to avoid redundant .set() calls
+	// - First application snaps instantly (duration: 0) for state restore / drill return
+	// - Subsequent keyframe changes tween smoothly using transition config
+	// - When stepping back below all keyframes, resets to initial position (0 offsets)
+	let lastAppliedKeyframeStep: number | null = null;
+	let keyframeInitialized = false;
+
 	$effect(() => {
 		if (!keyframes || keyframes.length === 0) return;
 
@@ -218,21 +227,43 @@
 		// Use the last keyframe whose step <= currentFragment
 		const sortedKeyframes = [...keyframes].sort((a, b) => a.step - b.step);
 		let activeKeyframe: Keyframe | undefined;
+		let activeNormalizedStep: number | undefined;
 
 		for (const kf of sortedKeyframes) {
 			const normalizedKfStep = getNormalizedStep(kf.step, slideContext);
 			if (normalizedKfStep !== undefined && $currentFragment >= normalizedKfStep) {
 				activeKeyframe = kf;
+				activeNormalizedStep = normalizedKfStep;
 			}
 		}
 
-		if (activeKeyframe) {
-			if (activeKeyframe.x !== undefined) tweenedX.set(activeKeyframe.x);
-			if (activeKeyframe.y !== undefined) tweenedY.set(activeKeyframe.y);
-			if (activeKeyframe.width !== undefined) tweenedWidth.set(activeKeyframe.width);
-			if (activeKeyframe.height !== undefined) tweenedHeight.set(activeKeyframe.height);
-			if (activeKeyframe.rotation !== undefined) tweenedRotation.set(activeKeyframe.rotation);
-			if (activeKeyframe.opacity !== undefined) tweenedOpacity.set(activeKeyframe.opacity);
+		if (activeKeyframe && activeNormalizedStep !== undefined) {
+			// Only apply when the active keyframe actually changes
+			if (lastAppliedKeyframeStep === activeNormalizedStep) return;
+
+			// First keyframe application snaps (handles drill return / page reload)
+			// Subsequent changes tween with configured duration
+			const opts = !keyframeInitialized ? { duration: 0 } : undefined;
+			keyframeInitialized = true;
+			lastAppliedKeyframeStep = activeNormalizedStep;
+
+			if (activeKeyframe.x !== undefined) tweenedX.set(activeKeyframe.x, opts);
+			if (activeKeyframe.y !== undefined) tweenedY.set(activeKeyframe.y, opts);
+			if (activeKeyframe.width !== undefined) tweenedWidth.set(activeKeyframe.width, opts);
+			if (activeKeyframe.height !== undefined) tweenedHeight.set(activeKeyframe.height, opts);
+			if (activeKeyframe.rotation !== undefined) tweenedRotation.set(activeKeyframe.rotation, opts);
+			if (activeKeyframe.opacity !== undefined) tweenedOpacity.set(activeKeyframe.opacity, opts);
+		} else if (lastAppliedKeyframeStep !== null) {
+			// No keyframe matches (stepped back below all keyframes) — reset to initial
+			lastAppliedKeyframeStep = null;
+			const opts = !keyframeInitialized ? { duration: 0 } : undefined;
+			keyframeInitialized = true;
+			tweenedX.set(0, opts);
+			tweenedY.set(0, opts);
+			tweenedWidth.set(0, opts);
+			tweenedHeight.set(0, opts);
+			tweenedRotation.set(0, opts);
+			tweenedOpacity.set(1, opts);
 		}
 	});
 

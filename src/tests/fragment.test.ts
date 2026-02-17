@@ -7,6 +7,7 @@
  * 3. drillTo - clickable to drill into a sub-presentation
  * 4. layout/font/fill/line - absolute positioning and styling
  * 5. animate - CSS entrance animations
+ * 6. keyframes - step-based motion animation (position/size/rotation/opacity tweening)
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
@@ -606,5 +607,249 @@ describe('Fragment Component - Static Positioned Content', () => {
 
 		const div = container.querySelector('.fragment-positioned.drillable');
 		expect(div).not.toBeNull();
+	});
+});
+
+describe('Fragment Component - Keyframes', () => {
+	/**
+	 * Keyframes provide step-based motion animation:
+	 * - Fragment's `step` + `animate` control WHEN and HOW the fragment first appears
+	 * - `keyframes` control WHERE the fragment moves AFTER appearing
+	 * - Each keyframe fires at its own step number (independent of Fragment's step)
+	 * - First keyframe application on mount snaps (no tween) for state restore
+	 * - Subsequent keyframe changes tween smoothly
+	 * - Stepping back below all keyframes resets position to initial (layout) values
+	 */
+
+	beforeEach(() => {
+		vi.clearAllMocks();
+		getMockFragment().set(0);
+	});
+
+	it('does not offset position before keyframe step is reached', async () => {
+		getMockFragment().set(1);
+
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 100, y: 50, width: 200, height: 40 },
+				keyframes: [{ step: 3, x: 150 }],
+				children: mockChildren
+			}
+		});
+
+		await new Promise(resolve => setTimeout(resolve, 10));
+
+		const div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		expect(div).not.toBeNull();
+		if (div) {
+			// Position should be layout values (no keyframe offset yet)
+			expect(div.style.left).toBe('100px');
+		}
+	});
+
+	it('applies keyframe offset when fragment reaches keyframe step', async () => {
+		getMockFragment().set(0);
+
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 100, y: 50, width: 200, height: 40 },
+				keyframes: [{ step: 3, x: 150 }],
+				children: mockChildren
+			}
+		});
+
+		// Wait for mount
+		await new Promise(resolve => setTimeout(resolve, 10));
+
+		// Advance to step 1 (fragment appears, no keyframe yet)
+		getMockFragment().set(1);
+		await new Promise(resolve => setTimeout(resolve, 10));
+
+		let div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		expect(div).not.toBeNull();
+		expect(div!.style.left).toBe('100px');
+
+		// Advance to step 3 (keyframe activates)
+		getMockFragment().set(3);
+		// Wait for tween to complete (Tweens in test env should resolve quickly)
+		await new Promise(resolve => setTimeout(resolve, 500));
+
+		div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		expect(div).not.toBeNull();
+		// Position = layout.x (100) + keyframe.x (150) = 250
+		expect(div!.style.left).toBe('250px');
+	});
+
+	it('snaps to keyframe position on restored state (mount with fragment already past keyframe)', async () => {
+		// Simulate restored state: fragment is already at 5 when component mounts
+		getMockFragment().set(5);
+
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 100, y: 50, width: 200, height: 40 },
+				keyframes: [{ step: 3, x: 150 }],
+				children: mockChildren
+			}
+		});
+
+		// Wait for mount + snap (should be instant, no visible tween)
+		await new Promise(resolve => setTimeout(resolve, 10));
+
+		const div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		expect(div).not.toBeNull();
+		// Should already be at keyframe position (snapped, not tweened)
+		expect(div!.style.left).toBe('250px');
+	});
+
+	it('supports multiple keyframes with progressive steps', async () => {
+		getMockFragment().set(0);
+
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 100, y: 50, width: 200, height: 40 },
+				keyframes: [
+					{ step: 2, x: 50 },
+					{ step: 4, x: 200 }
+				],
+				children: mockChildren
+			}
+		});
+
+		await new Promise(resolve => setTimeout(resolve, 10));
+
+		// Step 1: fragment appears at home position
+		getMockFragment().set(1);
+		await new Promise(resolve => setTimeout(resolve, 10));
+		let div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		expect(div!.style.left).toBe('100px');
+
+		// Step 2: first keyframe
+		getMockFragment().set(2);
+		await new Promise(resolve => setTimeout(resolve, 500));
+		div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		expect(div!.style.left).toBe('150px'); // 100 + 50
+
+		// Step 4: second keyframe
+		getMockFragment().set(4);
+		await new Promise(resolve => setTimeout(resolve, 500));
+		div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		expect(div!.style.left).toBe('300px'); // 100 + 200
+	});
+
+	it('resets to initial position when stepping back below all keyframes', async () => {
+		getMockFragment().set(0);
+
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 100, y: 50, width: 200, height: 40 },
+				keyframes: [{ step: 3, x: 150 }],
+				children: mockChildren
+			}
+		});
+
+		await new Promise(resolve => setTimeout(resolve, 10));
+
+		// Advance to step 3 (keyframe activates)
+		getMockFragment().set(3);
+		await new Promise(resolve => setTimeout(resolve, 500));
+		let div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		expect(div!.style.left).toBe('250px');
+
+		// Step back to 2 (below keyframe)
+		getMockFragment().set(2);
+		await new Promise(resolve => setTimeout(resolve, 500));
+		div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		// Should reset to layout position (no keyframe offset)
+		expect(div!.style.left).toBe('100px');
+	});
+
+	it('applies y offset from keyframe', async () => {
+		getMockFragment().set(0);
+
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 100, y: 50, width: 200, height: 40 },
+				keyframes: [{ step: 2, y: 100 }],
+				children: mockChildren
+			}
+		});
+
+		await new Promise(resolve => setTimeout(resolve, 10));
+
+		getMockFragment().set(2);
+		await new Promise(resolve => setTimeout(resolve, 500));
+
+		const div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		expect(div).not.toBeNull();
+		expect(div!.style.top).toBe('150px'); // 50 + 100
+	});
+
+	it('does not interfere with entrance animation', async () => {
+		getMockFragment().set(0);
+
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 100, y: 50, width: 200, height: 40 },
+				animate: 'fade',
+				keyframes: [{ step: 2, x: 150 }],
+				children: mockChildren
+			}
+		});
+
+		await new Promise(resolve => setTimeout(resolve, 10));
+
+		// Step 1: fragment fades in at home position
+		getMockFragment().set(1);
+		await new Promise(resolve => setTimeout(resolve, 10));
+
+		const div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		expect(div).not.toBeNull();
+		// Should have fade animation class (entrance animation works)
+		expect(div!.classList.contains('animate-fade')).toBe(true);
+		// Position is at layout (no keyframe offset yet)
+		expect(div!.style.left).toBe('100px');
+	});
+
+	it('steps back through multiple keyframes correctly', async () => {
+		getMockFragment().set(0);
+
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 100, y: 50, width: 200, height: 40 },
+				keyframes: [
+					{ step: 2, x: 50 },
+					{ step: 4, x: 200 }
+				],
+				children: mockChildren
+			}
+		});
+
+		await new Promise(resolve => setTimeout(resolve, 10));
+
+		// Advance to step 4 (second keyframe)
+		getMockFragment().set(4);
+		await new Promise(resolve => setTimeout(resolve, 500));
+		let div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		expect(div!.style.left).toBe('300px'); // 100 + 200
+
+		// Step back to 3 (should still use first keyframe since 3 >= 2)
+		getMockFragment().set(3);
+		await new Promise(resolve => setTimeout(resolve, 500));
+		div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		expect(div!.style.left).toBe('150px'); // 100 + 50
+
+		// Step back to 1 (below all keyframes)
+		getMockFragment().set(1);
+		await new Promise(resolve => setTimeout(resolve, 500));
+		div = container.querySelector('.fragment-positioned') as HTMLElement | null;
+		expect(div!.style.left).toBe('100px'); // Reset to layout
 	});
 });

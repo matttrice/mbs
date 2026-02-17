@@ -570,7 +570,7 @@
 	<!-- Step 38.5: "- Earth" (after 2500ms) -->
 	<Fragment
 		step={38.5}
-		layout={{ x: 614.1, y: 507.5, width: 75.9, height: 26.4 }}
+		layout={{ x: 606, y: 507.5, width: 75.9, height: 26.4 }}
 		font={{ font_size: 21.7, bold: true }}
 		zIndex={59}
 	>
@@ -630,7 +630,7 @@
 	<!-- Step 39.5: "- Heaven" (after 2500ms) -->
 	<Fragment
 		step={39.5}
-		layout={{ x: 353.9, y: 507.5, width: 94.8, height: 26.4 }}
+		layout={{ x: 350, y: 507.5, width: 94.8, height: 26.4 }}
 		font={{ font_size: 21.7, bold: true, color: 'var(--color-level3)' }}
 		zIndex={60}
 	>

@@ -3,7 +3,7 @@
 	import Fragment from '$lib/components/Fragment.svelte';
 	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
 	import { Arrow, Line, Rect } from '$lib/components/svg';
-
+	
 	/**
 	 * Slide 3: Full Biblical Timeline with transitions and scripture references
 	 * Canvas: 960 x 540 pixels (16:9 aspect ratio)
@@ -117,35 +117,17 @@
 		Angels<br/>Gospel
 	</Fragment>
 
-	<Fragment step={6}>
-		<Line from={{ x: 196, y: 225.5 }} to={{ x: 196, y: 285.7 }} 
-			  stroke={{ width: 6.7, color: 'var(--color-stroke-dark)' }} 
-			  startMarker={{ radius: 8 }}  
-			  endMarker={{ radius: 8 }} 
-			  zIndex={34} />
-	</Fragment>
-
-	<!-- Step 6 (click): Horizontal timeline arrow (pointing right across full width) -->
 	<Fragment 
 		step={6} 
 		animate="wipe"
 		exitStep={14}
 		>
-		<Arrow from={{ x: 195, y: 260 }} to={{ x: 744, y: 260 }} stroke={{ width: 7, color: 'var(--color-stroke-dark)' }} zIndex={30} />
-	</Fragment>
-
-	<!-- Step 7 (click): End vertical line + End label -->
-	<Fragment step={7} animate="wipe-down">
-		<Line from={{ x: 748.9, y: 225.5 }} to={{ x: 748.9, y: 285.7 }} 
-			  stroke={{ width: 6.7, color: 'var(--color-stroke-dark)' }} 
-			  startMarker={{ radius: 8 }}  
-			  endMarker={{ radius: 8 }} 
-			  zIndex={34} />
+		<Line from={{ x: 195, y: 260 }} to={{ x: 744, y: 260 }} startMarker={{ radius: 10 }} endMarker={{ radius: 10 }} stroke={{ width: 7, color: 'var(--color-stroke-dark)' }} zIndex={30} />
 	</Fragment>
 
 	<Fragment
 		step={7}
-		layout={{ x: 787.8, y: 227.9, width: 56.1, height: 30.3 }}
+		layout={{ x: 777.8, y: 227.9, width: 56.1, height: 30.3 }}
 		font={{ font_size: 20, bold: true }}
 		zIndex={35}
 		animate="fade"
@@ -257,12 +239,12 @@
 	</Fragment>
 	
 	<Fragment step={14}>
-		<Line from={{ x: 191.4, y: 260.8 }} to={{ x: 400, y: 260 }} stroke={{ width: 7, color: 'var(--color-stroke-dark)' }} zIndex={33} />
+		<Line from={{ x: 191.4, y: 260.8 }} to={{ x: 400, y: 260 }} startMarker={{ radius: 10 }} stroke={{ width: 7, color: 'var(--color-stroke-dark)' }} zIndex={33} />
 	</Fragment>
 
 	<!-- Step 14 (after 500ms): Diagonal DASHED line + Matthew -->
 	<Fragment step={14.1} animate="draw">
-		<Line from={{ x: 396, y: 256 }} to={{ x: 467, y: 160 }} stroke={{ width: 3.8, color: '#000000', dash: '8,4' }} zIndex={60} />
+		<Line from={{ x: 396, y: 256 }} to={{ x: 467, y: 160 }} stroke={{ width: 3.8, color: 'var(--color-stroke-dark)', dash: '8,4' }} zIndex={60} />
 	</Fragment>
 
 	<Fragment
@@ -345,7 +327,7 @@
 	</Fragment>
 
 	<Fragment step={16} animate="wipe-right">
-		<Arrow from={{ x: 390.9, y: 91.1 }} to={{ x: 513.1, y: 119.7 }} stroke={{ width: 5, color: '#000000' }} zIndex={15} />
+		<Arrow from={{ x: 390.9, y: 91.1 }} to={{ x: 513.1, y: 119.7 }} stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={15} />
 	</Fragment>
 
 	<!-- Step 16 (after 500ms): CHURCH + connector lines -->
@@ -360,11 +342,11 @@
 	</Fragment>
 
 	<Fragment step={16.1} animate="draw">
-		<Line from={{ x: 462, y: 165.2 }} to={{ x: 712.1, y: 165.2 }} stroke={{ width: 3.8, color: '#000000', dash: '10,5' }} zIndex={31} />
+		<Line from={{ x: 462, y: 165 }} to={{ x: 712.1, y: 165 }} stroke={{ width: 3.8, color: 'var(--color-stroke-dark)', dash: '10,5' }} zIndex={31} />
 	</Fragment>
 
 	<Fragment step={16.1} animate="draw">
-		<Line from={{ x: 454.4, y: 173.4 }} to={{ x: 717.3, y: 173.4 }} stroke={{ width: 3.8, color: 'var(--color-level3', dash: '10,5' }} zIndex={56} />
+		<Line from={{ x: 455.5, y: 173.4 }} to={{ x: 717.3, y: 173.4 }} stroke={{ width: 3.8, color: 'var(--color-level3', dash: '10,5' }} zIndex={56} />
 	</Fragment>
 
 	<!-- Step 17 (click): SPIRITUAL + 2 Corinthians 3:7-11 link -->

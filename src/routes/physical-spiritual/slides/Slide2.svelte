@@ -3,6 +3,8 @@
 	import Fragment from '$lib/components/Fragment.svelte';
 	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
 	import { Rect } from '$lib/components/svg';
+    import Line from '$lib/components/svg/Line.svelte';
+    import Arc from '$lib/components/svg/Arc.svelte';
 
 	/**
 	 * Slide 2: Physical/Spiritual - Timeline diagram
@@ -17,6 +19,17 @@
 	}
 
 	let { slideIndex }: Props = $props();
+
+	// Two-column layout: each 270px wide, meeting at center of 960px canvas
+	const GL = { x: 0, w: 210 };    // Left gutter
+	const L = { x: 210, w: 270 };   // Left column (PHYSICAL)
+	const R = { x: 480, w: 270 };   // Right column (SPIRITUAL)
+	const GR = { x: 750, w: 210 };  // Right gutter
+	const center = (col: { x: number; w: number }, fw: number) => col.x + (col.w - fw) / 2;
+	const pageCenter = (fw: number) => (960 - fw) / 2;
+
+	// Delta for swap animation: distance text slides between column centers
+	const swapDx = center(R, 238.5) - center(L, 230.6);
 </script>
 
 <Slide {slideIndex}>
@@ -27,154 +40,189 @@
 	
 	<!-- "ALPHA" label -->
 	<Fragment
-		layout={{ x: 92.5, y: 261.4, width: 82, height: 26.6 }}
+		layout={{ x: center(GL, 82), y: 265, width: 82, height: 26.6 }}
 		font={{ font_size: 17.5, bold: true }}
-		zIndex={2}
+		zIndex={1}
 	>
 		ALPHA
 	</Fragment>
-
-	<!-- Main timeline horizontal line -->
-	<Fragment zIndex={3}>
-		<div class="timeline-line" style="left: 60px; top: 259px; width: 840px; height: 5px;"></div>
+	<Fragment
+		layout={{ x: center(GL, 110.9), y: 220, width: 110.9, height: 30.3 }}
+		font={{ font_size: 20, bold: true }}
+		zIndex={23}
+	>
+		Beginning
 	</Fragment>
 
 	<!-- "OMEGA" label -->
 	<Fragment
-		layout={{ x: 765.9, y: 261.4, width: 88.1, height: 26.6 }}
+		layout={{ x: center(GR, 88.1), y: 265, width: 88.1, height: 26.6 }}
 		font={{ font_size: 17.5, bold: true, align: 'center' }}
-		zIndex={6}
+		zIndex={1}
 	>
 		OMEGA
 	</Fragment>
 
-	<!-- "ETERNAL" label (right side) -->
 	<Fragment
-		layout={{ x: 760.8, y: 205.7, width: 128.9, height: 27.2 }}
-		font={{ font_size: 26.7, bold: true, color: 'var(--color-level3)', align: 'center' }}
-		zIndex={7}
-	>
-		ETERNAL
-	</Fragment>
-
-	<!-- Vertical line at "End" position -->
-	<Fragment zIndex={29}>
-		<div class="vertical-line" style="left: 749.2px; top: 225.5px; width: 7px; height: 60.1px;"></div>
-	</Fragment>
-
-	<!-- "End" label -->
-	<Fragment
-		layout={{ x: 788.2, y: 227.9, width: 56.1, height: 30.3 }}
+		layout={{ x: center(GR, 56.1), y: 220, width: 56.1, height: 30.3 }}
 		font={{ font_size: 20, bold: true }}
-		zIndex={30}
+		zIndex={1}
 	>
 		End
 	</Fragment>
 
-	<!-- Vertical divider line -->
-	<Fragment zIndex={12}>
-		<div class="vertical-line" style="left: 461.4px; top: -19px; width: 10px; height: 559px;"></div>
-	</Fragment>
-
-	<!-- Diagonal line (lower) -->
-	<Fragment zIndex={13}>
-		<div class="connector-line diagonal" style="left: 295.7px; top: 161.8px; width: 1px; height: 195.8px;"></div>
-	</Fragment>
-
-	<!-- Arrow line to Heaven -->
-	<Fragment zIndex={16}>
-		<div class="connector-line diagonal-up" style="left: 646.1px; top: 398.1px; width: 39.9px; height: 173.9px;"></div>
-	</Fragment>
-
-	<!-- "=" between titles -->
+	<!-- "Eternity" labels (left and right) -->
 	<Fragment
-		layout={{ x: 412.1, y: 13.4, width: 95.8, height: 47.9 }}
-		font={{ font_size: 33.3, bold: true, align: 'center' }}
-		zIndex={21}
+		layout={{ x: center(GL, 142.1), y: 302.4, width: 142.1, height: 48.3 }}
+		font={{ font_size: 33.3, bold: true, color: 'var(--color-level3)' }}
+		zIndex={1}
+	>
+		Eternity
+	</Fragment>
+
+	<Fragment
+		layout={{ x: center(GR, 142.2), y: 302.4, width: 142.2, height: 48.3 }}
+		font={{ font_size: 33.3, bold: true, color: 'var(--color-level3)' }}
+		zIndex={1}
+	>
+		Eternity
+	</Fragment>
+	
+	<Fragment
+		layout={{ x: 44.9, y: 81.6, width: 41.9, height: 45.6 }}
+		font={{ font_size: 50, color: 'var(--color-level3)' }}
+		zIndex={68}
+	>
+		E
+	</Fragment>
+
+	<Fragment
+		layout={{ x: 75.4, y: 82.1, width: 29.2, height: 45.6 }}
+		font={{ font_size: 39.2 }}
+		zIndex={70}
 	>
 		=
 	</Fragment>
 
-	<!-- "Eternity" labels (left and right) -->
 	<Fragment
-		layout={{ x: 59.3, y: 302.4, width: 142.1, height: 48.3 }}
-		font={{ font_size: 33.3, bold: true, color: 'var(--color-level3)' }}
-		zIndex={24}
+		layout={{ x: 99.6, y: 81.8, width: 48, height: 45.6 }}
+		font={{ font_size: 50}}
+		zIndex={69}
 	>
-		Eternity
+		m
 	</Fragment>
-
+	
 	<Fragment
-		layout={{ x: 738.9, y: 302.4, width: 142.2, height: 48.3 }}
-		font={{ font_size: 33.3, bold: true, color: 'var(--color-level3)' }}
-		zIndex={25}
+		layout={{ x: 131.6, y: 81.4, width: 63, height: 45.6 }}
+		font={{ font_size: 50, color: 'var(--color-level3)' }}
+		zIndex={71}
 	>
-		Eternity
+		c²
 	</Fragment>
 
-	<!-- ========== ANIMATION SEQUENCE (18 Steps) ========== -->
+	<Fragment>
+		<Line from={{ x: 102, y: 260 }} to={{ x: 855, y: 260 }} stroke={{ width: 6.7, color: 'var(--color-stroke-dark)' }} 
+			  startMarker={{ radius: 8 }}  
+			  endMarker={{ radius: 8 }} zIndex={24} />
+	</Fragment>
 
-	<!-- Step 1: Blue rectangle (SPIRITUAL column) + "SPIRITUAL" title -->
-	<Fragment step={1} animate="wipe-down">
-		<Rect x={196.4} y={0} width={263.3} height={541.2} fill="var(--color-level2)" zIndex={1} />
+	<!-- Step 1: Background columns appear (SPIRITUAL left blue, PHYSICAL right gray) -->
+	<Fragment step={2} animate="wipe-down">
+		<Rect x={L.x} y={0} width={L.w} height={540} fill="var(--color-level2)" zIndex={0} />
+	</Fragment>
+
+	<Fragment step={2} animate="wipe-down">
+		<Rect x={R.x} y={0} width={R.w} height={540} fill="var(--color-level1)" zIndex={0} />
 	</Fragment>
 
 	<Fragment
-		step={1}
-		layout={{ x: 223.1, y: 7, width: 230.6, height: 52.4 }}
+		step={3}
+		animate="draw"
+	>
+		<Arc from={{ x: 77, y: 80 }} to={{ x: 114, y: 79 }} curve={-50} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow  />
+	</Fragment>
+	
+	<Fragment
+		step={3}
+		animate="draw"
+	>
+		<Arc from={{ x: 141, y: 86 }} to={{ x: 68, y: 74 }} curve={90} shift={20} stroke={{ width: 3, color: 'var(--color-stroke-dark)' }} arrow />
+	</Fragment>
+
+	<!-- Step 2: Background columns swap (gray left, blue right) -->
+	<Fragment step={3} animate="wipe-left">
+		<Rect x={L.x} y={0} width={L.w} height={540} fill="var(--color-level1)" zIndex={1} />
+	</Fragment>
+
+	<Fragment step={3} animate="wipe-right">
+		<Rect x={R.x} y={0} width={R.w} height={540} fill="var(--color-level2)" zIndex={1} />
+	</Fragment>
+	
+	<Fragment
+		step={2}
+		layout={{ x: pageCenter(95.8), y: 13.4, width: 95.8, height: 47.9 }}
+		font={{ font_size: 33.3, bold: true, align: 'center' }}
+		zIndex={2}
+	>
+		=
+	</Fragment>
+
+	<!-- Step 1: SPIRITUAL label fades in left, slides right at step 2 -->
+	<Fragment
+		step={2}
+		animate="fly-down"
+		layout={{ x: center(L, 230.6), y: 7, width: 230.6, height: 52.4 }}
 		font={{ font_size: 36.7, bold: true, color: 'var(--color-level3)', align: 'center' }}
+		keyframes={[{ step: 3, x: swapDx }]}
+		transition={{ duration: 800 }}
 		zIndex={9}
 	>
 		SPIRITUAL
 	</Fragment>
 
-	<!-- Step 1.1 (after): Gray rectangle (PHYSICAL column) + "PHYSICAL" title -->
-	<Fragment step={1.1} animate="wipe-down">
-		<Rect x={460} y={0} width={270.7} height={540} fill="var(--color-level1)" zIndex={0} />
-	</Fragment>
-
+	<!-- Step 1: PHYSICAL label fades in right, slides left at step 2 -->
 	<Fragment
-		step={1.1}
-		layout={{ x: 465.3, y: 7, width: 238.5, height: 52.4 }}
+		step={2}
+		animate="fly-down"
+		layout={{ x: center(R, 238.5), y: 7, width: 238.5, height: 52.4 }}
 		font={{ font_size: 36.7, bold: true, align: 'center' }}
-		zIndex={8}
+		keyframes={[{ step: 3, x: -swapDx }]}
+		transition={{ duration: 800 }}
+		zIndex={9}
 	>
 		PHYSICAL
 	</Fragment>
 
-	<!-- Step 2: "Temporary Visible" -->
 	<Fragment
-		step={2}
-		layout={{ x: 195.4, y: 50.6, width: 263.6, height: 76.4 }}
-		font={{ font_size: 33.3, wrap: true }}
+		step={4}
+		layout={{ x: center(L, 263.6), y: 50.6, width: 263.6, height: 76.4 }}
+		font={{ font_size: 33.3, bold: true, wrap: true }}
 		zIndex={26}
 	>
 		Temporary<br />Visible
 	</Fragment>
 
-	<!-- Step 3: "Eternal Unseen" -->
 	<Fragment
-		step={3}
-		layout={{ x: 462.5, y: 45, width: 221.9, height: 88.3 }}
-		font={{ font_size: 33.3, color: 'var(--color-level3)', wrap: true }}
+		step={5}
+		layout={{ x: center(R, 221.9), y: 45, width: 221.9, height: 88.3 }}
+		font={{ font_size: 33.3, bold: true, color: 'var(--color-level3)', wrap: true }}
 		zIndex={27}
 	>
 		Eternal<br />Unseen
 	</Fragment>
 
-	<!-- Step 4: "Copy / Shadow = True / Substance" -->
 	<Fragment
-		step={4}
-		layout={{ x: 214, y: 126.8, width: 515.6, height: 47.9 }}
+		step={6}
+		layout={{ x: pageCenter(490), y: 126.8, width: 515.6, height: 47.9 }}
 		font={{ font_size: 30, bold: true, align: 'center' }}
 		zIndex={18}
 	>
 		Copy / Shadow = True / Substance
 	</Fragment>
 
-	<!-- Step 5: Hebrews 9:22-24 (hyperlink) -->
+	<!-- Step 6: Hebrews 9:22-24 (hyperlink) -->
 	<Fragment
-		step={5}
+		step={7}
 		drillTo="physical-spiritual/hebrews-9-22"
 		layout={{ x: 14.6, y: 133.8, width: 205.6, height: 34.3 }}
 		font={{ font_size: 23.3, bold: true }}
@@ -184,10 +232,9 @@
 		Hebrews 9:22-24
 	</Fragment>
 
-	<!-- Step 6: "ISRAEL" + "=" + "CHURCH" -->
 	<Fragment
-		step={6}
-		layout={{ x: 246.8, y: 199.8, width: 160.8, height: 55.4 }}
+		step={8}
+		layout={{ x: center(L, 160.8), y: 199.8, width: 160.8, height: 55.4 }}
 		font={{ font_size: 39.2, bold: true, align: 'center' }}
 		zIndex={10}
 	>
@@ -195,8 +242,8 @@
 	</Fragment>
 
 	<Fragment
-		step={6}
-		layout={{ x: 427.2, y: 207, width: 63.6, height: 47.9 }}
+		step={8}
+		layout={{ x: pageCenter(63.6), y: 207, width: 63.6, height: 47.9 }}
 		font={{ font_size: 33.3, bold: true, align: 'center' }}
 		zIndex={20}
 	>
@@ -204,28 +251,26 @@
 	</Fragment>
 
 	<Fragment
-		step={6}
-		layout={{ x: 499.3, y: 203.6, width: 187.3, height: 55.4 }}
+		step={8}
+		layout={{ x: center(R, 187.3), y: 203.6, width: 187.3, height: 55.4 }}
 		font={{ font_size: 39.2, bold: true, align: 'center' }}
 		zIndex={5}
 	>
 		CHURCH
 	</Fragment>
 
-	<!-- Step 7: "Old Testament = New Testament" -->
 	<Fragment
-		step={7}
-		layout={{ x: 167.6, y: 267.7, width: 588.4, height: 44.4 }}
+		step={9}
+		layout={{ x: pageCenter(575), y: 267.7, width: 588.4, height: 44.4 }}
 		font={{ font_size: 33.3 }}
 		zIndex={19}
 	>
 		Old Testament = New Testament
 	</Fragment>
 
-	<!-- Step 8: "Perishable Weakness Dishonor" + "Imperishable Powerful Glorified" -->
 	<Fragment
-		step={8}
-		layout={{ x: 514.1, y: 316.5, width: 157.4, height: 118 }}
+		step={10}
+		layout={{ x: center(R, 157.4), y: 316.5, width: 157.4, height: 118 }}
 		font={{ font_size: 26.7, bold: true, color: 'var(--color-level3)', wrap: true }}
 		zIndex={23}
 	>
@@ -233,38 +278,35 @@
 	</Fragment>
 
 	<Fragment
-		step={8}
-		layout={{ x: 262.2, y: 318.1, width: 130, height: 114.9 }}
+		step={10}
+		layout={{ x: center(L, 130), y: 318.1, width: 130, height: 114.9 }}
 		font={{ font_size: 26.7, bold: true, wrap: true }}
 		zIndex={22}
 	>
 		Perishable<br />Weakness<br />Dishonor
 	</Fragment>
 
-	<!-- Step 9: "Glory #1" -->
 	<Fragment
-		step={9}
-		layout={{ x: 261.8, y: 174.8, width: 130.8, height: 29.2 }}
+		step={11}
+		layout={{ x: center(L, 130.8), y: 174.8, width: 130.8, height: 29.2 }}
 		font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--color-level3)', align: 'center' }}
 		zIndex={15}
 	>
 		Glory #1
 	</Fragment>
 
-	<!-- Step 10: "Glory #2" -->
 	<Fragment
-		step={10}
-		layout={{ x: 527.6, y: 180.4, width: 130.6, height: 29.2 }}
+		step={12}
+		layout={{ x: center(R, 130.6), y: 180.4, width: 130.6, height: 29.2 }}
 		font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--color-level3)', align: 'center' }}
 		zIndex={11}
 	>
 		Glory #2
 	</Fragment>
 
-	<!-- Step 11: "Glory #3" + "HEAVEN" -->
 	<Fragment
-		step={11}
-		layout={{ x: 745.8, y: 128.6, width: 130.6, height: 29.2 }}
+		step={13}
+		layout={{ x: center(GR, 130.6), y: 128.6, width: 130.6, height: 29.2 }}
 		font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--color-level3)', align: 'center' }}
 		zIndex={4}
 	>
@@ -272,45 +314,11 @@
 	</Fragment>
 
 	<Fragment
-		step={11}
-		layout={{ x: 730.8, y: 150, width: 177.8, height: 55.4 }}
+		step={13}
+		layout={{ x: center(GR, 177.8), y: 150, width: 177.8, height: 55.4 }}
 		font={{ font_size: 39.2, bold: true, color: 'var(--color-level3)', align: 'center' }}
 		zIndex={14}
 	>
 		HEAVEN
 	</Fragment>
 </Slide>
-
-<style>
-	.timeline-line {
-		position: absolute;
-		background-color: #0000FF;
-	}
-
-	.vertical-line {
-		position: absolute;
-		background-color: #000000;
-	}
-
-	.connector-line.diagonal {
-		position: absolute;
-		background: linear-gradient(
-			to bottom right,
-			transparent calc(50% - 4px),
-			#000000 calc(50% - 4px),
-			#000000 calc(50% + 4px),
-			transparent calc(50% + 4px)
-		);
-	}
-
-	.connector-line.diagonal-up {
-		position: absolute;
-		background: linear-gradient(
-			to top right,
-			transparent calc(50% - 3px),
-			#000000 calc(50% - 3px),
-			#000000 calc(50% + 3px),
-			transparent calc(50% + 3px)
-		);
-	}
-</style>
