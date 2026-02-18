@@ -27,9 +27,9 @@
 	<Fragment
 		step={1}
 		layout={{ x: 123, y: 241, width: 300, height: 72 }}
-		fill="var(--color-level2)"
+		fill="var(--bg-level-2)"
 		font={{ font_size: 26.7, align: 'center', wrap: true }}
-		line={{ width: 2, color: 'var(--color-stroke-dark)' }}
+		line={{ width: 2, color: 'var(--stroke-level-0)' }}
 	>
 		Who is the first to be resurrected from death?
 	</Fragment>
@@ -52,9 +52,9 @@
 	<Fragment
 		step={3}
 		layout={{ x: 123, y: 340, width: 300, height:190 }}
-		fill="var(--color-level2)"
+		fill="var(--bg-level-2)"
 		font={{ font_size: 26.7, align: 'left', wrap: true }}
-		line={{ width: 2, color: 'var(--color-stroke-dark)' }}
+		line={{ width: 2, color: 'var(--stroke-level-0)' }}
 	>
 		What did Christ leave behind as a way for you to "have a part" in His death, burial, and resurrection?
 	</Fragment>

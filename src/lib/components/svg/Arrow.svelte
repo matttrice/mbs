@@ -59,7 +59,7 @@
 	let { from, to, fromBox, toBox, stroke = {}, headSize = 3, startMarker, endMarker, zIndex = 1, bow = 0, flip = false }: Props = $props();
 
 	const strokeWidth = $derived(stroke.width ?? 4);
-	const strokeColor = $derived(stroke.color ?? 'var(--color-bg-darkest)');
+	const strokeColor = $derived(stroke.color ?? 'var(--bg-level-0)');
 
 	// Head dimensions based on stroke width
 	const headLength = $derived(strokeWidth * headSize);

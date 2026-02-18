@@ -1,39 +1,39 @@
 /* MBS Global Theme
  * Level-based color palette for teaching progression:
- *   level1 = gray (#B3B3B3)    - physical/earthly concepts
- *   level2 = light blue (#00aaff) - spiritual concepts
- *   level3 = blue (#0000cc)    - eternal/heavenly concepts
+ *   level-0,level-1 = physical/earthly concepts, defaults
+ *   level-2 = light blue - spiritual concepts
+ *   level-3 = dark blue - eternal/heavenly concepts
  */
 
 :root {
 	/* Level-based color palette */
-	--color-level1: #969696;
-	--color-level2: #00aaff;
-	--color-level3: #0000cc;
+	--bg-level-0: #000000;
+	--bg-level-1: #969696;
+	--bg-level-2: #00aaff;
+	--bg-level-3: #0000cc;
 
-	--color-bg-light: #e8e8e8;
-	--color-bg-ghost: #ffffff;
-	--color-bg-darkest: #000000;
-	--color-bg-cmd-law: #FD8017;
-	--color-bg-muted: #666666;
-	--color-bg-danger: #FF0000;
-	--color-bg-danger-dark: #cc0000;
-	--color-bg-blood: #b01a1a;
-	--color-stroke-dark: #000000;
-	--color-text-primary: #000000;
-	--color-text-muted: #666666;
-	--color-text-bright: #f804fc;
-	--color-text-light: #ffffff;
+	--text-level-0: #000000;
+	--text-level-1: #666666;
+	--stroke-level-0: #000000;	
+
+	--bg-light: #e8e8e8;
+	--bg-ghost: #ffffff;
+	--text-ghost: #ffffff;
+	
+	--bg-cmd-law: #FD8017;
+	--bg-danger: #FF0000;
+	--bg-danger-dark: #cc0000;
+	--bg-blood: #b01a1a;
+	
+	--text-bright: #f804fc;
+
 
 	/* Accent colors */
 	--color-highlight: #ffff00;
 	--color-highlight-dark: #ccaa00;
-
-
 	--color-success: #00aa00;
 
 	/* UI colors */
-	--color-border: #000000;
 	--color-shadow: rgba(0, 0, 0, 0.1);
 
 	/* Typography */

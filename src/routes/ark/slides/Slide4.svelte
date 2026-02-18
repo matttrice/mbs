@@ -33,8 +33,8 @@
 	<Fragment
 		step={1}
 		layout={{ x: 218, y: 245, width: 588, height: 72 }}
-		fill="var(--color-bg-darkest)"
-		font={{ font_size: 44.2, bold: true, color: 'var(--color-bg-ghost)', align: 'center', v_align: 'middle' }}
+		fill="var(--bg-level-0)"
+		font={{ font_size: 44.2, bold: true, color: 'var(--bg-ghost)', align: 'center', v_align: 'middle' }}
 		animate="fade"
 	>
 		Ark
@@ -42,14 +42,14 @@
 
 	<!-- Step 1.2: Water Line (timing: after 1000ms) and label (timing: with) -->
 	<Fragment step={1.2} animate="wipe">
-		<Line from={{ x: 0, y: 316 }} to={{ x: 960, y: 316 }} stroke={{ width: 8, color: 'var(--color-level2)', dash: '15,5' }} zIndex={10} />
+		<Line from={{ x: 0, y: 316 }} to={{ x: 960, y: 316 }} stroke={{ width: 8, color: 'var(--bg-level-2)', dash: '15,5' }} zIndex={10} />
 	</Fragment>
 
 	<Fragment
 		step={1.2}
 		layout={{ x: 50, y: 299, width: 162, height: 40 }}
-		fill="var(--color-level3)"
-		font={{ font_size: 26.7, bold: true, color: 'var(--color-bg-ghost)', align: 'center', wrap: true }}
+		fill="var(--bg-level-3)"
+		font={{ font_size: 26.7, bold: true, color: 'var(--bg-ghost)', align: 'center', wrap: true }}
 		line={{ width: 1 }}
         zIndex={10}
 	>
@@ -58,7 +58,7 @@
 
 	<!-- Black arrow pointing down (death arrow) -->
 	<Fragment step={2} animate="wipe-down">
-		<Arrow from={{ x: 115, y: 220 }} to={{ x: 115, y: 412 }} stroke={{ width: 25, color: 'var(--color-bg-darkest)' }} zIndex={3} />
+		<Arrow from={{ x: 115, y: 220 }} to={{ x: 115, y: 412 }} stroke={{ width: 25, color: 'var(--bg-level-0)' }} zIndex={3} />
 	</Fragment>
 
 	<Fragment
@@ -72,7 +72,7 @@
 
 	<!-- Step 3: Blue arrow pointing up (life arrow) -->
 	<Fragment step={3} animate="wipe-up">
-		<Arrow from={{ x: 160, y: 416 }} to={{ x: 160, y: 228 }} stroke={{ width: 25, color: 'var(--color-level3)' }} zIndex={3} />
+		<Arrow from={{ x: 160, y: 416 }} to={{ x: 160, y: 228 }} stroke={{ width: 25, color: 'var(--bg-level-3)' }} zIndex={3} />
 	</Fragment>
 
 	<!-- Step 3.1: Life label and Romans drillTo (timing: after 500ms) -->
@@ -106,7 +106,7 @@
 
 	<!-- Step 4.2: Second black box for burial (timing: after 1000ms) -->
 	<Fragment step={4.2} animate="fade">
-		<Rect x={218} y={360} width={588} height={72} fill="var(--color-bg-darkest)" zIndex={7} />
+		<Rect x={218} y={360} width={588} height={72} fill="var(--bg-level-0)" zIndex={7} />
 	</Fragment>
 
 	<Fragment
@@ -143,13 +143,13 @@
 
 	<!-- Step 6: Ark = Saved (timing: with, then after for text) -->
 	<Fragment step={6} animate="fade">
-		<Rect x={239} y={245} width={500} height={72} fill="var(--color-bg-darkest)" stroke={{ width: 2, color: '#000000' }} zIndex={8} />
+		<Rect x={239} y={245} width={500} height={72} fill="var(--bg-level-0)" stroke={{ width: 2, color: '#000000' }} zIndex={8} />
 	</Fragment>
 
 	<Fragment
 		step={6.1}
 		layout={{ x: 240, y: 245, width: 588, height: 72 }}
-		font={{ font_size: 59, bold: true, color: 'var(--color-bg-ghost)', align: 'left' }}
+		font={{ font_size: 59, bold: true, color: 'var(--bg-ghost)', align: 'left' }}
 		line={{ width: 1 }}
         zIndex={9}
 	>
@@ -180,8 +180,8 @@
 	<Fragment
 		step={9}
 		layout={{ x: 580, y: 245, width: 275, height: 72 }}
-		fill="var(--color-bg-darkest)"
-		font={{ font_size: 59, bold: true, color: 'var(--color-bg-ghost)', align: 'left' }}
+		fill="var(--bg-level-0)"
+		font={{ font_size: 59, bold: true, color: 'var(--bg-ghost)', align: 'left' }}
 		line={{ width: 1 }}
 		zIndex={9}
 	>

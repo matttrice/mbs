@@ -49,7 +49,7 @@
 
 	<!-- Step 2: Moral Law Rectangle (gray box) -->
 	<Fragment step={2} animate="wipe-down">
-		<Rect x={74.1} y={69.4} width={285.4} height={319.4} fill="var(--color-level1)" stroke={{ width: 2.3, color: 'var(--color-stroke-dark)' }} zIndex={2} />
+		<Rect x={74.1} y={69.4} width={285.4} height={319.4} fill="var(--bg-level-1)" stroke={{ width: 2.3, color: 'var(--stroke-level-0)' }} zIndex={2} />
 	</Fragment>
 
 	<!-- Step 2 (with): "Moral" label -->
@@ -140,7 +140,7 @@
 		step={8}
 		layout={{ x: 223.8, y: 445.4, width: 120, height: 56.4 }}
 		font={{ font_size: 40, v_align: 'middle', bold: true }}
-		fill="var(--color-level1)"
+		fill="var(--bg-level-1)"
 		zIndex={25}
 	>
 		Adam
@@ -151,7 +151,7 @@
 		step={8}
 		layout={{ x: 368, y: 417, width: 212.2, height: 85 }}
 		font={{ font_size: 40, align: 'center', v_align: 'bottom', bold: true }}
-		fill="var(--color-level1)"
+		fill="var(--bg-level-1)"
 		zIndex={24}
 	>
 		Moral Law
@@ -162,7 +162,7 @@
 		step={8}
 		layout={{ x: 613.1, y: 417, width: 143.1, height: 100 }}
 		font={{ font_size: 40, align: 'center', v_align: 'middle', bold: true }}
-		fill="var(--color-bg-cmd-law)"
+		fill="var(--bg-cmd-law)"
 		zIndex={26}
 	>
 		Moses<br/>Law
@@ -196,7 +196,7 @@
 
 	<!-- Step 9 (with): Commandment Law Rectangle (orange box) -->
 	<Fragment step={9} animate="wipe-down">
-		<Rect x={567.5} y={67.2} width={307.9} height={321.1} fill="var(--color-bg-cmd-law)" stroke={{ width: 2.3, color: 'var(--color-stroke-dark)' }} zIndex={1} />
+		<Rect x={567.5} y={67.2} width={307.9} height={321.1} fill="var(--bg-cmd-law)" stroke={{ width: 2.3, color: 'var(--stroke-level-0)' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 10: "Command" label -->
@@ -278,7 +278,7 @@
 
 	<!-- Step 15 (with): Law outer rectangle (orange background) -->
 	<Fragment step={15} animate="fade">
-		<Rect x={32.8} y={3.4} width={878.2} height={399.3} fill="var(--color-bg-cmd-law)" stroke={{ width: 1, color: '#000000' }} zIndex={0} />
+		<Rect x={32.8} y={3.4} width={878.2} height={399.3} fill="var(--bg-cmd-law)" stroke={{ width: 1, color: '#000000' }} zIndex={0} />
 	</Fragment>
 
 	<!-- Step 15.1: Top horizontal line -->
@@ -325,8 +325,8 @@
 	<Fragment
 		step={19}
 		layout={{ x: 320, y: 20, width: 270, height: 81.6 }}
-		font={{ font_size: 30, align: 'center', bold: true, color: 'var(--color-bg-cmd-law)' }}
-		fill="var(--color-bg-darkest)"
+		font={{ font_size: 30, align: 'center', bold: true, color: 'var(--bg-cmd-law)' }}
+		fill="var(--bg-level-0)"
 		zIndex={34}
 	>
 		Everyone Violates<br/>Conscience.

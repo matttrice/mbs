@@ -60,7 +60,7 @@
 
 	<!-- Step 2 (with): Plants column background -->
 	<Fragment step={2} animate="wipe-down">
-		<Rect x={85.8} y={100.3} width={260.8} height={206.4} fill="var(--color-level1)" zIndex={7} />
+		<Rect x={85.8} y={100.3} width={260.8} height={206.4} fill="var(--bg-level-1)" zIndex={7} />
 	</Fragment>
 
 	<!-- Step 2 (with): Horizontal line -->
@@ -81,7 +81,7 @@
 
 	<!-- Step 4: Rectangle 59 (Animals column) -->
 	<Fragment step={4} animate="wipe-down">
-		<Rect x={345.5} y={100.3} width={279.5} height={206.4} fill="var(--color-level1)" zIndex={3} />
+		<Rect x={345.5} y={100.3} width={279.5} height={206.4} fill="var(--bg-level-1)" zIndex={3} />
 	</Fragment>
 
 	<!-- Step 4 (with): Genesis 1:20-25 (drill) -->
@@ -178,7 +178,7 @@
 	<Fragment
 		step={12}
 		layout={{ x: 85.8, y: 192, width: 790.8, height: 55 }}
-		font={{ font_size: 36.7, align: 'center', v_align: 'middle', color: 'var(--color-bg-ghost)', bold: true }}
+		font={{ font_size: 36.7, align: 'center', v_align: 'middle', color: 'var(--bg-ghost)', bold: true }}
 		fill="#000000"
 		line={{ width: 0.8 }}
 		zIndex={10}
@@ -199,17 +199,17 @@
 
 	<!-- Step 14: Blue spirit box (Animals) + dashed line + Spirit text -->
 	<Fragment step={14} animate="wipe-down">
-		<Rect x={345.5} y={256.1} width={280.3} height={117.2} fill="var(--color-level2)" zIndex={9} />
+		<Rect x={345.5} y={256.1} width={280.3} height={117.2} fill="var(--bg-level-2)" zIndex={9} />
 	</Fragment>
 
 	<Fragment step={14} animate="draw">
-		<Line from={{ x: 345, y: 252 }} to={{ x: 877, y: 252 }} stroke={{ width: 8, color: 'var(--color-level3)', dash: '10,5' }} zIndex={51} />
+		<Line from={{ x: 345, y: 252 }} to={{ x: 877, y: 252 }} stroke={{ width: 8, color: 'var(--bg-level-3)', dash: '10,5' }} zIndex={51} />
 	</Fragment>
 
 	<Fragment
 		step={14}
 		layout={{ x: 396.4, y: 282.9, width: 144.9, height: 68.6 }}
-		font={{ font_size: 50, color: 'var(--color-level3)', bold: true }}
+		font={{ font_size: 50, color: 'var(--bg-level-3)', bold: true }}
 		zIndex={55}
 	>
 		Spirit
@@ -217,13 +217,13 @@
 
 	<!-- Step 15: Blue spirit box (Man) + Spirit text -->
 	<Fragment step={15} animate="wipe-down">
-		<Rect x={625} y={256.1} width={252} height={117.2} fill="var(--color-level2)" zIndex={6} />
+		<Rect x={625} y={256.1} width={252} height={117.2} fill="var(--bg-level-2)" zIndex={6} />
 	</Fragment>
 
 	<Fragment
 		step={15}
 		layout={{ x: 659.7, y: 281.8, width: 144.9, height: 68.6 }}
-		font={{ font_size: 50, align: 'center', color: 'var(--color-level3)', bold: true }}
+		font={{ font_size: 50, align: 'center', color: 'var(--bg-level-3)', bold: true }}
 		zIndex={54}
 	>
 		Spirit
@@ -233,8 +233,8 @@
 	<Fragment
 		step={16}
 		layout={{ x: 345, y: 255, width: 532, height: 40 }}
-		font={{ font_size: 34, align: 'center', v_align: 'middle', color: 'var(--color-bg-ghost)', bold:true }}
-		fill="var(--color-level3)"
+		font={{ font_size: 34, align: 'center', v_align: 'middle', color: 'var(--bg-ghost)', bold:true }}
+		fill="var(--bg-level-3)"
 		line={{ width: 0.1 }}
 		zIndex={46}
 	>
@@ -288,7 +288,7 @@
 		step={21}
 		layout={{ x: 595.8, y: 452.4, width: 283.4, height: 56.4 }}
 		font={{ font_size: 40, color: '#FF0000' }}
-		fill="var(--color-bg-ghost)"
+		fill="var(--bg-ghost)"
 		line={{ width: 0.6, color: '#000000' }}
 		zIndex={22}
 	>
@@ -321,7 +321,7 @@
 			from={{ x: 300, y: 345 }} 
 			to={{ x: 250, y: 500 }} 
 			curve={-180} 
-			stroke={{ width: 5, color: 'var(--color-level2)' }} 
+			stroke={{ width: 5, color: 'var(--bg-level-2)' }} 
 			arrow 
 			zIndex={10} 
 		/>
@@ -358,7 +358,7 @@
 	</Fragment>
 
 	<Fragment step={24.3} layout={{ x: 125, y: 290, width: 200, height: 200 }} animate="fade" zIndex={39}>
-		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 800 800"><g fill="var(--color-bg-blood)" stroke-width="10" stroke="hsl(356, 77%, 40%)" id="heart"><path d="M409.7902255825229 338.46151840103255C596.8531592309057 141.25873880453042 800 400 409.79021427181215 669.2307397802393 0 400 203.1468407690943 141.25873880453042 409.7902255825229 338.46151840103255Z" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 800 800"><g fill="var(--bg-blood)" stroke-width="10" stroke="hsl(356, 77%, 40%)" id="heart"><path d="M409.7902255825229 338.46151840103255C596.8531592309057 141.25873880453042 800 400 409.79021427181215 669.2307397802393 0 400 203.1468407690943 141.25873880453042 409.7902255825229 338.46151840103255Z" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
 	</Fragment>
 
 	<!-- Step 25: Arc 104 (return arc) -->
@@ -438,7 +438,7 @@
 	<Fragment
 		step={27.1}
 		layout={{ x: 91.6, y: 210.4, width: 74.2, height: 45.3 }}
-		font={{ font_size: 33.3, align: 'center', color: 'var(--color-bg-ghost)', bold: true }}
+		font={{ font_size: 33.3, align: 'center', color: 'var(--bg-ghost)', bold: true }}
 		zIndex={30}
 	>
 		CO<sub>2</sub>
@@ -460,7 +460,7 @@
 	<Fragment
 		step={27.3}
 		layout={{ x: 268.9, y: 208.6, width: 51.7, height: 45.3 }}
-		font={{ font_size: 33.3, align: 'center', color: 'var(--color-bg-ghost)', bold: true }}
+		font={{ font_size: 33.3, align: 'center', color: 'var(--bg-ghost)', bold: true }}
 		zIndex={31}
 	>
 		O<sub>2</sub>
@@ -483,7 +483,7 @@
 		step={28}
 		drillTo="life/1thessalonians-5-23"
 		layout={{ x: 647, y: 347.3, width: 157.4, height: 28.9 }}
-		font={{ font_size: 23.3, align: 'center', color: 'var(--color-bg-ghost)' }}
+		font={{ font_size: 23.3, align: 'center', color: 'var(--bg-ghost)' }}
 		zIndex={33}
 	>
 		1Thess. 5:23
@@ -491,13 +491,13 @@
 
 	<!-- Step 29: Blue Soul box (Man) + Soul text -->
 	<Fragment step={29} animate="wipe-down">
-		<Rect x={625.8} y={364.8} width={252.4} height={80.3} fill="var(--color-level2)" zIndex={5} />
+		<Rect x={625.8} y={364.8} width={252.4} height={80.3} fill="var(--bg-level-2)" zIndex={5} />
 	</Fragment>
 
 	<Fragment
 		step={29}
 		layout={{ x: 661.4, y: 367.2, width: 125.3, height: 68.6 }}
-		font={{ font_size: 60, color: 'var(--color-level3)', bold: true }}
+		font={{ font_size: 60, color: 'var(--bg-level-3)', bold: true }}
 		zIndex={34}
 	>
 		Soul
@@ -508,7 +508,7 @@
 		step={30}
 		layout={{ x: 110.8, y: 64.8, width: 201.9, height: 34.2 }}
 		font={{ font_size: 21.7 }}
-		fill="var(--color-bg-ghost)"
+		fill="var(--bg-ghost)"
 		zIndex={0}
 	>
 		LEAST COMPLEX
@@ -519,7 +519,7 @@
 		step={30.1}
 		layout={{ x: 376.8, y: 64.8, width: 195.8, height: 34.2 }}
 		font={{ font_size: 21.7 }}
-		fill="var(--color-bg-ghost)"
+		fill="var(--bg-ghost)"
 		zIndex={1}
 	>
 		MORE COMPLEX
@@ -530,7 +530,7 @@
 		step={30.2}
 		layout={{ x: 639.3, y: 64.8, width: 193.4, height: 34.2 }}
 		font={{ font_size: 21.7 }}
-		fill="var(--color-bg-ghost)"
+		fill="var(--bg-ghost)"
 		zIndex={2}
 	>
 		MOST COMPLEX
@@ -541,7 +541,7 @@
 		step={31}
 		layout={{ x: 557, y: 2.1, width: 299.7, height: 45.4 }}
 		font={{ font_size: 30.8 }}
-		fill="var(--color-bg-ghost)"
+		fill="var(--bg-ghost)"
 		zIndex={35}
 	>
 		God is Progressive

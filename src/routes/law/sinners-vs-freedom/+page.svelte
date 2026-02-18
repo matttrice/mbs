@@ -18,26 +18,26 @@
 
 	<!-- Left column header - Sinners -->
 	<Fragment animate="wipe-down">
-		<Rect x={66.5} y={60} width={350} height={460} fill="var(--color-level1)" zIndex={0} />
+		<Rect x={66.5} y={60} width={350} height={460} fill="var(--bg-level-1)" zIndex={0} />
 	</Fragment>
 
 	<Fragment
 		layout={{ x: 66.5, y: 64.7, width: 350, height: 38 }}
 		font={{ font_size: 28, bold: true, align: 'center', color: '#FFFFFF' }}
-		fill="var(--color-level1)"
+		fill="var(--bg-level-1)"
 	>
 		Sinners
 	</Fragment>
 
 	<!-- Right column header - Freedom from Sin -->
 	<Fragment animate="wipe-down">
-		<Rect x={543.5} y={60} width={350} height={460} fill="var(--color-level2)" zIndex={0} />
+		<Rect x={543.5} y={60} width={350} height={460} fill="var(--bg-level-2)" zIndex={0} />
 	</Fragment>
 
 	<Fragment
 		layout={{ x: 543.5, y: 64.7, width: 350, height: 38 }}
 		font={{ font_size: 28, bold: true, align: 'center', color: '#FFFFFF' }}
-		fill="var(--color-level2)"
+		fill="var(--bg-level-2)"
 	>
 		Freedom from Sin
 	</Fragment>

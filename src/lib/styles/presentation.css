@@ -96,8 +96,8 @@
 }
 
 .indicator-dot.active {
-	background: var(--color-level3, #0066cc);
-	border-color: var(--color-level3, #0066cc);
+	background: var(--bg-level-3, #0066cc);
+	border-color: var(--bg-level-3, #0066cc);
 	color: #fff;
 }
 

@@ -40,7 +40,7 @@
 
 	<!-- Step 1: Moral Law Rectangle (gray box) -->
 	<Fragment step={1} animate="wipe-down">
-		<Rect x={82.6} y={116.7} width={206.1} height={277.4} fill="var(--color-level1)" stroke={{ width: 1, color: '#000000' }} zIndex={3} />
+		<Rect x={82.6} y={116.7} width={206.1} height={277.4} fill="var(--bg-level-1)" stroke={{ width: 1, color: '#000000' }} zIndex={3} />
 	</Fragment>
 
 	<!-- Step 1 (with): "Moral" label -->
@@ -80,7 +80,7 @@
 
 	<!-- Step 3: Commandment Law Rectangle (orange box) -->
 	<Fragment step={3} animate="wipe-down">
-		<Rect x={53.2} y={46.4} width={466.7} height={493.6} fill="var(--color-bg-cmd-law)" stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={0} />
+		<Rect x={53.2} y={46.4} width={466.7} height={493.6} fill="var(--bg-cmd-law)" stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={0} />
 	</Fragment>
 
 	<!-- Step 3 (with): "Command" label -->
@@ -142,7 +142,7 @@
 
 	<!-- Step 6 (with): Faith/Grace Rectangle (blue box) -->
 	<Fragment step={6} animate="wipe-down">
-		<Rect x={558.4} y={0} width={369.8} height={540} fill="var(--color-level2)" stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={1} />
+		<Rect x={558.4} y={0} width={369.8} height={540} fill="var(--bg-level-2)" stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 6 (with): "Faith / Grace" title -->
@@ -174,9 +174,9 @@
 	<Fragment
 		step={7.1}
 		layout={{ x: 120, y: 402.4, width: 354.8, height: 48.8 }}
-		font={{ font_size: 33.3, align: 'center', color: 'var(--color-bg-cmd-law)' }}
-		fill="var(--color-bg-darkest)"
-		line={{ color: 'var(--color-stroke-dark)' }}
+		font={{ font_size: 33.3, align: 'center', color: 'var(--bg-cmd-law)' }}
+		fill="var(--bg-level-0)"
+		line={{ color: 'var(--stroke-level-0)' }}
 		zIndex={23}
 	>
 		Law of Sin & Death
@@ -256,7 +256,7 @@
 		drillTo="law/sinners-vs-freedom"
 		layout={{ x: 605.2, y: 461, width: 276.1, height: 59.8 }}
 		font={{ font_size: 20, align: 'center', italic: true }}
-		fill="var(--color-bg-ghost)"
+		fill="var(--bg-ghost)"
 		zIndex={27}
 	>
 		"I thought everyone<br/>was/is a sinner ?"
@@ -268,7 +268,7 @@
 		drillTo="law/hebrews-7-11"
 		layout={{ x: 46.6, y: 41.9, width: 176.5, height: 67.4 }}
 		font={{ font_size: 24, align: 'center' }}
-		fill="var(--color-level2)"
+		fill="var(--bg-level-2)"
 		zIndex={26}
 	>
 		Hebrews 7:11<br/>(change of law)

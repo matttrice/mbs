@@ -56,7 +56,7 @@
 	<Fragment
 		step={1}
 		layout={{ x: 399, y: 241, width: 129, height: 78 }}
-		line={{ width: 2, color: 'var(--color-stroke-dark)' }}
+		line={{ width: 2, color: 'var(--stroke-level-0)' }}
 		animate="fade"
 	>
 		<img src="/export/08-The_Ark/image2.png" alt="Door" class="slide-image" />
@@ -213,9 +213,9 @@
 	<Fragment
 		step={13}
 		layout={{ x: 532, y: 448, width: 376, height: 81 }}
-		fill="var(--color-bg-blood)"
+		fill="var(--bg-blood)"
 		font={{ font_size: 30, bold: true, align: 'left', wrap: true }}
-		line={{ width: 1, color: 'var(--color-stroke-dark)' }}
+		line={{ width: 1, color: 'var(--stroke-level-0)' }}
         zIndex={2}
 	>
 		Spiritually, (symbolic) What is covering the ark?
@@ -226,7 +226,7 @@
         step={15}
         animate="wipe-left"
     >
-        <Arrow from={{ x: 532, y: 489 }} to={{ x: 230, y: 489 }}  stroke={{ color: "var(--color-bg-blood)", width: 10 }} />
+        <Arrow from={{ x: 532, y: 489 }} to={{ x: 230, y: 489 }}  stroke={{ color: "var(--bg-blood)", width: 10 }} />
     </Fragment>
 	
     <Fragment
@@ -243,9 +243,9 @@
 		step={16}
 		drillTo="ark/hebrews-11-7"
 		layout={{ x: 344, y: 444, width: 163, height: 34 }}
-        fill="var(--color-bg-ghost)"
+        fill="var(--bg-ghost)"
 		font={{ font_size: 23.3, bold: true, align: 'center' }}
-		line={{ width: 3, color: 'var(--color-stroke-dark)' }}
+		line={{ width: 3, color: 'var(--stroke-level-0)' }}
         zIndex={5}
 	>
 		Hebrews 11:7
@@ -304,11 +304,11 @@
 
 	<!-- Step 21: Water arrows (coming from off-screen above and below) -->
 	<Fragment step={21} animate="wipe-down">
-		<Arrow from={{ x: 396, y: 0 }} to={{ x: 396, y: 172 }} stroke={{ width: 30, color: 'var(--color-level3)' }} zIndex={4} />
+		<Arrow from={{ x: 396, y: 0 }} to={{ x: 396, y: 172 }} stroke={{ width: 30, color: 'var(--bg-level-3)' }} zIndex={4} />
 	</Fragment>
 
 	<Fragment step={21} animate="wipe-up">
-		<Arrow from={{ x: 469, y: 550 }} to={{ x: 469, y: 314 }} stroke={{ width: 30, color: 'var(--color-level3)' }} headSize={3} zIndex={4} />
+		<Arrow from={{ x: 469, y: 550 }} to={{ x: 469, y: 314 }} stroke={{ width: 30, color: 'var(--bg-level-3)' }} headSize={3} zIndex={4} />
 	</Fragment>
 
 	<!-- Step 21.1: Water labels (timing: after) -->

@@ -40,12 +40,12 @@
 
 	<!-- Step 2: Rectangle 35 (grey background column - Physical) -->
 	<Fragment step={2} animate="wipe-down">
-		<Rect x={92.3} y={52.7} width={345.6} height={468} fill="var(--color-level1)" zIndex={0} />
+		<Rect x={92.3} y={52.7} width={345.6} height={468} fill="var(--bg-level-1)" zIndex={0} />
 	</Fragment>
 
 	<!-- Step 3: Rectangle 34 (blue background column - Spiritual) -->
 	<Fragment step={3} animate="wipe-down">
-		<Rect x={516} y={52.7} width={338.4} height={468} fill="var(--color-level2)" zIndex={0} />
+		<Rect x={516} y={52.7} width={338.4} height={468} fill="var(--bg-level-2)" zIndex={0} />
 	</Fragment>
 
 	<!-- Step 4: Abraham (centered boxed) -->
@@ -53,8 +53,8 @@
 		step={4}
 		layout={{ x: 379.2, y: 100.7, width: 208.8, height: 54 }}
 		font={{ font_size: 43.2 }}
-		fill="var(--color-bg-light)"
-		line={{ color: 'var(--color-bg-darkest)', width: 2.3 }}
+		fill="var(--bg-light)"
+		line={{ color: 'var(--bg-level-0)', width: 2.3 }}
 		zIndex={22}
 	>
 		Abraham
@@ -74,7 +74,7 @@
 	<Fragment
 		step={6}
 		layout={{ x: 624.9, y: 108.7, width: 121.7, height: 61.1 }}
-		font={{ font_size: 43.2, align: 'left', color: 'var(--color-level3)' }}
+		font={{ font_size: 43.2, align: 'left', color: 'var(--bg-level-3)' }}
 		zIndex={3}
 	>
 		Isaac
@@ -94,7 +94,7 @@
 	<Fragment
 		step={8}
 		layout={{ x: 589.2, y: 45.9, width: 192, height: 61.1 }}
-		font={{ font_size: 43.2, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 43.2, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={17}
 	>
 		Spiritual
@@ -144,7 +144,7 @@
 	<Fragment
 		step={12.1}
 		layout={{ x: 616.5, y: 158.2, width: 138.7, height: 61.1 }}
-		font={{ font_size: 43.2, bold: true, align: 'left', color: 'var(--color-level3)' }}
+		font={{ font_size: 43.2, bold: true, align: 'left', color: 'var(--bg-level-3)' }}
 		zIndex={5}
 	>
 		Sarah
@@ -154,7 +154,7 @@
 	<Fragment
 		step={14}
 		layout={{ x: 598.5, y: 196.7, width: 174.8, height: 55.3 }}
-		font={{ font_size: 38.4, align: 'left', color: 'var(--color-level3)' }}
+		font={{ font_size: 38.4, align: 'left', color: 'var(--bg-level-3)' }}
 		zIndex={19}
 	>
 		covenant
@@ -235,7 +235,7 @@
 	<Fragment
 		step={22.1}
 		layout={{ x: 543.4, y: 278.5, width: 283.4, height: 97.9 }}
-		font={{ font_size: 38.4, italic: true, color: 'var(--color-level3)', wrap: true, align: 'center' }}
+		font={{ font_size: 38.4, italic: true, color: 'var(--bg-level-3)', wrap: true, align: 'center' }}
 		zIndex={6}
 	>
 		"Jerusalem above is free"
@@ -257,7 +257,7 @@
 		step={25}
 		layout={{ x: 85.4, y: 372, width: 362.9, height: 67 }}
 		font={{ font_size: 20, wrap: true, align: 'center', v_align: 'middle' }}
-		fill="var(--color-bg-ghost)"
+		fill="var(--bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={15}
 	>
@@ -269,10 +269,10 @@
 		step={26}
 		layout={{ x: 503.3, y: 446.3, width: 362.9, height: 64.8 }}
 		font={{ font_size: 24, bold: true, wrap: true, align: 'center' }}
-		fill="var(--color-bg-ghost)"
+		fill="var(--bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={25}
 	>
-		<span style="color: var(--color-level3);">Spiritual</span> Jews/Following Christ's Law <strong>gives</strong> salvation.
+		<span style="color: var(--bg-level-3);">Spiritual</span> Jews/Following Christ's Law <strong>gives</strong> salvation.
 	</Fragment>
 </Slide>

@@ -48,7 +48,7 @@
 	<!-- Animated Content -->
 	<!-- Step 1: Gray column (Physical Death) -->
 	<Fragment step={1} animate="wipe-down">
-		<Rect x={66.8} y={101.4} width={271.4} height={240} fill="var(--color-level1)" stroke={{ width: 1, color: '#000000' }} zIndex={1} />
+		<Rect x={66.8} y={101.4} width={271.4} height={240} fill="var(--bg-level-1)" stroke={{ width: 1, color: '#000000' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 1: Isaiah 59:1-2 -->
@@ -114,7 +114,7 @@
 
 	<!-- Step 6: Orange (Spiritual Death) -->
 	<Fragment step={6} animate="wipe-down">
-		<Rect x={315.3} y={101.4} width={271.4} height={240} fill="var(--color-bg-cmd-law)" stroke={{ width: 1, color: 'var(--color-stroke-dark)' }} zIndex={1} />
+		<Rect x={315.3} y={101.4} width={271.4} height={240} fill="var(--bg-cmd-law)" stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 7: Ezekiel 18:4 reference -->
@@ -167,7 +167,7 @@
 
 	<!-- Step 12: Red column (Eternal Death) -->
 	<Fragment step={12} animate="wipe-down">
-		<Rect x={585.8} y={101.4} width={271.4} height={240} fill="var(--color-bg-danger)" stroke={{ width: 1, color: 'var(--color-stroke-dark)' }} zIndex={0} />
+		<Rect x={585.8} y={101.4} width={271.4} height={240} fill="var(--bg-danger)" stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={0} />
 	</Fragment>
 
 	<!-- Step 12.1: Revelation 20:14-15, 21:6-8 -->
@@ -223,7 +223,7 @@
 		step={16}
 		layout={{ x: 460, y: 325, width: 203.0, height: 23.9 }}
 		fill="#FFFFFF"
-		line={{ width: 1, color: 'var(--color-stroke-dark)' }}
+		line={{ width: 1, color: 'var(--stroke-level-0)' }}
 		font={{ v_align: 'middle', align: 'center', font_size: 17.5, italic: true }}
 		zIndex={30}
 		animate="fade"
@@ -235,10 +235,10 @@
 	<Fragment
 		step={17}
 		layout={{ x: 315.3, y: 330, width: 271.4, height: 100 }}
-		line={{ width: [0, 1, 1, 1], color: 'var(--color-stroke-dark)' }}
+		line={{ width: [0, 1, 1, 1], color: 'var(--stroke-level-0)' }}
 		font={{ v_align: 'middle', align: 'center', font_size: 30.8, italic: true, wrap: true }}
 		zIndex={1}
-		fill="var(--color-bg-cmd-law)"
+		fill="var(--bg-cmd-law)"
 		animate="wipe-down"
 	>
 		Changeable<br/><span style="font-size: 0.7em">"You formerly walked"</span>
@@ -248,10 +248,10 @@
 	<Fragment
 		step={17.1}
 		layout={{ x: 585.8, y: 340, width: 271.4, height: 150 }}
-		line={{ width: [0, 1, 1, 1], color: 'var(--color-stroke-dark)' }}
+		line={{ width: [0, 1, 1, 1], color: 'var(--stroke-level-0)' }}
 		font={{ v_align: 'top', align: 'center', font_size: 30.8, italic: true, wrap: true }}
 		zIndex={1}
-		fill="var(--color-bg-danger)"
+		fill="var(--bg-danger)"
 		animate="fade"
 	>
 		Permanent<br/><span style="font-size: 0.7em">"It is done"</span>

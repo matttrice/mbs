@@ -234,7 +234,7 @@
 	.menu {
 		width: 100%;
 		height: 100%;
-		background: var(--color-bg-light);
+		background: var(--bg-light);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -254,12 +254,12 @@
 		font-size: 64px;
 		font-weight: 300;
 		margin: 0;
-		color: var(--color-level3);
+		color: var(--bg-level-3);
 		letter-spacing: -1px;
 	}
 
 	.subtitle {
-		color: var(--color-text-muted);
+		color: var(--text-level-1);
 		font-size: 16px;
 		margin-top: 12px;
 		font-weight: 400;
@@ -282,7 +282,7 @@
 
 	.toggle-text {
 		font-size: 14px;
-		color: var(--color-text-muted);
+		color: var(--text-level-1);
 		font-weight: 500;
 	}
 
@@ -290,7 +290,7 @@
 		position: relative;
 		width: 44px;
 		height: 24px;
-		background: var(--color-text-muted);
+		background: var(--text-level-1);
 		border: none;
 		border-radius: 12px;
 		cursor: pointer;
@@ -299,7 +299,7 @@
 	}
 
 	.toggle-switch.active {
-		background: var(--color-level3);
+		background: var(--bg-level-3);
 	}
 
 	.toggle-knob {
@@ -330,7 +330,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		background: var(--color-bg-ghost);
+		background: var(--bg-ghost);
 		border: none;
 		border-radius: 8px;
 		padding: 32px 36px;
@@ -352,12 +352,12 @@
 		font-size: 28px;
 		font-weight: 600;
 		margin: 0 0 8px 0;
-		color: var(--color-level3);
+		color: var(--bg-level-3);
 	}
 
 	.lesson-card p {
 		margin: 0;
-		color: var(--color-text-muted);
+		color: var(--text-level-1);
 		font-size: 18px;
 	}
 
@@ -369,7 +369,7 @@
 
 	.arrow {
 		font-size: 28px;
-		color: var(--color-level3);
+		color: var(--bg-level-3);
 		opacity: 0.3;
 		transition: opacity 0.2s ease, transform 0.2s ease;
 	}
@@ -382,7 +382,7 @@
 	.reset-btn {
 		background: transparent;
 		border: none;
-		color: var(--color-text-muted);
+		color: var(--text-level-1);
 		padding: 8px 16px;
 		border-radius: 6px;
 		font-size: 15px;
@@ -394,13 +394,13 @@
 
 	.lesson-card:hover .reset-btn {
 		opacity: .8;
-		background: var(--color-level3);
-		color: var(--color-bg-ghost);
+		background: var(--bg-level-3);
+		color: var(--bg-ghost);
 		pointer-events: auto;
 	}
 
 	.lesson-card:hover .reset-btn:hover {
 		background: rgba(204, 0, 0, 0.3);
-		color: var(--color-bg-danger-dark);
+		color: var(--bg-danger-dark);
 	}
 </style>

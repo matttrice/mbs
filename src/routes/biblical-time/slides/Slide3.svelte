@@ -122,7 +122,7 @@
 		animate="wipe"
 		exitStep={14}
 		>
-		<Line from={{ x: 195, y: 260 }} to={{ x: 764, y: 260 }} startMarker={{ radius: 10 }} endMarker={{ radius: 10 }} stroke={{ width: 7, color: 'var(--color-stroke-dark)' }} zIndex={30} />
+		<Line from={{ x: 195, y: 260 }} to={{ x: 764, y: 260 }} startMarker={{ radius: 10 }} endMarker={{ radius: 10 }} stroke={{ width: 7, color: 'var(--stroke-level-0)' }} zIndex={30} />
 	</Fragment>
 
 	<Fragment
@@ -239,12 +239,12 @@
 	</Fragment>
 	
 	<Fragment step={14}>
-		<Line from={{ x: 191.4, y: 260.8 }} to={{ x: 400, y: 260 }} startMarker={{ radius: 10 }} stroke={{ width: 7, color: 'var(--color-stroke-dark)' }} zIndex={33} />
+		<Line from={{ x: 191.4, y: 260.8 }} to={{ x: 400, y: 260 }} startMarker={{ radius: 10 }} stroke={{ width: 7, color: 'var(--stroke-level-0)' }} zIndex={33} />
 	</Fragment>
 
 	<!-- Step 14 (after 500ms): Diagonal DASHED line + Matthew -->
 	<Fragment step={14.1} animate="draw">
-		<Line from={{ x: 396, y: 256 }} to={{ x: 467, y: 160 }} stroke={{ width: 3.8, color: 'var(--color-stroke-dark)', dash: '8,4' }} zIndex={60} />
+		<Line from={{ x: 396, y: 256 }} to={{ x: 467, y: 160 }} stroke={{ width: 3.8, color: 'var(--stroke-level-0)', dash: '8,4' }} zIndex={60} />
 	</Fragment>
 
 	<Fragment
@@ -313,7 +313,7 @@
 	</Fragment>
 
 	<Fragment step={15.1} animate="wipe-down">
-		<Arrow from={{ x: 211.4, y: 115.6 }} to={{ x: 219, y: 181.3 }} stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={11} />
+		<Arrow from={{ x: 211.4, y: 115.6 }} to={{ x: 219, y: 181.3 }} stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={11} />
 	</Fragment>
 
 	<!-- Step 16 (click): "now I say to you" + connector line -->
@@ -327,7 +327,7 @@
 	</Fragment>
 
 	<Fragment step={16} animate="wipe-right">
-		<Arrow from={{ x: 390.9, y: 91.1 }} to={{ x: 513.1, y: 119.7 }} stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={15} />
+		<Arrow from={{ x: 390.9, y: 91.1 }} to={{ x: 513.1, y: 119.7 }} stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={15} />
 	</Fragment>
 
 	<!-- Step 16 (after 500ms): CHURCH + connector lines -->
@@ -342,11 +342,11 @@
 	</Fragment>
 
 	<Fragment step={16.1} animate="draw">
-		<Line from={{ x: 462, y: 165 }} to={{ x: 712.1, y: 165 }} stroke={{ width: 3.8, color: 'var(--color-stroke-dark)', dash: '10,5' }} zIndex={31} />
+		<Line from={{ x: 462, y: 165 }} to={{ x: 712.1, y: 165 }} stroke={{ width: 3.8, color: 'var(--stroke-level-0)', dash: '10,5' }} zIndex={31} />
 	</Fragment>
 
 	<Fragment step={16.1} animate="draw">
-		<Line from={{ x: 455.5, y: 173.4 }} to={{ x: 717.3, y: 173.4 }} stroke={{ width: 3.8, color: 'var(--color-level3', dash: '10,5' }} zIndex={56} />
+		<Line from={{ x: 455.5, y: 173.4 }} to={{ x: 717.3, y: 173.4 }} stroke={{ width: 3.8, color: 'var(--bg-level-3', dash: '10,5' }} zIndex={56} />
 	</Fragment>
 
 	<!-- Step 17 (click): SPIRITUAL + 2 Corinthians 3:7-11 link -->
@@ -393,7 +393,7 @@
 	<Fragment
 		step={20}
 		layout={{ x: 502.1, y: 180, width: 250, height: 74.7 }}
-		font={{ font_size: 16.7, color: 'var(--color-level3)', wrap: true }}
+		font={{ font_size: 16.7, color: 'var(--bg-level-3)', wrap: true }}
 		zIndex={37}
 	>
 		Church Nation, Promise land,<br/>Battle, Birthrights, Circumcision,<br/>Blood, Sacrifice, Worship,<br/>Heavenly Jerusalem
@@ -412,12 +412,12 @@
 
 	<!-- Step 22 (click): Diagonal DASHED purple line to Eternal + ETERNAL label -->
 	<Fragment step={22} animate="wipe-up">
-		<Line from={{ x: 716, y: 113 }} to={{ x: 716, y: 172 }} stroke={{ width: 3.8, color: 'var(--color-level3)', dash: '10,5' }} zIndex={59} />
+		<Line from={{ x: 716, y: 113 }} to={{ x: 716, y: 172 }} stroke={{ width: 3.8, color: 'var(--bg-level-3)', dash: '10,5' }} zIndex={59} />
 	</Fragment>
 
 	<!-- Step 22 (after): Blue DASHED vertical line to Eternal + ETERNAL -->
 	<Fragment step={22.1} animate="wipe">
-		<Line from={{ x: 715, y: 115 }} to={{ x: 958, y: 115 }} stroke={{ width: 4.4, color: 'var(--color-level3)', dash: '10,5' }} zIndex={32} />
+		<Line from={{ x: 715, y: 115 }} to={{ x: 958, y: 115 }} stroke={{ width: 4.4, color: 'var(--bg-level-3)', dash: '10,5' }} zIndex={32} />
 	</Fragment>
 
 	<Fragment
@@ -493,11 +493,11 @@
 
 	<!-- Step 28 (click): Connector ARROW lines to Romans 7:14 -->
 	<Fragment step={28} animate="wipe-down">
-		<Arrow from={{ x: 414.2, y: 320 }} to={{ x: 530, y: 364 }} stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={50} />
+		<Arrow from={{ x: 414.2, y: 320 }} to={{ x: 530, y: 364 }} stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={50} />
 	</Fragment>
 
 	<Fragment step={28} animate="wipe-down">
-		<Arrow from={{ x: 669, y: 234.2 }} to={{ x: 683.8, y: 358.6 }} stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={57} />
+		<Arrow from={{ x: 669, y: 234.2 }} to={{ x: 683.8, y: 358.6 }} stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={57} />
 	</Fragment>
 
 	<!-- Step 29 (click): ...How? -->

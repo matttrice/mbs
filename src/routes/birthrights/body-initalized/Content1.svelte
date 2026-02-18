@@ -44,14 +44,14 @@
 	step={2}
 	layout={{ x: 90, y: 328, width: 797, height: 157 }}
 	font={{ font_size: 21.7, wrap: true }}
-	fill="var(--color-bg-light)"
+	fill="var(--bg-light)"
 >
 	1 When the day of Pentecost came, they were all together in one place. 2 Suddenly a sound like the blowing of a violent wind came from heaven and filled the whole house where they were sitting. 3 They saw what seemed to be tongues of fire that separated and came to rest on each of them. 4 All of them were filled with the Holy Spirit and began to speak in other tongues as the Spirit enabled them.
 </Fragment>
 
 <!-- Step 3: Commentary box -->
 <Fragment step={3}>
-	<Rect x={156} y={238} width={682} height={57} fill="var(--color-bg-light)" stroke={{ width: 3, color: '#000000' }} zIndex={5} />
+	<Rect x={156} y={238} width={682} height={57} fill="var(--bg-light)" stroke={{ width: 3, color: '#000000' }} zIndex={5} />
 </Fragment>
 
 <!-- Step 3: Commentary text -->

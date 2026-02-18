@@ -39,7 +39,7 @@
 	step={3}
 	layout={{ x: 74, y: 309, width: 554, height: 90 }}
 	font={{ font_size: 26.7, wrap: true }}
-	fill="var(--color-bg-light)"
+	fill="var(--bg-light)"
 >
 	<sup>15</sup> And I will put enmity between you and the woman, and between your offspring and hers;
 </Fragment>
@@ -58,7 +58,7 @@
 	step={5}
 	layout={{ x: 69, y: 50, width: 800, height: 66 }}
 	font={{ font_size: 26.7, wrap: true }}
-	fill="var(--color-bg-light)"
+	fill="var(--bg-light)"
 >
 	Then the LORD God said to the woman, "What is this you have done?" The woman said, "The serpent deceived me, and I ate."
 </Fragment>
@@ -68,7 +68,7 @@
 	step={6}
 	layout={{ x: 74, y: 309, width: 554, height: 90 }}
 	font={{ font_size: 26.7, wrap: true }}
-	fill="var(--color-bg-light)"
+	fill="var(--bg-light)"
 >
 	<sup>15</sup> And I will put enmity between you and the woman, and between your offspring and hers;
 </Fragment>
@@ -78,7 +78,7 @@
 	step={7}
 	layout={{ x: 129, y: 402, width: 418, height: 67 }}
 	font={{ font_size: 30.8, bold: true, color: '#0000FF', v_align: 'middle' }}
-	fill="var(--color-bg-light)"
+	fill="var(--bg-light)"
 >
 	he will crush your head, and<br>you will strike his heel."
 </Fragment>

@@ -101,7 +101,7 @@
 			Ubuntu,
 			sans-serif;
 		overflow: hidden;
-		background: var(--color-bg-light);
+		background: var(--bg-light);
 	}
 
 	.presentation-container {

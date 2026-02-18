@@ -25,7 +25,7 @@
 
 	<!-- Step 1: Gray rectangle (left column) -->
 	<Fragment step={1} animate="wipe-down">
-		<Rect x={59} y={53} width={331} height={487} fill="var(--color-level1)" zIndex={1} />
+		<Rect x={59} y={53} width={331} height={487} fill="var(--bg-level-1)" zIndex={1} />
 	</Fragment>
 
 	<!-- Step 1: Top line - with previous -->
@@ -194,7 +194,7 @@
 
 	<!-- Step 13: Blue rectangle (right column) - with previous -->
 	<Fragment step={13} animate="wipe-down">
-		<Rect x={533} y={53} width={371} height={487} fill="var(--color-level2)" zIndex={0} />
+		<Rect x={533} y={53} width={371} height={487} fill="var(--bg-level-2)" zIndex={0} />
 	</Fragment>
 
 	<!-- Step 14: Hebrews 7:25 drillTo -->
@@ -368,7 +368,7 @@
 	:global(.slide-bg) {
 		position: absolute;
 		inset: 0;
-		background: var(--color-bg-ghost);
+		background: var(--bg-ghost);
 	}
 
 	:global(.slide-image) {

@@ -289,8 +289,8 @@
 		step={13}
 		layout={{ x: 161, y: 406, width: 200, height: 80 }}
 		font={{ font_size: 26.7, bold: true, wrap: true, align: 'center', v_align: 'middle' }}
-		fill="var(--color-bg-ghost)"
-		line={{ color: 'var(--color-bg-darkest)', width: 1 }}
+		fill="var(--bg-ghost)"
+		line={{ color: 'var(--bg-level-0)', width: 1 }}
 		zIndex={17}
 	>
 		How does the Author think?

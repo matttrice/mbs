@@ -39,12 +39,12 @@
 	<!-- ===== STATIC CONTENT ===== -->
 	<!-- Static horizontal timeline line (visible throughout) - DASHED blue line -->
 	<Fragment>
-		<Line from={{ x: 0, y: 260 }} to={{ x: 960, y: 260 }} stroke={{ width: 4.8, color: 'var(--color-level3)', dash: '10,5' }} zIndex={3} />
+		<Line from={{ x: 0, y: 260 }} to={{ x: 960, y: 260 }} stroke={{ width: 4.8, color: 'var(--bg-level-3)', dash: '10,5' }} zIndex={3} />
 	</Fragment>
 
 	<Fragment
 		layout={{ x: center(GL, 142.1), y: 302.4, width: 142.1, height: 48.3 }}
-		font={{ font_size: 33.3, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 33.3, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={1}
 	>
 		Eternity
@@ -79,7 +79,7 @@
 	</Fragment>
 	
 	<Fragment step={3.1} animate="wipe">
-		<Line from={{ x: 102, y: 260 }} to={{ x: 855, y: 260 }} stroke={{ width: 6.7, color: 'var(--color-stroke-dark)' }} 
+		<Line from={{ x: 102, y: 260 }} to={{ x: 855, y: 260 }} stroke={{ width: 6.7, color: 'var(--stroke-level-0)' }} 
 			  startMarker={{ radius: 8 }}  
 			  endMarker={{ radius: 8 }} zIndex={24} />
 	</Fragment>
@@ -96,7 +96,7 @@
 	<Fragment
 		step={4}
 		layout={{ x: center(GR, 142.2), y: 302.4, width: 142.2, height: 48.3 }}
-		font={{ font_size: 33.3, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 33.3, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={1}
 	>
 		Eternity
@@ -105,7 +105,7 @@
 	<Fragment
 		step={5}
 		layout={{ x: 44.9, y: 81.6, width: 41.9, height: 45.6 }}
-		font={{ font_size: 50, color: 'var(--color-level3)' }}
+		font={{ font_size: 50, color: 'var(--bg-level-3)' }}
 		zIndex={68}
 	>
 		E
@@ -132,7 +132,7 @@
 	<Fragment
 		step={5}
 		layout={{ x: 131.6, y: 81.4, width: 63, height: 45.6 }}
-		font={{ font_size: 50, color: 'var(--color-level3)' }}
+		font={{ font_size: 50, color: 'var(--bg-level-3)' }}
 		zIndex={71}
 	>
 		c²
@@ -140,8 +140,8 @@
 
 	<!-- Step 1: Background columns appear (SPIRITUAL left blue, PHYSICAL right gray) -->
 	<Fragment step={5} animate="wipe-down">
-		<Rect x={L.x} y={0} width={L.w} height={540} fill="var(--color-level2)" zIndex={0} />
-		<Rect x={R.x} y={0} width={R.w} height={540} fill="var(--color-level1)" zIndex={0} />
+		<Rect x={L.x} y={0} width={L.w} height={540} fill="var(--bg-level-2)" zIndex={0} />
+		<Rect x={R.x} y={0} width={R.w} height={540} fill="var(--bg-level-1)" zIndex={0} />
 	</Fragment>
 	
 	<!-- SPIRITUAL label fades in left, slides right at step -->
@@ -149,7 +149,7 @@
 		step={5}
 		animate="fly-down"
 		layout={{ x: center(L, 230.6), y: 7, width: 230.6, height: 52.4 }}
-		font={{ font_size: 36.7, bold: true, color: 'var(--color-level3)', align: 'center' }}
+		font={{ font_size: 36.7, bold: true, color: 'var(--bg-level-3)', align: 'center' }}
 		keyframes={[{ step: 7, x: swapDx }]}
 		transition={{ duration: 800 }}
 		zIndex={2}
@@ -180,17 +180,17 @@
 
 	<!-- EMC2 Arrows -->
 	<Fragment step={6} animate="draw">
-		<Arc from={{ x: 77, y: 80 }} to={{ x: 114, y: 79 }} curve={-50} stroke={{ width: 3, color: 'var(--color-level3)' }} arrow  />
-		<Arc from={{ x: 141, y: 86 }} to={{ x: 68, y: 74 }} curve={90} shift={20} stroke={{ width: 3, color: 'var(--color-stroke-dark)' }} arrow />
+		<Arc from={{ x: 77, y: 80 }} to={{ x: 114, y: 79 }} curve={-50} stroke={{ width: 3, color: 'var(--bg-level-3)' }} arrow  />
+		<Arc from={{ x: 141, y: 86 }} to={{ x: 68, y: 74 }} curve={90} shift={20} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} arrow />
 	</Fragment>
 
 	<!-- Step 2: Background columns swap (gray left, blue right) -->
 	<Fragment step={7} animate="wipe-left">
-		<Rect x={L.x} y={0} width={L.w} height={540} fill="var(--color-level1)" zIndex={1} />
+		<Rect x={L.x} y={0} width={L.w} height={540} fill="var(--bg-level-1)" zIndex={1} />
 	</Fragment>
 
 	<Fragment step={7} animate="wipe-right">
-		<Rect x={R.x} y={0} width={R.w} height={540} fill="var(--color-level2)" zIndex={1} />
+		<Rect x={R.x} y={0} width={R.w} height={540} fill="var(--bg-level-2)" zIndex={1} />
 	</Fragment>
 	
 	<Fragment
@@ -205,7 +205,7 @@
 	<Fragment
 		step={9}
 		layout={{ x: center(R, 221.9), y: 45, width: 221.9, height: 88.3 }}
-		font={{ font_size: 33.3, bold: true, color: 'var(--color-level3)', wrap: true }}
+		font={{ font_size: 33.3, bold: true, color: 'var(--bg-level-3)', wrap: true }}
 		zIndex={27}
 	>
 		Eternal<br />Unseen
@@ -232,7 +232,7 @@
 	<Fragment
 		step={10}
 		layout={{ x: center(R, 250), y: 126.8, width: 250, height: 47.9 }}
-		font={{ font_size: 30, bold: true, align: 'center', color: 'var(--color-level3)' }}
+		font={{ font_size: 30, bold: true, align: 'center', color: 'var(--bg-level-3)' }}
 		zIndex={18}
 	>
 		True/Substance
@@ -243,7 +243,7 @@
 		drillTo="physical-spiritual/hebrews-9-22"
 		layout={{ x: 14.6, y: 133.8, width: 205.6, height: 34.3 }}
 		font={{ font_size: 23.3, bold: true }}
-		fill="var(--color-level2)"
+		fill="var(--bg-level-2)"
 		zIndex={32}
 	>
 		Hebrews 9:22-24
@@ -288,7 +288,7 @@
 	<Fragment
 		step={15}
 		layout={{ x: center(R, 157.4), y: 316.5, width: 157.4, height: 118 }}
-		font={{ font_size: 26.7, bold: true, color: 'var(--color-level3)', wrap: true }}
+		font={{ font_size: 26.7, bold: true, color: 'var(--bg-level-3)', wrap: true }}
 		zIndex={23}
 	>
 		Imperishable<br />Powerful<br />Glorified
@@ -306,7 +306,7 @@
 	<Fragment
 		step={16}
 		layout={{ x: center(L, 130.8), y: 174.8, width: 130.8, height: 29.2 }}
-		font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--color-level3)', align: 'center' }}
+		font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--bg-level-3)', align: 'center' }}
 		zIndex={15}
 	>
 		Glory #1
@@ -315,7 +315,7 @@
 	<Fragment
 		step={17}
 		layout={{ x: center(R, 130.6), y: 180.4, width: 130.6, height: 29.2 }}
-		font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--color-level3)', align: 'center' }}
+		font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--bg-level-3)', align: 'center' }}
 		zIndex={11}
 	>
 		Glory #2
@@ -324,7 +324,7 @@
 	<Fragment
 		step={18}
 		layout={{ x: center(GR, 130.6), y: 128.6, width: 130.6, height: 29.2 }}
-		font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--color-level3)', align: 'center' }}
+		font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--bg-level-3)', align: 'center' }}
 		zIndex={4}
 	>
 		Glory #3
@@ -333,7 +333,7 @@
 	<Fragment
 		step={18}
 		layout={{ x: center(GR, 177.8), y: 150, width: 177.8, height: 55.4 }}
-		font={{ font_size: 39.2, bold: true, color: 'var(--color-level3)', align: 'center' }}
+		font={{ font_size: 39.2, bold: true, color: 'var(--bg-level-3)', align: 'center' }}
 		zIndex={14}
 	>
 		HEAVEN

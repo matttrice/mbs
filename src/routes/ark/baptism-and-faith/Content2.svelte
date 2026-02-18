@@ -50,12 +50,12 @@
 
 <!-- Step 3: First arrow (timing: click) -->
 <Fragment step={3} animate="wipe-up">
-	<Arc from={{ x: 518, y: 423 }} to={{ x: 413, y: 82 }}  stroke={{ width: 5, color: 'var(--color-level3)' }} arrow />	
+	<Arc from={{ x: 518, y: 423 }} to={{ x: 413, y: 82 }}  stroke={{ width: 5, color: 'var(--bg-level-3)' }} arrow />	
 </Fragment>
 
 <!-- Step 4: Second arrow (timing: click) -->
 <Fragment step={4} animate="wipe-up">
-	<Arc from={{ x: 379, y: 446 }} to={{ x: 329, y: 108 }} stroke={{ width: 5, color: 'var(--color-level3)' }} arrow />
+	<Arc from={{ x: 379, y: 446 }} to={{ x: 329, y: 108 }} stroke={{ width: 5, color: 'var(--bg-level-3)' }} arrow />
 </Fragment>
 
 <Fragment
@@ -69,7 +69,7 @@
 <Fragment
 	step={5}
 	layout={{ x: 94, y: 185, width: 799, height: 173 }}
-	fill="var(--color-bg-light)"
+	fill="var(--bg-light)"
 	font={{ font_size: 22, align: 'left', wrap: true }}
 	line={{ width: 8 }}
 	 zIndex={1}

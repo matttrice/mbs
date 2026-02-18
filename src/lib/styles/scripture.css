@@ -6,7 +6,7 @@
 .drill-content {
 	width: 100%;
 	height: 100%;
-	background: var(--color-bg-light);
+	background: var(--bg-light);
 	display: flex;
 	flex-direction: column;
 	padding: var(--spacing-page);
@@ -22,7 +22,7 @@
 .drill-content header h1 {
 	font-size: var(--font-size-title);
 	margin: 0;
-	color: var(--color-text-primary);
+	color: var(--text-level-0);
 	font-weight: bold;
 }
 
@@ -40,7 +40,7 @@
 
 /* Scripture blockquote styling */
 .scripture {
-	background: var(--color-bg-ghost);
+	background: var(--bg-ghost);
 	padding: 24px 32px;
 	margin: 0;
 	font-size: var(--font-size-scripture);
@@ -64,7 +64,7 @@
 }
 
 .scripture sup {
-	color: var(--color-text-muted);
+	color: var(--text-level-1);
 	font-size: var(--font-size-verse);
 	margin-right: 2px;
 }
@@ -90,7 +90,7 @@
 	text-align: center;
 	color: #333;
 	padding: 20px;
-	background: var(--color-bg-ghost);
+	background: var(--bg-ghost);
 	border-radius: var(--radius-card);
 	box-shadow: 0 2px 8px var(--color-shadow);
 }

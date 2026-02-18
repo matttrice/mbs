@@ -114,7 +114,7 @@
 		step={5.1}
 		layout={{ x: 588, y: 332, width: 200, height: 25 }}
 		font={{ font_size: 26.7, bold: true, align: 'center'}}
-		fill="var(--color-bg-light)"
+		fill="var(--bg-light)"
 		line={{ width: 1 }}
 		zIndex={textLayer}
 	>

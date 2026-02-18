@@ -28,7 +28,7 @@
 	<!-- Excarnation references (right side, static) -->
 	<Fragment
 		layout={{ x: 649, y: 231, width: 244, height: 32 }}
-		font={{ v_align: 'middle', color: 'var(--color-level3)' }}
+		font={{ v_align: 'middle', color: 'var(--bg-level-3)' }}
 		zIndex={7}
 	>
 		Taken up into Heaven"
@@ -36,7 +36,7 @@
 
 	<Fragment
 		layout={{ x: 651, y: 94, width: 246, height: 34 }}
-		font={{ v_align: 'middle', font_size: 20, color: 'var(--color-level3)' }}
+		font={{ v_align: 'middle', font_size: 20, color: 'var(--bg-level-3)' }}
 		zIndex={8}
 	>
 		Enoch- "took him away"
@@ -44,7 +44,7 @@
 
 	<Fragment
 		layout={{ x: 651, y: 138, width: 277, height: 34 }}
-		font={{ v_align: 'middle', font_size: 20, color: 'var(--color-level3)' }}
+		font={{ v_align: 'middle', font_size: 20, color: 'var(--bg-level-3)' }}
 		zIndex={9}
 	>
 		Elijah- "went up to heaven"
@@ -52,7 +52,7 @@
 
 	<Fragment
 		layout={{ x: 648, y: 182, width: 222, height: 34 }}
-		font={{ v_align: 'middle', font_size: 20, color: 'var(--color-level3)' }}
+		font={{ v_align: 'middle', font_size: 20, color: 'var(--bg-level-3)' }}
 		zIndex={10}
 	>
 		Jesus' transfiguration
@@ -62,7 +62,7 @@
 	<Fragment
 		drillTo="translation/genesis-5-21"
 		layout={{ x: 637, y: 77, width: 201, height: 31 }}
-		font={{ v_align: 'middle', bold: true, color: 'var(--color-level3)' }}
+		font={{ v_align: 'middle', bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={11}
 	>
 		Genesis 5:21-24
@@ -71,7 +71,7 @@
 	<Fragment
 		drillTo="translation/2-kings-2-11"
 		layout={{ x: 637, y: 118, width: 163, height: 32 }}
-		font={{ v_align: 'middle', font_size: 20, bold: true, color: 'var(--color-level3)' }}
+		font={{ v_align: 'middle', font_size: 20, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={12}
 	>
 		2 Kings 2:11-12
@@ -80,7 +80,7 @@
 	<Fragment
 		drillTo="translation/matthew-17-1"
 		layout={{ x: 637, y: 164, width: 161, height: 32 }}
-		font={{ v_align: 'middle', font_size: 20, bold: true, color: 'var(--color-level3)' }}
+		font={{ v_align: 'middle', font_size: 20, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={13}
 	>
 		Matthew 17:1-3
@@ -89,7 +89,7 @@
 	<Fragment
 		drillTo="translation/luke-24-50"
 		layout={{ x: 638, y: 208, width: 149, height: 32 }}
-		font={{ v_align: 'middle', font_size: 20, bold: true, color: 'var(--color-level3)' }}
+		font={{ v_align: 'middle', font_size: 20, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={14}
 	>
 		Luke 24:50-52
@@ -98,7 +98,7 @@
 	<!-- Incarnation references (left side, static descriptions) -->
 	<Fragment
 		layout={{ x: 95, y: 94, width: 289, height: 24 }}
-		font={{ v_align: 'middle', align: 'left', color: 'var(--color-level1)' }}
+		font={{ v_align: 'middle', align: 'left', color: 'var(--bg-level-1)' }}
 		zIndex={16}
 	>
 		Serpent, heard Lord walking
@@ -106,7 +106,7 @@
 
 	<Fragment
 		layout={{ x: 95, y: 136, width: 262, height: 34 }}
-		font={{ v_align: 'middle', align: 'left', font_size: 20, color: 'var(--color-level1)' }}
+		font={{ v_align: 'middle', align: 'left', font_size: 20, color: 'var(--bg-level-1)' }}
 		zIndex={19}
 	>
 		Visitors surprise Abraham
@@ -114,7 +114,7 @@
 
 	<Fragment
 		layout={{ x: 95, y: 182, width: 210, height: 51 }}
-		font={{ v_align: 'middle', align: 'left', color: 'var(--color-level1)' }}
+		font={{ v_align: 'middle', align: 'left', color: 'var(--bg-level-1)' }}
 		zIndex={15}
 	>
 		Moses protected from glory of God
@@ -122,7 +122,7 @@
 
 	<Fragment
 		layout={{ x: 95, y: 248, width: 178, height: 29 }}
-		font={{ v_align: 'middle', align: 'left', font_size: 20, color: 'var(--color-level1)' }}
+		font={{ v_align: 'middle', align: 'left', font_size: 20, color: 'var(--bg-level-1)' }}
 		zIndex={20}
 	>
 		Balaam's donkey
@@ -130,7 +130,7 @@
 
 	<Fragment
 		layout={{ x: 95, y: 289, width: 235, height: 38 }}
-		font={{ v_align: 'middle', align: 'left', font_size: 20, color: 'var(--color-level1)' }}
+		font={{ v_align: 'middle', align: 'left', font_size: 20, color: 'var(--bg-level-1)' }}
 		zIndex={18}
 	>
 		glowing metal, chrysolite
@@ -138,7 +138,7 @@
 
 	<Fragment
 		layout={{ x: 95, y: 339, width: 181, height: 29 }}
-		font={{ v_align: 'middle', align: 'left', font_size: 20, color: 'var(--color-level1)' }}
+		font={{ v_align: 'middle', align: 'left', font_size: 20, color: 'var(--bg-level-1)' }}
 		zIndex={17}
 	>
 		shining clothes
@@ -146,7 +146,7 @@
 
 	<Fragment
 		layout={{ x: 95, y: 382, width: 229, height: 49 }}
-		font={{ v_align: 'middle', align: 'left', font_size: 20, color: 'var(--color-level1)' }}
+		font={{ v_align: 'middle', align: 'left', font_size: 20, color: 'var(--bg-level-1)' }}
 		zIndex={21}
 	>
 		Paul blinded by light on Damascus road
@@ -222,7 +222,7 @@
 		layout={{ x: 385, y: 86, width: 191, height: 123 }}
 		fill="#000000"
 		line={{ width: 4 }}
-		font={{ v_align: 'middle', align: 'center', color: 'var(--color-level1)' }}
+		font={{ v_align: 'middle', align: 'center', color: 'var(--bg-level-1)' }}
 		zIndex={3}
 		animate="fade"
 	>
@@ -235,7 +235,7 @@
 		layout={{ x: 374, y: 208, width: 214, height: 72 }}
 		fill="#FFFFFF"
 		line={{ width: 1, color: '#000000' }}
-		font={{ v_align: 'middle', align: 'center', font_name: 'Arial Black', font_size: 50, bold: true, color: 'var(--color-level3)' }}
+		font={{ v_align: 'middle', align: 'center', font_name: 'Arial Black', font_size: 50, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={29}
 		animate="fade"
 	>
@@ -246,7 +246,7 @@
 	<Fragment
 		step={2}
 		layout={{ x: 619, y: 416, width: 294, height: 96 }}
-		font={{ v_align: 'middle', align: 'center', font_size: 66.7, bold: true, color: 'var(--color-level3)' }}
+		font={{ v_align: 'middle', align: 'center', font_size: 66.7, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={30}
 		animate="fade"
 	>
@@ -297,7 +297,7 @@
 		step={4}
 		drillTo="translation/excarnation"
 		layout={{ x: 637, y: 25, width: 242, height: 56 }}
-		font={{ v_align: 'middle', font_size: 39.2, bold: true, color: 'var(--color-level3)' }}
+		font={{ v_align: 'middle', font_size: 39.2, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={5}
 		animate="fade"
 	>
@@ -317,6 +317,6 @@
 
 	<!-- Step 4: Excarnation arrow (Exit - Spiritual to Physical) (with) -->
 	<Fragment step={4} animate="wipe">
-		<Arrow from={{ x: 0, y: 466 }} to={{ x: 638, y: 468 }} stroke={{ width: 70, color: 'var(--color-level3)' }} zIndex={1} />
+		<Arrow from={{ x: 0, y: 466 }} to={{ x: 638, y: 468 }} stroke={{ width: 70, color: 'var(--bg-level-3)' }} zIndex={1} />
 	</Fragment>
 </Slide>

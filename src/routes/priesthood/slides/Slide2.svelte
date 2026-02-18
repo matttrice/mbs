@@ -30,7 +30,7 @@
 
 	<!-- Step 1: Gray rectangle (left column) - instant with rectangle visible -->
 	<Fragment step={1} animate="fade">
-		<Rect x={48} y={54} width={418} height={364} fill="var(--color-level1)" zIndex={1} />
+		<Rect x={48} y={54} width={418} height={364} fill="var(--bg-level-1)" zIndex={1} />
 	</Fragment>
 
 	<!-- Step 1.1: Is everyone a priest? - after -->
@@ -207,7 +207,7 @@
 
 	<!-- Step 11: Blue rectangle (right column) - with previous -->
 	<Fragment step={11} animate="wipe-down">
-		<Rect x={466} y={54} width={446} height={400} fill="var(--color-level2)" zIndex={0} />
+		<Rect x={466} y={54} width={446} height={400} fill="var(--bg-level-2)" zIndex={0} />
 	</Fragment>
 
 	<!-- Step 11: What is the name of the Priesthood over the CHURCH? - with previous -->
@@ -334,7 +334,7 @@
 
 	<!-- Step 18: Blue fill between frames - with previous -->
 	<Fragment step={18} animate="fade">
-		<Rect x={673} y={147} width={25} height={67} fill="var(--color-level2)" zIndex={44} />
+		<Rect x={673} y={147} width={25} height={67} fill="var(--bg-level-2)" zIndex={44} />
 	</Fragment>
 
 	<!-- Step 18: Curved arrow - with previous (simplified to straight arrow) -->
@@ -420,7 +420,7 @@
 		step={25}
 		layout={{ x: 221, y: 404, width: 357, height: 50 }}
 		font={{ font_size: 24, bold: true, v_align: 'middle', wrap: true, align: 'center' }}
-		fill="var(--color-level2)"
+		fill="var(--bg-level-2)"
 		zIndex={22}
 	>
 		Responsibilities / Duties:
@@ -502,6 +502,6 @@
 	:global(.slide-bg) {
 		position: absolute;
 		inset: 0;
-		background: var(--color-bg-ghost);
+		background: var(--bg-ghost);
 	}
 </style>

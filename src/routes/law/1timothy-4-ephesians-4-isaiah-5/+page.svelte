@@ -35,7 +35,7 @@
 		step={2}
 		layout={{ x: 130.4, y: 345.1, width: 706.4, height: 64.5 }}
 		font={{ font_size: 23.3, align: 'center', wrap: true }}
-		fill="var(--color-level2)"
+		fill="var(--bg-level-2)"
 	>
 		Does a person with seared conscience or callous heart distinguish easily between what is good and what is evil?
 	</Fragment>

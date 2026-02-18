@@ -204,7 +204,7 @@
 		drillTo="life/greek-hebrew-soul-spirit"
 		layout={{ x: 289.8, y: 187.5, width: 187.9, height: 64.2 }}
 		font={{ font_size: 23.3, align: 'center' }}
-		fill="var(--color-bg-ghost)"
+		fill="var(--bg-ghost)"
 		line={{ width: 0.8, color: '#000000' }}
 		zIndex={18}
 	>
@@ -229,7 +229,7 @@
 
 	<!-- Step 15 (with): Body section background -->
 	<Fragment step={15} animate="wipe-down">
-		<Rect x={81.1} y={394} width={286.4} height={138} fill="var(--color-level1)" zIndex={2} />
+		<Rect x={81.1} y={394} width={286.4} height={138} fill="var(--bg-level-1)" zIndex={2} />
 	</Fragment>
 
 	<!-- Step 15.1: Cloud callout - Spirit description -->
@@ -338,7 +338,7 @@
 		step={26}
 		layout={{ x: 498.1, y: 92.4, width: 127.1, height: 128.4 }}
 		font={{ font_size: 23.3, align: 'center' }}
-		fill="var(--color-level1)"
+		fill="var(--bg-level-1)"
 		line={{ width: 0.8 }}
 		zIndex={27}
 	>
@@ -375,7 +375,7 @@
 		step={30}
 		layout={{ x: 498.1, y: 224.3, width: 126.1, height: 123.8 }}
 		font={{ font_size: 23.3, align: 'center' }}
-		fill="var(--color-level1)"
+		fill="var(--bg-level-1)"
 		line={{ width: 0.8 }}
 		zIndex={28}
 	>

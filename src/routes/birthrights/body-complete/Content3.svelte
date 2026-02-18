@@ -15,7 +15,7 @@
 
 <!-- Step 1: Physical column -->
 <Fragment step={1} animate="wipe-down">
-	<Rect x={90} y={0} width={227} height={540} fill="var(--color-level1)" zIndex={0} />
+	<Rect x={90} y={0} width={227} height={540} fill="var(--bg-level-1)" zIndex={0} />
 </Fragment>
 
 <!-- Step 1.1: Dust image -->
@@ -195,7 +195,7 @@
 
 <!-- Step 12: Spiritual column -->
 <Fragment step={12} animate="wipe-down">
-	<Rect x={648} y={0} width={234} height={540} fill="var(--color-level2)" zIndex={0} />
+	<Rect x={648} y={0} width={234} height={540} fill="var(--bg-level-2)" zIndex={0} />
 </Fragment>
 
 <!-- Step 12: 2nd Adam -->
@@ -283,7 +283,7 @@
 
 <!-- Step 16: Is the Church Complete? box -->
 <Fragment step={16} animate="fade">
-	<Rect x={144} y={370} width={125} height={62} fill="var(--color-bg-light)" zIndex={50} />
+	<Rect x={144} y={370} width={125} height={62} fill="var(--bg-light)" zIndex={50} />
 </Fragment>
 
 <Fragment

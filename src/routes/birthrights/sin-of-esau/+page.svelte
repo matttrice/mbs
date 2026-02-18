@@ -42,8 +42,8 @@
 	step={2}
 	layout={{ x: 70, y: 420, width: 850, height: 100}}
 	font={{ font_size: 23.3, wrap: true, bold: true, align: 'center' }}
-	fill="var(--color-level1)"
-	line={{ width: 1, color: 'var(--color-stroke-dark)' }}	 
+	fill="var(--bg-level-1)"
+	line={{ width: 1, color: 'var(--stroke-level-0)' }}	 
 >
 	Esau cared more for filling his stomach than keeping his inheritance and therefore serves as an example of the physically minded people of the world.
 </Fragment>

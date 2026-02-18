@@ -24,7 +24,7 @@
 <Fragment
 	layout={{ x: 95, y: 110, width: 494, height: 413 }}
 	font={{ font_size: 23.3, wrap: true }}
-	fill="var(--color-bg-light)"
+	fill="var(--bg-light)"
 >
 	So it is written: "The first man Adam became a living being" the last Adam, a life-giving spirit. 46 The spiritual did not come first, but the natural, and after that the spiritual. 47 The first man was of the dust of the earth, the second man from heaven. 48 As was the earthly man, so are those who are of the earth; and as is the man from heaven, so also are those who are of heaven. 49 And just as we have borne the likeness of the earthly man, so shall we bear the likeness of the man from heaven.
 </Fragment>
@@ -40,7 +40,7 @@
 <Fragment
 	layout={{ x: 577, y: 197, width: 151, height: 45 }}
 	font={{ font_size: 30.8, bold: true }}
-	fill="var(--color-bg-light)"
+	fill="var(--bg-light)"
 	line={{ width: 1, color: '#000000' }}
 >
 	Physical
@@ -57,7 +57,7 @@
 <Fragment
 	layout={{ x: 735, y: 103, width: 140, height: 45 }}
 	font={{ font_size: 30.8, bold: true, color: '#0000FF' }}
-	fill="var(--color-bg-light)"
+	fill="var(--bg-light)"
 	line={{ width: 1, color: '#000000' }}
 >
 	Spiritual
@@ -68,7 +68,7 @@
 	step={1}
 	layout={{ x: 95, y: 110, width: 494, height: 413 }}
 	font={{ font_size: 23.3, wrap: true }}
-	fill="var(--color-bg-light)"
+	fill="var(--bg-light)"
 >
 	So it is written: "The first man Adam became a living being" the last Adam, a life-giving spirit. 46 The spiritual did not come first, but the natural, and after that the spiritual. 47 The first man was of the dust of the earth, the second man from heaven. 48 As was the earthly man, so are those who are of the earth; and as is the man from heaven, so also are those who are of heaven. 49 And just as we have borne the likeness of the earthly man, so shall we bear the likeness of the man from heaven.
 </Fragment>

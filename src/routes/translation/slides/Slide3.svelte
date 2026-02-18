@@ -116,7 +116,7 @@
 	<Fragment
 		step={3}
 		layout={{ x: 454, y: 75, width: 184, height: 42 }}
-		font={{ font_size: 26.7, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 26.7, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={22}
 		animate="fade"
 	>
@@ -147,7 +147,7 @@
 
 	<!-- Step 4: Blue flood arrow (with) -->
 	<Fragment step={4} animate="wipe">
-		<Arrow from={{ x: -2, y: 342 }} to={{ x: 428, y: 342 }} stroke={{ width: 82, color: 'var(--color-level3)' }} zIndex={33} />
+		<Arrow from={{ x: -2, y: 342 }} to={{ x: 428, y: 342 }} stroke={{ width: 82, color: 'var(--bg-level-3)' }} zIndex={33} />
 	</Fragment>
 
 	<!-- Step 5: "in those days" Pre-Flood -->

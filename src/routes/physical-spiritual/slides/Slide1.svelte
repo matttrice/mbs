@@ -58,18 +58,18 @@
 
 	<!-- Step 3: "Heavens" + Blue rectangle + Lines + "Earth" + Gray rectangle (all with timing) -->
 	<Fragment step={3} animate="wipe-down">
-		<Rect x={192.7} y={0} width={288} height={540} fill="var(--color-level2)" zIndex={0} />
-		<Rect x={480} y={0} width={270} height={540} fill="var(--color-level1)" zIndex={0} />
+		<Rect x={192.7} y={0} width={288} height={540} fill="var(--bg-level-2)" zIndex={0} />
+		<Rect x={480} y={0} width={270} height={540} fill="var(--bg-level-1)" zIndex={0} />
 		<!-- Horizontal divider line -->
-		<Line from={{ x: 192.4, y: 55.4 }} to={{ x: 750.4, y: 55.4 }} stroke={{ width: 3, color: 'var(--color-stroke-dark)' }} zIndex={0} />
+		<Line from={{ x: 192.4, y: 55.4 }} to={{ x: 750.4, y: 55.4 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={0} />
 		<!-- Vertical divider line -->
-		<Line from={{ x: 481.5, y: 0 }} to={{ x: 481.5, y: 540 }} stroke={{ width: 3, color: 'var(--color-stroke-dark)' }} zIndex={0} />
+		<Line from={{ x: 481.5, y: 0 }} to={{ x: 481.5, y: 540 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={0} />
 	</Fragment>
 
 	<Fragment
 		step={3}
 		layout={{ x: 239.5, y: 6.9, width: 217.1, height: 40.8 }}
-		font={{ font_size: 50, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 50, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={10}
 	>
 		Heavens
@@ -90,7 +90,7 @@
 		drillTo="physical-spiritual/colossians-1-15"
 		layout={{ x: 693.8, y: 60.3, width: 247.2, height: 36.1 }}
 		font={{ font_size: 23.3, bold: true, align: 'left' }}
-		fill="var(--color-level1)"
+		fill="var(--bg-level-1)"
 		zIndex={62}
 	>
 		Colossians 1:15-16
@@ -119,7 +119,7 @@
 	<Fragment
 		step={6}
 		layout={{ x: 240.4, y: 55, width: 210, height: 36.1 }}
-		font={{ font_size: 40, color: 'var(--color-level3)' }}
+		font={{ font_size: 40, color: 'var(--bg-level-3)' }}
 		zIndex={14}
 	>
 		Invisible
@@ -131,7 +131,7 @@
 		drillTo="physical-spiritual/2corinthians-4-17"
 		layout={{ x: 693.8, y: 96.4, width: 247.2, height: 40.6 }}
 		font={{ font_size: 23.3, bold: true, align: 'left' }}
-		fill="var(--color-level1)"
+		fill="var(--bg-level-1)"
 		zIndex={63}
 	>
 		2 Corinthians 4:17
@@ -161,7 +161,7 @@
 	<Fragment
 		step={10}
 		layout={{ x: 264.9, y: 93.6, width: 161.1, height: 35.9 }}
-		font={{ font_size: 40, color: 'var(--color-level3)' }}
+		font={{ font_size: 40, color: 'var(--bg-level-3)' }}
 		zIndex={16}
 	>
 		Unseen
@@ -171,7 +171,7 @@
 	<Fragment
 		step={11}
 		layout={{ x: 265.8, y: 131.4, width: 159.3, height: 38.6 }}
-		font={{ font_size: 40, color: 'var(--color-level3)' }}
+		font={{ font_size: 40, color: 'var(--bg-level-3)' }}
 		zIndex={18}
 	>
 		Eternal
@@ -183,7 +183,7 @@
 		drillTo="physical-spiritual/hebrews-11-1"
 		layout={{ x: 695.6, y: 134.2, width: 245.1, height: 35.1 }}
 		font={{ font_size: 23.3, bold: true, align: 'left' }}
-		fill="var(--color-level1)"
+		fill="var(--bg-level-1)"
 		zIndex={22}
 	>
 		Hebrews 11:1
@@ -252,7 +252,7 @@
 	<Fragment
 		step={16.2}
 		layout={{ x: 228.8, y: 260, width: 235.9, height: 31.3 }}
-		font={{ font_size: 25, color: 'var(--color-level3)' }}
+		font={{ font_size: 25, color: 'var(--bg-level-3)' }}
 		zIndex={27}
 	>
 		Force of Electricity
@@ -274,7 +274,7 @@
 	<Fragment
 		step={19}
 		layout={{ x: 255.8, y: 234.8, width: 182, height: 31.3 }}
-		font={{ font_size: 25, color: 'var(--color-level3)' }}
+		font={{ font_size: 25, color: 'var(--bg-level-3)' }}
 		zIndex={26}
 	>
 		Force of Wind
@@ -296,14 +296,14 @@
 	<Fragment
 		step={21}
 		layout={{ x: 246.8, y: 206.1, width: 199.8, height: 31.3 }}
-		font={{ font_size: 25, color: 'var(--color-level3)' }}
+		font={{ font_size: 25, color: 'var(--bg-level-3)' }}
 		zIndex={28}
 	>
 		Force of Gravity
 	</Fragment>
 
 	<Fragment step={22} animate="fade">
-		<Rect x={206} y={178} width={275} height={118.9} fill="var(--color-bg-light)" stroke={{ color: '#000000', width: 1 }} zIndex={6} />
+		<Rect x={206} y={178} width={275} height={118.9} fill="var(--bg-light)" stroke={{ color: '#000000', width: 1 }} zIndex={6} />
 	</Fragment>
 
 	<Fragment step={22} animate="wipe">
@@ -322,7 +322,7 @@
 	<Fragment
 		step={23}
 		layout={{ x: 280, y: 177, width: 136.8, height: 36.1 }}
-		font={{ font_size: 35, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 35, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={30}
 	>
 		Causes
@@ -338,7 +338,7 @@
 	</Fragment>
 
 	<Fragment step={24} animate="fade">
-		<Rect x={482} y={178} width={250} height={118.9} fill="var(--color-bg-light)" stroke={{ color: '#000000', width: 1 }} zIndex={5} />
+		<Rect x={482} y={178} width={250} height={118.9} fill="var(--bg-light)" stroke={{ color: '#000000', width: 1 }} zIndex={5} />
 	</Fragment>
 
 	<Fragment
@@ -355,7 +355,7 @@
 	</Fragment>
 
 	<Fragment step={24} animate="fade">
-		<Rect x={483} y={295.4} width={258.6} height={127.7} fill="var(--color-bg-ghost)" zIndex={1} />
+		<Rect x={483} y={295.4} width={258.6} height={127.7} fill="var(--bg-ghost)" zIndex={1} />
 	</Fragment>
 
 	<Fragment
@@ -371,14 +371,14 @@
 	<Fragment
 		step={27}
 		layout={{ x: 252.5, y: 294.4, width: 177.3, height: 53.9 }}
-		font={{ font_size: 44.2, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 44.2, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={65}
 	>
 		Energy
 	</Fragment>
 
 	<Fragment step={27}>
-		<Rect x={199.3} y={294.9} width={281} height={128.4} fill="var(--color-bg-ghost)" zIndex={4} />
+		<Rect x={199.3} y={294.9} width={281} height={128.4} fill="var(--bg-ghost)" zIndex={4} />
 	</Fragment>
 
 	<!-- Step 28: First Law of Thermodynamics -->
@@ -396,7 +396,7 @@
 		step={29}
 		layout={{ x: 429.1, y: 308, width: 101.9, height: 30 }}
 		font={{ font_size: 21.7, bold: true }}
-		fill="var(--color-bg-ghost)"
+		fill="var(--bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={46}
 	>
@@ -408,7 +408,7 @@
 		step={30}
 		layout={{ x: 424.4, y: 297, width: 113.1, height: 47 }}
 		font={{ font_size: 48.3, bold: true }}
-		fill="var(--color-bg-ghost)"
+		fill="var(--bg-ghost)"
 		zIndex={61}
 	>
 		=
@@ -418,7 +418,7 @@
 	<Fragment
 		step={31}
 		layout={{ x: 434.9, y: 341.6, width: 41.9, height: 45.6 }}
-		font={{ font_size: 50, color: 'var(--color-level3)' }}
+		font={{ font_size: 50, color: 'var(--bg-level-3)' }}
 		zIndex={68}
 	>
 		E
@@ -428,7 +428,7 @@
 		step={31}
 		layout={{ x: 466.4, y: 342.1, width: 29.2, height: 45.6 }}
 		font={{ font_size: 39.2 }}
-		fill="var(--color-bg-ghost)"
+		fill="var(--bg-ghost)"
 		zIndex={70}
 	>
 		=
@@ -459,7 +459,7 @@
 		drillTo="physical-spiritual/genesis-1-1"
 		layout={{ x: 23.2, y: 437.5, width: 160.2, height: 30.8 }}
 		font={{ font_size: 20, bold: true }}
-		fill="var(--color-bg-ghost)"
+		fill="var(--bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={36}
 	>
@@ -498,7 +498,7 @@
 	<Fragment
 		step={36}
 		layout={{ x: 525.6, y: 338.4, width: 63, height: 45.6 }}
-		font={{ font_size: 50, color: 'var(--color-level3)' }}
+		font={{ font_size: 50, color: 'var(--bg-level-3)' }}
 		zIndex={71}
 	>
 		c²
@@ -509,8 +509,8 @@
 		step={37}
 		drillTo="physical-spiritual/1corinthians-15-40"
 		layout={{ x: 33.3, y: 470.4, width: 140, height: 53.9 }}
-		font={{ font_size: 20, bold: true, color: 'var(--color-level3)', wrap: true, align: 'center' }}
-		fill="var(--color-bg-ghost)"
+		font={{ font_size: 20, bold: true, color: 'var(--bg-level-3)', wrap: true, align: 'center' }}
+		fill="var(--bg-ghost)"
 		line={{ color: '#000000', width: 1 }}
 		zIndex={40}
 	>
@@ -581,7 +581,7 @@
 	<Fragment
 		step={39}
 		layout={{ x: 266.4, y: 420, width: 132.2, height: 26.4 }}
-		font={{ font_size: 21.7, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={50}
 	>
 		imperishable
@@ -591,7 +591,7 @@
 	<Fragment
 		step={39.1}
 		layout={{ x: 301.4, y: 441.9, width: 62.6, height: 26.4 }}
-		font={{ font_size: 21.7, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={52}
 	>
 		glory
@@ -601,7 +601,7 @@
 	<Fragment
 		step={39.2}
 		layout={{ x: 296.7, y: 463.8, width: 71.9, height: 26.4 }}
-		font={{ font_size: 21.7, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={54}
 	>
 		power
@@ -611,7 +611,7 @@
 	<Fragment
 		step={39.3}
 		layout={{ x: 263, y: 485.6, width: 139.3, height: 26.4 }}
-		font={{ font_size: 21.7, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={56}
 	>
 		spiritual body
@@ -621,7 +621,7 @@
 	<Fragment
 		step={39.4}
 		layout={{ x: 242, y: 507.5, width: 107.2, height: 26.4 }}
-		font={{ font_size: 21.7, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={58}
 	>
 		2nd Adam
@@ -631,7 +631,7 @@
 	<Fragment
 		step={39.5}
 		layout={{ x: 350, y: 507.5, width: 94.8, height: 26.4 }}
-		font={{ font_size: 21.7, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={60}
 	>
 		- Heaven
@@ -641,7 +641,7 @@
 	<Fragment
 		step={40}
 		layout={{ x: 235, y: 386.3, width: 218, height: 35.9 }}
-		font={{ font_size: 39.2, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 39.2, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={41}
 	>
 		SPIRITUAL
@@ -660,7 +660,7 @@
 	<!-- Step 42: "=" between SPIRITUAL and PHYSICAL -->
 	<Fragment
 		step={42}
-		fill="var(--color-bg-ghost)"
+		fill="var(--bg-ghost)"
 		layout={{ x: 462.9, y: 387, width: 40, height: 36, padding: 0 }}
 		font={{ font_size: 39.2, bold: true }}
 		zIndex={43}
@@ -673,7 +673,7 @@
 		step={43}
 		layout={{ x: 715.6, y: 431.6, width: 196.1, height: 108 }}
 		font={{ font_size: 17.5, bold: true, align: 'left', v_align: 'top', wrap: true }}
-		fill="var(--color-level1)"
+		fill="var(--bg-level-1)"
 		zIndex={44}
 	>
 		Spiritual & Physical are equal, but in different forms, same as energy & matter

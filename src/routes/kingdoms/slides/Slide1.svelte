@@ -15,7 +15,7 @@
     const boxLayer = 1
     const textLayer = 2
 	const topLinksLayer = 99
-    const questionMark = { font_size: 30, bold: true, color: 'var(--color-text-bright)' }
+    const questionMark = { font_size: 30, bold: true, color: 'var(--text-bright)' }
     const boxQuestion = { font_size: 24 }
     const boxAnswer = { font_size: 24, bold: true, italic: true }
 </script>
@@ -27,12 +27,12 @@
 	<!-- Static Content -->
 	<!-- Background rectangle (light blue) -->
 	<Fragment>
-		<Rect x={0} y={0} width={961} height={541} fill="var(--color-level2)" zIndex={bgLayer} />
+		<Rect x={0} y={0} width={961} height={541} fill="var(--bg-level-2)" zIndex={bgLayer} />
 	</Fragment>
 
 	<!-- Static Kingdom box (left, top) -->
 	<Fragment>
-		<Rect x={30} y={19} width={450} height={218} fill="var(--color-bg-ghost)" stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={boxLayer} />
+		<Rect x={30} y={19} width={450} height={218} fill="var(--bg-ghost)" stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={boxLayer} />
 	</Fragment>
 
 	<!-- Static "Kingdom" label (left) -->
@@ -153,9 +153,9 @@
 	<Fragment
 		step={8}
 		layout={{ x: 300, y: 72, width: 170, height: 40 }}
-		font={{ v_align: 'middle', wrap: true, font_size: 10.0, italic: true, bold: true, color: 'var(--color-level3)' }}
+		font={{ v_align: 'middle', wrap: true, font_size: 10.0, italic: true, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={textLayer}
-        line={{ width:2, color: 'var(--color-level3)' }}
+        line={{ width:2, color: 'var(--bg-level-3)' }}
 	>
 		Lacking moral categories; no law against sin; pre-fallen Adam & Eve, children, etc.
 	</Fragment>
@@ -185,7 +185,7 @@
 	<Fragment
 		step={11}
 		layout={{ x: 71, y: 134, width: 158, height: 30 }}
-		font={{ font_size: 22, bold: true, color: 'var(--color-level3)' }}
+		font={{ font_size: 22, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={textLayer}
 	>
 		State of Safety
@@ -216,11 +216,11 @@
 
 	<Fragment step={13}>
 	    <!-- Step 13: Light blue background (right side) -->        
-        <Rect x={369} y={0} width={592} height={236} fill="var(--color-level2)" zIndex={bgLayer} />
+        <Rect x={369} y={0} width={592} height={236} fill="var(--bg-level-2)" zIndex={bgLayer} />
         <!-- Eternal Kingdom box -->
-        <Rect x={480} y={19} width={450} height={218} fill="var(--color-bg-ghost)" stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={boxLayer} />
+        <Rect x={480} y={19} width={450} height={218} fill="var(--bg-ghost)" stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={boxLayer} />
         <!-- White door -->
-        <Rect x={475} y={152} width={12} height={55} fill="var(--color-bg-ghost)" zIndex={boxLayer} />
+        <Rect x={475} y={152} width={12} height={55} fill="var(--bg-ghost)" zIndex={boxLayer} />
     </Fragment>
 
 	<!-- Step 13: "Eternal" label -->
@@ -246,7 +246,7 @@
         <Arrow 
             from={{ x: 400, y: 185 }} 
             to={{ x: 590, y: 185 }} 
-            stroke={{ width: 35, color: 'var(--color-stroke-dark)' }}
+            stroke={{ width: 35, color: 'var(--stroke-level-0)' }}
             headSize={1.5} 
             zIndex={boxLayer} 
         />
@@ -256,7 +256,7 @@
 	<Fragment
 		step={14}
 		layout={{ x: 433, y: 160, width: 100, height: 50 }}
-		font={{ v_align: 'middle', font_name: 'Arial Black', font_size: 24, bold: true, color: 'var(--color-bg-ghost)' }}
+		font={{ v_align: 'middle', font_name: 'Arial Black', font_size: 24, bold: true, color: 'var(--bg-ghost)' }}
 		zIndex={textLayer}
 	>
 		DEATH
@@ -376,10 +376,10 @@
 
 	<!-- Step 19: Orange background (Kingdom of the World area, with) -->
 	<Fragment step={19} animate="wipe-down">
-		<Rect x={-1} y={237} width={962} height={350} fill="var(--color-bg-cmd-law)" zIndex={bgLayer} />
-		<Line from={{ x: 36, y: 211 }} to={{ x: 474, y: 212 }} stroke={{ width: 7, color: 'var(--color-bg-cmd-law', dash: '10,5' }} zIndex={boxLayer} />
-		<Rect x={30} y={237} width={450} height={236} fill="var(--color-bg-ghost)" stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={boxLayer} />
-		<Line from={{ x: 270, y: 231 }} to={{ x: 430, y: 231 }} stroke={{ width: 23, color: 'var(--color-bg-ghost)' }} zIndex={boxLayer} />
+		<Rect x={-1} y={237} width={962} height={350} fill="var(--bg-cmd-law)" zIndex={bgLayer} />
+		<Line from={{ x: 36, y: 211 }} to={{ x: 474, y: 212 }} stroke={{ width: 7, color: 'var(--bg-cmd-law', dash: '10,5' }} zIndex={boxLayer} />
+		<Rect x={30} y={237} width={450} height={236} fill="var(--bg-ghost)" stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={boxLayer} />
+		<Line from={{ x: 270, y: 231 }} to={{ x: 430, y: 231 }} stroke={{ width: 23, color: 'var(--bg-ghost)' }} zIndex={boxLayer} />
     </Fragment>
 
 	<!-- Step 20: Romans 3:23 drill -->
@@ -387,7 +387,7 @@
 		step={20}
 		drillTo="kingdoms/romans-3-23"
 		layout={{ x: 29, y: 240, width: 241, height: 18 }}
-		fill="var(--color-bg-cmd-law)"
+		fill="var(--bg-cmd-law)"
 		font={{font_size: 12 }}
 		zIndex={56}
 	>
@@ -408,7 +408,7 @@
         <Arrow 
             from={{ x: 325, y: 198 }} 
             to={{ x: 325, y: 350 }} 
-            stroke={{ width: 35, color: 'var(--color-level2)' }}
+            stroke={{ width: 35, color: 'var(--bg-level-2)' }}
             headSize={1.5} 
             zIndex={textLayer+1} 
         />
@@ -418,7 +418,7 @@
 	<Fragment
 		step={21}
 		layout={{ x: 308, y: 210, width: 35, height: 100 }}
-		font={{ v_align: 'middle', font_name: 'Arial Black', font_size: 24, bold: true, color: 'var(--color-bg-ghost)' }}
+		font={{ v_align: 'middle', font_name: 'Arial Black', font_size: 24, bold: true, color: 'var(--bg-ghost)' }}
 		zIndex={textLayer+1}
 	>
 		<div style="writing-mode: vertical-lr; text-orientation: upright; font-family: 'Arial Black'; font-size: 24px; font-weight: bold; letter-spacing: -12px; text-align: center; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
@@ -532,7 +532,7 @@
 	<Fragment
 		step={22}
 		layout={{ x: 71, y: 358, width: 158, height: 30  }}
-		font={{ font_size: 22, font_name:'Arial Black', bold: true, color: 'var(--color-bg-cmd-law)' }}
+		font={{ font_size: 22, font_name:'Arial Black', bold: true, color: 'var(--bg-cmd-law)' }}
 		zIndex={textLayer}
 	>
 		State of Danger
@@ -574,7 +574,7 @@
 		step={25}
 		layout={{ x: 93, y: 330, width: 216, height: 24 }}
 		font={boxAnswer}
-        fill="var(--color-bg-ghost)"
+        fill="var(--bg-ghost)"
 		zIndex={textLayer}
 	>
 		Moral, Sin & Death
@@ -585,7 +585,7 @@
 		step={25}
 		layout={{ x: 80, y: 355, width: 221, height: 10 }}
 		font={{font_size: 11.7, italic: true }}
-        fill="var(--color-bg-ghost)"
+        fill="var(--bg-ghost)"
 		zIndex={textLayer}
 	>
 		(unable to cleanse conscience)
@@ -593,7 +593,7 @@
 
 	<!-- Step 26: White line connector below World box -->
 	<Fragment step={26} animate="wipe">
-		<Line from={{ x: 270, y: 469 }} to={{ x: 406, y: 469 }} stroke={{ width: 8, color: 'var(--color-bg-ghost)' }} zIndex={boxLayer} />
+		<Line from={{ x: 270, y: 469 }} to={{ x: 406, y: 469 }} stroke={{ width: 8, color: 'var(--bg-ghost)' }} zIndex={boxLayer} />
 	</Fragment>
 
 	<!-- Step 26.1: "(physical)" label -->
@@ -610,7 +610,7 @@
         <Arrow 
             from={{ x: 325, y: 378 }} 
             to={{ x: 325, y: 518 }} 
-            stroke={{ width: 35, color: 'var(--color-stroke-dark)' }}
+            stroke={{ width: 35, color: 'var(--stroke-level-0)' }}
             headSize={1.5} 
             zIndex={boxLayer} 
         />
@@ -620,7 +620,7 @@
 	<Fragment
 		step={26.1}
 		layout={{ x: 308, y: 385, width: 35, height: 105 }}
-		font={{ v_align: 'middle', align: 'center', font_name: 'Arial Black', font_size: 23.3, bold: true, color: 'var(--color-bg-ghost)' }}
+		font={{ v_align: 'middle', align: 'center', font_name: 'Arial Black', font_size: 23.3, bold: true, color: 'var(--bg-ghost)' }}
 		zIndex={textLayer}
 	>
 	    <div style="writing-mode: vertical-lr; text-orientation: upright; font-family: 'Arial Black'; font-size: 24px; font-weight: bold; letter-spacing: -12px; text-align: center; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
@@ -672,7 +672,7 @@
 	<Fragment step={27} animate="wipe-down">
 		<Arrow 
 			from={{ x: 569, y: 515 }} to={{ x: 603, y: 567 }}
-			stroke={{ width: 27, color: 'var(--color-bg-danger-dark)' }}
+			stroke={{ width: 27, color: 'var(--bg-danger-dark)' }}
 			headSize={1.5} 
 			zIndex={boxLayer} 
 		/>
@@ -694,8 +694,8 @@
 		drillTo="kingdoms/die-with-christ"
 		layout={{ x: 570, y: 355, width: 160, height: 49 }}
 		font={{ font_size: 12, wrap: true }}
-		fill="var(--color-bg-ghost)"
-        line={{width: 2, color: 'var(--color-level3)'}}
+		fill="var(--bg-ghost)"
+        line={{width: 2, color: 'var(--bg-level-3)'}}
 		zIndex={textLayer}
 	>
 		Romans 6:1-11, Ephesians 2:1-5, Colossians 2:8-14, 3:1-4, Romans 8:10
@@ -703,19 +703,19 @@
 
 	<!-- Kingdom of Christ box -->
 	<Fragment step={29}>
-		<Rect x={480} y={237} width={450} height={236} fill="var(--color-bg-ghost)" stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={boxLayer} />
+		<Rect x={480} y={237} width={450} height={236} fill="var(--bg-ghost)" stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={boxLayer} />
 	</Fragment>
 
 	<!-- White connector line -->
 	<Fragment step={29} animate="wipe-down">
-		<Line from={{ x: 480, y: 352 }} to={{ x: 480, y: 404 }} stroke={{ width: 27, color: 'var(--color-bg-ghost' }} zIndex={boxLayer} />
+		<Line from={{ x: 480, y: 352 }} to={{ x: 480, y: 404 }} stroke={{ width: 27, color: 'var(--bg-ghost' }} zIndex={boxLayer} />
 	</Fragment>
 
     <Fragment step={29} animate="wipe-right">
         <Arrow 
             from={{ x: 360, y: 380 }} 
             to={{ x: 560, y: 380 }} 
-            stroke={{ width: 35, color: 'var(--color-level2)' }}
+            stroke={{ width: 35, color: 'var(--bg-level-2)' }}
             headSize={1.5} 
             zIndex={boxLayer} 
         />
@@ -725,7 +725,7 @@
 	<Fragment
 		step={29}
 		layout={{ x: 345, y: 365, width: 223, height: 28 }}
-		font={{ v_align: 'middle', font_name: 'Arial Black', bold: true, font_size: 19, color: 'var(--color-bg-ghost)' }}
+		font={{ v_align: 'middle', font_name: 'Arial Black', bold: true, font_size: 19, color: 'var(--bg-ghost)' }}
 		zIndex={textLayer}
 	>
 		Baptism = DEATH
@@ -796,8 +796,8 @@
 		step={31}
 		drillTo="kingdoms/faith-and-baptism"
 		layout={{ x: 491, y: 405, width: 337, height: 20 }}
-		font={{ wrap: true, font_size: 11.7, color: 'var(--color-bg-ghost)' }}
-		fill="var(--color-level3)"
+		font={{ wrap: true, font_size: 11.7, color: 'var(--bg-ghost)' }}
+		fill="var(--bg-level-3)"
 		zIndex={textLayer}
 	>
 		1 Corinthians 15:1-4 Hebrews 11:6, Romans 10:17, Acts 2:38
@@ -827,8 +827,8 @@
 	<Fragment
 		step={33}
 		layout={{ x: 215, y: 290, width: 76, height: 20 }}
-		font={{ font_size: 11.7, italic: true, color: 'var(--color-bg-ghost)', bold: true }}
-        fill = "var(--color-bg-darkest)"
+		font={{ font_size: 11.7, italic: true, color: 'var(--bg-ghost)', bold: true }}
+        fill = "var(--bg-level-0)"
 		zIndex={textLayer}
 	>
 		Wide Gate
@@ -874,7 +874,7 @@
 		step={35}
 		drillTo="kingdoms/1-peter-3-18"
 		layout={{ x: 522, y: 241, width: 222, height: 20 }}
-		font={{ wrap: true, font_size: 11.7, bold: true, color: 'var(--color-level3)' }}
+		font={{ wrap: true, font_size: 11.7, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={textLayer}
 	>
 		Conscience Cleaned (1 Peter 3:21)
@@ -889,8 +889,8 @@
 	<Fragment
 		step={35.1}
 		layout={{ x: 260, y: 130, width: 112, height: 51 }}
-		fill="var(--color-level3)"
-		font={{ wrap: true, align: 'center', font_size: 11, italic: true, color: 'var(--color-bg-ghost)' }}
+		fill="var(--bg-level-3)"
+		font={{ wrap: true, align: 'center', font_size: 11, italic: true, color: 'var(--bg-ghost)' }}
 		zIndex={textLayer}
 	>
 		"Must become like children' - not under the law"
@@ -982,7 +982,7 @@
 
 	<!-- Step 41: Dashed line (Unfaithful boundary) -->
 	<Fragment step={41} animate="wipe">
-		<Line from={{ x: 483, y: 430 }} to={{ x: 930, y: 430 }} stroke={{ width: 4, color: 'var(--color-stroke-dark)', dash: '10,5' }} zIndex={textLayer} />
+		<Line from={{ x: 483, y: 430 }} to={{ x: 930, y: 430 }} stroke={{ width: 4, color: 'var(--stroke-level-0)', dash: '10,5' }} zIndex={textLayer} />
 	</Fragment>
 
 	<!-- Step 42: "Unfaithful" label -->
@@ -1008,18 +1008,18 @@
 
 	<!-- Step 27: Gray bar -->
 	<Fragment step={42} animate="wipe-down">
-		<Rect x={479} y={237} width={482} height={350} fill="var(--color-level1)" zIndex={bgLayer} />
+		<Rect x={479} y={237} width={482} height={350} fill="var(--bg-level-1)" zIndex={bgLayer} />
 	</Fragment>
 
 	<!-- Step 42: White connector line -->
 	<Fragment step={42}>
-		<Line from={{ x: 820, y: 470 }} to={{ x: 890, y: 470 }} stroke={{ width: 7, color: 'var(--color-bg-ghost)' }} zIndex={boxLayer} />
+		<Line from={{ x: 820, y: 470 }} to={{ x: 890, y: 470 }} stroke={{ width: 7, color: 'var(--bg-ghost)' }} zIndex={boxLayer} />
 	</Fragment>
 	<!-- Step 43: Death arrow (diagonal, unfaithful) -->	
 	<Fragment step={43} animate="wipe-down">
         <Arrow 
 			from={{ x: 850, y: 452 }} to={{ x: 850, y: 565 }}
-            stroke={{ width: 35, color: 'var(--color-stroke-dark)' }}
+            stroke={{ width: 35, color: 'var(--stroke-level-0)' }}
             headSize={1.5} 
             zIndex={boxLayer} 
         />
@@ -1038,7 +1038,7 @@
 	<Fragment
 		step={43}
 		layout={{ x: 811, y: 436, width: 76, height: 17 }}
-		fill="var(--color-bg-ghost)"
+		fill="var(--bg-ghost)"
 		font={{ wrap: true, font_size: 13.3, bold: true }}
 		zIndex={textLayer}
 	>
@@ -1059,7 +1059,7 @@
     <Fragment step={44} animate="wipe-up">
         <Arrow 
 			from={{ x: 783, y: 300 }} to={{ x: 783, y: 165 }}            
-			stroke={{ width: 35, color: 'var(--color-bg-darkest)' }}
+			stroke={{ width: 35, color: 'var(--bg-level-0)' }}
             headSize={1.5} 
             zIndex={textLayer} 
         />
@@ -1069,7 +1069,7 @@
 	<Fragment
 		step={44}
 		layout={{ x: 770, y: 158, width: 25, height: 142 }}
-		font={{ v_align: 'middle', font_name: 'Arial Black', font_size: 23.3, bold: true, color: 'var(--color-bg-ghost)' }}
+		font={{ v_align: 'middle', font_name: 'Arial Black', font_size: 23.3, bold: true, color: 'var(--bg-ghost)' }}
 		zIndex={textLayer}
 	>
 		<div style="writing-mode: vertical-lr; text-orientation: upright; font-family: 'Arial Black'; font-size: 24px; font-weight: bold; letter-spacing: -12px; text-align: center; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
@@ -1088,7 +1088,7 @@
 
 	<!-- Step 44: White connector line -->
 	<Fragment step={44}>
-		<Line from={{ x: 755, y: 237 }} to={{ x: 810, y: 237 }} stroke={{ width: 11, color: 'var(--color-bg-ghost)' }} zIndex={boxLayer} />
+		<Line from={{ x: 755, y: 237 }} to={{ x: 810, y: 237 }} stroke={{ width: 11, color: 'var(--bg-ghost)' }} zIndex={boxLayer} />
 	</Fragment>
 
 	<!-- Step 44: "Perfect Safety" label -->

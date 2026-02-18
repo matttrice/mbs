@@ -12,7 +12,7 @@
 	 * @example Filled rectangle
 	 * ```svelte
 	 * <Fragment step={3} animate="wipe-down">
-	 *   <Rect x={192} y={0} width={288} height={540} fill="var(--color-level2)" zIndex={2} />
+	 *   <Rect x={192} y={0} width={288} height={540} fill="var(--bg-level-2)" zIndex={2} />
 	 * </Fragment>
 	 * ```
 	 *

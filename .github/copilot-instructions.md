@@ -2,11 +2,11 @@
 
 ## Architecture Overview
 
-MBS is a SvelteKit presentation system replicating PowerPoint's **Custom Show "drillTo and return"** functionality. The core innovation is a stack-based navigation system that preserves exact fragment position when drilling into scripture references or sequences of slides.
+MBS is a SvelteKit presentation system replicating PowerPoint's **Custom Show "drillTo and return"** functionality. The core innovation is a stack-based navigation system that preserves exact fragment reveal state when drilling into sequences of slides and returning to the original slide.
 
 ### Core Presentation Conversion Data Flow
 ```
-JSON (hsu-pptx/) → extractor.py → Slide components → navigation store → localStorage
+pptx → extractor.py → JSON → Slide components → navigation store → localStorage
 ```
 
 ### Key Components
@@ -21,7 +21,7 @@ JSON (hsu-pptx/) → extractor.py → Slide components → navigation store → 
 | [SVG Components](src/lib/components/svg/) | svg.js-powered shape components (Arrow, Line, Rect, Circle, Ellipse, Path, Polygon) |
 
 ### Fixed Canvas System
-All presentations use a **960×540 pixel fixed canvas** (16:9 aspect ratio). The canvas scales to fit the viewport via CSS `transform: scale()`. All layout coordinates are absolute pixel positions within this canvas.
+All presentations use a **960×540 pixel fixed canvas** (16:9 aspect ratio). The canvas scales to fit the viewport via CSS `transform: scale()`. All fragment layout coordinates are absolute pixel positions within this canvas.
 
 ## Theme Colors
 
@@ -29,29 +29,29 @@ Use CSS custom properties for semantic colors instead of hardcoded hex values. T
 
 | Variable | Value | Use For |
 |----------|-------|---------|
-| `var(--color-level1)` | `#808080` | Physical/earthly concepts, gray column backgrounds |
-| `var(--color-level2)` | `#00aaff` | Spiritual concepts, blue column backgrounds |
-| `var(--color-level3)` | `#0000cc` | Eternal/heavenly concepts, blue text |
+| `var(--bg-level-1)` | `#808080` | Physical/earthly concepts, gray column backgrounds |
+| `var(--bg-level-2)` | `#00aaff` | Spiritual concepts, blue column backgrounds |
+| `var(--bg-level-3)` | `#0000cc` | Eternal/heavenly concepts, blue text |
 | `var(--color-highlight)` | `#ffd700` | Gold accent, emphasis |
-| `var(--color-bg-light)` | `#e8e8e8` | Light gray backgrounds |
+| `var(--bg-light)` | `#e8e8e8` | Light gray backgrounds |
 
 **Example - Column backgrounds:**
 ```svelte
 <!-- Physical column (gray) -->
 <Fragment step={2} animate="wipe-down">
-  <Rect x={75} y={48} width={275} height={464} fill="var(--color-level1)" />
+  <Rect x={75} y={48} width={275} height={464} fill="var(--bg-level-1)" />
 </Fragment>
 
 <!-- Spiritual column (blue) -->
 <Fragment step={3} animate="wipe-down">
-  <Rect x={610} y={48} width={266} height={464} fill="var(--color-level2)" />
+  <Rect x={610} y={48} width={266} height={464} fill="var(--bg-level-2)" />
 </Fragment>
 ```
 
 **When converting from PowerPoint JSON:**
-- `fill: "#B3B3B3"` or similar grays → `fill="var(--color-level1)"`
-- `fill: "#33CCFF"` or `#00AAFF` → `fill="var(--color-level2)"`
-- `color: "#0000FF"` or `#0000CC"` in font → `color: '#0000FF'` (keep for text, or use `var(--color-level3)`)
+- `fill: "#B3B3B3"` or similar grays → `fill="var(--bg-level-1)"`
+- `fill: "#33CCFF"` or `#00AAFF` → `fill="var(--bg-level-2)"`
+- `color: "#0000FF"` or `#0000CC"` in font → `color: '#0000FF'` (keep for text, or use `var(--bg-level-3)`)
 
 ## Fragment Component
 
@@ -65,7 +65,7 @@ The `Fragment` component handles hide/show for all slide content.
 | `drillTo` | `string` | Route to drill into on click (e.g., `"promises/genesis-12-1"`) |
 | `layout` | `BoxLayout` | Absolute positioning: `{ x, y, width, height, rotation? }` |
 | `font` | `BoxFont` | Typography: `{ font_name?, font_size?, bold?, italic?, color?, align?, v_align?, wrap? }` |
-| `fill` | `string` | Background color (e.g., `"var(--color-bg-ghost)"`) |
+| `fill` | `string` | Background color (e.g., `"var(--bg-ghost)"`) |
 | `line` | `BoxLine` | Border: `{ color?, width? }` |
 | `zIndex` | `number` | Stacking order |
 | `animate` | `AnimationType` | Entrance animation: `'fade'`, `'fly-up'`, `'fly-down'`, `'fly-left'`, `'fly-right'`, `'scale'`, `'wipe'`, `'wipe-up'`, `'wipe-down'`, `'wipe-left'`, `'wipe-right'`, `'draw'`, `'none'` |
@@ -73,7 +73,7 @@ The `Fragment` component handles hide/show for all slide content.
 | `keyframes` | `Keyframe[]` | Step-based motion: `[{ step: 2, x: 100 }, { step: 3, x: 200 }]` |
 | `transition` | `TransitionConfig` | Motion config: `{ duration?: number, easing?: function }` |
 | `returnHere` | `boolean` | Return to this drill (not origin) after nested drill completes |
-| `autoDrill` | `boolean` | Auto-drill on next click after being revealed (independent of global autoDrillAll toggle). Defaults to `false`. |
+| `autoDrill` | `boolean` | Auto-drill on next click after being revealed (independent of global autoDrillAll toggle) - ensures the click-to is never missed when navigating by arrow keys. Defaults to `false`. |
 
 ### BoxFont Properties
 
@@ -138,7 +138,7 @@ The `Fragment` component handles hide/show for all slide content.
 **SVG shape components:**
 ```svelte
 <Fragment step={5} animate="draw">
-  		<Arc from={{ x: 125, y: 408 }} to={{ x: 125, y: 362 }} curve={-80} rx={12} ry={37} largeArc stroke={{ width: 3, color: 'var(--color-level3)' }} arrow zIndex={6} />
+  		<Arc from={{ x: 125, y: 408 }} to={{ x: 125, y: 362 }} curve={-80} rx={12} ry={37} largeArc stroke={{ width: 3, color: 'var(--bg-level-3)' }} arrow zIndex={6} />
 </Fragment>
 ```
 
@@ -181,7 +181,7 @@ Fragment supports **step-based keyframe motion** for animating position, size, r
 <Fragment
   step={1}
   layout={{ x: 210, y: 7, width: 230, height: 52 }}
-  font={{ font_size: 36.7, bold: true, color: 'var(--color-level3)' }}
+  font={{ font_size: 36.7, bold: true, color: 'var(--bg-level-3)' }}
   keyframes={[{ step: 2, x: swapDx }]}
   transition={{ duration: 800 }}
   zIndex={9}
@@ -250,11 +250,11 @@ Arc, Arrow, Line, and Rect are self-positioning components that use **canvas coo
 ```svelte
 <!-- ✅ CORRECT: SVG component inside Fragment for empty shapes -->
 <Fragment step={2} animate="wipe-down">
-  <Rect x={75} y={48} width={275} height={464} fill="var(--color-level1)" zIndex={5} />
+  <Rect x={75} y={48} width={275} height={464} fill="var(--bg-level-1)" zIndex={5} />
 </Fragment>
 
 <!-- ❌ WRONG: Fragment with layout/fill but no children -->
-<Fragment step={2} layout={{ x: 75, y: 48, width: 275, height: 464 }} fill="var(--color-level1)">
+<Fragment step={2} layout={{ x: 75, y: 48, width: 275, height: 464 }} fill="var(--bg-level-1)">
 </Fragment>
 ```
 
@@ -308,7 +308,7 @@ Rect positions itself absolutely on the canvas. Use for background columns, boxe
 | `y` | `number` | Y position on canvas |
 | `width` | `number` | Rectangle width |
 | `height` | `number` | Rectangle height |
-| `fill` | `string` | Fill color (e.g., `"var(--color-level2)"`) |
+| `fill` | `string` | Fill color (e.g., `"var(--bg-level-2)"`) |
 | `stroke` | `StrokeStyle` | Border styling (width, color, dash) |
 | `radius` | `number` | Corner radius for rounded rectangles |
 | `zIndex` | `number` | Stacking order (default: 1) |
@@ -391,21 +391,21 @@ interface StrokeStyle {
 **Background column (full height, wipes down):**
 ```svelte
 <Fragment step={3} animate="wipe-down">
-  <Rect x={192.7} y={0} width={288} height={540} fill="var(--color-level2)" zIndex={2} />
+  <Rect x={192.7} y={0} width={288} height={540} fill="var(--bg-level-2)" zIndex={2} />
 </Fragment>
 ```
 
 **Box with border:**
 ```svelte
 <Fragment step={22} animate="fade">
-  <Rect x={206} y={178} width={275} height={118.9} fill="var(--color-bg-light)" stroke={{ color: '#000000', width: 1 }} zIndex={6} />
+  <Rect x={206} y={178} width={275} height={118.9} fill="var(--bg-light)" stroke={{ color: '#000000', width: 1 }} zIndex={6} />
 </Fragment>
 ```
 
 **White background box:**
 ```svelte
 <Fragment step={25} animate="fade">
-  <Rect x={481.1} y={295.4} width={258.6} height={127.7} fill="var(--color-bg-ghost)" zIndex={1} />
+  <Rect x={481.1} y={295.4} width={258.6} height={127.7} fill="var(--bg-ghost)" zIndex={1} />
 </Fragment>
 ```
 
@@ -813,7 +813,7 @@ Becomes:
     step={1}
     drillTo="promises/genesis-12-1"
     layout={{ x: 100, y: 50, width: 200, height: 30 }}
-    font={{ font_size: 24, bold: true, color: 'var(--color-level3)' }}
+    font={{ font_size: 24, bold: true, color: 'var(--bg-level-3)' }}
   >
     Genesis 12:1-3
   </Fragment>
@@ -878,7 +878,7 @@ JSON entries **without `text` or `font` properties** represent visual-only shape
 **Becomes SVG component inside Fragment:**
 ```svelte
 <Fragment step={5} animate="wipe-down">
-  <Rect x={75} y={48} width={275} height={464} fill="var(--color-level1)" zIndex={5} />
+  <Rect x={75} y={48} width={275} height={464} fill="var(--bg-level-1)" zIndex={5} />
 </Fragment>
 ```
 

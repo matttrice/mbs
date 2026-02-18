@@ -35,26 +35,26 @@
 
 	<!-- Step 1: First underline (timing: click) -->
 	<Fragment step={1} animate="draw">
-		<Line from={{ x: 120, y: 344 }} to={{ x: 390, y: 344 }} stroke={{ width: 4, color: 'var(--color-level3)' }} zIndex={1} />
+		<Line from={{ x: 120, y: 344 }} to={{ x: 390, y: 344 }} stroke={{ width: 4, color: 'var(--bg-level-3)' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 1.1: Second underline (timing: after) -->
 	<Fragment step={1.1} animate="draw">
-		<Line from={{ x: 410, y: 344 }} to={{ x: 660, y: 344 }} stroke={{ width: 4, color: 'var(--color-level3)' }} zIndex={1} />
+		<Line from={{ x: 410, y: 344 }} to={{ x: 660, y: 344 }} stroke={{ width: 4, color: 'var(--bg-level-3)' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 1.2: Third underline (timing: after) -->
 	<Fragment step={1.2} animate="draw">
-		<Line from={{ x: 770, y: 344 }} to={{ x: 821, y: 344 }} stroke={{ width: 4, color: 'var(--color-level3)' }} zIndex={1} />
+		<Line from={{ x: 770, y: 344 }} to={{ x: 821, y: 344 }} stroke={{ width: 4, color: 'var(--bg-level-3)' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 1.3: Fourth underline (timing: after) -->
 	<Fragment step={1.3} animate="draw">
-		<Line from={{ x: 69, y: 376 }} to={{ x: 560, y: 376 }} stroke={{ width: 4, color: 'var(--color-level3)' }} zIndex={1} />
+		<Line from={{ x: 69, y: 376 }} to={{ x: 560, y: 376 }} stroke={{ width: 4, color: 'var(--bg-level-3)' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 1.4: Fifth underline (timing: after) -->
 	<Fragment step={1.4} animate="draw">
-		<Line from={{ x:65, y: 409 }} to={{ x: 380, y: 409 }} stroke={{ width: 4, color: 'var(--color-level3)' }} zIndex={1} />
+		<Line from={{ x:65, y: 409 }} to={{ x: 380, y: 409 }} stroke={{ width: 4, color: 'var(--bg-level-3)' }} zIndex={1} />
 	</Fragment>
 </Slide>

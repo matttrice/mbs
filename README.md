@@ -237,7 +237,7 @@ The `Slide` component uses Svelte context to collect step values from child `Fra
 | `returnHere` | `boolean` | Return to this drill (not origin) after nested drill completes |
 | `layout` | `BoxLayout` | Absolute positioning: `{ x, y, width, height, rotation? }` |
 | `font` | `BoxFont` | Typography: `{ font_name?, font_size?, bold?, italic?, color?, alignment? }` |
-| `fill` | `string` | Background color (e.g., `"var(--color-bg-ghost)"`) |
+| `fill` | `string` | Background color (e.g., `"var(--bg-ghost)"`) |
 | `line` | `BoxLine` | Border: `{ color?, width? }` |
 | `zIndex` | `number` | Stacking order |
 | `animate` | `AnimationType` | Entrance animation: `'fade'`, `'fly-up'`, `'fly-down'`, `'fly-left'`, `'fly-right'`, `'scale'` |

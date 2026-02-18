@@ -26,7 +26,7 @@
 		step={1}
 		layout={{ x: 137, y: 360, width: 665, height: 108 }}
 		font={{ font_size: 48, align: 'center' }}
-		fill="var(--color-bg-cmd-law)"
+		fill="var(--bg-cmd-law)"
 		line={{ width: 8 }}
 	>
 		"commanded" evokes what thoughts?

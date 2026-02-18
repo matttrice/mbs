@@ -35,7 +35,7 @@
 		step={2}
 		layout={{ x: 354, y: 385, width: 254, height: 88 }}
 		font={{ font_size: 23, align: 'center' , wrap: true }}
-		fill="var(--color-level1)"
+		fill="var(--bg-level-1)"
 	>
 		<strong>"instinctively"</strong> <br/> Means what?
 	</Fragment>
@@ -52,7 +52,7 @@
 		step={4}
 		layout={{ x: 632.8, y: 389.2, width: 300.2, height: 80.7 }}
 		font={{ font_size: 30, align: 'center' }}
-		fill="var(--color-level1)"
+		fill="var(--bg-level-1)"
 	>
 		Instinct +<br/>Conscience & Heart
 	</Fragment>

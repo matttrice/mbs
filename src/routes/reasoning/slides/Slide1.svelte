@@ -32,7 +32,7 @@
 	<Fragment
 		layout={{ x: 127, y: 50, width: 733, height: 300 }}
 		font={{ font_size: 23.3, align: 'left', wrap: true }}
-		fill="var(--color-bg-light)"
+		fill="var(--bg-light)"
 		zIndex={1}
 	>
 		<p style="margin: 0; padding: 15px; line-height: 1.5;">

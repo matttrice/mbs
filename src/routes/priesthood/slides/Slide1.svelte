@@ -34,7 +34,7 @@
 
 	<!-- Step 1: Gray rectangle (left column) -->
 	<Fragment step={1} animate="wipe-down">
-		<Rect x={55} y={53} width={419} height={475} fill="var(--color-bg-light)" zIndex={1} />
+		<Rect x={55} y={53} width={419} height={475} fill="var(--bg-light)" zIndex={1} />
 	</Fragment>
 
 	<!-- Step 1: Top line - with previous -->
@@ -85,7 +85,7 @@
 
 	<!-- Step 2: Blue rectangle (right column) - with previous -->
 	<Fragment step={2} animate="wipe-down">
-		<Rect x={475} y={53} width={430} height={475} fill="var(--color-level2)" zIndex={0} />
+		<Rect x={475} y={53} width={430} height={475} fill="var(--bg-level-2)" zIndex={0} />
 	</Fragment>
 
 	<!-- Step 2: "New Order" - with previous -->
@@ -308,6 +308,6 @@
 	:global(.slide-bg) {
 		position: absolute;
 		inset: 0;
-		background: var(--color-bg-ghost);
+		background: var(--bg-ghost);
 	}
 </style>

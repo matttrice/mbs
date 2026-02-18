@@ -92,7 +92,7 @@
 
 	<!-- Step 5 (with): Horizontal line under Romans 6:18 -->
 	<Fragment step={5} animate="draw">
-		<Line from={{ x: 84.1, y: 245.8 }} to={{ x: 324.1, y: 245.8 }} stroke={{ width: 5, color: 'var(--color-stroke-dark)' }} zIndex={32} />
+		<Line from={{ x: 84.1, y: 245.8 }} to={{ x: 324.1, y: 245.8 }} stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={32} />
 	</Fragment>
 
 	<!-- Step 6: Romans 6:18 quote box (drill) -->
@@ -128,7 +128,7 @@
 
 	<!-- Step 8: Right column rectangle (blue) -->
 	<Fragment step={8} animate="wipe-down">
-		<Rect x={333} y={15.5} width={308.9} height={416.6} fill="var(--color-level2)" stroke={{ width: 1, color: '#000000' }} zIndex={0} />
+		<Rect x={333} y={15.5} width={308.9} height={416.6} fill="var(--bg-level-2)" stroke={{ width: 1, color: '#000000' }} zIndex={0} />
 	</Fragment>
 
 	<!-- Step 8 (with): "As a slave you have new set of responsibility" -->
@@ -249,7 +249,7 @@
 
 	<!-- Step 16: Right column rectangle (blue) for hamartia -->
 	<Fragment step={16} animate="wipe-down">
-		<Rect x={650.8} y={15.8} width={234.2} height={472.2} fill="var(--color-level2)" stroke={{ width: 1, color: '#000000' }} zIndex={1} />
+		<Rect x={650.8} y={15.8} width={234.2} height={472.2} fill="var(--bg-level-2)" stroke={{ width: 1, color: '#000000' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 16 (with): "hamartia" title -->

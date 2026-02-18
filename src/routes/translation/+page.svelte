@@ -69,16 +69,16 @@
 		justify-content: center;
 		gap: 8px;
 		padding: 16px;
-		background: var(--color-bg-light);
+		background: var(--bg-light);
 	}
 
 	.indicator-dot {
 		width: 32px;
 		height: 32px;
 		border-radius: 50%;
-		border: 2px solid var(--color-level3);
+		border: 2px solid var(--bg-level-3);
 		background: transparent;
-		color: var(--color-level3);
+		color: var(--bg-level-3);
 		font-size: 14px;
 		font-weight: 600;
 		cursor: pointer;
@@ -86,12 +86,12 @@
 	}
 
 	.indicator-dot:hover {
-		background: var(--color-level3);
+		background: var(--bg-level-3);
 		color: white;
 	}
 
 	.indicator-dot.active {
-		background: var(--color-level3);
+		background: var(--bg-level-3);
 		color: white;
 	}
 </style>

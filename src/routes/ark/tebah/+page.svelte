@@ -11,9 +11,9 @@
 	<!-- Static: Genesis 6:14 quote -->
 	<Fragment
 		layout={{ x: 53, y: 189, width: 819, height: 54 }}
-		fill="var(--color-level1)"
+		fill="var(--bg-level-1)"
 		font={{ font_size: 20, align: 'center', wrap: true }}
-		line={{ width: 2, color: 'var(--color-stroke-dark)' }}
+		line={{ width: 2, color: 'var(--stroke-level-0)' }}
 	>
 		"Make for yourself an *ark of gopher wood; you shall make the <strong>ark</strong> with rooms, and shall <strong>*cover it inside and out with *pitch</strong>.
 	</Fragment>
@@ -136,10 +136,10 @@
 
 	<!-- Step 9: Left brace shape (timing: with) - using line approximation -->
 	<Fragment step={9} animate="fade">
-		<Line from={{ x: 799, y: 19 }} to={{ x: 799, y: 129 }} stroke={{ width: 6, color: 'var(--color-stroke-dark)' }} />
-		<Line from={{ x: 779, y: 19 }} to={{ x: 799, y: 22 }} stroke={{ width: 6, color: 'var(--color-stroke-dark)' }} />
-		<Line from={{ x: 779, y: 130 }} to={{ x: 799, y: 126 }} stroke={{ width: 6, color: 'var(--color-stroke-dark)' }} />
-		<Line from={{ x: 800, y: 64 }} to={{ x: 810, y: 64 }} stroke={{ width: 6, color: 'var(--color-stroke-dark)' }} />
+		<Line from={{ x: 799, y: 19 }} to={{ x: 799, y: 129 }} stroke={{ width: 6, color: 'var(--stroke-level-0)' }} />
+		<Line from={{ x: 779, y: 19 }} to={{ x: 799, y: 22 }} stroke={{ width: 6, color: 'var(--stroke-level-0)' }} />
+		<Line from={{ x: 779, y: 130 }} to={{ x: 799, y: 126 }} stroke={{ width: 6, color: 'var(--stroke-level-0)' }} />
+		<Line from={{ x: 800, y: 64 }} to={{ x: 810, y: 64 }} stroke={{ width: 6, color: 'var(--stroke-level-0)' }} />
 
 	</Fragment>
 
@@ -174,7 +174,7 @@
 	</Fragment>
 
 	<Fragment step={12} animate="wipe-down">
-		<Arrow from={{ x: 168, y: 179 }} to={{ x: 168, y: 331 }} stroke={{ width: 3, color: 'var(--color-stroke-dark)' }} />
+		<Arrow from={{ x: 168, y: 179 }} to={{ x: 168, y: 331 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} />
 	</Fragment>
 
 	<Fragment step={12} animate="draw">
@@ -201,7 +201,7 @@
 
 	<!-- Step 13: Blood = arrow (timing: click) -->
 	<Fragment step={13} animate="wipe-down">
-		<Arrow from={{ x: 408, y: 97 }} to={{ x: 258, y: 351 }} stroke={{ width: 3, color: 'var(--color-stroke-dark)' }} />
+		<Arrow from={{ x: 408, y: 97 }} to={{ x: 258, y: 351 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} />
 	</Fragment>
 
 	<Fragment
@@ -242,7 +242,7 @@
 	<Fragment
 		step={16}
 		layout={{ x: 524, y: 331, width: 350, height: 69 }}
-		font={{ font_size: 21.7, bold: true, color: 'var(--color-level3)', align: 'left', wrap: true }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--bg-level-3)', align: 'left', wrap: true }}
 		line={{ width: 1 }}
 	>
 		Propitiation (atoning sacrifice) of sin is accomplished how?
@@ -282,6 +282,6 @@
 	</Fragment>
 
 	<Fragment step={17.1} animate="wipe-down">
-		<Arrow from={{ x: 573, y: 92 }} to={{ x: 733, y: 393 }} stroke={{ width: 3, color: 'var(--color-stroke-dark)' }} zIndex={6} />
+		<Arrow from={{ x: 573, y: 92 }} to={{ x: 733, y: 393 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={6} />
 	</Fragment>
 </Slide>

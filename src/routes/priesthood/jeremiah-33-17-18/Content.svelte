@@ -55,7 +55,7 @@
 	step={1}
 	layout={{ x: 132, y: 443, width: 720, height: 36 }}
 	font={{ font_size: 21.6, bold: true, color: '#0000FF', wrap: true, align: 'center' }}
-	fill="var(--color-level2)"
+	fill="var(--bg-level-2)"
 >
 	Offices Spiritually Joined – No longer divided
 </Fragment>

@@ -26,7 +26,7 @@
 	drillTo="birthrights/galatians-4-6"
 	layout={{ x: 96, y: 225, width: 272, height: 74 }}
 	font={{ font_size: 16.7, align: 'center', v_align: 'middle', wrap: true }}
-	fill="var(--color-bg-light)"
+	fill="var(--bg-light)"
 	line={{ width: 1, color: '#000000' }}
 >
 	How could God not 'know them'? – They used his name – Galatians 4:6-9

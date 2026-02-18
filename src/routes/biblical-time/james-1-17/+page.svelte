@@ -70,9 +70,9 @@
 		margin-top: 1em;
 	}
 	.spiritual {
-		color: var(--color-level3);
+		color: var(--bg-level-3);
 	}
 	.physical {
-		color: var(--color-level1);
+		color: var(--bg-level-1);
 	}
 </style>

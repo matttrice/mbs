@@ -31,8 +31,8 @@
 		step={1}
 		layout={{ x: 707.2, y: 250.3, width: 139.9, height: 86.8 }}
 		font={{ font_size: 33.3, align: 'center', v_align: 'middle' }}
-		fill="var(--color-bg-cmd-law)"
-		line={{ width: 2, color: "var(--color-stroke-dark)" }}
+		fill="var(--bg-cmd-law)"
+		line={{ width: 2, color: "var(--stroke-level-0)" }}
 	>
 		Moses<br/>Law
 	</Fragment>
@@ -53,8 +53,8 @@
 		step={1.2}
 		layout={{ x: 25.6, y: 250.3, width: 187.5, height: 83.4 }}
 		font={{ font_size: 48, align: 'center', v_align: 'middle', wrap: true }}
-		fill="var(--color-level1)"
-		line={{ width: 2, color: "var(--color-stroke-dark)" }}
+		fill="var(--bg-level-1)"
+		line={{ width: 2, color: "var(--stroke-level-0)" }}
 	>
 		Adam
 	</Fragment>
@@ -123,7 +123,7 @@
 		step={6}
 		layout={{ x: 0, y: 441.2, width: 960, height: 72.8 }}
 		font={{ font_size: 48, align: 'center', v_align: 'middle' }}
-		fill="var(--color-level1)"
+		fill="var(--bg-level-1)"
 		line={{ color: '#000000' }}
 	>
 		Moral Law
