@@ -122,7 +122,7 @@
 		animate="wipe"
 		exitStep={14}
 		>
-		<Line from={{ x: 195, y: 260 }} to={{ x: 744, y: 260 }} startMarker={{ radius: 10 }} endMarker={{ radius: 10 }} stroke={{ width: 7, color: 'var(--color-stroke-dark)' }} zIndex={30} />
+		<Line from={{ x: 195, y: 260 }} to={{ x: 764, y: 260 }} startMarker={{ radius: 10 }} endMarker={{ radius: 10 }} stroke={{ width: 7, color: 'var(--color-stroke-dark)' }} zIndex={30} />
 	</Fragment>
 
 	<Fragment
