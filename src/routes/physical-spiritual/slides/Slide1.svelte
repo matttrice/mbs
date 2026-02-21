@@ -18,6 +18,13 @@
 	}
 
 	let { slideIndex }: Props = $props();
+
+	const GL = { x: 0, w: 210 };
+	const L = { x: 210, w: 270 };
+	const R = { x: 480, w: 270 };
+	const GR = { x: 750, w: 210 };
+	const center = (col: { x: number; w: number }, fw: number) => col.x + (col.w - fw) / 2;
+	const pageCenter = (fw: number) => (960 - fw) / 2;
 </script>
 
 <Slide {slideIndex}>
@@ -27,7 +34,7 @@
 	<!-- ===== STATIC CONTENT ===== -->
 	<!-- Title: Genesis 1:1 -->
 	<Fragment
-		layout={{ x: 13.1, y: 2.3, width: 161.7, height: 37.2 }}
+		layout={{ x: center(GL, 161.7), y: 2.3, width: 161.7, height: 37.2 }}
 		font={{ font_size: 24.2 }}
 		zIndex={66}
 	>
@@ -39,7 +46,7 @@
 	<!-- Step 1: "In the beginning God created the HEAVENS and the EARTH..." -->
 	<Fragment
 		step={1}
-		layout={{ x: 20.3, y: 29, width: 166.1, height: 70 }}
+		layout={{ x: center(GL, 166.1), y: 29, width: 166.1, height: 70 }}
 		font={{ font_size: 15, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={48}
 	>
@@ -49,7 +56,7 @@
 	<!-- Step 2: "Internal Interpretation" -->
 	<Fragment
 		step={2}
-		layout={{ x: 40, y: 95.4, width: 126.7, height: 50.8 }}
+		layout={{ x: center(GL, 126.7), y: 95.4, width: 126.7, height: 50.8 }}
 		font={{ font_size: 17.5, wrap: true }}
 		zIndex={45}
 	>
@@ -58,17 +65,17 @@
 
 	<!-- Step 3: "Heavens" + Blue rectangle + Lines + "Earth" + Gray rectangle (all with timing) -->
 	<Fragment step={3} animate="wipe-down">
-		<Rect x={192.7} y={0} width={288} height={540} fill="var(--bg-level-2)" zIndex={0} />
-		<Rect x={480} y={0} width={270} height={540} fill="var(--bg-level-1)" zIndex={0} />
+		<Rect x={L.x} y={0} width={L.w} height={540} fill="var(--bg-level-2)" zIndex={0} />
+		<Rect x={R.x} y={0} width={R.w} height={540} fill="var(--bg-level-1)" zIndex={0} />
 		<!-- Horizontal divider line -->
-		<Line from={{ x: 192.4, y: 55.4 }} to={{ x: 750.4, y: 55.4 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={0} />
+		<Line from={{ x: L.x, y: 55.4 }} to={{ x: R.x + R.w, y: 55.4 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={0} />
 		<!-- Vertical divider line -->
-		<Line from={{ x: 481.5, y: 0 }} to={{ x: 481.5, y: 540 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={0} />
+		<Line from={{ x: R.x, y: 0 }} to={{ x: R.x, y: 540 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={0} />
 	</Fragment>
 
 	<Fragment
 		step={3}
-		layout={{ x: 239.5, y: 6.9, width: 217.1, height: 40.8 }}
+		layout={{ x: center(L, 217.1), y: 6.9, width: 217.1, height: 40.8 }}
 		font={{ font_size: 50, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={10}
 	>
@@ -77,7 +84,7 @@
 
 	<Fragment
 		step={3}
-		layout={{ x: 520.8, y: 7.5, width: 161.1, height: 40.8 }}
+		layout={{ x: center(R, 161.1), y: 7.5, width: 161.1, height: 40.8 }}
 		font={{ font_size: 50, bold: true }}
 		zIndex={11}
 	>
@@ -88,7 +95,7 @@
 	<Fragment
 		step={4}
 		drillTo="physical-spiritual/colossians-1-15"
-		layout={{ x: 693.8, y: 60.3, width: 247.2, height: 36.1 }}
+		layout={{ x: center(GR, 250), y: 60.3, width: 210, height: 30 }}
 		font={{ font_size: 23.3, bold: true, align: 'left' }}
 		fill="var(--bg-level-1)"
 		zIndex={62}
@@ -98,7 +105,7 @@
 
 	<Fragment
 		step={4}
-		layout={{ x: 773.8, y: 38.5, width: 137.8, height: 25.4 }}
+		layout={{ x: center(GR, 137.8), y: 38.5, width: 137.8, height: 25.4 }}
 		font={{ font_size: 20, italic: true }}
 		zIndex={74}
 	>
@@ -108,7 +115,7 @@
 	<!-- Step 5: "Visible" -->
 	<Fragment
 		step={5}
-		layout={{ x: 500.4, y: 55, width: 196.1, height: 36.1 }}
+		layout={{ x: center(R, 196.1), y: 55, width: 196.1, height: 36.1 }}
 		font={{ font_size: 40 }}
 		zIndex={13}
 	>
@@ -118,7 +125,7 @@
 	<!-- Step 6: "Invisible" -->
 	<Fragment
 		step={6}
-		layout={{ x: 240.4, y: 55, width: 210, height: 36.1 }}
+		layout={{ x: center(L, 210), y: 55, width: 210, height: 36.1 }}
 		font={{ font_size: 40, color: 'var(--bg-level-3)' }}
 		zIndex={14}
 	>
@@ -129,7 +136,7 @@
 	<Fragment
 		step={7}
 		drillTo="physical-spiritual/2corinthians-4-17"
-		layout={{ x: 693.8, y: 96.4, width: 247.2, height: 40.6 }}
+		layout={{ x: center(GR, 250), y: 96.4, width: 210, height: 30 }}
 		font={{ font_size: 23.3, bold: true, align: 'left' }}
 		fill="var(--bg-level-1)"
 		zIndex={63}
@@ -140,7 +147,7 @@
 	<!-- Step 8: "Seen" -->
 	<Fragment
 		step={8}
-		layout={{ x: 520.4, y: 93.6, width: 160.9, height: 35.9 }}
+		layout={{ x: center(R, 160.9), y: 93.6, width: 160.9, height: 35.9 }}
 		font={{ font_size: 40 }}
 		zIndex={15}
 	>
@@ -150,7 +157,7 @@
 	<!-- Step 9: "Temporal" -->
 	<Fragment
 		step={9}
-		layout={{ x: 497.9, y: 129.8, width: 205.9, height: 42 }}
+		layout={{ x: center(R, 205.9), y: 129.8, width: 205.9, height: 42 }}
 		font={{ font_size: 40 }}
 		zIndex={17}
 	>
@@ -160,7 +167,7 @@
 	<!-- Step 10: "Unseen" -->
 	<Fragment
 		step={10}
-		layout={{ x: 264.9, y: 93.6, width: 161.1, height: 35.9 }}
+		layout={{ x: center(L, 161.1), y: 93.6, width: 161.1, height: 35.9 }}
 		font={{ font_size: 40, color: 'var(--bg-level-3)' }}
 		zIndex={16}
 	>
@@ -170,7 +177,7 @@
 	<!-- Step 11: "Eternal" -->
 	<Fragment
 		step={11}
-		layout={{ x: 265.8, y: 131.4, width: 159.3, height: 38.6 }}
+		layout={{ x: center(L, 159.3), y: 131.4, width: 159.3, height: 38.6 }}
 		font={{ font_size: 40, color: 'var(--bg-level-3)' }}
 		zIndex={18}
 	>
@@ -181,8 +188,8 @@
 	<Fragment
 		step={12}
 		drillTo="physical-spiritual/hebrews-11-1"
-		layout={{ x: 695.6, y: 134.2, width: 245.1, height: 35.1 }}
-		font={{ font_size: 23.3, bold: true, align: 'left' }}
+		layout={{ x: center(GR, 250), y: 134.2, width: 210, height: 30 }}
+		font={{ font_size: 23.3, bold: true, align: 'center' }}
 		fill="var(--bg-level-1)"
 		zIndex={22}
 	>
@@ -202,7 +209,7 @@
 	<Fragment
 		step={13}
 		drillTo="physical-spiritual/romans-1-20"
-		layout={{ x: 33.3, y: 154.3, width: 140, height: 30.8 }}
+		layout={{ x: center(GL, 140), y: 144, width: 140, height: 30.8 }}
 		font={{ font_size: 20, bold: true, align: 'left' }}
 		zIndex={47}
 	>
@@ -211,8 +218,8 @@
 
 	<Fragment
 		step={14}
-		layout={{ x: 31.1, y: 179.2, width: 154.4, height: 58.9 }}
-		font={{ font_size: 17.5, align: 'left', v_align: 'top', wrap: true }}
+		layout={{ x: center(GL, 154.4), y: 168, width: 154.4, height: 65 }}
+		font={{ font_size: 17.5, align: 'left', wrap: true }}
 		zIndex={20}
 	>
 		What evidence for invisible qualities are <strong>clearly seen</strong>?
@@ -220,7 +227,7 @@
 
 	<Fragment
 		step={15}
-		layout={{ x: 766, y: 201.8, width: 130.2, height: 60.4 }}
+		layout={{ x: center(GR, 130.2), y: 201.8, width: 130.2, height: 60.4 }}
 		font={{ font_size: 15, align: 'center', v_align: 'top', wrap: true }}
 		zIndex={21}
 	>
@@ -229,7 +236,7 @@
 
     <Fragment
 		step={15}
-		layout={{ x: 766, y: 260, width: 130.2, height: 60.4 }}
+		layout={{ x: center(GR, 130.2), y: 260, width: 130.2, height: 60.4 }}
 		font={{ font_size: 15, align: 'center', v_align: 'top', wrap: true, bold: true }}
 		zIndex={21}
 	>
@@ -238,7 +245,7 @@
 
 	<Fragment
 		step={16}
-		layout={{ x: 530.6, y: 263.9, width: 153.9, height: 31.3 }}
+		layout={{ x: center(R, 153.9), y: 263.9, width: 153.9, height: 31.3 }}
 		font={{ font_size: 25 }}
 		zIndex={24}
 	>
@@ -251,7 +258,7 @@
 
 	<Fragment
 		step={16.2}
-		layout={{ x: 228.8, y: 260, width: 235.9, height: 31.3 }}
+		layout={{ x: center(L, 200), y: 260, width: 220, height: 31.3 }}
 		font={{ font_size: 25, color: 'var(--bg-level-3)' }}
 		zIndex={27}
 	>
@@ -260,7 +267,7 @@
 
 	<Fragment
 		step={18}
-		layout={{ x: 536.1, y: 237.6, width: 142.8, height: 31.3 }}
+		layout={{ x: center(R, 142.8), y: 237.6, width: 142.8, height: 31.3 }}
 		font={{ font_size: 25 }}
 		zIndex={23}
 	>
@@ -273,7 +280,7 @@
 
 	<Fragment
 		step={19}
-		layout={{ x: 255.8, y: 234.8, width: 182, height: 31.3 }}
+		layout={{ x: center(L, 182), y: 234.8, width: 182, height: 31.3 }}
 		font={{ font_size: 25, color: 'var(--bg-level-3)' }}
 		zIndex={26}
 	>
@@ -282,7 +289,7 @@
 
 	<Fragment
 		step={20}
-		layout={{ x: 540.9, y: 208.8, width: 133.1, height: 31.3 }}
+		layout={{ x: center(R, 133.1), y: 208.8, width: 133.1, height: 31.3 }}
 		font={{ font_size: 25 }}
 		zIndex={25}
 	>
@@ -295,7 +302,7 @@
 
 	<Fragment
 		step={21}
-		layout={{ x: 246.8, y: 206.1, width: 199.8, height: 31.3 }}
+		layout={{ x: center(L, 199.8), y: 206.1, width: 199.8, height: 31.3 }}
 		font={{ font_size: 25, color: 'var(--bg-level-3)' }}
 		zIndex={28}
 	>
@@ -303,16 +310,16 @@
 	</Fragment>
 
 	<Fragment step={22} animate="fade">
-		<Rect x={206} y={178} width={275} height={118.9} fill="var(--bg-light)" stroke={{ color: 'var(--stroke-level-0)', width: 1 }} zIndex={6} />
+		<Rect x={center(L, 230) + 20} y={178} width={230} height={118.9} fill="var(--bg-light)" zIndex={6} />
 	</Fragment>
 
 	<Fragment step={22} animate="wipe">
-		<Arrow from={{ x: 140, y: 270 }} to={{ x: 235, y: 228 }} stroke={{ width: 4 }} zIndex={32} />
+		<Arrow from={{ x: 146, y: 261 }} to={{ x: 245, y: 240 }} stroke={{ width: 4 }} zIndex={32} />
 	</Fragment>
 
 	<Fragment
 		step={22}
-		layout={{ x: 50.3, y: 245.6, width: 96.8, height: 45.8 }}
+		layout={{ x: center(GL, 96.8), y: 245.6, width: 96.8, height: 45.8 }}
 		font={{ font_size: 21.7, bold: true, wrap: true, align: 'center' }}
 		zIndex={31}
 	>
@@ -321,7 +328,7 @@
 
 	<Fragment
 		step={23}
-		layout={{ x: 280, y: 177, width: 136.8, height: 36.1 }}
+		layout={{ x: center(L, 136.8), y: 177, width: 136.8, height: 36.1 }}
 		font={{ font_size: 35, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={30}
 	>
@@ -330,7 +337,7 @@
 
 	<Fragment
 		step={24}
-		layout={{ x: 535.3, y: 177, width: 144.5, height: 36.1 }}
+		layout={{ x: center(R, 144.5), y: 177, width: 144.5, height: 36.1 }}
 		font={{ font_size: 35, bold: true }}
 		zIndex={29}
 	>
@@ -338,29 +345,29 @@
 	</Fragment>
 
 	<Fragment step={24} animate="fade">
-		<Rect x={482} y={178} width={250} height={118.9} fill="var(--bg-light)" stroke={{ color: 'var(--stroke-level-0)', width: 1 }} zIndex={5} />
+		<Rect x={center(R, 230) - 20} y={178} width={230} height={118.9} fill="var(--bg-light)" zIndex={5} />
 	</Fragment>
 
 	<Fragment
-		step={24}
-		layout={{ x: 761, y: 273.9, width: 138.3, height: 75.8 }}
+		step={25}
+		layout={{ x: center(GR, 138.3), y: 273.9, width: 138.3, height: 75.8 }}
 		font={{ font_size: 21.7, bold: true, wrap: true }}
 		zIndex={33}
 	>
 		What is effected?
 	</Fragment>
 
-	<Fragment step={24} animate="wipe-left">
-		<Arrow from={{ x: 760, y: 300 }} to={{ x: 685, y: 315 }} stroke={{ width: 4 }} zIndex={34} />
+	<Fragment step={25} animate="wipe-left">
+		<Arrow from={{ x: 780, y: 305 }} to={{ x: 694, y: 315 }} stroke={{ width: 4 }} zIndex={34} />
 	</Fragment>
 
-	<Fragment step={24} animate="fade">
-		<Rect x={483} y={295.4} width={258.6} height={127.7} fill="var(--bg-ghost)" zIndex={1} />
+	<Fragment step={26} animate="fade">
+		<Rect x={center(R, 230) - 20} y={295.4} width={250} height={127.7} fill="var(--bg-ghost)"  zIndex={1} />
 	</Fragment>
 
 	<Fragment
-		step={25}
-		layout={{ x: 533.6, y: 301.8, width: 161.1, height: 40 }}
+		step={26}
+		layout={{ x: center(R, 161.1), y: 301.8, width: 161.1, height: 40 }}
 		font={{ font_size: 44.2, bold: true }}
 		zIndex={64}
 	>
@@ -370,7 +377,7 @@
 	<!-- Step 27: "Energy" + white box -->
 	<Fragment
 		step={27}
-		layout={{ x: 252.5, y: 294.4, width: 177.3, height: 53.9 }}
+		layout={{ x: center(L, 177.3), y: 294.4, width: 177.3, height: 53.9 }}
 		font={{ font_size: 44.2, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={65}
 	>
@@ -378,13 +385,13 @@
 	</Fragment>
 
 	<Fragment step={27}>
-		<Rect x={199.3} y={294.9} width={281} height={128.4} fill="var(--bg-ghost)" zIndex={4} />
+		<Rect x={center(L, 230)} y={294.9} width={250} height={128.4} fill="var(--bg-ghost)" zIndex={4} />
 	</Fragment>
 
 	<!-- Step 28: First Law of Thermodynamics -->
 	<Fragment
 		step={28}
-		layout={{ x: 10.9, y: 299.4, width: 184.8, height: 86.9 }}
+		layout={{ x: center(GL, 184.8), y: 299.4, width: 184.8, height: 86.9 }}
 		font={{ font_size: 11, align: 'left', v_align: 'top', wrap: true }}
 		zIndex={39}
 	>
@@ -394,7 +401,7 @@
 	<!-- Step 29: "Einstein" box -->
 	<Fragment
 		step={29}
-		layout={{ x: 429.1, y: 308, width: 101.9, height: 30 }}
+		layout={{ x: pageCenter(101.9), y: 308, width: 101.9, height: 30 }}
 		font={{ font_size: 21.7, bold: true }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1 }}
@@ -406,7 +413,7 @@
 	<!-- Step 30: "=" overlay -->
 	<Fragment
 		step={30}
-		layout={{ x: 424.4, y: 297, width: 113.1, height: 47 }}
+		layout={{ x: pageCenter(113.1), y: 297, width: 113.1, height: 47 }}
 		font={{ font_size: 48.3, bold: true }}
 		fill="var(--bg-ghost)"
 		zIndex={61}
@@ -427,7 +434,7 @@
 	<Fragment
 		step={31}
 		layout={{ x: 466.4, y: 342.1, width: 29.2, height: 45.6 }}
-		font={{ font_size: 39.2 }}
+		font={{ font_size: 39.2, bold: true}}
 		fill="var(--bg-ghost)"
 		zIndex={70}
 	>
@@ -446,7 +453,7 @@
 	<!-- Step 32: "What's missing?" -->
 	<Fragment
 		step={32}
-		layout={{ x: 36.4, y: 409.3, width: 133.8, height: 29.8 }}
+		layout={{ x: center(GL, 133.8), y: 409.3, width: 133.8, height: 29.8 }}
 		font={{ font_size: 16.7, bold: true }}
 		zIndex={35}
 	>
@@ -457,7 +464,7 @@
 	<Fragment
 		step={33}
 		drillTo="physical-spiritual/genesis-1-1"
-		layout={{ x: 23.2, y: 437.5, width: 160.2, height: 30.8 }}
+		layout={{ x: center(GL, 160.2), y: 437.5, width: 160.2, height: 30.8 }}
 		font={{ font_size: 20, bold: true }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1 }}
@@ -469,7 +476,7 @@
 	<!-- Step 34: "Creation Equation" + diagonal line to Genesis -->
 	<Fragment
 		step={34}
-		layout={{ x: 228.8, y: 348.3, width: 204.9, height: 36.3 }}
+		layout={{ x: center(L, 204.9), y: 348.3, width: 204.9, height: 36.3 }}
 		font={{ font_size: 23.3, italic: true }}
 		zIndex={67}
 	>
@@ -477,13 +484,13 @@
 	</Fragment>
 
 	<Fragment step={34} animate="wipe">
-		<Arrow from={{ x: 169, y: 447 }} to={{ x: 234, y: 373 }} stroke={{ width: 4 }} zIndex={72} />
+		<Arrow from={{ x: 169, y: 447 }} to={{ x: 249, y: 379 }} stroke={{ width: 4 }} zIndex={72} />
 	</Fragment>
 
 	<!-- Step 34: "What gives matter stability?" + diagonal line -->
 	<Fragment
 		step={35}
-		layout={{ x: 760.4, y: 365.8, width: 147.1, height: 48 }}
+		layout={{ x: center(GR, 147.1), y: 365.8, width: 147.1, height: 48 }}
 		font={{ font_size: 17.5, wrap: true }}
 		zIndex={37}
 	>
@@ -491,13 +498,13 @@
 	</Fragment>
 
 	<Fragment step={35} animate="wipe-left">
-		<Arrow from={{ x: 754, y: 379 }} to={{ x: 583, y: 361 }} stroke={{ width: 4 }} zIndex={38} />
+		<Arrow from={{ x: 774, y: 379 }} to={{ x: 583, y: 367 }} stroke={{ width: 4 }} zIndex={38} />
 	</Fragment>
 
 	<!-- Step 35: "c²" -->
 	<Fragment
 		step={36}
-		layout={{ x: 525.6, y: 338.4, width: 63, height: 45.6 }}
+		layout={{ x: center(R, 185), y: 340, width: 63, height: 45.6 }}
 		font={{ font_size: 50, color: 'var(--bg-level-3)' }}
 		zIndex={71}
 	>
@@ -508,7 +515,7 @@
 	<Fragment
 		step={37}
 		drillTo="physical-spiritual/1corinthians-15-40"
-		layout={{ x: 33.3, y: 470.4, width: 140, height: 53.9 }}
+		layout={{ x: center(GL, 140), y: 470.4, width: 140, height: 53.9 }}
 		font={{ font_size: 20, bold: true, color: 'var(--bg-level-3)', wrap: true, align: 'center' }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1 }}
@@ -520,7 +527,7 @@
 	<!-- Step 38: "perishable" -->
 	<Fragment
 		step={38}
-		layout={{ x: 540.5, y: 420, width: 110.2, height: 26.4 }}
+		layout={{ x: center(R, 110.2), y: 420, width: 110.2, height: 26.4 }}
 		font={{ font_size: 21.7, bold: true }}
 		zIndex={49}
 	>
@@ -530,7 +537,7 @@
 	<!-- Step 38.1: "dishonor" (after 500ms) -->
 	<Fragment
 		step={38.1}
-		layout={{ x: 547.2, y: 441.9, width: 96.9, height: 26.4 }}
+		layout={{ x: center(R, 96.9), y: 441.9, width: 96.9, height: 26.4 }}
 		font={{ font_size: 21.7, bold: true }}
 		zIndex={51}
 	>
@@ -540,7 +547,7 @@
 	<!-- Step 38.2: "weakness" (after 1000ms) -->
 	<Fragment
 		step={38.2}
-		layout={{ x: 543, y: 463.8, width: 105.1, height: 26.4 }}
+		layout={{ x: center(R, 105.1), y: 463.8, width: 105.1, height: 26.4 }}
 		font={{ font_size: 21.7, bold: true }}
 		zIndex={53}
 	>
@@ -550,7 +557,7 @@
 	<!-- Step 38.3: "physical body" (after 1500ms) -->
 	<Fragment
 		step={38.3}
-		layout={{ x: 522.4, y: 485.6, width: 146.6, height: 26.4 }}
+		layout={{ x: center(R, 146.6), y: 485.6, width: 146.6, height: 26.4 }}
 		font={{ font_size: 21.7, bold: true }}
 		zIndex={55}
 	>
@@ -560,7 +567,7 @@
 	<!-- Step 38.4: "1st Adam" (after 2000ms) -->
 	<Fragment
 		step={38.4}
-		layout={{ x: 508, y: 507.5, width: 100.9, height: 26.4 }}
+		layout={{ x: center(R, 180), y: 507.5, width: 100.9, height: 26.4 }}
 		font={{ font_size: 21.7, bold: true }}
 		zIndex={57}
 	>
@@ -570,7 +577,7 @@
 	<!-- Step 38.5: "- Earth" (after 2500ms) -->
 	<Fragment
 		step={38.5}
-		layout={{ x: 606, y: 507.5, width: 75.9, height: 26.4 }}
+		layout={{ x: center(R, -20), y: 507.5, width: 75.9, height: 26.4 }}
 		font={{ font_size: 21.7, bold: true }}
 		zIndex={59}
 	>
@@ -580,7 +587,7 @@
 	<!-- Step 39: "imperishable" -->
 	<Fragment
 		step={39}
-		layout={{ x: 266.4, y: 420, width: 132.2, height: 26.4 }}
+		layout={{ x: center(L, 132.2), y: 420, width: 132.2, height: 26.4 }}
 		font={{ font_size: 21.7, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={50}
 	>
@@ -590,7 +597,7 @@
 	<!-- Step 39.1: "glory" (after 500ms) -->
 	<Fragment
 		step={39.1}
-		layout={{ x: 301.4, y: 441.9, width: 62.6, height: 26.4 }}
+		layout={{ x: center(L, 62.6), y: 441.9, width: 62.6, height: 26.4 }}
 		font={{ font_size: 21.7, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={52}
 	>
@@ -600,7 +607,7 @@
 	<!-- Step 39.2: "power" (after 1000ms) -->
 	<Fragment
 		step={39.2}
-		layout={{ x: 296.7, y: 463.8, width: 71.9, height: 26.4 }}
+		layout={{ x: center(L, 71.9), y: 463.8, width: 71.9, height: 26.4 }}
 		font={{ font_size: 21.7, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={54}
 	>
@@ -610,7 +617,7 @@
 	<!-- Step 39.3: "spiritual body" (after 1500ms) -->
 	<Fragment
 		step={39.3}
-		layout={{ x: 263, y: 485.6, width: 139.3, height: 26.4 }}
+		layout={{ x: center(L, 139.3), y: 485.6, width: 139.3, height: 26.4 }}
 		font={{ font_size: 21.7, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={56}
 	>
@@ -620,7 +627,7 @@
 	<!-- Step 39.4: "2nd Adam" (after 2000ms) -->
 	<Fragment
 		step={39.4}
-		layout={{ x: 242, y: 507.5, width: 107.2, height: 26.4 }}
+		layout={{ x: center(L, 200), y: 507.5, width: 107.2, height: 26.4 }}
 		font={{ font_size: 21.7, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={58}
 	>
@@ -630,7 +637,7 @@
 	<!-- Step 39.5: "- Heaven" (after 2500ms) -->
 	<Fragment
 		step={39.5}
-		layout={{ x: 350, y: 507.5, width: 94.8, height: 26.4 }}
+		layout={{ x: center(L, -20	), y: 507.5, width: 94.8, height: 26.4 }}
 		font={{ font_size: 21.7, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={60}
 	>
@@ -640,7 +647,7 @@
 	<!-- Step 40: "SPIRITUAL" with border -->
 	<Fragment
 		step={40}
-		layout={{ x: 235, y: 386.3, width: 218, height: 35.9 }}
+		layout={{ x: center(L, 218), y: 386.3, width: 218, height: 35.9 }}
 		font={{ font_size: 39.2, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={41}
 	>
@@ -650,7 +657,7 @@
 	<!-- Step 41: "PHYSICAL" -->
 	<Fragment
 		step={41}
-		layout={{ x: 500.8, y: 381.8, width: 210.3, height: 44.9 }}
+		layout={{ x: center(R, 210.3), y: 381.8, width: 210.3, height: 44.9 }}
 		font={{ font_size: 39.2, bold: true }}
 		zIndex={42}
 	>
@@ -661,7 +668,7 @@
 	<Fragment
 		step={42}
 		fill="var(--bg-ghost)"
-		layout={{ x: 462.9, y: 387, width: 40, height: 36, padding: 0 }}
+		layout={{ x: pageCenter(40), y: 387, width: 40, height: 36, padding: 0 }}
 		font={{ font_size: 39.2, bold: true }}
 		zIndex={43}
 	>
@@ -671,7 +678,7 @@
 	<!-- Step 43: "Spiritual & Physical: Equal..." summary box -->
 	<Fragment
 		step={43}
-		layout={{ x: 715.6, y: 431.6, width: 196.1, height: 108 }}
+		layout={{ x: center(GR, 210), y: 423, width: 196.1, height: 90 }}
 		font={{ font_size: 17.5, bold: true, align: 'left', v_align: 'top', wrap: true }}
 		fill="var(--bg-level-1)"
 		zIndex={44}
