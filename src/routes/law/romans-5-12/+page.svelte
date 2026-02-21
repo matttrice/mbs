@@ -90,7 +90,7 @@
 	<Fragment
 		step={4}
 		layout={{ x: 124.2, y: 397.1, width: 685.3, height: 40.2 }}
-		font={{ font_size: 26.7, align: 'center', italic: true, color: '#0000FF' }}
+		font={{ font_size: 26.7, align: 'center', italic: true, color: 'var(--text-level-3)' }}
 	>
 		Why did death reign during the time period with no law?
 	</Fragment>
@@ -124,7 +124,7 @@
 		layout={{ x: 0, y: 441.2, width: 960, height: 72.8 }}
 		font={{ font_size: 48, align: 'center', v_align: 'middle' }}
 		fill="var(--bg-level-1)"
-		line={{ color: '#000000' }}
+		line={{ color: 'var(--stroke-level-0)' }}
 	>
 		Moral Law
 	</Fragment>

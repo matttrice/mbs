@@ -18,7 +18,7 @@
 	<!-- Scripture text -->
 	<Fragment
 		layout={{ x: 96, y: 41, width: 795, height: 162 }}
-		font={{ wrap: true, font_size: 18.3, color: '#000000' }}
+		font={{ wrap: true, font_size: 18.3, color: 'var(--text-level-0)' }}
 		zIndex={1}
 	>
 		When the woman saw that the fruit of the tree was good for food and pleasing to the eye, and also desirable for gaining wisdom, she took some and ate it. She also gave some to her husband, who was with her, and he ate it. 7 Then the eyes of both of them were opened, and they realized they were naked; so they sewed fig leaves together and made coverings for themselves.8 Then the man and his wife heard the sound of the Lord God as he was walking in the garden in the cool of the day, and they hid from the Lord God among the trees of the garden.
@@ -39,7 +39,7 @@
 	<Fragment
 		step={2}
 		layout={{ x: 102, y: 254, width: 776, height: 107 }}
-		font={{ wrap: true, font_size: 23.3, bold: true, color: '#000000' }}
+		font={{ wrap: true, font_size: 23.3, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={3}
 		animate="fade"
 	>
@@ -50,7 +50,7 @@
 	<Fragment
 		step={3}
 		layout={{ x: 102, y: 376, width: 771, height: 82 }}
-		font={{ wrap: true, font_size: 23.3, bold: true, color: '#000000' }}
+		font={{ wrap: true, font_size: 23.3, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={4}
 		animate="fade"
 	>
@@ -61,8 +61,8 @@
 	<Fragment
 		step={4}
 		layout={{ x: 171, y: 473, width: 632, height: 34 }}
-		fill="#0000FF"
-		font={{ font_size: 23.3, bold: true, color: '#F4F4F4' }}
+		fill="var(--text-level-3)"
+		font={{ font_size: 23.3, bold: true, color: 'var(--text-light)' }}
 		zIndex={5}
 		animate="fade"
 	>

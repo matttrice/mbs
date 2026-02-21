@@ -29,12 +29,12 @@
 
 	<!-- Step 2: Horizontal line -->
 	<Fragment step={2} animate="draw">
-		<Line from={{ x: 172, y: 261 }} to={{ x: 786, y: 261 }} stroke={{ width: 9, color: '#000000' }} zIndex={16} />
+		<Line from={{ x: 172, y: 261 }} to={{ x: 786, y: 261 }} stroke={{ width: 9, color: 'var(--stroke-level-0)' }} zIndex={16} />
 	</Fragment>
 
 	<!-- Step 3: Vertical line (gate) -->
 	<Fragment step={3} animate="draw">
-		<Line from={{ x: 499, y: 226 }} to={{ x: 499, y: 414 }} stroke={{ width: 9, color: '#000000' }} zIndex={17} />
+		<Line from={{ x: 499, y: 226 }} to={{ x: 499, y: 414 }} stroke={{ width: 9, color: 'var(--stroke-level-0)' }} zIndex={17} />
 	</Fragment>
 
 	<!-- Step 4: Thief label -->
@@ -127,7 +127,7 @@
 
 	<!-- Step 12: Blue oval for Spirit Born -->
 	<Fragment step={12} animate="fade">
-		<Ellipse cx={341} cy={383} rx={59} ry={51} fill="#33CCFF" stroke={{ width: 3, color: '#000000' }} zIndex={18} />
+		<Ellipse cx={341} cy={383} rx={59} ry={51} fill="var(--bg-level-2)" stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={18} />
 	</Fragment>
 
 	<!-- Step 13: Spirit Born label -->
@@ -176,7 +176,7 @@
 
 	<!-- Step 17: Gray oval for Earth Born -->
 	<Fragment step={17} animate="fade">
-		<Ellipse cx={655} cy={379} rx={59} ry={51} fill="#969696" stroke={{ width: 3, color: '#000000' }} zIndex={20} />
+		<Ellipse cx={655} cy={379} rx={59} ry={51} fill="var(--bg-level-1)" stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={20} />
 	</Fragment>
 
 	<!-- Step 18: Earth Born label -->

@@ -54,7 +54,7 @@
 	<Fragment
 		layout={{ x: 442.3, y: 370.3, width: 397.4, height: 41.2 }}
 		line={{ width: 1 }}
-		font={{ font_size: 40, color: '#FD8017' }}
+		font={{ font_size: 40, color: 'var(--bg-cmd-law)' }}
 	>
 		Death as a State
 	</Fragment>

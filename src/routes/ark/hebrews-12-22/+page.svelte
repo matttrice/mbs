@@ -9,7 +9,7 @@
 	<!-- Static: Title -->
 	<Fragment
 		layout={{ x: 95, y: 15, width: 399, height: 51 }}
-		font={{ font_size: 36.7, bold: true, color: '#000000', align: 'left' }}
+		font={{ font_size: 36.7, bold: true, color: 'var(--text-level-0)', align: 'left' }}
 	>
 		Hebrews 12:2, 22-23
 	</Fragment>
@@ -17,7 +17,7 @@
 	<!-- Static: Scripture Hebrews -->
 	<Fragment
 		layout={{ x: 95, y: 58, width: 756, height: 299 }}
-		font={{ font_size: 26.7, color: '#000000', v_align: 'middle', align: 'left', wrap: true }}
+		font={{ font_size: 26.7, color: 'var(--text-level-0)', v_align: 'middle', align: 'left', wrap: true }}
 	>
 		fixing our eyes on Jesus, the author and perfecter of faith, who for the joy set before Him endured the cross, despising the shame, and has sat down at the right hand of the throne of God... 22 But you have come to Mount Zion and to the city of the living God, the heavenly Jerusalem, and to myriads of angels, 23 to the general assembly and Church of the firstborn who are enrolled in heaven, and to God, the Judge of all, and to the spirits of the righteous made perfect,
 	</Fragment>

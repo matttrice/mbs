@@ -54,7 +54,7 @@
 		if (stroke) {
 			path.stroke({
 				width: stroke.width ?? 2,
-				color: stroke.color ?? '#000000',
+				color: stroke.color ?? 'var(--stroke-level-0)',
 				linecap: stroke.linecap ?? 'round',
 				linejoin: stroke.linejoin ?? 'round',
 				dasharray: stroke.dash ?? undefined

@@ -9,7 +9,7 @@
 	<!-- Title: Colossians 1:13-14 -->
 	<Fragment
 		layout={{ x: 101, y: 12, width: 756, height: 44 }}
-		font={{ font_size: 26.7, bold: true, color: '#000000' }}
+		font={{ font_size: 26.7, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={0}
 	>
 		Colossians 1:13-14
@@ -18,7 +18,7 @@
 	<!-- Scripture text -->
 	<Fragment
 		layout={{ x: 102, y: 44, width: 767, height: 54 }}
-		font={{ wrap: true, color: '#000000' }}
+		font={{ wrap: true, color: 'var(--text-level-0)' }}
 		zIndex={1}
 	>
 		For He rescued us from the domain of darkness, and transferred us to the kingdom of His beloved Son, 14 in whom we have redemption, the forgiveness of sins.
@@ -28,7 +28,7 @@
 	<Fragment
 		step={1}
 		layout={{ x: 102, y: 109, width: 767, height: 184 }}
-		font={{ wrap: true, font_size: 26.7, bold: true, color: '#000000' }}
+		font={{ wrap: true, font_size: 26.7, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={2}
 		animate="fade"
 	>
@@ -39,7 +39,7 @@
 	<Fragment
 		step={2}
 		layout={{ x: 102, y: 308, width: 766, height: 159 }}
-		font={{ wrap: true, font_size: 26.7, bold: true, color: '#000000' }}
+		font={{ wrap: true, font_size: 26.7, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={3}
 		animate="fade"
 	>
@@ -51,7 +51,7 @@
 		step={3}
 		layout={{ x: 60, y: 484, width: 840, height: 30 }}
 		fill="#0000FF"
-		font={{ wrap: true, align: 'center', bold: true, color: '#F4F4F4' }}
+		font={{ wrap: true, align: 'center', bold: true, color: 'var(--text-light)' }}
 		zIndex={4}
 		animate="fade"
 	>

@@ -41,7 +41,7 @@
 	step={1}
 	layout={{ x: 218, y: 464, width: 541, height: 36 }}
 	font={{ font_size: 21.6, bold: true }}
-	line={{ width: 4, color: '#000000' }}
+	line={{ width: 4, color: 'var(--stroke-level-0)' }}
 >
 	The Church is offensive, militant, and on the move
 </Fragment>

@@ -9,7 +9,7 @@
 	<!-- Static: Title -->
 	<Fragment
 		layout={{ x: 91, y: 22, width: 807, height: 90 }}
-		font={{ font_size: 44.2, bold: true, color: '#000000', align: 'left' }}
+		font={{ font_size: 44.2, bold: true, color: 'var(--text-level-0)', align: 'left' }}
 	>
 		Genesis 7:11
 	</Fragment>

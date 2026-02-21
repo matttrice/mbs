@@ -51,14 +51,14 @@
 
 <!-- Step 3: Commentary box -->
 <Fragment step={3}>
-	<Rect x={156} y={238} width={682} height={57} fill="var(--bg-light)" stroke={{ width: 3, color: '#000000' }} zIndex={5} />
+	<Rect x={156} y={238} width={682} height={57} fill="var(--bg-light)" stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={5} />
 </Fragment>
 
 <!-- Step 3: Commentary text -->
 <Fragment
 	step={3}
 	layout={{ x: 155, y: 236, width: 696, height: 57 }}
-	font={{ font_size: 20, bold: true, color: '#0000FF', v_align: 'bottom', wrap: true }}
+	font={{ font_size: 20, bold: true, color: 'var(--text-level-3)', v_align: 'bottom', wrap: true }}
 >
 	The Church miraculously comes to life when the disciples receive the Holy Spirit. They now have the counselor and begin to plant the Seed.
 </Fragment>

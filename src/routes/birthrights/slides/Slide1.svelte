@@ -175,12 +175,12 @@
 
 	<!-- Step 8 (with): Arrow connector from Husband to Wife -->
 	<Fragment step={8} animate="fade">
-		<Arrow from={{ x: 375, y: 164 }} to={{ x: 305, y: 181 }} stroke={{ width: 8, color: '#000000' }} zIndex={arrowLayer} />
+		<Arrow from={{ x: 375, y: 164 }} to={{ x: 305, y: 181 }} stroke={{ width: 8, color: 'var(--stroke-level-0)' }} zIndex={arrowLayer} />
 	</Fragment>
 
 	<!-- Step 8 (with): Physical oval (womb) -->
 	<Fragment step={8}>
-		<Ellipse cx={217} cy={243} rx={93.5} ry={105} stroke={{ width: 8, color: '#000000' }} zIndex={shapeLayer} />
+		<Ellipse cx={217} cy={243} rx={93.5} ry={105} stroke={{ width: 8, color: 'var(--stroke-level-0)' }} zIndex={shapeLayer} />
 	</Fragment>
 
 	<!-- Step 9: Seed -->
@@ -246,7 +246,7 @@
 	<Fragment
 		step={11}
 		layout={{ x: 173, y: 270, width: 101, height: 40 }}
-		font={{ font_size: 36.7, bold: true, color: '#F4F4F4', align: 'center', v_align: 'middle' }}
+		font={{ font_size: 36.7, bold: true, color: 'var(--text-light)', align: 'center', v_align: 'middle' }}
 		zIndex={textLayer}
 	>
 		Water
@@ -303,7 +303,7 @@
 
 	<!-- Step 13 (with): Arrow to Genetics -->
 	<Fragment step={13} animate="fade">
-		<Arrow from={{ x: 54, y: 273 }} to={{ x: 54, y: 336 }} stroke={{ width: 8, color: '#000000' }} zIndex={arrowLayer} />
+		<Arrow from={{ x: 54, y: 273 }} to={{ x: 54, y: 336 }} stroke={{ width: 8, color: 'var(--stroke-level-0)' }} zIndex={arrowLayer} />
 	</Fragment>
 
 	<!-- Step 13 (with): Genetics text -->
@@ -511,7 +511,7 @@
 	<Fragment
 		step={20}
 		layout={{ x: 640, y: 267, width: 194, height: 40 }}
-		font={{ font_size: 36.7, bold: true, color: '#F4F4F4', align: 'center', v_align: 'middle' }}
+		font={{ font_size: 36.7, bold: true, color: 'var(--text-light)', align: 'center', v_align: 'middle' }}
 		zIndex={96}
 	>
 		Baptized
@@ -522,7 +522,7 @@
 		step={20}
 		drillTo="birthrights/acts-2-38"
 		layout={{ x: 660, y: 303, width: 160, height: 14 }}
-		font={{ font_size: 10, color: '#FFFFFF', align: 'center', v_align: 'middle' }}
+		font={{ font_size: 10, color: 'var(--text-ghost)', align: 'center', v_align: 'middle' }}
 		zIndex={linkLayer}
 	>
 		Acts 2:38, Gal. 2:24, 1Cor. 12:13

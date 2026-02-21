@@ -40,7 +40,7 @@
 
 	<!-- Step 1: Moral Law Rectangle (gray box) -->
 	<Fragment step={1} animate="wipe-down">
-		<Rect x={82.6} y={116.7} width={206.1} height={277.4} fill="var(--bg-level-1)" stroke={{ width: 1, color: '#000000' }} zIndex={3} />
+		<Rect x={82.6} y={116.7} width={206.1} height={277.4} fill="var(--bg-level-1)" stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={3} />
 	</Fragment>
 
 	<!-- Step 1 (with): "Moral" label -->

@@ -7,7 +7,7 @@
 	<!-- Title -->
 	<Fragment
 		layout={{ x: 102.7, y: 13.6, width: 756.1, height: 44.5 }}
-		font={{ bold: true, color: '#000000' }}
+		font={{ bold: true, color: 'var(--text-level-0)' }}
 	>
 		Psalms 51:5
 	</Fragment>

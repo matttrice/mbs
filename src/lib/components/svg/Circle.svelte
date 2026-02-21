@@ -17,7 +17,7 @@
 	 * @example Circle with stroke
 	 * ```svelte
 	 * <Fragment step={5} layout={{ x: 100, y: 100, width: 100, height: 100 }} animate="draw">
-	 *   <Circle cx={50} cy={50} r={45} stroke={{ width: 3, color: '#0000FF' }} />
+	 *   <Circle cx={50} cy={50} r={45} stroke={{ width: 3, color: 'var(--stroke-level-3)' }} />
 	 * </Fragment>
 	 * ```
 	 */
@@ -58,7 +58,7 @@
 		if (stroke) {
 			circle.stroke({
 				width: stroke.width ?? 1,
-				color: stroke.color ?? '#000000',
+				color: stroke.color ?? 'var(--stroke-level-0)',
 				dasharray: stroke.dash ?? undefined
 			});
 		}

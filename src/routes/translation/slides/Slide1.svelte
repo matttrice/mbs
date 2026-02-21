@@ -220,7 +220,7 @@
 	<Fragment
 		step={1}
 		layout={{ x: 385, y: 86, width: 191, height: 123 }}
-		fill="#000000"
+		fill="var(--bg-level-0)"
 		line={{ width: 4 }}
 		font={{ v_align: 'middle', align: 'center', color: 'var(--bg-level-1)' }}
 		zIndex={3}
@@ -233,8 +233,8 @@
 	<Fragment
 		step={1}
 		layout={{ x: 374, y: 208, width: 214, height: 72 }}
-		fill="#FFFFFF"
-		line={{ width: 1, color: '#000000' }}
+		fill="var(--bg-ghost)"
+		line={{ width: 1, color: 'var(--stroke-level-0)' }}
 		font={{ v_align: 'middle', align: 'center', font_name: 'Arial Black', font_size: 50, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={29}
 		animate="fade"
@@ -266,14 +266,14 @@
 
 	<!-- Step 3: Incarnation arrow (Enter - Physical to Spiritual) -->
 	<Fragment step={3} animate="wipe">
-		<Arrow from={{ x: 372, y: 359 }} to={{ x: 960, y: 360 }} stroke={{ width: 70, color: '#000000' }} zIndex={0} />
+		<Arrow from={{ x: 372, y: 359 }} to={{ x: 960, y: 360 }} stroke={{ width: 70, color: 'var(--stroke-level-0)' }} zIndex={0} />
 	</Fragment>
 
 	<!-- Step 3: "Enter" label (with) -->
 	<Fragment
 		step={3}
 		layout={{ x: 507, y: 321, width: 141, height: 67 }}
-		font={{ font_size: 50, bold: true, color: '#FFFFFF' }}
+		font={{ font_size: 50, bold: true, color: 'var(--text-ghost)' }}
 		zIndex={32}
 		animate="fade"
 	>
@@ -308,7 +308,7 @@
 	<Fragment
 		step={4}
 		layout={{ x: 399, y: 432, width: 104, height: 67 }}
-		font={{ font_size: 50, bold: true, color: '#FFFFFF' }}
+		font={{ font_size: 50, bold: true, color: 'var(--text-ghost)' }}
 		zIndex={31}
 		animate="fade"
 	>

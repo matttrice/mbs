@@ -45,7 +45,7 @@
 	let { from, to, stroke = {}, startMarker, endMarker, zIndex = 1 }: Props = $props();
 
 	const strokeWidth = $derived(stroke.width ?? 2);
-	const strokeColor = $derived(stroke.color ?? '#000000');
+	const strokeColor = $derived(stroke.color ?? 'var(--stroke-level-0)');
 
 	// Calculate bounding box for the SVG
 	const padding = $derived(strokeWidth * 2);

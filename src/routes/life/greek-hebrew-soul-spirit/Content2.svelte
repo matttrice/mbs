@@ -31,7 +31,7 @@
 <Fragment
 	step={2}
 	layout={{ x: 62.5, y: 425, width: 250, height: 31.3 }}
-	font={{ font_size: 22, color: '#0000FF' }}
+	font={{ font_size: 22, color: 'var(--text-level-3)' }}
 >
 	More examples →
 </Fragment>

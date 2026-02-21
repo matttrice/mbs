@@ -36,7 +36,7 @@
 
 	<!-- Step 2: Arrow (timing: click) -->
 	<Fragment step={2} animate="wipe-right">
-		<Arrow from={{ x: 421, y: 281 }} to={{ x: 640, y: 281 }} stroke={{ width: 23, color: '#000000' }} zIndex={1} />
+		<Arrow from={{ x: 421, y: 281 }} to={{ x: 640, y: 281 }} stroke={{ width: 23, color: 'var(--stroke-level-0)' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 2.1: CHRIST (timing: after 500ms) -->
@@ -61,7 +61,7 @@
 
 	<!-- Step 4: Arrow (timing: click) -->
 	<Fragment step={4} animate="wipe">
-		<Arrow from={{ x: 421, y: 437 }} to={{ x: 640, y: 437 }} stroke={{ width: 23, color: '#000000' }} zIndex={1} />
+		<Arrow from={{ x: 421, y: 437 }} to={{ x: 640, y: 437 }} stroke={{ width: 23, color: 'var(--stroke-level-0)' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 4.1: BAPTISM (timing: after 500ms) -->

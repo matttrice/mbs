@@ -26,7 +26,7 @@
 <Fragment
 	step={1}
 	layout={{ x: 104, y: 263, width: 751, height: 36 }}
-	font={{ font_size: 21.6, bold: true, color: '#0000FF', align: 'center' }}
+	font={{ font_size: 21.6, bold: true, color: 'var(--text-level-3)', align: 'center' }}
 >
 	When Christ became King He issued a decree of war.
 </Fragment>
@@ -36,7 +36,7 @@
 	step={2}
 	layout={{ x: 152, y: 300, width: 657, height: 97 }}
 	font={{ font_size: 24, bold: true, wrap: true, align: 'center' }}
-	line={{ width: 4, color: '#000000' }}
+	line={{ width: 4, color: 'var(--stroke-level-0)' }}
 >
 	Consider the Tutor: Physical Israel tribe ratio of 11:1 11 non-priestly tribes to 1 priestly tribe<br />Most resources were dedicated to the 11
 </Fragment>

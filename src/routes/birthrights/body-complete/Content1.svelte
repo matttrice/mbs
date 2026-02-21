@@ -41,7 +41,7 @@
 	layout={{ x: 577, y: 197, width: 151, height: 45 }}
 	font={{ font_size: 30.8, bold: true }}
 	fill="var(--bg-light)"
-	line={{ width: 1, color: '#000000' }}
+	line={{ width: 1, color: 'var(--stroke-level-0)' }}
 >
 	Physical
 </Fragment>
@@ -56,9 +56,9 @@
 <!-- Static: Spiritual label -->
 <Fragment
 	layout={{ x: 735, y: 103, width: 140, height: 45 }}
-	font={{ font_size: 30.8, bold: true, color: '#0000FF' }}
+	font={{ font_size: 30.8, bold: true, color: 'var(--text-level-3)' }}
 	fill="var(--bg-light)"
-	line={{ width: 1, color: '#000000' }}
+	line={{ width: 1, color: 'var(--stroke-level-0)' }}
 >
 	Spiritual
 </Fragment>

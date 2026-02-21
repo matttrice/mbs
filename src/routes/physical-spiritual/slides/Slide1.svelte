@@ -303,7 +303,7 @@
 	</Fragment>
 
 	<Fragment step={22} animate="fade">
-		<Rect x={206} y={178} width={275} height={118.9} fill="var(--bg-light)" stroke={{ color: '#000000', width: 1 }} zIndex={6} />
+		<Rect x={206} y={178} width={275} height={118.9} fill="var(--bg-light)" stroke={{ color: 'var(--stroke-level-0)', width: 1 }} zIndex={6} />
 	</Fragment>
 
 	<Fragment step={22} animate="wipe">
@@ -338,7 +338,7 @@
 	</Fragment>
 
 	<Fragment step={24} animate="fade">
-		<Rect x={482} y={178} width={250} height={118.9} fill="var(--bg-light)" stroke={{ color: '#000000', width: 1 }} zIndex={5} />
+		<Rect x={482} y={178} width={250} height={118.9} fill="var(--bg-light)" stroke={{ color: 'var(--stroke-level-0)', width: 1 }} zIndex={5} />
 	</Fragment>
 
 	<Fragment
@@ -397,7 +397,7 @@
 		layout={{ x: 429.1, y: 308, width: 101.9, height: 30 }}
 		font={{ font_size: 21.7, bold: true }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={46}
 	>
 		Einstein
@@ -460,7 +460,7 @@
 		layout={{ x: 23.2, y: 437.5, width: 160.2, height: 30.8 }}
 		font={{ font_size: 20, bold: true }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={36}
 	>
 		Genesis 1:1-3
@@ -511,7 +511,7 @@
 		layout={{ x: 33.3, y: 470.4, width: 140, height: 53.9 }}
 		font={{ font_size: 20, bold: true, color: 'var(--bg-level-3)', wrap: true, align: 'center' }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={40}
 	>
 		1 Corinthians 15:40-45

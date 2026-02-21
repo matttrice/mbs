@@ -18,14 +18,14 @@
 	<!-- Static: Physical Israel title -->
 	<Fragment
 		layout={{ x: 98, y: 8, width: 308, height: 40 }}
-		font={{ bold: true, color: '#000000', align: 'left' }}
+		font={{ bold: true, color: 'var(--text-level-0)', align: 'left' }}
 	>
 		Physical Israel
 	</Fragment>
 
 	<!-- Static: Top line -->
 	<Fragment>
-		<Line from={{ x: 48, y: 54 }} to={{ x: 912, y: 54 }} stroke={{ width: 3, color: '#000000' }} zIndex={31} />
+		<Line from={{ x: 48, y: 54 }} to={{ x: 912, y: 54 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={31} />
 	</Fragment>
 
 	<!-- Step 1: Gray rectangle (left column) - instant with rectangle visible -->
@@ -85,10 +85,10 @@
 
 	<!-- Step 5: Half frames (black boxes for Priests/Kings) - with previous -->
 	<Fragment step={5} animate="fade">
-		<Rect x={55} y={129} width={202} height={125} fill="#000000" stroke={{ width: 1, color: '#000000' }} zIndex={33} />
+		<Rect x={55} y={129} width={202} height={125} fill="var(--bg-level-0)" stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={33} />
 	</Fragment>
 	<Fragment step={5} animate="fade">
-		<Rect x={250} y={129} width={202} height={125} fill="#000000" stroke={{ width: 1, color: '#000000' }} zIndex={32} />
+		<Rect x={250} y={129} width={202} height={125} fill="var(--bg-level-0)" stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={32} />
 	</Fragment>
 
 	<!-- Step 5: Offices Divided - with previous -->
@@ -96,7 +96,7 @@
 		step={5}
 		layout={{ x: 134, y: 184, width: 234, height: 36 }}
 		font={{ font_size: 21.6, bold: true, color: '#FFC000', wrap: true, align: 'center' }}
-		fill="#000000"
+		fill="var(--bg-level-0)"
 		zIndex={50}
 	>
 		Offices Divided
@@ -134,7 +134,7 @@
 
 	<!-- Step 7: Arrow down + Genesis 49:10 drillTo -->
 	<Fragment step={7} animate="draw">
-		<Arrow from={{ x: 378, y: 178 }} to={{ x: 378, y: 241 }} stroke={{ width: 5, color: '#000000' }} zIndex={41} />
+		<Arrow from={{ x: 378, y: 178 }} to={{ x: 378, y: 241 }} stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={41} />
 	</Fragment>
 
 	<!-- Step 7.1: Genesis 49:10 - after -->
@@ -170,7 +170,7 @@
 
 	<!-- Step 9: Arrow to Christ + Luke 1:30-33 drillTo -->
 	<Fragment step={9} animate="draw">
-		<Arrow from={{ x: 380, y: 324 }} to={{ x: 380, y: 350 }} stroke={{ width: 5, color: '#000000' }} zIndex={11} />
+		<Arrow from={{ x: 380, y: 324 }} to={{ x: 380, y: 350 }} stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={11} />
 	</Fragment>
 
 	<!-- Step 9: Christ Luke 1:30-33 drillTo - with previous -->
@@ -188,8 +188,8 @@
 	<Fragment
 		step={10}
 		layout={{ x: 275, y: 405, width: 193, height: 50 }}
-		font={{ font_size: 16.8, bold: true, color: '#0000FF', align: 'center' }}
-		fill="#F4F4F4"
+		font={{ font_size: 16.8, bold: true, color: 'var(--text-level-3)', align: 'center' }}
+		fill="var(--bg-ghost)"
 		zIndex={13}
 	>
 		What is the name<br />of Christ's Kingdom?
@@ -199,7 +199,7 @@
 	<Fragment
 		step={11}
 		layout={{ x: 597, y: 8, width: 149, height: 40 }}
-		font={{ font_size: 38.4, color: '#0000FF', v_align: 'middle', align: 'left' }}
+		font={{ font_size: 38.4, color: 'var(--text-level-3)', v_align: 'middle', align: 'left' }}
 		zIndex={35}
 	>
 		Church
@@ -222,17 +222,17 @@
 
 	<!-- Step 11: Half frames (black boxes for Priest/King) - with previous -->
 	<Fragment step={11} animate="fade">
-		<Rect x={682} y={129} width={202} height={125} fill="#000000" zIndex={39} />
+		<Rect x={682} y={129} width={202} height={125} fill="var(--bg-level-0)" zIndex={39} />
 	</Fragment>
 	<Fragment step={11} animate="fade">
-		<Rect x={488} y={129} width={202} height={125} fill="#000000" zIndex={40} />
+		<Rect x={488} y={129} width={202} height={125} fill="var(--bg-level-0)" zIndex={40} />
 	</Fragment>
 
 	<!-- Step 12: MELCHIZEDEK -->
 	<Fragment
 		step={12}
 		layout={{ x: 575, y: 54, width: 230, height: 45 }}
-		font={{ font_size: 28.8, bold: true, color: '#0000FF' }}
+		font={{ font_size: 28.8, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={55}
 	>
 		MELCHIZEDEK
@@ -326,7 +326,7 @@
 	<Fragment
 		step={18}
 		layout={{ x: 465, y: 275, width: 404, height: 39 }}
-		font={{ font_size: 24, bold: true, color: '#0000FF', wrap: true, align: 'right' }}
+		font={{ font_size: 24, bold: true, color: 'var(--text-level-3)', wrap: true, align: 'right' }}
 		zIndex={17}
 	>
 		JESUS = High Priest and King
@@ -339,7 +339,7 @@
 
 	<!-- Step 18: Curved arrow - with previous (simplified to straight arrow) -->
 	<Fragment step={18} animate="draw">
-		<Arrow from={{ x: 837, y: 76 }} to={{ x: 837, y: 294 }} stroke={{ width: 6, color: '#000000' }} zIndex={36} />
+		<Arrow from={{ x: 837, y: 76 }} to={{ x: 837, y: 294 }} stroke={{ width: 6, color: 'var(--stroke-level-0)' }} zIndex={36} />
 	</Fragment>
 
 	<!-- Step 18: Peace - with previous -->
@@ -347,7 +347,7 @@
 		step={18}
 		layout={{ x: 642, y: 145, width: 90, height: 35 }}
 		font={{ font_size: 21.6, bold: true, color: '#FFC000', wrap: true, align: 'center' }}
-		fill="#000000"
+		fill="var(--bg-level-0)"
 		zIndex={51}
 	>
 		Peace
@@ -449,13 +449,13 @@
 
 	<!-- Step 27: Arrow + HOLY - with previous -->
 	<Fragment step={27} animate="wipe">
-		<Arrow from={{ x: 207, y: 464 }} to={{ x: 272, y: 464 }} stroke={{ width: 8, color: '#0000FF' }} zIndex={28} />
+		<Arrow from={{ x: 207, y: 464 }} to={{ x: 272, y: 464 }} stroke={{ width: 8, color: 'var(--stroke-level-3)' }} zIndex={28} />
 	</Fragment>
 
 	<Fragment
 		step={27}
 		layout={{ x: 85, y: 436, width: 124, height: 56 }}
-		font={{ font_size: 38.4, bold: true, color: '#0000FF' }}
+		font={{ font_size: 38.4, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={26}
 	>
 		HOLY
@@ -477,7 +477,7 @@
 		step={29}
 		drillTo="priesthood/2-corinthians-10-3-6"
 		layout={{ x: 473, y: 473, width: 367, height: 33 }}
-		font={{ font_size: 19.2, bold: true, color: '#0000FF', wrap: true }}
+		font={{ font_size: 19.2, bold: true, color: 'var(--text-level-3)', wrap: true }}
 		zIndex={2}
 	>
 		Spiritual Battle, Expand the boarders
@@ -485,13 +485,13 @@
 
 	<!-- Step 29.1: Arrow + ROYAL - after -->
 	<Fragment step={29.1} animate="wipe">
-		<Arrow from={{ x: 221, y: 486 }} to={{ x: 271, y: 486 }} stroke={{ width: 8, color: '#0000FF' }} zIndex={29} />
+		<Arrow from={{ x: 221, y: 486 }} to={{ x: 271, y: 486 }} stroke={{ width: 8, color: 'var(--stroke-level-3)' }} zIndex={29} />
 	</Fragment>
 
 	<Fragment
 		step={29.1}
 		layout={{ x: 77, y: 472, width: 151, height: 56 }}
-		font={{ font_size: 38.4, bold: true, color: '#0000FF' }}
+		font={{ font_size: 38.4, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={27}
 	>
 		ROYAL

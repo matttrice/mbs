@@ -17,7 +17,7 @@
 	 * @example Star outline
 	 * ```svelte
 	 * <Fragment step={10} layout={{ x: 100, y: 100, width: 100, height: 100 }} animate="draw">
-	 *   <Polygon points={starPoints} stroke={{ width: 2, color: '#0000FF' }} />
+	 *   <Polygon points={starPoints} stroke={{ width: 2, color: 'var(--stroke-level-3)' }} />
 	 * </Fragment>
 	 * ```
 	 */
@@ -70,7 +70,7 @@
 		if (stroke) {
 			polygon.stroke({
 				width: stroke.width ?? 1,
-				color: stroke.color ?? '#000000',
+				color: stroke.color ?? 'var(--stroke-level-0)',
 				linejoin: stroke.linejoin ?? 'miter',
 				dasharray: stroke.dash ?? undefined
 			});

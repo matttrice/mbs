@@ -36,7 +36,7 @@
 	<Fragment
 		step={2}
 		layout={{ x: 314.4, y: 314.5, width: 585.6, height: 56.4 }}
-		fill="#969696"
+		fill="var(--bg-level-1)"
 		font={{ align: 'center', font_size: 36.7 }}
 		animate="fade"
 	>
@@ -57,7 +57,7 @@
 	<Fragment
 		step={4}
 		layout={{ x: 162.7, y: 473.2, width: 737.3, height: 56.4 }}
-		fill="#FD8017"
+		fill="var(--bg-cmd-law)"
 		font={{ align: 'center', font_size: 36.7 }}
 		animate="fade"
 	>

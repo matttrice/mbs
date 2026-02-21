@@ -19,7 +19,7 @@
 	<!-- Scripture text -->
 	<Fragment
 		layout={{ x: 102, y: 72, width: 765, height: 248 }}
-		font={{ wrap: true, color: '#000000' }}
+		font={{ wrap: true, color: 'var(--text-level-0)' }}
 		zIndex={1}
 	>
 		For Christ also died for sins once for all, the just for the unjust, so that He might bring us to God, having been put to death in the flesh, but made alive in the spirit; 19 in which also He went and made proclamation to the spirits now in prison, 20 who once were disobedient, when the patience of God kept waiting in the days of Noah, during the construction of the ark, in which a few, that is, eight persons, were brought safely through the water. 21 Corresponding to that, baptism now saves you—not the removal of dirt from the flesh, but an appeal to God for a good conscience—through the resurrection of Jesus Christ, 22 who is at the right hand of God, having gone into heaven, after angels and authorities and powers had been subjected to Him.
@@ -29,8 +29,8 @@
 	<Fragment
 		step={1}
 		layout={{ x: 169, y: 424, width: 622, height: 54 }}
-		fill="#000000"
-		font={{ wrap: true, align: 'center', bold: true, color: '#F4F4F4' }}
+		fill="var(--bg-level-0)"
+		font={{ wrap: true, align: 'center', bold: true, color: 'var(--text-light)' }}
 		zIndex={3}
 		animate="fade"
 	>
@@ -42,7 +42,7 @@
 		step={1}
 		layout={{ x: 118, y: 365, width: 741, height: 30 }}
 		fill="#0000FF"
-		font={{ wrap: true, align: 'center', bold: true, color: '#F4F4F4' }}
+		font={{ wrap: true, align: 'center', bold: true, color: 'var(--text-light)' }}
 		zIndex={2}
 		animate="fade"
 	>

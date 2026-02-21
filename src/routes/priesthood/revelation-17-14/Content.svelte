@@ -32,7 +32,7 @@
 <Fragment
 	step={1}
 	layout={{ x: 229, y: 299, width: 482, height: 86 }}
-	font={{ font_size: 38.4, bold: true, color: '#0000FF', v_align: 'middle', wrap: true, align: 'center' }}
+	font={{ font_size: 38.4, bold: true, color: 'var(--text-level-3)', v_align: 'middle', wrap: true, align: 'center' }}
 >
 	King & Lord Forever
 </Fragment>

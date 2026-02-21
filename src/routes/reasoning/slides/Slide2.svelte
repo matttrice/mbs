@@ -46,7 +46,7 @@
 		<Line 
 			from={{ x: 130, y: 285 }} 
 			to={{ x: 830, y: 285 }} 
-			stroke={{ width: 1, color: '#000000' }} 
+			stroke={{ width: 1, color: 'var(--stroke-level-0)' }} 
 			zIndex={3} 
 		/>
 	</Fragment>
@@ -74,11 +74,11 @@
 	</Fragment>
 
 	<!-- Step 3: Law (5) -->
-	<!-- Original: x: 199.7, y: 107.3, font_size: 34.7, color: #0000FF -->
+	<!-- Original: x: 199.7, y: 107.3, font_size: 34.7, color: var(--text-level-3) -->
 	<Fragment
 		step={3}
 		layout={{ x: 125, y: 67, width: 82, height: 34 }}
-		font={{ font_size: 21.7, bold: true, color: '#0000FF' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={5}
 	>
 		Law (5)
@@ -95,11 +95,11 @@
 	</Fragment>
 
 	<!-- Step 4: History (12) -->
-	<!-- Original: x: 405, y: 105.8, font_size: 34.7, color: #0000FF -->
+	<!-- Original: x: 405, y: 105.8, font_size: 34.7, color: var(--text-level-3) -->
 	<Fragment
 		step={4}
 		layout={{ x: 253, y: 66, width: 123, height: 34 }}
-		font={{ font_size: 21.7, bold: true, color: '#0000FF' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={6}
 	>
 		History (12)
@@ -116,11 +116,11 @@
 	</Fragment>
 
 	<!-- Step 5: Poetry (5) -->
-	<!-- Original: x: 627.8, y: 105.8, font_size: 34.7, color: #0000FF -->
+	<!-- Original: x: 627.8, y: 105.8, font_size: 34.7, color: var(--text-level-3) -->
 	<Fragment
 		step={5}
 		layout={{ x: 392, y: 66, width: 108, height: 34 }}
-		font={{ font_size: 21.7, bold: true, color: '#0000FF' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={7}
 	>
 		Poetry (5)
@@ -137,11 +137,11 @@
 	</Fragment>
 
 	<!-- Step 6: Major Prophets (5) -->
-	<!-- Original: x: 853.7, y: 71.8, font_size: 34.7, color: #0000FF, 2 lines -->
+	<!-- Original: x: 853.7, y: 71.8, font_size: 34.7, color: var(--text-level-3), 2 lines -->
 	<Fragment
 		step={6}
 		layout={{ x: 534, y: 45, width: 135, height: 56 }}
-		font={{ font_size: 21.7, bold: true, color: '#0000FF' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={8}
 	>
 		Major<br/>Prophets (5)
@@ -158,11 +158,11 @@
 	</Fragment>
 
 	<!-- Step 7: Minor Prophets (12) -->
-	<!-- Original: x: 1091.7, y: 82.5, font_size: 34.7, color: #0000FF, 2 lines -->
+	<!-- Original: x: 1091.7, y: 82.5, font_size: 34.7, color: var(--text-level-3), 2 lines -->
 	<Fragment
 		step={7}
 		layout={{ x: 682, y: 52, width: 143, height: 51 }}
-		font={{ font_size: 21.7, bold: true, color: '#0000FF' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={9}
 	>
 		Minor<br/>Prophets (12)
@@ -179,11 +179,11 @@
 	</Fragment>
 
 	<!-- Step 8: Gospel (4) -->
-	<!-- Original: x: 185.7, y: 502.7, font_size: 28, color: #0000FF -->
+	<!-- Original: x: 185.7, y: 502.7, font_size: 28, color: var(--text-level-3) -->
 	<Fragment
 		step={8}
 		layout={{ x: 116, y: 314, width: 95, height: 29 }}
-		font={{ font_size: 17.5, bold: true, color: '#0000FF' }}
+		font={{ font_size: 17.5, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={10}
 	>
 		Gospel (4)
@@ -200,11 +200,11 @@
 	</Fragment>
 
 	<!-- Step 9: Church History (1) -->
-	<!-- Original: x: 432, y: 492, font_size: 28, color: #0000FF, 2 lines -->
+	<!-- Original: x: 432, y: 492, font_size: 28, color: var(--text-level-3), 2 lines -->
 	<Fragment
 		step={9}
 		layout={{ x: 270, y: 307, width: 96, height: 43 }}
-		font={{ font_size: 17.5, bold: true, color: '#0000FF' }}
+		font={{ font_size: 17.5, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={11}
 	>
 		Church<br/>History (1)
@@ -221,11 +221,11 @@
 	</Fragment>
 
 	<!-- Step 10: Letters to Churches (9) -->
-	<!-- Original: x: 667.5, y: 485.8, font_size: 28, color: #0000FF, 2 lines -->
+	<!-- Original: x: 667.5, y: 485.8, font_size: 28, color: var(--text-level-3), 2 lines -->
 	<Fragment
 		step={10}
 		layout={{ x: 417, y: 304, width: 117, height: 50 }}
-		font={{ font_size: 17.5, bold: true, color: '#0000FF' }}
+		font={{ font_size: 17.5, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={13}
 	>
 		Letters to<br/>Churches (9)
@@ -242,11 +242,11 @@
 	</Fragment>
 
 	<!-- Step 11: Letters to Individuals (12) -->
-	<!-- Original: x: 932, y: 485.8, font_size: 28, color: #0000FF, 2 lines -->
+	<!-- Original: x: 932, y: 485.8, font_size: 28, color: var(--text-level-3), 2 lines -->
 	<Fragment
 		step={11}
 		layout={{ x: 582, y: 304, width: 134, height: 50 }}
-		font={{ font_size: 17.5, bold: true, color: '#0000FF' }}
+		font={{ font_size: 17.5, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={14}
 	>
 		Letters to<br/>Individuals (12)
@@ -263,11 +263,11 @@
 	</Fragment>
 
 	<!-- Step 12: Prophecy (1) -->
-	<!-- Original: x: 1160, y: 502.7, font_size: 28, color: #0000FF -->
+	<!-- Original: x: 1160, y: 502.7, font_size: 28, color: var(--text-level-3) -->
 	<Fragment
 		step={12}
 		layout={{ x: 725, y: 314, width: 116, height: 29 }}
-		font={{ font_size: 17.5, bold: true, color: '#0000FF' }}
+		font={{ font_size: 17.5, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={12}
 	>
 		Prophecy (1)

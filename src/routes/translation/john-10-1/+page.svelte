@@ -38,12 +38,12 @@
 
 	<!-- Step 2: Horizontal line -->
 	<Fragment step={2} animate="draw">
-		<Line from={{ x: 164, y: 331 }} to={{ x: 778, y: 331 }} stroke={{ width: 9, color: '#000000' }} zIndex={13} />
+		<Line from={{ x: 164, y: 331 }} to={{ x: 778, y: 331 }} stroke={{ width: 9, color: 'var(--stroke-level-0)' }} zIndex={13} />
 	</Fragment>
 
 	<!-- Step 3: Vertical line (gate) -->
 	<Fragment step={3} animate="draw">
-		<Line from={{ x: 491, y: 296 }} to={{ x: 491, y: 399 }} stroke={{ width: 9, color: '#000000' }} zIndex={14} />
+		<Line from={{ x: 491, y: 296 }} to={{ x: 491, y: 399 }} stroke={{ width: 9, color: 'var(--stroke-level-0)' }} zIndex={14} />
 	</Fragment>
 
 	<!-- Step 4: Thief label -->
@@ -59,7 +59,7 @@
 
 	<!-- Step 5: Line above gate -->
 	<Fragment step={5} animate="draw">
-		<Line from={{ x: 55, y: 110 }} to={{ x: 483, y: 110 }} stroke={{ width: 9, color: '#000000' }} zIndex={17} />
+		<Line from={{ x: 55, y: 110 }} to={{ x: 483, y: 110 }} stroke={{ width: 9, color: 'var(--stroke-level-0)' }} zIndex={17} />
 	</Fragment>
 
 	<!-- Step 6: Satan label -->
@@ -75,7 +75,7 @@
 
 	<!-- Step 7: Blue line (proper way) -->
 	<Fragment step={7} animate="draw">
-		<Line from={{ x: 55, y: 136 }} to={{ x: 273, y: 136 }} stroke={{ width: 9, color: '#0000FF' }} zIndex={18} />
+		<Line from={{ x: 55, y: 136 }} to={{ x: 273, y: 136 }} stroke={{ width: 9, color: 'var(--stroke-level-3)' }} zIndex={18} />
 	</Fragment>
 
 	<!-- Step 8: Christ label -->
@@ -157,7 +157,7 @@
 
 	<!-- Step 15: Earth oval -->
 	<Fragment step={15} animate="fade">
-		<Ellipse cx={490} cy={454} rx={64} ry={56} fill="#05D000" stroke={{ width: 3, color: '#000000' }} zIndex={15} />
+		<Ellipse cx={490} cy={454} rx={64} ry={56} fill="#05D000" stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={15} />
 	</Fragment>
 
 	<!-- Step 16: Earth label -->

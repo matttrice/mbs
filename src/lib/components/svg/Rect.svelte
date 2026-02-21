@@ -54,7 +54,7 @@
 	let { x, y, width, height, fill, stroke, radius = 0, zIndex = 1, rotation = 0 }: Props = $props();
 
 	const strokeWidth = $derived(stroke?.width ?? 0);
-	const strokeColor = $derived(stroke?.color ?? '#000000');
+	const strokeColor = $derived(stroke?.color ?? 'var(--stroke-level-0)');
 	const fillColor = $derived(fill ?? 'none');
 
 	// Calculate perimeter for draw animation

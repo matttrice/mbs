@@ -24,7 +24,7 @@
 
 	<Fragment
 		layout={{ x: 69, y: 5, width: 455, height: 58 }}
-		font={{ font_size: 52.5, bold: true, color: '#000000' }}
+		font={{ font_size: 52.5, bold: true, color: 'var(--text-level-0)' }}
 	>
 		Baptism Defined
 	</Fragment>
@@ -42,7 +42,7 @@
 
 	<!-- Step 1.2: Water Line (timing: after 1000ms) and label (timing: with) -->
 	<Fragment step={1.2} animate="wipe">
-		<Line from={{ x: 0, y: 316 }} to={{ x: 960, y: 316 }} stroke={{ width: 8, color: 'var(--bg-level-2)', dash: '15,5' }} zIndex={10} />
+		<Line from={{ x: 0, y: 316 }} to={{ x: 960, y: 316 }} stroke={{ width: 8, color: 'var(--bg-level-3)', dash: '15,5' }} zIndex={10} />
 	</Fragment>
 
 	<Fragment
@@ -79,7 +79,7 @@
 	<Fragment
 		step={3.1}
 		layout={{ x: 87, y: 128, width: 158, height: 104 }}
-		font={{ font_size: 79.2, bold: true, color: '#0000FF', align: 'left' }}
+		font={{ font_size: 79.2, bold: true, color: 'var(--text-level-3)', align: 'left' }}
 		line={{ width: 1 }}
 	>
 		Life
@@ -112,7 +112,7 @@
 	<Fragment
 		step={4.2}
 		layout={{ x: 230, y: 360, width: 588, height: 72 }}
-		font={{ font_size: 50, bold: true, color: '#F4F4F4', align: 'center' }}
+		font={{ font_size: 50, bold: true, color: 'var(--text-light)', align: 'center' }}
 		line={{ width: 1 }}
         zIndex={8}
 	>
@@ -124,7 +124,7 @@
 		step={5}
 		drillTo="ark/john-13-5"
 		layout={{ x: 398, y: 438, width: 227, height: 82 }}
-		fill="#F4F4F4"
+		fill="var(--bg-ghost)"
 		font={{ font_size: 21.7, align: 'center' }}
 		line={{ width: 1 }}
 	>
@@ -135,7 +135,7 @@
 	<Fragment
 		step={6}
 		layout={{ x: 421, y: 360, width: 366, height: 66 }}
-		font={{ font_size: 50, bold: true, color: '#F4F4F4', align: 'left' }}
+		font={{ font_size: 50, bold: true, color: 'var(--text-light)', align: 'left' }}
 		line={{ width: 4 }}
 	>
 		& Resurrection
@@ -143,7 +143,7 @@
 
 	<!-- Step 6: Ark = Saved (timing: with, then after for text) -->
 	<Fragment step={6} animate="fade">
-		<Rect x={239} y={245} width={500} height={72} fill="var(--bg-level-0)" stroke={{ width: 2, color: '#000000' }} zIndex={8} />
+		<Rect x={239} y={245} width={500} height={72} fill="var(--bg-level-0)" stroke={{ width: 2, color: 'var(--stroke-level-0)' }} zIndex={8} />
 	</Fragment>
 
 	<Fragment
@@ -160,7 +160,7 @@
 	<Fragment
 		step={7}
 		layout={{ x: 524, y: 21, width: 411, height: 78 }}
-		font={{ font_size: 26.7, bold: true, color: '#0000FF', align: 'left', wrap: true }}
+		font={{ font_size: 26.7, bold: true, color: 'var(--text-level-3)', align: 'left', wrap: true }}
 		line={{ width: 1 }}
 	>
 		Baptism = Death, Burial, Resurrection = Free gift of God

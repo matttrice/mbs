@@ -5,7 +5,7 @@
 <!-- Title -->
 <Fragment
 	layout={{ x: 102.7, y: 8.6, width: 756.1, height: 44.5 }}
-	font={{ font_size: 30.8, bold: true, color: '#000000' }}
+	font={{ font_size: 30.8, bold: true, color: 'var(--text-level-0)' }}
 >
 	1Corinthians 15:45-53
 </Fragment>

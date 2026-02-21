@@ -65,7 +65,7 @@
 
 	<!-- Step 2 (with): Horizontal line -->
 	<Fragment step={2} animate="fade">
-		<Line from={{ x: 86.6, y: 100.1 }} to={{ x: 877.5, y: 100.1 }} stroke={{ width: 3.3, color: '#000000' }} zIndex={18} />
+		<Line from={{ x: 86.6, y: 100.1 }} to={{ x: 877.5, y: 100.1 }} stroke={{ width: 3.3, color: 'var(--stroke-level-0)' }} zIndex={18} />
 	</Fragment>
 
 	<!-- Step 3: "Plants" label -->
@@ -108,7 +108,7 @@
 
 	<!-- Step 6: Rectangle 60 (Man column) -->
 	<Fragment step={6} animate="wipe-down">
-		<Rect x={620} y={100.3} width={257.1} height={206.4} fill="#969696" zIndex={4} />
+		<Rect x={620} y={100.3} width={257.1} height={206.4} fill="var(--bg-level-1)" zIndex={4} />
 	</Fragment>
 
 	<!-- Step 6 (with): Genesis 1:26-27 (drill) -->
@@ -179,7 +179,7 @@
 		step={12}
 		layout={{ x: 85.8, y: 192, width: 790.8, height: 55 }}
 		font={{ font_size: 36.7, align: 'center', v_align: 'middle', color: 'var(--bg-ghost)', bold: true }}
-		fill="#000000"
+		fill="var(--bg-level-0)"
 		line={{ width: 0.8 }}
 		zIndex={10}
 	>
@@ -256,7 +256,7 @@
 	<Fragment
 		step={18}
 		layout={{ x: 403.5, y: 399.2, width: 154.1, height: 38.3 }}
-		font={{ font_size: 26.7, color: '#0000FF' }}
+		font={{ font_size: 26.7, color: 'var(--text-level-3)' }}
 		zIndex={42}
 	>
 		Life = Spirit
@@ -289,7 +289,7 @@
 		layout={{ x: 595.8, y: 452.4, width: 283.4, height: 56.4 }}
 		font={{ font_size: 40, color: '#FF0000' }}
 		fill="var(--bg-ghost)"
-		line={{ width: 0.6, color: '#000000' }}
+		line={{ width: 0.6, color: 'var(--stroke-level-0)' }}
 		zIndex={22}
 	>
 		Blood = Spirit

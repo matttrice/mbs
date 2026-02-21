@@ -7,7 +7,7 @@
 	<!-- Title -->
 	<Fragment
 		layout={{ x: 87.4, y: 9.6, width: 755.9, height: 44.4 }}
-		font={{ bold: true, color: '#000000' }}
+		font={{ bold: true, color: 'var(--text-level-0)' }}
 	>
 		Matthew 18:1-3
 	</Fragment>

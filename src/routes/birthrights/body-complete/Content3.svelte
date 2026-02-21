@@ -225,7 +225,7 @@
 <Fragment
 	step={13}
 	layout={{ x: 573, y: 47, width: 68, height: 29 }}
-	font={{ font_size: 26.7, bold: true, color: '#0000FF', align: 'right', v_align: 'middle' }}
+	font={{ font_size: 26.7, bold: true, color: 'var(--text-level-3)', align: 'right', v_align: 'middle' }}
 >
 	Jews
 </Fragment>
@@ -263,7 +263,7 @@
 <Fragment
 	step={14}
 	layout={{ x: 522, y: 108, width: 121, height: 31 }}
-	font={{ font_size: 26.7, bold: true, color: '#0000FF', align: 'right', v_align: 'middle' }}
+	font={{ font_size: 26.7, bold: true, color: 'var(--text-level-3)', align: 'right', v_align: 'middle' }}
 >
 	Pentecost
 </Fragment>
@@ -276,7 +276,7 @@
 <Fragment
 	step={15}
 	layout={{ x: 540, y: 143, width: 101, height: 48 }}
-	font={{ font_size: 20, bold: true, color: '#0000FF', align: 'right', v_align: 'middle' }}
+	font={{ font_size: 20, bold: true, color: 'var(--text-level-3)', align: 'right', v_align: 'middle' }}
 >
 	Living Church
 </Fragment>
@@ -303,7 +303,7 @@
 <Fragment
 	step={17}
 	layout={{ x: 525, y: 259, width: 121, height: 27 }}
-	font={{ font_size: 26.7, bold: true, color: '#0000FF', align: 'right', v_align: 'middle' }}
+	font={{ font_size: 26.7, bold: true, color: 'var(--text-level-3)', align: 'right', v_align: 'middle' }}
 >
 	Gentiles
 </Fragment>
@@ -334,7 +334,7 @@
 	step={18}
 	drillTo="birthrights/acts-10-24"
 	layout={{ x: 554, y: 203, width: 90, height: 18 }}
-	font={{ font_size: 26.7, bold: true, italic: true, color: '#0000FF', align: 'right', v_align: 'middle' }}
+	font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--text-level-3)', align: 'right', v_align: 'middle' }}
 >
 	Peter
 </Fragment>
@@ -416,7 +416,7 @@
 
 <!-- Step 22: Physical = Spiritual box -->
 <Fragment step={22} animate="fade">
-	<Rect x={60} y={426} width={874} height={115} fill="#0000FF" zIndex={52} />
+	<Rect x={60} y={426} width={874} height={115} fill="var(--text-level-3)" zIndex={52} />
 </Fragment>
 
 <Fragment

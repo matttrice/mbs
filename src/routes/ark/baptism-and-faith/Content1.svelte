@@ -10,7 +10,7 @@
 <!-- Static: Title -->
 <Fragment
 	layout={{ x: 58, y: 11, width: 366, height: 36 }}
-	font={{ font_size: 26.7, bold: true, color: '#000000', align: 'left' }}
+	font={{ font_size: 26.7, bold: true, color: 'var(--text-level-0)', align: 'left' }}
 >
 	Romans 6:3-7, 17-18, 22-23
 </Fragment>
@@ -18,7 +18,7 @@
 <!-- Static: Main scripture -->
 <Fragment
 	layout={{ x: 58, y: 39, width: 865, height: 178 }}
-	font={{ font_size: 20, color: '#000000', v_align: 'middle', align: 'left', wrap: true }}
+	font={{ font_size: 20, color: 'var(--text-level-0)', v_align: 'middle', align: 'left', wrap: true }}
 	line={{ width: 1 }}
 >
 	Or do you not know that all of us who have been baptized into Christ Jesus have been baptized into His death? 4 Therefore we have been buried with Him through baptism into death, so that as Christ was raised  from the dead through the glory of the Father, so we too might walk in newness of life. 5 For if we have become united with Him in the likeness of His death, certainly we shall also be in the likeness of His resurrection, 6 knowing this, that our old self was crucified with Him, in order that our body of sin might be done away with, so that we would no longer be slaves to sin; 7 for he who has died is freed from sin.
@@ -48,7 +48,7 @@
 <Fragment
 	step={1}
 	layout={{ x: 396, y: 433, width: 208, height: 40 }}
-	font={{ font_size: 30, bold: true, color: '#000000', align: 'left' }}
+	font={{ font_size: 30, bold: true, color: 'var(--text-level-0)', align: 'left' }}
 	line={{ width: 1 }}
 >
 	Death, Burial

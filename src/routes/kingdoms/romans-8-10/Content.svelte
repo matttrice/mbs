@@ -27,7 +27,7 @@
 <Fragment
 	step={1}
 	layout={{ x: 177, y: 288, width: 613, height: 62 }}
-	fill="#33CCFF"
+	fill="var(--bg-level-2)"
 	font={{ wrap: true, align: 'center', font_size: 23.3 }}
 	zIndex={2}
 	animate="fade"

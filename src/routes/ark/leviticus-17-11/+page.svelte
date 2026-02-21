@@ -9,7 +9,7 @@
 	<!-- Static: Title -->
 	<Fragment
 		layout={{ x: 83, y: 42, width: 332, height: 62 }}
-		font={{ font_size: 44, bold: true, color: '#000000' }}
+		font={{ font_size: 44, bold: true, color: 'var(--text-level-0)' }}
 	>
 		Leviticus 17:11
 	</Fragment>

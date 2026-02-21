@@ -205,8 +205,8 @@
 	<Fragment
 		step={12}
 		layout={{ x: 402, y: 212, width: 154, height: 57 }}
-		fill="#F4F4F4"
-		line={{ width: 8, color: '#000000' }}
+		fill="var(--bg-ghost)"
+		line={{ width: 8, color: 'var(--stroke-level-0)' }}
 		font={{ v_align: 'middle', wrap: true, align: 'center', font_size: 26.7, bold: true }}
 		zIndex={100}
         exitStep={13}
@@ -650,7 +650,7 @@
 
 	<!-- Step 27: Black bar at bottom -->
 	<!-- <Fragment step={27}>
-		<Rect x={-1} y={514} width={962} height={28} fill="#000000" zIndex={bgLayer} />
+		<Rect x={-1} y={514} width={962} height={28} fill="var(--bg-level-0)" zIndex={bgLayer} />
 	</Fragment> -->
 
 	<!-- Step 27: "Judgement" label -->
@@ -836,7 +836,7 @@
 
 	<!-- Wide gate arrow -->
 	<Fragment step={33} animate="wipe-down">
-		<Arrow from={{ x: 280, y: 308 }} to={{ x: 255, y: 430 }} stroke={{ width: 6, color: '#000000' }} zIndex={boxLayer} />
+		<Arrow from={{ x: 280, y: 308 }} to={{ x: 255, y: 430 }} stroke={{ width: 6, color: 'var(--stroke-level-0)' }} zIndex={boxLayer} />
 	</Fragment>
 
 	<!-- Wide gate description -->
@@ -853,7 +853,7 @@
 	<Fragment
 		step={34}
 		layout={{ x: 753, y: 310, width: 146, height: 51 }}
-		font={{ wrap: true, font_name: 'Arial Black', font_size: 40.0, bold: true, color: '#0000FF' }}
+		font={{ wrap: true, font_name: 'Arial Black', font_size: 40.0, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={textLayer}
 	>
 		Saved
@@ -882,7 +882,7 @@
 	
 	<!-- Blue arc connector -->
 	<Fragment step={35.1} animate="draw">
-		<Arc from={{ x: 528, y: 253 }} to={{ x: 370, y: 190 }} curve={-60} stroke={{ width: 6, color: '#0000FF' }} arrow zIndex={51} />
+		<Arc from={{ x: 528, y: 253 }} to={{ x: 370, y: 190 }} curve={-60} stroke={{ width: 6, color: 'var(--stroke-level-3)' }} arrow zIndex={51} />
 	</Fragment>
 
 	<!-- "Must become like children" box (after) -->
@@ -1028,7 +1028,7 @@
 	<Fragment
 		step={43}
 		layout={{ x: 840, y: 450, width: 20, height: 100 }}
-		font={{ v_align: 'middle', font_name: 'Arial Black', font_size: 20, color: '#F4F4F4' }}
+		font={{ v_align: 'middle', font_name: 'Arial Black', font_size: 20, color: 'var(--text-light)' }}
 		zIndex={textLayer}
 	>
 		<div style="writing-mode: vertical-lr; text-orientation: upright; font-family: 'Arial Black'; font-size: 22px; font-weight: bold; letter-spacing: -12px; text-align: center; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
@@ -1095,7 +1095,7 @@
 	<Fragment
 		step={44}
 		layout={{ x: 622, y: 126, width: 300, height: 45 }}
-		font={{ wrap: true, v_align: 'middle', align: 'center', font_name: 'Arial Black', font_size: 36.7, bold: true, color: '#0000FF' }}
+		font={{ wrap: true, v_align: 'middle', align: 'center', font_name: 'Arial Black', font_size: 36.7, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={textLayer}
 	>
 		Perfect Safety
@@ -1155,7 +1155,7 @@
 
 	<!-- Step 46: Blue horizontal line -->
 	<Fragment step={46} animate="wipe">
-		<Line from={{ x: 514, y: 61 }} to={{ x: 722, y: 61 }} stroke={{ width: 4, color: '#0000FF' }} zIndex={91} />
+		<Line from={{ x: 514, y: 61 }} to={{ x: 722, y: 61 }} stroke={{ width: 4, color: 'var(--stroke-level-3)' }} zIndex={91} />
 	</Fragment>
 
 	<!-- Step 47: Revelation 21:3-4 drill -->

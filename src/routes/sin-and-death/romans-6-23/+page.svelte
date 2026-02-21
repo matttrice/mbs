@@ -7,7 +7,7 @@
 	<!-- Title -->
 	<Fragment
 		layout={{ x: 105.1, y: 37.4, width: 755.9, height: 44.4 }}
-		font={{ font_size: 33.3, bold: true, color: '#000000' }}
+		font={{ font_size: 33.3, bold: true, color: 'var(--text-level-0)' }}
 	>
 		Romans 6:23
 	</Fragment>

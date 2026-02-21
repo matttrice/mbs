@@ -82,7 +82,7 @@
 <Fragment
 	step={4}
 	layout={{ x: 62.5, y: 312.5, width: 500, height: 31.3 }}
-	font={{ font_size: 22, color: '#0000FF' }}
+	font={{ font_size: 22, color: 'var(--text-level-3)' }}
 >
 	Biblical examples of Psyche (Soul) →
 </Fragment>

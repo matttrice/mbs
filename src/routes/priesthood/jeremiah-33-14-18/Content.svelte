@@ -27,7 +27,7 @@
 	step={1}
 	layout={{ x: 106, y: 378, width: 756, height: 97 }}
 	font={{ font_size: 24, wrap: true }}
-	line={{ width: 3, color: '#000000' }}
+	line={{ width: 3, color: 'var(--stroke-level-0)' }}
 >
 	The "Branch" will be a King and Priest per order of Melchizedek<br />Jesus transformed the physical (temporary) Levitical Priesthood into its spiritual (eternal) Melchizedekian form.
 </Fragment>

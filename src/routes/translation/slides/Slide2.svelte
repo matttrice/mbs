@@ -43,7 +43,7 @@
 	<Fragment
 		step={1}
 		layout={{ x: 48, y: 52, width: 851, height: 432 }}
-		fill="#F4F4F4"
+		fill="var(--bg-ghost)"
 		font={{ wrap: true, font_size: 23.3 }}
 		zIndex={2}
 		animate="fade"

@@ -16,13 +16,13 @@
 </script>
 
 <Slide {slideIndex}>
-	<div class="slide-bg slide-bg-dark"></div>
-	<ReferenceOverlay src="/export/02-Physical_Spiritual/Slide3.png" />
+	<div class="slide-bg slide-earth"></div>
 
 	<!-- Static: End of lesson -->
 	<Fragment
 		layout={{ x: 414, y: 125.1, width: 486.1, height: 85.8 }}
-		font={{ font_size: 44.2, color: 'var(--bg-ghost)' }}
+		font={{ font_size: 44.2, bold: true, color: 'var(--text-light)' }}
+		fill="var(--bg-level-1)"
 		zIndex={1}
 	>
 		End of lesson
@@ -30,7 +30,10 @@
 </Slide>
 
 <style>
-	.slide-bg-dark {
-		background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+	.slide-earth {
+		background-image: url('/images/earth-moon.png');
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
 	}
 </style>

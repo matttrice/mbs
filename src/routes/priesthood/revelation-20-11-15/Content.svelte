@@ -25,7 +25,7 @@
 	step={1}
 	layout={{ x: 95, y: 283, width: 766, height: 144 }}
 	font={{ font_size: 24, bold: true, align: 'center', v_align: 'middle', wrap: true }}
-	line={{ width: 4, color: '#000000' }}
+	line={{ width: 4, color: 'var(--stroke-level-0)' }}
 >
 	Following this Judgment – Death is destroyed and the Kingdom of Christ passes back to the Father. Eternity begins. Those who have been made worthy to possess the kingdom reign with God in Eternity.
 </Fragment>

@@ -19,8 +19,8 @@
 	<!-- "Sin =" box -->
 	<Fragment
 		layout={{ x: 222.2, y: 13.9, width: 138.6, height: 50.4 }}
-		fill="#000000"
-		font={{ v_align: 'middle', font_size: 39.2, color: '#F4F4F4' }}
+		fill="var(--bg-level-0)"
+		font={{ v_align: 'middle', font_size: 39.2, color: 'var(--text-light)' }}
 	>
 		Sin&nbsp;&nbsp;=
 	</Fragment>
@@ -28,8 +28,8 @@
 	<!-- "Death" box -->
 	<Fragment
 		layout={{ x: 351.8, y: 13.9, width: 128.2, height: 50.4 }}
-		fill="#000000"
-		font={{ v_align: 'top', font_size: 39.2, bold: true, color: '#F4F4F4' }}
+		fill="var(--bg-level-0)"
+		font={{ v_align: 'top', font_size: 39.2, bold: true, color: 'var(--text-light)' }}
 	>
 		Death
 	</Fragment>
@@ -48,7 +48,7 @@
 	<!-- Animated Content -->
 	<!-- Step 1: Gray column (Physical Death) -->
 	<Fragment step={1} animate="wipe-down">
-		<Rect x={66.8} y={101.4} width={271.4} height={240} fill="var(--bg-level-1)" stroke={{ width: 1, color: '#000000' }} zIndex={1} />
+		<Rect x={66.8} y={101.4} width={271.4} height={240} fill="var(--bg-level-1)" stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 1: Isaiah 59:1-2 -->
@@ -222,7 +222,7 @@
 	<Fragment
 		step={16}
 		layout={{ x: 460, y: 325, width: 203.0, height: 23.9 }}
-		fill="#FFFFFF"
+		fill="var(--bg-ghost)"
 		line={{ width: 1, color: 'var(--stroke-level-0)' }}
 		font={{ v_align: 'middle', align: 'center', font_size: 17.5, italic: true }}
 		zIndex={30}
@@ -299,7 +299,7 @@
 		step={19.2}
 		layout={{ x: 98.1, y: 472.9, width: 189.1, height: 66.1 }}
 		line={{ width: 1 }}
-		font={{ font_size: 33.3, color: '#FD8017' }}
+		font={{ font_size: 33.3, color: 'var(--bg-cmd-law)' }}
 		zIndex={27}
 		animate="fade"
 	>

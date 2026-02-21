@@ -10,7 +10,7 @@
 <!-- Title: Flesh -->
 <Fragment
 	layout={{ x: 102.7, y: 9, width: 756.1, height: 44.4 }}
-	font={{ align: 'center', font_size: 59.2, bold: true, color: '#000000' }}
+	font={{ align: 'center', font_size: 59.2, bold: true, color: 'var(--text-level-0)' }}
 >
 	Flesh
 </Fragment>
@@ -18,7 +18,7 @@
 <!-- SARX (Greek) -->
 <Fragment
 	layout={{ x: 95.6, y: 38.6, width: 237.9, height: 36.1 }}
-	fill="#969696"
+	fill="var(--bg-level-1)"
 	line={{ width: 6 }}
 	font={{ font_size: 30.8 }}
 >
@@ -28,7 +28,7 @@
 <!-- Flesh definition box -->
 <Fragment
 	layout={{ x: 95.6, y: 72.6, width: 455, height: 133.9 }}
-	fill="#969696"
+	fill="var(--bg-level-1)"
 	line={{ width: 6 }}
 >
 	Flesh that covers the bones<br/>The body of man.<br/>Sensuous nature of man.<br/>Animal nature with cravings which incite to sin.<br/>Physical nature of man.<br/>The flesh, earthly nature apart from divine influence<br/>and therefore prone to sin and opposed to God.
@@ -50,7 +50,7 @@
 <Fragment
 	step={2}
 	layout={{ x: 563.9, y: 105.2, width: 119.7, height: 45.4 }}
-	fill="#969696"
+	fill="var(--bg-level-1)"
 	line={{ width: 1.3 }}
 	font={{ font_size: 30.8 }}
 	animate="fade"
@@ -62,7 +62,7 @@
 <Fragment
 	step={2}
 	layout={{ x: 563.9, y: 150, width: 315, height: 120 }}
-	fill="#969696"
+	fill="var(--bg-level-1)"
 	line={{ width: 1.3 }}
 	font={{ v_align: 'middle', font_size: 17.5 }}
 	animate="fade"
@@ -74,7 +74,7 @@
 <Fragment
 	step={3}
 	layout={{ x: 95, y: 206.6, width: 455.6, height: 53.4 }}
-	fill="#FD8017"
+	fill="var(--bg-cmd-law)"
 	line={{ width: 6 }}
 	font={{ font_size: 36.7 }}
 	animate="fade"
@@ -119,7 +119,7 @@
 <Fragment
 	step={7}
 	layout={{ x: 292.2, y: 355.2, width: 182.7, height: 59.9 }}
-	line={{ width: 1, color: '#000000' }}
+	line={{ width: 1, color: 'var(--stroke-level-0)' }}
 	font={{ v_align: 'middle', align: 'center', font_size: 23.3, italic: true }}
 	animate="fade"
 >
@@ -128,7 +128,7 @@
 
 <!-- Step 8: Red arc -->
 <Fragment step={8} animate="draw">
-	<Arc from={{ x: 495.7, y: 302.5 }} to={{ x: 520.2, y: 302.5 }} curve={-86.2} stroke={{ width: 1, color: '#000000' }} zIndex={13} />
+	<Arc from={{ x: 495.7, y: 302.5 }} to={{ x: 520.2, y: 302.5 }} curve={-86.2} stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={13} />
 </Fragment>
 
 <!-- Step 8.1: SIN -->
@@ -162,7 +162,7 @@
 <Fragment
 	step={9}
 	layout={{ x: 563.9, y: 270, width: 315, height: 78 }}
-	fill="#FD8017"
+	fill="var(--bg-cmd-law)"
 	line={{ width: 1 }}
 	animate="fade"
 >

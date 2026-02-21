@@ -36,7 +36,7 @@
 	layout={{ x: 521, y: 17, width: 359, height: 82 }}
 	font={{ font_size: 15, align: 'center', wrap: true }}
 	fill="var(--bg-level-2)"
-	line={{ color: '#0000FF' }}
+	line={{ color: 'var(--stroke-level-3)' }}
 >
 	The true seed, gospel message, places a major conditional on being baptized into Christ. Any message (seed) that teaches less is simply false doctrine, from a false Jesus that cannot save.
 </Fragment>
@@ -67,7 +67,7 @@
 	drillTo="birthrights/james-2-14"
 	layout={{ x: 540, y: 281, width: 328, height: 30 }}
 	font={{ font_size: 16.7 }}
-	line={{ width: 3, color: '#0000FF' }}
+	line={{ width: 3, color: 'var(--stroke-level-3)' }}
 >
 	Some works are necessary: James 2:14
 </Fragment>

@@ -34,9 +34,9 @@
 <Fragment
 	step={2}
 	layout={{ x: 154, y: 129, width: 661, height: 32 }}
-	font={{ font_size: 20, bold: true, color: '#0000FF', align: 'center' }}
+	font={{ font_size: 20, bold: true, color: 'var(--text-level-3)', align: 'center' }}
 	fill="var(--bg-light)"
-	line={{ width: 1, color: '#000000' }}
+	line={{ width: 1, color: 'var(--stroke-level-0)' }}
 >
 	...The Holy Spirit came on the disciples, then other Jews gathered...
 </Fragment>
@@ -75,7 +75,7 @@
 	layout={{ x: 133, y: 392, width: 661, height: 32 }}
 	font={{ font_size: 20, align: 'center' }}
 	fill="var(--bg-light)"
-	line={{ width: 1, color: '#000000' }}
+	line={{ width: 1, color: 'var(--stroke-level-0)' }}
 >
 	At this point, many Jews have been added....by baptism
 </Fragment>
@@ -84,7 +84,7 @@
 <Fragment
 	step={6}
 	layout={{ x: 139, y: 437, width: 661, height: 56 }}
-	font={{ font_size: 20, bold: true, color: '#0000FF', wrap: true }}
+	font={{ font_size: 20, bold: true, color: 'var(--text-level-3)', wrap: true }}
 	fill="var(--bg-light)"
 >
 	The disciples received the Holy Spirit miraculously to form the body. Then Jews preached to other Jews and added them by baptism.

@@ -18,7 +18,7 @@
 	<!-- Scripture text -->
 	<Fragment
 		layout={{ x: 102, y: 52, width: 768, height: 79 }}
-		font={{ wrap: true, color: '#000000' }}
+		font={{ wrap: true, color: 'var(--text-level-0)' }}
 		zIndex={1}
 	>
 		Do not be bound together with unbelievers; for what partnership have righteousness and lawlessness, or what fellowship has light with darkness?15 Or what harmony has Christ with Belial, or what has a believer in common with an unbeliever?
@@ -28,7 +28,7 @@
 	<Fragment
 		step={1}
 		layout={{ x: 219, y: 144, width: 534, height: 34 }}
-		fill="#33CCFF"
+		fill="var(--bg-level-2)"
 		font={{ font_size: 23.3, bold: true }}
 		zIndex={3}
 		animate="fade"
@@ -40,7 +40,7 @@
 	<Fragment
 		step={2}
 		layout={{ x: 98, y: 209, width: 772, height: 111 }}
-		font={{ wrap: true, font_size: 26.7, bold: true, color: '#000000' }}
+		font={{ wrap: true, font_size: 26.7, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={2}
 		animate="fade"
 	>

@@ -9,7 +9,7 @@
 	<!-- Title: 2 Peter 2:1-4 -->
 	<Fragment
 		layout={{ x: 49, y: 8, width: 864, height: 44 }}
-		font={{ font_size: 26.7, bold: true, color: '#000000' }}
+		font={{ font_size: 26.7, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={0}
 	>
 		2 Peter 2:1-4
@@ -28,7 +28,7 @@
 	<Fragment
 		step={1}
 		layout={{ x: 196, y: 309, width: 596, height: 62 }}
-		fill="#FD8017"
+		fill="var(--bg-cmd-law)"
 		font={{ wrap: true, align: 'center', font_size: 23.3 }}
 		zIndex={2}
 		animate="fade"

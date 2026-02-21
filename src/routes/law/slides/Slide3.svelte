@@ -52,7 +52,7 @@
 	<Fragment
 		step={2}
 		layout={{ x: 89.5, y: 45.8, width: 229.2, height: 52.7 }}
-		font={{ font_size: 16.7, align: 'center', italic: true, color: '#0000FF' }}
+		font={{ font_size: 16.7, align: 'center', italic: true, color: 'var(--text-level-3)' }}
 		zIndex={26}
 	>
 		Sin Not Counted = No Death<br/>Why Fear & Trembling?
@@ -128,7 +128,7 @@
 
 	<!-- Step 8: Right column rectangle (blue) -->
 	<Fragment step={8} animate="wipe-down">
-		<Rect x={333} y={15.5} width={308.9} height={416.6} fill="var(--bg-level-2)" stroke={{ width: 1, color: '#000000' }} zIndex={0} />
+		<Rect x={333} y={15.5} width={308.9} height={416.6} fill="var(--bg-level-2)" stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={0} />
 	</Fragment>
 
 	<!-- Step 8 (with): "As a slave you have new set of responsibility" -->
@@ -249,7 +249,7 @@
 
 	<!-- Step 16: Right column rectangle (blue) for hamartia -->
 	<Fragment step={16} animate="wipe-down">
-		<Rect x={650.8} y={15.8} width={234.2} height={472.2} fill="var(--bg-level-2)" stroke={{ width: 1, color: '#000000' }} zIndex={1} />
+		<Rect x={650.8} y={15.8} width={234.2} height={472.2} fill="var(--bg-level-2)" stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 16 (with): "hamartia" title -->

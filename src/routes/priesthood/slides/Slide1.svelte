@@ -18,7 +18,7 @@
 	<!-- Static: Title - Priesthood -->
 	<Fragment
 		layout={{ x: 329, y: 11, width: 302, height: 40 }}
-		font={{ font_size: 43.2, bold: true, color: '#000000' }}
+		font={{ font_size: 43.2, bold: true, color: 'var(--text-level-0)' }}
 	>
 		Priesthood
 	</Fragment>
@@ -39,7 +39,7 @@
 
 	<!-- Step 1: Top line - with previous -->
 	<Fragment step={1} animate="wipe">
-		<Line from={{ x: 55, y: 54 }} to={{ x: 905, y: 54 }} stroke={{ width: 3, color: '#000000' }} zIndex={34} />
+		<Line from={{ x: 55, y: 54 }} to={{ x: 905, y: 54 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={34} />
 	</Fragment>
 
 	<!-- Step 1: LEVITICAL - with previous -->
@@ -92,7 +92,7 @@
 	<Fragment
 		step={2}
 		layout={{ x: 484, y: 102, width: 176, height: 35 }}
-		font={{ font_size: 24, bold: true, italic: true, color: '#0000FF', v_align: 'middle', align: 'center' }}
+		font={{ font_size: 24, bold: true, italic: true, color: 'var(--text-level-3)', v_align: 'middle', align: 'center' }}
 		zIndex={20}
 	>
 		"New Order"
@@ -112,7 +112,7 @@
 	<Fragment
 		step={3}
 		layout={{ x: 526, y: 57, width: 323, height: 50 }}
-		font={{ font_size: 33.6, bold: true, color: '#0000FF', align: 'center' }}
+		font={{ font_size: 33.6, bold: true, color: 'var(--text-level-3)', align: 'center' }}
 		zIndex={6}
 	>
 		MELCHIZEDEKIAN
@@ -122,7 +122,7 @@
 	<Fragment
 		step={3}
 		layout={{ x: 488, y: 125, width: 172, height: 36 }}
-		font={{ font_size: 19.2, bold: true, italic: true, color: '#0000FF', v_align: 'middle', wrap: true }}
+		font={{ font_size: 19.2, bold: true, italic: true, color: 'var(--text-level-3)', v_align: 'middle', wrap: true }}
 		zIndex={36}
 	>
 		"A better hope"
@@ -130,16 +130,16 @@
 
 	<!-- Step 4: Arrows for attributes -->
 	<Fragment step={4} animate="wipe">
-		<Arrow from={{ x: 375, y: 288 }} to={{ x: 544, y: 289 }} stroke={{ width: 6, color: '#000000' }} zIndex={26} />
+		<Arrow from={{ x: 375, y: 288 }} to={{ x: 544, y: 289 }} stroke={{ width: 6, color: 'var(--stroke-level-0)' }} zIndex={26} />
 	</Fragment>
 	<Fragment step={4} animate="wipe">
-		<Arrow from={{ x: 375, y: 315 }} to={{ x: 546, y: 315 }} stroke={{ width: 6, color: '#000000' }} zIndex={27} />
+		<Arrow from={{ x: 375, y: 315 }} to={{ x: 546, y: 315 }} stroke={{ width: 6, color: 'var(--stroke-level-0)' }} zIndex={27} />
 	</Fragment>
 	<Fragment step={4} animate="wipe">
-		<Arrow from={{ x: 375, y: 339 }} to={{ x: 546, y: 341 }} stroke={{ width: 6, color: '#000000' }} zIndex={28} />
+		<Arrow from={{ x: 375, y: 339 }} to={{ x: 546, y: 341 }} stroke={{ width: 6, color: 'var(--stroke-level-0)' }} zIndex={28} />
 	</Fragment>
 	<Fragment step={4} animate="wipe">
-		<Arrow from={{ x: 375, y: 365 }} to={{ x: 546, y: 365 }} stroke={{ width: 6, color: '#000000' }} zIndex={29} />
+		<Arrow from={{ x: 375, y: 365 }} to={{ x: 546, y: 365 }} stroke={{ width: 6, color: 'var(--stroke-level-0)' }} zIndex={29} />
 	</Fragment>
 
 	<!-- Step 4: Source details spiritual - with previous -->
@@ -164,7 +164,7 @@
 
 	<!-- Step 6: Arrow from life to eternity -->
 	<Fragment step={6} animate="wipe">
-		<Arrow from={{ x: 422, y: 167 }} to={{ x: 501, y: 167 }} stroke={{ width: 6, color: '#000000' }} zIndex={23} />
+		<Arrow from={{ x: 422, y: 167 }} to={{ x: 501, y: 167 }} stroke={{ width: 6, color: 'var(--stroke-level-0)' }} zIndex={23} />
 	</Fragment>
 
 	<!-- Step 6: High Priest: Appointed For Eternity - with previous -->
@@ -200,7 +200,7 @@
 
 	<!-- Step 9: Arrow to spiritual intercession -->
 	<Fragment step={9} animate="wipe">
-		<Arrow from={{ x: 376, y: 219 }} to={{ x: 583, y: 219 }} stroke={{ width: 6, color: '#000000' }} zIndex={24} />
+		<Arrow from={{ x: 376, y: 219 }} to={{ x: 583, y: 219 }} stroke={{ width: 6, color: 'var(--stroke-level-0)' }} zIndex={24} />
 	</Fragment>
 
 	<!-- Step 9: Spiritual man intercedes - with previous -->
@@ -235,7 +235,7 @@
 
 	<!-- Step 11: Arrow from Physical to Spiritual -->
 	<Fragment step={11} animate="wipe">
-		<Arrow from={{ x: 375, y: 409 }} to={{ x: 550, y: 409 }} stroke={{ width: 11, color: '#000000' }} zIndex={25} />
+		<Arrow from={{ x: 375, y: 409 }} to={{ x: 550, y: 409 }} stroke={{ width: 11, color: 'var(--stroke-level-0)' }} zIndex={25} />
 	</Fragment>
 
 	<!-- Step 11: New Testament (2nd Glory) - with previous -->
@@ -252,7 +252,7 @@
 	<Fragment
 		step={11}
 		layout={{ x: 608, y: 421, width: 268, height: 50 }}
-		font={{ font_size: 43.2, bold: true, color: '#0000FF', v_align: 'middle', align: 'center' }}
+		font={{ font_size: 43.2, bold: true, color: 'var(--text-level-3)', v_align: 'middle', align: 'center' }}
 		zIndex={30}
 	>
 		Spiritual
@@ -290,14 +290,14 @@
 
 	<!-- Step 15: Arrow to Church -->
 	<Fragment step={15} animate="wipe">
-		<Arrow from={{ x: 285, y: 500 }} to={{ x: 648, y: 500 }} stroke={{ width: 11, color: '#000000' }} zIndex={32} />
+		<Arrow from={{ x: 285, y: 500 }} to={{ x: 648, y: 500 }} stroke={{ width: 11, color: 'var(--stroke-level-0)' }} zIndex={32} />
 	</Fragment>
 
 	<!-- Step 15: Church - with previous -->
 	<Fragment
 		step={15}
 		layout={{ x: 648, y: 465, width: 189, height: 68 }}
-		font={{ font_size: 48, bold: true, color: '#0000FF' }}
+		font={{ font_size: 48, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={31}
 	>
 		Church

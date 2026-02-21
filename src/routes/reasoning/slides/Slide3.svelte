@@ -61,7 +61,7 @@
 
 	<!-- Step 3: Gray rectangle (Inductive box) -->
 	<Fragment step={3} animate="fade">
-		<Rect x={60} y={138} width={413} height={120} fill="var(--bg-level-1)" stroke={{ color: '#000000', width: 1 }} zIndex={22} />
+		<Rect x={60} y={138} width={413} height={120} fill="var(--bg-level-1)" stroke={{ color: 'var(--stroke-level-0)', width: 1 }} zIndex={22} />
 	</Fragment>
 
 	<!-- Step 3.1: Small (delay 500ms) -->
@@ -108,7 +108,7 @@
 
 	<!-- Step 5: Cyan rectangle (Deductive box) -->
 	<Fragment step={5} animate="fade">
-		<Rect x={473} y={138} width={427} height={120} fill="var(--bg-level-2)" stroke={{ color: '#000000', width: 1 }} zIndex={21} />
+		<Rect x={473} y={138} width={427} height={120} fill="var(--bg-level-2)" stroke={{ color: 'var(--stroke-level-0)', width: 1 }} zIndex={21} />
 	</Fragment>
 
 	<!-- Step 5.1: Big (blue) (delay 500ms) -->
@@ -140,7 +140,7 @@
 	<Fragment
 		step={6.1}
 		layout={{ x: 736.7, y: 174.8, width: 110.2, height: 50.4 }}
-		font={{ font_size: 35, bold: true, color: '#0000FF' }}
+		font={{ font_size: 35, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={45}
 	>
 		Small
@@ -150,7 +150,7 @@
 	<Fragment
 		step={6.2}
 		layout={{ x: 713.3, y: 205.5, width: 151.4, height: 50.4 }}
-		font={{ font_size: 35, bold: true, color: '#0000FF' }}
+		font={{ font_size: 35, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={47}
 	>
 		Specific
@@ -170,7 +170,7 @@
 	<Fragment
 		step={8}
 		layout={{ x: 271.2, y: 49.2, width: 324.9, height: 24.4 }}
-		font={{ font_size: 23.3, bold: true, italic: true, color: '#0000FF' }}
+		font={{ font_size: 23.3, bold: true, italic: true, color: 'var(--text-level-3)' }}
 		zIndex={36}
 	>
 		How do you start a puzzle?
@@ -178,10 +178,10 @@
 
 	<!-- Puzzle pieces (simplified - scattered gray pieces) -->
 	<Fragment step={8} animate="fade">
-		<Rect x={641} y={72} width={21} height={18} fill="#969696" stroke={{ color: '#000000', width: 1 }} zIndex={83} />
-		<Rect x={620} y={114} width={21} height={18} fill="var(--bg-level-1)" stroke={{ color: '#000000', width: 1 }} zIndex={86} />
-		<Rect x={650} y={100} width={16} height={13} fill="var(--bg-level-1)" stroke={{ color: '#000000', width: 1 }} zIndex={101} />
-		<Rect x={604} y={87} width={18} height={15} fill="var(--bg-level-1)" stroke={{ color: '#000000', width: 1 }} zIndex={102} />
+		<Rect x={641} y={72} width={21} height={18} fill="var(--bg-level-1)" stroke={{ color: 'var(--stroke-level-0)', width: 1 }} zIndex={83} />
+		<Rect x={620} y={114} width={21} height={18} fill="var(--bg-level-1)" stroke={{ color: 'var(--stroke-level-0)', width: 1 }} zIndex={86} />
+		<Rect x={650} y={100} width={16} height={13} fill="var(--bg-level-1)" stroke={{ color: 'var(--stroke-level-0)', width: 1 }} zIndex={101} />
+		<Rect x={604} y={87} width={18} height={15} fill="var(--bg-level-1)" stroke={{ color: 'var(--stroke-level-0)', width: 1 }} zIndex={102} />
 	</Fragment>
 
 	<!-- Step 9/10: Blue corner pieces of completed puzzle -->
@@ -225,8 +225,8 @@
 	</Fragment>
 	<!-- Gray puzzle piece appearing at end of second arc -->
 	<Fragment step={11.1} animate="fade">
-		<Rect x={811} y={86} width={26} height={36} fill="var(--bg-level-1)" stroke={{ color: '#000000', width: 1 }} zIndex={85} />
-		<Rect x={836} y={93} width={10} height={20} fill="var(--bg-level-1)" stroke={{ color: '#000000', width: 1 }} zIndex={85} />
+		<Rect x={811} y={86} width={26} height={36} fill="var(--bg-level-1)" stroke={{ color: 'var(--stroke-level-0)', width: 1 }} zIndex={85} />
+		<Rect x={836} y={93} width={10} height={20} fill="var(--bg-level-1)" stroke={{ color: 'var(--stroke-level-0)', width: 1 }} zIndex={85} />
 	</Fragment>
 	<!-- Step 12: "What if you begin inductively?" -->
 	<Fragment
@@ -283,7 +283,7 @@
 		layout={{ x: 260, y: 293.6, width: 112.1, height: 53.1 }}
 		font={{ font_size: 16.7 }}
 		fill="var(--bg-light)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={69}
 	>
 		<span style="display: flex; align-items: center; justify-content: center; height: 100%; text-align: center; font-size: 14px;">
@@ -351,8 +351,8 @@
 		drillTo="reasoning/hebrews-9-15"
 		layout={{ x: 412.2, y: 306.7, width: 142.3, height: 25.5 }}
 		font={{ font_size: 16.7, bold: true }}
-		fill="#FFFFFF"
-		line={{ color: '#000000', width: 0.2 }}
+		fill="var(--bg-ghost)"
+		line={{ color: 'var(--stroke-level-0)', width: 0.2 }}
 		zIndex={90}
 	>
 		Hebrews 9:15-17
@@ -413,9 +413,9 @@
 	<Fragment
 		step={22}
 		layout={{ x: 428.1, y: 473.9, width: 143.1, height: 60.8, rotation: -11 }}
-		font={{ font_size: 26.7, bold: true, italic: true, color: '#0000FF' }}
+		font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--text-level-3)' }}
 		fill="var(--bg-light)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={68}
 	>
 		<span style="display: flex; align-items: center; justify-content: center; height: 100%; text-align: center;">
@@ -547,7 +547,7 @@
 		layout={{ x: 722.9, y: 265.4, width: 157.1, height: 54.6 }}
 		font={{ font_size: 20 }}
 		fill="var(--bg-light)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={67}
 	>
 		<span style="display: flex; align-items: center; justify-content: center; height: 100%; text-align: center;">

@@ -7,7 +7,7 @@
 	<!-- Title -->
 	<Fragment
 		layout={{ x: 85.9, y: 28.1, width: 756.1, height: 44.4 }}
-		font={{ font_size: 33.3, bold: true, color: '#000000' }}
+		font={{ font_size: 33.3, bold: true, color: 'var(--text-level-0)' }}
 	>
 		Acts 2:37-39
 	</Fragment>

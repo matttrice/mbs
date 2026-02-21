@@ -29,12 +29,12 @@
 	<!-- ===== STATIC CONTENT (Always visible) ===== -->
 	
 	<!-- Blue background for left side -->
-	<Rect x={60} y={0} width={554.1} height={540} fill="#3BCCFD" zIndex={0} />
+	<Rect x={60} y={0} width={554.1} height={540} fill="var(--bg-level-2)" zIndex={0} />
 
 	<!-- Title: Man -->
 	<Fragment
 		layout={{ x: 132.9, y: 7.8, width: 141.4, height: 44.8 }}
-		font={{ font_size: 52.5, v_align: 'middle', bold: true, color: '#000000' }}
+		font={{ font_size: 52.5, v_align: 'middle', bold: true, color: 'var(--text-level-0)' }}
 		zIndex={40}
 	>
 		Man
@@ -54,7 +54,7 @@
 		drillTo="life/hebrews-4-12"
 		layout={{ x: 355.2, y: 5.7, width: 254.6, height: 48.5 }}
 		font={{ font_size: 35, v_align: 'middle' }}
-		fill="#FFFFFF"
+		fill="var(--bg-ghost)"
 		zIndex={39}
 	>
 		Hebrews 4:12
@@ -65,9 +65,8 @@
 	<!-- Step 1: "Soul" header -->
 	<Fragment
 		step={1}
-		layout={{ x: 140.5, y: 62.7, width: 129.5, height: 62.9 }}
-		font={{ font_size: 45, color: '#0099CC' }}
-		line={{ width: 0.8 }}
+		layout={{ x: 140.5, y: 76.7, width: 129.5, height: 42.9 }}
+		font={{ font_size: 45, color: 'var(--text-level-3)' }}
 		zIndex={9}
 	>
 		Soul
@@ -87,7 +86,7 @@
 	<Fragment
 		step={3}
 		layout={{ x: 131.4, y: 188.6, width: 148.4, height: 62.7 }}
-		font={{ font_size: 45, color: '#0000FF' }}
+		font={{ font_size: 45, color: 'var(--text-level-3)' }}
 		line={{ width: 0.8 }}
 		zIndex={10}
 	>
@@ -99,7 +98,7 @@
 		step={4}
 		drillTo="life/jude-1-10"
 		layout={{ x: 85.2, y: 247.2, width: 133.9, height: 34.3 }}
-		font={{ font_size: 21.7, color: '#0000FF' }}
+		font={{ font_size: 21.7, color: 'var(--text-level-3)' }}
 		zIndex={13}
 	>
 		Jude 1:10
@@ -110,7 +109,7 @@
 		step={5}
 		drillTo="life/2peter-2-12"
 		layout={{ x: 206.6, y: 247.2, width: 132.7, height: 34.3 }}
-		font={{ font_size: 21.7, color: '#0000FF' }}
+		font={{ font_size: 21.7, color: 'var(--text-level-3)' }}
 		zIndex={14}
 	>
 		2 Peter 2:12
@@ -171,7 +170,7 @@
 		step={10}
 		drillTo="life/proverbs-16-32"
 		layout={{ x: 384.1, y: 299.3, width: 172.8, height: 34.2 }}
-		font={{ font_size: 21.7, color: '#0000FF' }}
+		font={{ font_size: 21.7, color: 'var(--text-level-3)' }}
 		zIndex={7}
 	>
 		Proverbs 16:32
@@ -205,7 +204,7 @@
 		layout={{ x: 289.8, y: 187.5, width: 187.9, height: 64.2 }}
 		font={{ font_size: 23.3, align: 'center' }}
 		fill="var(--bg-ghost)"
-		line={{ width: 0.8, color: '#000000' }}
+		line={{ width: 0.8, color: 'var(--stroke-level-0)' }}
 		zIndex={18}
 	>
 		Greek & Hebrew<br/>Definitions
@@ -224,7 +223,7 @@
 
 	<!-- Step 15: Dashed line divider -->
 	<Fragment step={15} animate="draw">
-		<Line from={{ x: 60, y: 394.1 }} to={{ x: 612, y: 394.1 }} stroke={{ width: 4, color: '#000000', dash: '16,6' }} zIndex={4} />
+		<Line from={{ x: 60, y: 394.1 }} to={{ x: 612, y: 394.1 }} stroke={{ width: 4, color: 'var(--stroke-level-0)', dash: '16,6' }} zIndex={4} />
 	</Fragment>
 
 	<!-- Step 15 (with): Body section background -->
@@ -237,8 +236,8 @@
 		step={15.1}
 		layout={{ x: 362, y: 269.4, width: 271.5, height: 108.1 }}
 		font={{ font_size: 30, v_align: 'middle', align: 'center', wrap: true }}
-		fill="#F4F4F4"
-		line={{ width: 0.6, color: '#000000' }}
+		fill="var(--bg-ghost)"
+		line={{ width: 0.6, color: 'var(--stroke-level-0)' }}
 		zIndex={8}
 	>
 		Invisible part.<br/>1. Ingredient of animal and human life.<br/>2. Collective invisible nature of life.
@@ -248,7 +247,7 @@
 	<Fragment
 		step={16}
 		layout={{ x: 705.1, y: 0, width: 119.6, height: 53.6 }}
-		font={{ font_size: 52.5, align: 'center', color: '#0000FF' }}
+		font={{ font_size: 52.5, align: 'center', color: 'var(--text-level-3)' }}
 		zIndex={20}
 	>
 		God
@@ -258,7 +257,7 @@
 	<Fragment
 		step={17}
 		layout={{ x: 657.1, y: 62.8, width: 215.6, height: 62.7 }}
-		font={{ font_size: 45, align: 'center', color: '#0000FF' }}
+		font={{ font_size: 45, align: 'center', color: 'var(--text-level-3)' }}
 		line={{ width: 0.8 }}
 		zIndex={33}
 	>
@@ -269,7 +268,7 @@
 	<Fragment
 		step={18}
 		layout={{ x: 634.6, y: 109, width: 222.3, height: 86.7 }}
-		font={{ font_size: 23.3, color: '#0000FF', wrap: true }}
+		font={{ font_size: 23.3, color: 'var(--text-level-3)', wrap: true }}
 		zIndex={21}
 	>
 		Creator, Designer, Planner, progressive, dominant
@@ -279,7 +278,7 @@
 	<Fragment
 		step={19}
 		layout={{ x: 706.9, y: 198.3, width: 116.1, height: 62.7 }}
-		font={{ font_size: 45, color: '#000000' }}
+		font={{ font_size: 45, color: 'var(--text-level-0)' }}
 		line={{ width: 0.8 }}
 		zIndex={35}
 	>
@@ -290,7 +289,7 @@
 	<Fragment
 		step={20}
 		layout={{ x: 634.6, y: 246.1, width: 252.6, height: 123.1 }}
-		font={{ font_size: 23.3, color: '#0000FF', wrap: true }}
+		font={{ font_size: 23.3, color: 'var(--text-level-3)', wrap: true }}
 		zIndex={22}
 	>
 		Word governs the Church which is the body of Christ – rules, regulations, restrictions
@@ -300,7 +299,7 @@
 	<Fragment
 		step={21}
 		layout={{ x: 631.6, y: 366.4, width: 266.8, height: 62.7 }}
-		font={{ font_size: 45, color: '#0000FF' }}
+		font={{ font_size: 45, color: 'var(--text-level-3)' }}
 		line={{ width: 0.8 }}
 		zIndex={34}
 	>
@@ -312,7 +311,7 @@
 		step={22}
 		drillTo="life/1corinthians-6-15"
 		layout={{ x: 634.6, y: 420, width: 255.2, height: 107.5 }}
-		font={{ font_size: 23.3, color: '#0000FF', wrap: true }}
+		font={{ font_size: 23.3, color: 'var(--text-level-3)', wrap: true }}
 		zIndex={23}
 	>
 		Implementation of His will - life to the body of Christ. Defies logic.
@@ -320,17 +319,17 @@
 
 	<!-- Step 23: Arrow Soul→Father -->
 	<Fragment step={23} animate="wipe">
-		<Arrow from={{ x: 246.2, y: 92.2 }} to={{ x: 661.9, y: 100.3 }} stroke={{ width: 3.5, color: '#0099CC' }} zIndex={24} />
+		<Arrow from={{ x: 246.2, y: 92.2 }} to={{ x: 661.9, y: 100.3 }} stroke={{ width: 3.5, color: 'var(--text-level-3)' }} zIndex={24} />
 	</Fragment>
 
 	<!-- Step 24: Arrow Spirit→Body (of Christ) -->
 	<Fragment step={24} animate="wipe">
-		<Arrow from={{ x: 263, y: 233.1 }} to={{ x: 715.4, y: 435.3 }} stroke={{ width: 3.5, color: '#000000' }} zIndex={25} />
+		<Arrow from={{ x: 263, y: 233.1 }} to={{ x: 715.4, y: 435.3 }} stroke={{ width: 3.5, color: 'var(--stroke-level-0)' }} zIndex={25} />
 	</Fragment>
 
 	<!-- Step 25: Arrow Spirit→Holy Spirit -->
 	<Fragment step={25} animate="wipe">
-		<Arrow from={{ x: 257.7, y: 227 }} to={{ x: 634.4, y: 394.1 }} stroke={{ width: 3.5, color: '#0099CC' }} zIndex={26} />
+		<Arrow from={{ x: 257.7, y: 227 }} to={{ x: 634.4, y: 394.1 }} stroke={{ width: 3.5, color: 'var(--text-level-3)' }} zIndex={26} />
 	</Fragment>
 
 	<!-- Step 26: Freud box -->
@@ -357,17 +356,17 @@
 
 	<!-- Step 27: Arrow Freud Superego→Son -->
 	<Fragment step={27} animate="wipe">
-		<Arrow from={{ x: 258.6, y: 167.8 }} to={{ x: 540.6, y: 213.7 }} stroke={{ width: 3.5, color: '#000000' }} zIndex={29} />
+		<Arrow from={{ x: 258.6, y: 167.8 }} to={{ x: 540.6, y: 213.7 }} stroke={{ width: 3.5, color: 'var(--stroke-level-0)' }} zIndex={29} />
 	</Fragment>
 
 	<!-- Step 28: Arrow Freud Id→Holy Spirit area -->
 	<Fragment step={28} animate="wipe">
-		<Arrow from={{ x: 261.6, y: 138.5 }} to={{ x: 552.2, y: 431.3 }} stroke={{ width: 3.5, color: '#000000' }} zIndex={30} />
+		<Arrow from={{ x: 261.6, y: 138.5 }} to={{ x: 552.2, y: 431.3 }} stroke={{ width: 3.5, color: 'var(--stroke-level-0)' }} zIndex={30} />
 	</Fragment>
 
 	<!-- Step 29: Arrow Freud Ego→Father -->
 	<Fragment step={29} animate="wipe">
-		<Arrow from={{ x: 244.4, y: 95.8 }} to={{ x: 507.8, y: 192.6 }} stroke={{ width: 3.5, color: '#000000' }} zIndex={36} />
+		<Arrow from={{ x: 244.4, y: 95.8 }} to={{ x: 507.8, y: 192.6 }} stroke={{ width: 3.5, color: 'var(--stroke-level-0)' }} zIndex={36} />
 	</Fragment>
 
 	<!-- Step 30: Harris box -->
@@ -384,17 +383,17 @@
 
 	<!-- Step 31: Arrow Harris Parent→Child -->
 	<Fragment step={31} animate="wipe">
-		<Arrow from={{ x: 265.7, y: 272.6 }} to={{ x: 521.8, y: 430.9 }} stroke={{ width: 3.5, color: '#FFFFFF' }} zIndex={31} />
+		<Arrow from={{ x: 265.7, y: 272.6 }} to={{ x: 521.8, y: 430.9 }} stroke={{ width: 3.5, color: 'var(--stroke-ghost)' }} zIndex={31} />
 	</Fragment>
 
 	<!-- Step 32: Arrow Harris Adult→Body -->
 	<Fragment step={32} animate="wipe">
-		<Arrow from={{ x: 245.3, y: 102.8 }} to={{ x: 529.6, y: 295.1 }} stroke={{ width: 3.5, color: '#FFFFFF' }} zIndex={37} />
+		<Arrow from={{ x: 245.3, y: 102.8 }} to={{ x: 529.6, y: 295.1 }} stroke={{ width: 3.5, color: 'var(--stroke-ghost)' }} zIndex={37} />
 	</Fragment>
 
 	<!-- Step 33: Arrow Harris Child→Spirit -->
 	<Fragment step={33} animate="wipe">
-		<Arrow from={{ x: 258.6, y: 219 }} to={{ x: 530.8, y: 326.6 }} stroke={{ width: 3.5, color: '#FFFFFF' }} zIndex={32} />
+		<Arrow from={{ x: 258.6, y: 219 }} to={{ x: 530.8, y: 326.6 }} stroke={{ width: 3.5, color: 'var(--stroke-ghost)' }} zIndex={32} />
 	</Fragment>
 </Slide>
 

@@ -25,7 +25,7 @@
 	<!-- Step 1: "Ark" title (timing: with) -->
 	<Fragment
 		layout={{ x: 74, y: 239, width: 199, height: 41 }}
-		font={{ font_size: 55, bold: true, color: '#F4F4F4' }}
+		font={{ font_size: 55, bold: true, color: 'var(--text-light)' }}
         zIndex={4}
 	>
 		Ark
@@ -33,21 +33,21 @@
 
 	<Fragment
 		layout={{ x: 768, y: 274, width: 76, height: 34 }}
-		font={{ font_size: 23.3, bold: true, color: '#F4F4F4', align: 'center', wrap: true }}
+		font={{ font_size: 23.3, bold: true, color: 'var(--text-light)', align: 'center', wrap: true }}
 	>
 		75ft
 	</Fragment>
 
 	<Fragment
 		layout={{ x: 778, y: 201, width: 76, height: 34 }}
-		font={{ font_size: 23.3, bold: true, color: '#F4F4F4', align: 'center', wrap: true }}
+		font={{ font_size: 23.3, bold: true, color: 'var(--text-light)', align: 'center', wrap: true }}
 	>
 		45ft
 	</Fragment>
 
 	<Fragment
 		layout={{ x: 731, y: 149, width: 76, height: 34 }}
-		font={{ font_size: 23.3, bold: true, color: '#F4F4F4', align: 'center', wrap: true }}
+		font={{ font_size: 23.3, bold: true, color: 'var(--text-light)', align: 'center', wrap: true }}
 	>
 		450ft
 	</Fragment>
@@ -73,13 +73,13 @@
 
 	<!-- Step 3: Pattern of Salvation box (timing: click triggers with elements) -->
 	<Fragment step={3} animate="fade">
-		<Rect x={43} y={345} width={367} height={200} fill="#F4F4F4" stroke={{ width: 4, color: '#000000' }} zIndex={1} />
+		<Rect x={43} y={345} width={367} height={200} fill="var(--text-light)" stroke={{ width: 4, color: 'var(--stroke-level-0)' }} zIndex={1} />
 	</Fragment>
 
 	<Fragment
 		step={3}
 		layout={{ x: 90, y: 354, width: 273, height: 26 }}
-		font={{ font_size: 26.7, color: '#000000', v_align: 'middle' }}
+		font={{ font_size: 26.7, color: 'var(--text-level-0)', v_align: 'middle' }}
 		line={{ width: 1 }}
         zIndex={2}
 	>
@@ -101,7 +101,7 @@
 	<Fragment
 		step={5}
 		layout={{ x: 209, y: 384, width: 202, height: 34 }}
-		font={{ font_size: 23.3, bold: true, color: '#0000FF', align: 'left', v_align: 'middle', wrap: true }}
+		font={{ font_size: 23.3, bold: true, color: 'var(--text-level-3)', align: 'left', v_align: 'middle', wrap: true }}
         zIndex={2}
 	>
 		Death Sentence
@@ -122,7 +122,7 @@
 	<Fragment
 		step={7}
 		layout={{ x: 244, y: 415, width: 100, height: 30 }}
-		font={{ font_size: 23.3, bold: true, color: '#0000FF', align: 'left', v_align: 'middle', wrap: true }}
+		font={{ font_size: 23.3, bold: true, color: 'var(--text-level-3)', align: 'left', v_align: 'middle', wrap: true }}
         zIndex={2}
 	>
 		Flood
@@ -232,7 +232,7 @@
     <Fragment
 		step={15}
 		layout={{ x: 161, y: 473, width: 70, height: 34 }}
-		font={{ font_size: 23.3, bold: true, color: '#0000FF', align: 'left', v_align: 'middle' }}
+		font={{ font_size: 23.3, bold: true, color: 'var(--text-level-3)', align: 'left', v_align: 'middle' }}
         zIndex={3}
 	>
 		Pitch
@@ -255,7 +255,7 @@
 	<Fragment
 		step={17}
 		layout={{ x: 284, y: 446, width: 71, height: 30 }}
-		font={{ font_size: 23.3, bold: true, color: '#0000FF', align: 'left', v_align: 'middle', wrap: true }}
+		font={{ font_size: 23.3, bold: true, color: 'var(--text-level-3)', align: 'left', v_align: 'middle', wrap: true }}
         zIndex={5}
 	>
 		Ark
@@ -285,7 +285,7 @@
 	<Fragment
 		step={19}
 		layout={{ x: 526, y: 180, width: 279, height: 101 }}
-		font={{ font_size: 20, bold: true, color: '#FFFFFF', align: 'left', wrap: true }}
+		font={{ font_size: 20, bold: true, color: 'var(--text-ghost)', align: 'left', wrap: true }}
 		line={{ width: 1 }}
 	>
 		"8 persons were brought safely through the water. Corresponding to that, baptism now saves you."
@@ -315,7 +315,7 @@
 	<Fragment
 		step={21.1}
 		layout={{ x: 281, y: 178, width: 178, height: 41 }}
-		font={{ font_size: 26.7, bold: true, color: '#F4F4F4', align: 'left' }}
+		font={{ font_size: 26.7, bold: true, color: 'var(--text-light)', align: 'left' }}
 		line={{ width: 1 }}
 	>
 		Water Above
@@ -324,7 +324,7 @@
 	<Fragment
 		step={21.1}
 		layout={{ x: 282, y: 290, width: 177, height: 41 }}
-		font={{ font_size: 26.7, bold: true, color: '#F4F4F4', align: 'left', wrap: true }}
+		font={{ font_size: 26.7, bold: true, color: 'var(--text-light)', align: 'left', wrap: true }}
 		line={{ width: 1 }}
 	>
 		Water Below
@@ -334,7 +334,7 @@
 	<Fragment
 		step={22}
 		layout={{ x: 281, y: 221, width: 274, height: 69 }}
-		font={{ font_size: 50, bold: true, color: '#33CCFF', align: 'left', wrap: true }}
+		font={{ font_size: 50, bold: true, color: 'var(--text-level-2)', align: 'left', wrap: true }}
 		line={{ width: 1 }}
 	>
 		Baptism

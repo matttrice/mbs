@@ -18,7 +18,7 @@
 	<!-- Static: Physical Priesthood title -->
 	<Fragment
 		layout={{ x: 50, y: 11, width: 365, height: 50 }}
-		font={{ font_size: 33.6, bold: true, color: '#000000', wrap: true }}
+		font={{ font_size: 33.6, bold: true, color: 'var(--stroke-level-0)', wrap: true }}
 	>
 		Physical Priesthood
 	</Fragment>
@@ -30,14 +30,14 @@
 
 	<!-- Step 1: Top line - with previous -->
 	<Fragment step={1} animate="wipe">
-		<Line from={{ x: 55, y: 54 }} to={{ x: 905, y: 54 }} stroke={{ width: 3, color: '#000000' }} zIndex={2} />
+		<Line from={{ x: 55, y: 54 }} to={{ x: 905, y: 54 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={2} />
 	</Fragment>
 
 	<!-- Step 1: Men Interceding/Mediating - with previous -->
 	<Fragment
 		step={1}
 		layout={{ x: 97, y: 68, width: 248, height: 33 }}
-		font={{ font_size: 19.2, color: '#000000' }}
+		font={{ font_size: 19.2, color: 'var(--text-level-0)' }}
 		zIndex={4}
 	>
 		Men Interceding/Mediating
@@ -47,7 +47,7 @@
 	<Fragment
 		step={2}
 		layout={{ x: 97, y: 97, width: 266, height: 33 }}
-		font={{ font_size: 19.2, color: '#000000' }}
+		font={{ font_size: 19.2, color: 'var(--text-level-0)' }}
 		zIndex={5}
 	>
 		Men have titles/clergy & laity
@@ -57,7 +57,7 @@
 	<Fragment
 		step={3}
 		layout={{ x: 97, y: 126, width: 199, height: 33 }}
-		font={{ font_size: 19.2, color: '#000000' }}
+		font={{ font_size: 19.2, color: 'var(--text-level-0)' }}
 		zIndex={30}
 	>
 		Tithes support clergy
@@ -67,7 +67,7 @@
 	<Fragment
 		step={4}
 		layout={{ x: 97, y: 155, width: 287, height: 33 }}
-		font={{ font_size: 19.2, color: '#000000' }}
+		font={{ font_size: 19.2, color: 'var(--text-level-0)' }}
 		zIndex={6}
 	>
 		Men interceding die & replaced
@@ -77,7 +77,7 @@
 	<Fragment
 		step={5}
 		layout={{ x: 97, y: 184, width: 194, height: 33 }}
-		font={{ font_size: 19.2, color: '#000000' }}
+		font={{ font_size: 19.2, color: 'var(--text-level-0)' }}
 		zIndex={7}
 	>
 		Physical Holy Lands
@@ -87,7 +87,7 @@
 	<Fragment
 		step={6}
 		layout={{ x: 97, y: 213, width: 230, height: 33 }}
-		font={{ font_size: 19.2, color: '#000000' }}
+		font={{ font_size: 19.2, color: 'var(--text-level-0)' }}
 		zIndex={8}
 	>
 		Physical capital on earth
@@ -97,7 +97,7 @@
 	<Fragment
 		step={7}
 		layout={{ x: 97, y: 242, width: 138, height: 33 }}
-		font={{ font_size: 19.2, color: '#000000' }}
+		font={{ font_size: 19.2, color: 'var(--text-level-0)' }}
 		zIndex={9}
 	>
 		Physical wars
@@ -118,7 +118,7 @@
 	<Fragment
 		step={9}
 		layout={{ x: 65, y: 317, width: 247, height: 39 }}
-		font={{ font_size: 24, color: '#000000', wrap: true }}
+		font={{ font_size: 24, color: 'var(--text-level-0)', wrap: true }}
 		zIndex={16}
 	>
 		Physical Symbols:
@@ -138,7 +138,7 @@
 	<Fragment
 		step={10}
 		layout={{ x: 55, y: 446, width: 118, height: 39 }}
-		font={{ font_size: 24, bold: true, color: '#000000' }}
+		font={{ font_size: 24, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={18}
 	>
 		Judaism
@@ -157,7 +157,7 @@
 	<Fragment
 		step={11}
 		layout={{ x: 174, y: 446, width: 81, height: 39 }}
-		font={{ font_size: 24, bold: true, color: '#000000' }}
+		font={{ font_size: 24, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={20}
 	>
 		Islam
@@ -176,7 +176,7 @@
 	<Fragment
 		step={12}
 		layout={{ x: 258, y: 444, width: 139, height: 68 }}
-		font={{ font_size: 24, bold: true, color: '#000000' }}
+		font={{ font_size: 24, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={22}
 	>
 		Orthodox<br />Protestant
@@ -186,7 +186,7 @@
 	<Fragment
 		step={13}
 		layout={{ x: 519, y: 11, width: 379, height: 50 }}
-		font={{ font_size: 33.6, bold: true, color: '#0000FF', wrap: true, align: 'center' }}
+		font={{ font_size: 33.6, bold: true, color: 'var(--text-level-3)', wrap: true, align: 'center' }}
 		zIndex={3}
 	>
 		Spiritual Priesthood
@@ -202,7 +202,7 @@
 		step={14}
 		drillTo="priesthood/hebrews-7-25"
 		layout={{ x: 395, y: 62, width: 138, height: 50 }}
-		font={{ font_size: 16.8, bold: true, color: '#000000' }}
+		font={{ font_size: 16.8, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={26}
 	>
 		Hebrews 7:25, 1Timothy 2:5
@@ -212,7 +212,7 @@
 	<Fragment
 		step={14}
 		layout={{ x: 535, y: 71, width: 166, height: 33 }}
-		font={{ font_size: 19.2, color: '#000000' }}
+		font={{ font_size: 19.2, color: 'var(--text-level-0)' }}
 		zIndex={10}
 	>
 		Christ Intercedes
@@ -222,7 +222,7 @@
 	<Fragment
 		step={15}
 		layout={{ x: 535, y: 108, width: 163, height: 33 }}
-		font={{ font_size: 19.2, color: '#000000' }}
+		font={{ font_size: 19.2, color: 'var(--text-level-0)' }}
 		zIndex={11}
 	>
 		God has all titles
@@ -233,7 +233,7 @@
 		step={15}
 		drillTo="priesthood/matthew-23-8-10"
 		layout={{ x: 390, y: 110, width: 151, height: 30 }}
-		font={{ font_size: 16.8, bold: true, color: '#000000' }}
+		font={{ font_size: 16.8, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={27}
 	>
 		Matthew 23:8-10
@@ -243,7 +243,7 @@
 	<Fragment
 		step={16}
 		layout={{ x: 535, y: 133, width: 318, height: 33 }}
-		font={{ font_size: 19.2, color: '#000000' }}
+		font={{ font_size: 19.2, color: 'var(--text-level-0)' }}
 		zIndex={31}
 	>
 		All must work for their possessions
@@ -254,7 +254,7 @@
 		step={16}
 		drillTo="priesthood/2-thessalonians-3-7-11"
 		layout={{ x: 384, y: 137, width: 158, height: 27 }}
-		font={{ font_size: 14.4, bold: true, color: '#000000', align: 'center' }}
+		font={{ font_size: 14.4, bold: true, color: 'var(--text-level-0)', align: 'center' }}
 		zIndex={32}
 	>
 		2 Thessalonians 3:9
@@ -264,7 +264,7 @@
 	<Fragment
 		step={17}
 		layout={{ x: 535, y: 158, width: 304, height: 33 }}
-		font={{ font_size: 19.2, color: '#000000' }}
+		font={{ font_size: 19.2, color: 'var(--text-level-0)' }}
 		zIndex={12}
 	>
 		Christ never dies, never replaced
@@ -275,7 +275,7 @@
 		step={17}
 		drillTo="priesthood/hebrews-7-24"
 		layout={{ x: 401, y: 160, width: 129, height: 30 }}
-		font={{ font_size: 16.8, bold: true, color: '#000000' }}
+		font={{ font_size: 16.8, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={28}
 	>
 		Hebrews 7:24
@@ -285,7 +285,7 @@
 	<Fragment
 		step={18}
 		layout={{ x: 535, y: 188, width: 371, height: 33 }}
-		font={{ font_size: 19.2, color: '#000000' }}
+		font={{ font_size: 19.2, color: 'var(--text-level-0)' }}
 		zIndex={13}
 	>
 		Spiritual land of Canaan/Eternal Sabbath
@@ -295,7 +295,7 @@
 	<Fragment
 		step={19}
 		layout={{ x: 535, y: 218, width: 304, height: 33 }}
-		font={{ font_size: 19.2, color: '#000000' }}
+		font={{ font_size: 19.2, color: 'var(--text-level-0)' }}
 		zIndex={14}
 	>
 		Spiritual capital/Jerusalem above
@@ -305,7 +305,7 @@
 	<Fragment
 		step={20}
 		layout={{ x: 537, y: 248, width: 362, height: 56 }}
-		font={{ font_size: 19.2, color: '#000000', wrap: true }}
+		font={{ font_size: 19.2, color: 'var(--text-level-0)', wrap: true }}
 		zIndex={15}
 	>
 		Spiritual battles<br />"not against flesh and blood"
@@ -315,8 +315,8 @@
 	<Fragment
 		step={21}
 		layout={{ x: 289, y: 316, width: 515, height: 33 }}
-		font={{ font_size: 19.2, bold: true, color: '#000000', wrap: true, align: 'center' }}
-		fill="#969696"
+		font={{ font_size: 19.2, bold: true, color: 'var(--text-level-0)', wrap: true, align: 'center' }}
+		fill="var(--bg-level-1)"
 		zIndex={35}
 	>
 		"No graven image" can represent a Spiritual Nation
@@ -336,7 +336,7 @@
 		step={23}
 		layout={{ x: 354, y: 418, width: 211, height: 36 }}
 		font={{ font_size: 24, bold: true, v_align: 'middle', wrap: true, align: 'center' }}
-		fill="#F4F4F4"
+		fill="var(--bg-ghost)"
 		zIndex={33}
 	>
 		Evangelicalism
@@ -346,7 +346,7 @@
 	<Fragment
 		step={24}
 		layout={{ x: 399, y: 452, width: 116, height: 79 }}
-		font={{ font_size: 19.2, bold: true, color: '#000000', align: 'center' }}
+		font={{ font_size: 19.2, bold: true, color: 'var(--text-level-0)', align: 'center' }}
 		zIndex={24}
 	>
 		Dagon<br />(Fish God)<br />Philistines
@@ -356,8 +356,8 @@
 	<Fragment
 		step={24}
 		layout={{ x: 553, y: 358, width: 334, height: 114 }}
-		font={{ font_size: 21.6, color: '#000000', wrap: true, align: 'center' }}
-		fill="#F4F4F4"
+		font={{ font_size: 21.6, color: 'var(--text-level-0)', wrap: true, align: 'center' }}
+		fill="var(--bg-ghost)"
 		zIndex={36}
 	>
 		A physical symbol representing a spiritual (invisible) nation is a contradiction, anathema to God

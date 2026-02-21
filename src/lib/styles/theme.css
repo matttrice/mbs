@@ -14,13 +14,26 @@
 
 	--text-level-0: #000000;
 	--text-level-1: #666666;
-	--stroke-level-0: #000000;	
+	--text-level-2: #00aaff;
+	--text-level-3: #0000cc;
+	
+	--stroke-level-0: #000000;
+	--stroke-level-1: #969696;
+	--stroke-level-2: #00aaff;
+	--stroke-level-3: #0000cc;	
 
-	--bg-light: #e8e8e8;
 	--bg-ghost: #ffffff;
 	--text-ghost: #ffffff;
-	
+	--stroke-ghost: #ffffff;
+
+	--bg-light: #e8e8e8;
+	--text-light: #e8e8e8;
+	--stroke-light: #e8e8e8;
+
 	--bg-cmd-law: #FD8017;
+	--text-cmd-law: #FD8017;
+	--stroke-cmd-law: #cc6613;
+
 	--bg-danger: #FF0000;
 	--bg-danger-dark: #cc0000;
 	--bg-blood: #b01a1a;

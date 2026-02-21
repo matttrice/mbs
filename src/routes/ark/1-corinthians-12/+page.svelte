@@ -9,7 +9,7 @@
 	<!-- Static: Title -->
 	<Fragment
 		layout={{ x: 100, y: 36, width: 525, height: 44 }}
-		font={{ font_size: 36, bold: true, color: '#000000', align: 'left' }}
+		font={{ font_size: 36, bold: true, color: 'var(--text-level-0)', align: 'left' }}
 	>
 		1 Corinthians 12:12-14, 27-28
 	</Fragment>

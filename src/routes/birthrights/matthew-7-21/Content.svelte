@@ -27,7 +27,7 @@
 	layout={{ x: 96, y: 225, width: 272, height: 74 }}
 	font={{ font_size: 16.7, align: 'center', v_align: 'middle', wrap: true }}
 	fill="var(--bg-light)"
-	line={{ width: 1, color: '#000000' }}
+	line={{ width: 1, color: 'var(--stroke-level-0)' }}
 >
 	How could God not 'know them'? – They used his name – Galatians 4:6-9
 </Fragment>
@@ -36,7 +36,7 @@
 <Fragment
 	step={2}
 	layout={{ x: 80, y: 299, width: 323, height: 50 }}
-	font={{ font_size: 16.7, bold: true, color: '#0000FF', align: 'center' }}
+	font={{ font_size: 16.7, bold: true, color: 'var(--text-level-3)', align: 'center' }}
 >
 	God knows his Sons – those Born of the promise, Abraham's seed.
 </Fragment>
@@ -72,7 +72,7 @@
 <Fragment
 	step={5}
 	layout={{ x: 93, y: 374, width: 301, height: 133 }}
-	font={{ font_size: 23.3, bold: true, color: '#0000FF', align: 'center', wrap: true }}
+	font={{ font_size: 23.3, bold: true, color: 'var(--text-level-3)', align: 'center', wrap: true }}
 >
 	Jesus is not just a name. Some are born of another "Jesus." Many doctrines look similar but there is only one true seed and gate to salvation.
 </Fragment>

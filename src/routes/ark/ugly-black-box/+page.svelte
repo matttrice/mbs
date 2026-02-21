@@ -10,8 +10,8 @@
 	<!-- Static: Title -->
 	<Fragment
 		layout={{ x: 139, y: 30, width: 681, height: 100 }}
-		fill="#000000"
-		font={{ font_size: 39.2, bold: true, color: '#F4F4F4' }}
+		fill="var(--bg-level-0)"
+		font={{ font_size: 39.2, bold: true, color: 'var(--text-light)' }}
 	>
 		What does the Ark look like?
 	</Fragment>
@@ -40,16 +40,16 @@
 	<Fragment
 		step={3}
 		layout={{ x: 214, y: 244, width: 576, height: 176 }}
-		fill="#F4F4F4"
+		fill="var(--bg-ghost)"
 		font={{ font_size: 23.3, align: 'left', wrap: true }}
-		line={{ width: 4, color: '#000000' }}
+		line={{ width: 4, color: 'var(--stroke-level-0)' }}
 	>
 		Who has believed our message? And to whom has the arm of the LORD been revealed? 2 For He grew up before Him like a tender  shoot, And like a root out of parched ground; He has no {'{stately}'} form or majesty That we should look upon Him, Nor appearance that we should be attracted to Him.
 	</Fragment>
 
 	<!-- Step 3.1: Arrow pointing to Common (timing: after) -->
 	<Fragment step={3.1} animate="wipe-down">
-		<Arrow from={{ x: 480, y: 245 }} to={{ x: 480, y: 287 }} stroke={{ width: 13, color: '#000000' }} zIndex={1} />
+		<Arrow from={{ x: 480, y: 245 }} to={{ x: 480, y: 287 }} stroke={{ width: 13, color: 'var(--stroke-level-0)' }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 3.2: Common, maybe even ugly (timing: after) -->
@@ -94,7 +94,7 @@
 
 	<!-- Step 5: Cover ? mark (timing: with) -->
 	<Fragment step={5} animate="fade">
-		<Rect x={349} y={349} width={42} height={64} fill="#F4F4F4" stroke={{ width: 1 }} zIndex={2} />
+		<Rect x={349} y={349} width={42} height={64} fill="var(--bg-ghost)" stroke={{ width: 1 }} zIndex={2} />
 	</Fragment>
 
 	<!-- Step 6: Who is the Church? drillTo (timing: click) -->

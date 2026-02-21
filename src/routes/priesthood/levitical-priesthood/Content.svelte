@@ -27,7 +27,7 @@
 <Fragment
 	step={1}
 	layout={{ x: 184, y: 56, width: 160, height: 36 }}
-	font={{ font_size: 21.6, bold: true, align: 'center', color: '#F4F4F4' }}
+	font={{ font_size: 21.6, bold: true, align: 'center', color: 'var(--text-light)' }}
 >
 	Jacob (Israel)
 </Fragment>
@@ -36,7 +36,7 @@
 <Fragment
 	step={2}
 	layout={{ x: 326, y: 56, width: 313, height: 36 }}
-	font={{ font_size: 21.6, bold: true, align: 'center', color: '#F4F4F4', wrap: true }}
+	font={{ font_size: 21.6, bold: true, align: 'center', color: 'var(--text-light)', wrap: true }}
 >
 	12 sons<br />12 tribes (Israel)
 </Fragment>
@@ -45,7 +45,7 @@
 <Fragment
 	step={3}
 	layout={{ x: 623, y: 56, width: 86, height: 36 }}
-	font={{ font_size: 21.6, bold: true, align: 'center', color: '#F4F4F4' }}
+	font={{ font_size: 21.6, bold: true, align: 'center', color: 'var(--text-light)' }}
 >
 	Levi
 </Fragment>
@@ -54,7 +54,7 @@
 <Fragment
 	step={4}
 	layout={{ x: 693, y: 56, width: 208, height: 36 }}
-	font={{ font_size: 21.6, bold: true, align: 'center', color: '#F4F4F4' }}
+	font={{ font_size: 21.6, bold: true, align: 'center', color: 'var(--text-light)' }}
 >
 	Aaron (order of)
 </Fragment>
@@ -63,7 +63,7 @@
 <Fragment
 	step={5}
 	layout={{ x: 155, y: 90, width: 634, height: 45 }}
-	font={{ font_size: 28.8, bold: true, align: 'center', color: '#F4F4F4' }}
+	font={{ font_size: 28.8, bold: true, align: 'center', color: 'var(--text-light)' }}
 >
 	Responsible for a system of animal sacrifice
 </Fragment>
@@ -81,10 +81,10 @@
 <Fragment
 	step={6}
 	layout={{ x: 69, y: 407, width: 836, height: 103 }}
-	font={{ font_size: 28.8, bold: true, color: '#F4F4F4', wrap: true }}
-	fill="#808080"
+	font={{ font_size: 28.8, bold: true, color: 'var(--text-light)', wrap: true }}
+	fill="var(--bg-level-1)"
 >
-	Hebrews10:3-4: But those sacrifices are an annual reminder of sins, 4 because it is impossible for the blood of bulls and goats to take away sins.
+	Hebrews 10:3-4: But those sacrifices are an annual reminder of sins, 4 because it is impossible for the blood of bulls and goats to take away sins.
 </Fragment>
 
 <!-- Step 6: Copy / Shadow of the True - with previous -->
@@ -92,7 +92,7 @@
 	step={6}
 	layout={{ x: 463, y: 385, width: 435, height: 44 }}
 	font={{ font_size: 33.6, bold: true, v_align: 'middle', wrap: true }}
-	line={{ width: 4, color: '#000000' }}
+	line={{ width: 4, color: 'var(--stroke-level-0)' }}
 >
 	Copy / Shadow of the True
 </Fragment>

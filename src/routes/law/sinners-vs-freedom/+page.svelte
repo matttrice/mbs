@@ -23,7 +23,7 @@
 
 	<Fragment
 		layout={{ x: 66.5, y: 64.7, width: 350, height: 38 }}
-		font={{ font_size: 28, bold: true, align: 'center', color: '#FFFFFF' }}
+		font={{ font_size: 28, bold: true, align: 'center', color: 'var(--text-ghost)' }}
 		fill="var(--bg-level-1)"
 	>
 		Sinners
@@ -36,7 +36,7 @@
 
 	<Fragment
 		layout={{ x: 543.5, y: 64.7, width: 350, height: 38 }}
-		font={{ font_size: 28, bold: true, align: 'center', color: '#FFFFFF' }}
+		font={{ font_size: 28, bold: true, align: 'center', color: 'var(--text-ghost)' }}
 		fill="var(--bg-level-2)"
 	>
 		Freedom from Sin

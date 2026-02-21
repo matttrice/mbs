@@ -41,8 +41,8 @@
 		step={1}
 		drillTo="sin-and-death/mortality-morality"
 		layout={{ x: 121.6, y: 118.1, width: 730.7, height: 59.9 }}
-		fill="#F4F4F4"
-		line={{ width: 1.3, color: '#000000' }}
+		fill="var(--bg-ghost)"
+		line={{ width: 1.3, color: 'var(--stroke-level-0)' }}
 		font={{ v_align: 'middle', align: 'center', font_size: 36.7 }}
 		zIndex={13}
 		animate="fade"
@@ -64,7 +64,7 @@
 
 	<!-- Step 2 with: Gray rectangle behind Mortality -->
 	<Fragment step={2} animate="wipe-down">
-		<Rect x={149.4} y={171.8} width={293.9} height={372.1} fill="#999999" stroke={{ width: 1 }} zIndex={1} />
+		<Rect x={149.4} y={171.8} width={293.9} height={372.1} fill="var(--bg-level-1)" stroke={{ width: 1 }} zIndex={1} />
 	</Fragment>
 
 	<!-- Step 2 with: "V.S." -->
@@ -92,7 +92,7 @@
 
 	<!-- Step 2.1 with: Orange rectangle behind Morality -->
 	<Fragment step={2.1} animate="wipe-down">
-		<Rect x={517.9} y={170.5} width={293.9} height={373.4} fill="#FD8017" stroke={{ width: 1 }} zIndex={0} />
+		<Rect x={517.9} y={170.5} width={293.9} height={373.4} fill="var(--bg-cmd-law)" stroke={{ width: 1 }} zIndex={0} />
 	</Fragment>
 
 	<!-- Step 3: Down arrow for "No Choice" -->
@@ -104,7 +104,7 @@
 	<Fragment
 		step={3.1}
 		layout={{ x: 178.1, y: 330, width: 236.4, height: 61.6 }}
-		fill="#F4F4F4"
+		fill="var(--bg-ghost)"
 		line={{ width: 1 }}
 		font={{ align: 'center', font_size: 44.2 }}
 		zIndex={4}
@@ -122,7 +122,7 @@
 	<Fragment
 		step={4.1}
 		layout={{ x: 563.4, y: 330, width: 202.9, height: 61.6 }}
-		fill="#F4F4F4"
+		fill="var(--bg-ghost)"
 		line={{ width: 1 }}
 		font={{ align: 'center', font_size: 44.2 }}
 		zIndex={5}

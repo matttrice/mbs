@@ -44,15 +44,15 @@
 
 	<!-- Step 1: Brown ark shape (left side) with labels -->
 	<Fragment step={1} animate="draw">
-		<Arc from={{ x: 84, y: 522 }} to={{ x: 424, y: 522 }} curve={-450} stroke={{ width: 8, color: '#000000' }} zIndex={boxLayer} />
+		<Arc from={{ x: 84, y: 522 }} to={{ x: 424, y: 522 }} curve={-450} stroke={{ width: 8, color: 'var(--stroke-level-0)' }} zIndex={boxLayer} />
 	</Fragment>
 
 	<!-- Step 1.2: Ark label (timing: with delay 1000ms) -->
 	<Fragment
 		step={1.2}
 		layout={{ x: 165, y: 276, width: 182, height: 51 }}
-		fill="#000000"
-		font={{ font_size: 35, bold: true, color: '#F4F4F4', align: 'center' }}
+		fill="var(--bg-level-0)"
+		font={{ font_size: 35, bold: true, color: 'var(--text-light)', align: 'center' }}
 		line={{ width: 1 }}
 		zIndex={textLayer}
 	>
@@ -97,7 +97,7 @@
 		step={4}
 		drillTo="ark/hebrews-12-22"
 		layout={{ x: 345, y: 314, width: 243, height: 105 }}
-		font={{ font_size: 23, bold: true, color: '#0000FF', align: 'center' }}
+		font={{ font_size: 23, bold: true, color: 'var(--text-level-3)', align: 'center' }}
 		line={{ width: 1 }}
 		zIndex={textLayer}
 	>
@@ -106,7 +106,7 @@
 
 	<!-- Step 5: ark shape (right side - Church) -->
 	<Fragment step={5} animate="draw">
-		<Arc from={{ x: 525, y: 522 }} to={{ x: 850, y: 522 }} curve={-400} stroke={{ width: 8, color: '#000000' }} zIndex={boxLayer}/>
+		<Arc from={{ x: 525, y: 522 }} to={{ x: 850, y: 522 }} curve={-400} stroke={{ width: 8, color: 'var(--stroke-level-0)' }} zIndex={boxLayer}/>
 	</Fragment>
 
 	<!-- Step 5.1: Christ "sat down" label (timing: after) -->
@@ -125,8 +125,8 @@
 	<Fragment
 		step={6}
 		layout={{ x: 590, y: 276, width: 203, height: 51 }}
-		fill="#000000"
-		font={{ font_size: 35, bold: true, color: '#F4F4F4', align: 'center' }}
+		fill="var(--bg-level-0)"
+		font={{ font_size: 35, bold: true, color: 'var(--text-light)', align: 'center' }}
 		line={{ width: 1 }}
 		zIndex={textLayer}
 

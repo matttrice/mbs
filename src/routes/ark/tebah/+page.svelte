@@ -22,7 +22,7 @@
 	<Fragment
 		step={1}
 		layout={{ x: 86, y: 8, width: 319, height: 40 }}
-		font={{ font_size: 26.7, bold: true, color: '#000000', v_align: 'bottom', align: 'left' }}
+		font={{ font_size: 26.7, bold: true, color: 'var(--text-level-0)', v_align: 'bottom', align: 'left' }}
 	>
 		*Ark = Tebah
 	</Fragment>
@@ -31,7 +31,7 @@
 	<Fragment
 		step={1}
 		layout={{ x: 106, y: 39, width: 259, height: 30 }}
-		font={{ font_size: 20, color: '#000000', align: 'left', wrap: true }}
+		font={{ font_size: 20, color: 'var(--text-level-0)', align: 'left', wrap: true }}
 	>
 		1. A vessel, a box or chest.
 	</Fragment>
@@ -40,7 +40,7 @@
 	<Fragment
 		step={2}
 		layout={{ x: 106, y: 61, width: 298, height: 30 }}
-		font={{ font_size: 20, color: '#0000FF', align: 'left', wrap: true }}
+		font={{ font_size: 20, color: 'var(--text-level-3)', align: 'left', wrap: true }}
 	>
 		2. Coffer - box for valuables
 	</Fragment>
@@ -90,7 +90,7 @@
 	<Fragment
 		step={6}
 		layout={{ x: 469, y: 83, width: 332, height: 40 }}
-		font={{ font_size: 26.7, bold: true, color: '#000000', align: 'left' }}
+		font={{ font_size: 26.7, bold: true, color: 'var(--text-level-0)', align: 'left' }}
 		line={{ width: 1 }}
 	>
 		*Cover = Kaphar (v)
@@ -100,7 +100,7 @@
 	<Fragment
 		step={6}
 		layout={{ x: 498, y: 112, width: 134, height: 30 }}
-		font={{ font_size: 20, color: '#000000', align: 'left', wrap: true }}
+		font={{ font_size: 20, color: 'var(--text-level-0)', align: 'left', wrap: true }}
 	>
 		1. To cover
 	</Fragment>
@@ -109,7 +109,7 @@
 	<Fragment
 		step={7}
 		layout={{ x: 502, y: 64, width: 313, height: 26 }}
-		font={{ font_size: 20, color: '#0000FF', align: 'left' }}
+		font={{ font_size: 20, color: 'var(--text-level-3)', align: 'left' }}
 	>
 		2. The price of life, ransom, bribe
 	</Fragment>
@@ -118,7 +118,7 @@
 	<Fragment
 		step={8}
 		layout={{ x: 498, y: 132, width: 456, height: 48 }}
-		font={{ font_size: 20, color: '#0000FF', align: 'left', wrap: true }}
+		font={{ font_size: 20, color: 'var(--text-level-3)', align: 'left', wrap: true }}
 	>
 		2. Purge, make an atonement, make propitiation, reconciliation, cover over with pitch
 	</Fragment>
@@ -259,7 +259,7 @@
 	</Fragment>
 
 	<Fragment step={17} animate="wipe">
-		<Arrow from={{ x: 645, y: 410 }} to={{ x: 722, y: 410 }} stroke={{ width: 8, color: '#000000' }} zIndex={5} />
+		<Arrow from={{ x: 645, y: 410 }} to={{ x: 722, y: 410 }} stroke={{ width: 8, color: 'var(--stroke-level-0)' }} zIndex={5} />
 	</Fragment>
 
 	<!-- Step 17.1: BLOOD and kaphar equation (timing: after) -->

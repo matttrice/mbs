@@ -36,7 +36,7 @@
 	layout={{ x: 473, y: 56, width: 266, height: 107 }}
 	font={{ font_size: 33.6, bold: true, v_align: 'middle', wrap: true, align: 'center' }}
 	fill="var(--bg-level-2)"
-	line={{ width: 5, color: '#000000' }}
+	line={{ width: 5, color: 'var(--stroke-level-0)' }}
 >
 	King Priest<br />Priest King
 </Fragment>

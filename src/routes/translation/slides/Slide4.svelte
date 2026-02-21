@@ -15,7 +15,7 @@
 	<!-- End of lesson -->
 	<Fragment
 		layout={{ x: 111, y: 118, width: 747, height: 57 }}
-		font={{ font_size: 59.2, bold: true, color: '#FFFFFF' }}
+		font={{ font_size: 59.2, bold: true, color: 'var(--text-ghost)' }}
 		zIndex={1}
 	>
 		End of lesson

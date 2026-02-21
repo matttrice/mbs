@@ -19,7 +19,7 @@
 	 * @example Ellipse with stroke
 	 * ```svelte
 	 * <Fragment step={5} animate="draw">
-	 *   <Ellipse cx={200} cy={150} rx={95} ry={45} stroke={{ width: 3, color: '#0000FF' }} zIndex={10} />
+	 *   <Ellipse cx={200} cy={150} rx={95} ry={45} stroke={{ width: 3, color: 'var(--stroke-level-3)' }} zIndex={10} />
 	 * </Fragment>
 	 * ```
 	 */
@@ -76,7 +76,7 @@
 		if (stroke) {
 			ellipse.stroke({
 				width: stroke.width ?? 1,
-				color: stroke.color ?? '#000000',
+				color: stroke.color ?? 'var(--stroke-level-0)',
 				dasharray: stroke.dash ?? undefined
 			});
 		}

@@ -10,7 +10,7 @@
 	<!-- Static: Title -->
 	<Fragment
 		layout={{ x: 10, y: 35, width: 399, height: 51 }}
-		font={{ font_size: 45, bold: true, color: '#000000' }}
+		font={{ font_size: 45, bold: true, color: 'var(--text-level-0)' }}
 	>
 		1Peter 3:18-21
 	</Fragment>

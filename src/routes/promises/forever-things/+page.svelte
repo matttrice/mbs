@@ -10,7 +10,7 @@
 	<Rect x={480} y={0} width={288} height={540} fill="var(--bg-level-1)" zIndex={0} />
 	
 	<!-- Vertical divider -->
-	<Line from={{ x: 480, y: 0 }} to={{ x: 480, y: 540 }} stroke={{ width: 3, color: '#000000' }} zIndex={1} />
+	<Line from={{ x: 480, y: 0 }} to={{ x: 480, y: 540 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={1} />
 
 	<!-- Title: 1 Corinthians 15:40-45 (drillable) -->
 	<Fragment

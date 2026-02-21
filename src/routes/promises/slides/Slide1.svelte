@@ -52,7 +52,7 @@
 	</Fragment>
 
 	<Fragment step={2} animate="fade">
-		<Line from={{ x: 74.7, y: 48.2 }} to={{ x: 885.7, y: 48.2 }} stroke={{ width: 2.7, color: '#000000' }} />
+		<Line from={{ x: 74.7, y: 48.2 }} to={{ x: 885.7, y: 48.2 }} stroke={{ width: 2.7, color: 'var(--stroke-level-0)' }} />
 	</Fragment>
 
 	<!-- Step 3: Great Nation -->
@@ -103,7 +103,7 @@
 		layout={{ x: 156, y: 175.4, width: 122.4, height: 43.9 }}
 		font={{ font_size: 33.6, bold: true }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1.3 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1.3 }}
 		zIndex={10}
 	>
 		Israel
@@ -178,7 +178,7 @@
 		layout={{ x: 679.8, y: 175.4, width: 138.6, height: 43.9 }}
 		font={{ font_size: 33.6, bold: true, color: 'var(--bg-level-3)' }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1.3 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1.3 }}
 		zIndex={12}
 		animate="fade"
 	>
@@ -201,7 +201,7 @@
 		layout={{ x: 146, y: 280.3, width: 142.4, height: 43.9 }}
 		font={{ font_size: 33.6, bold: true }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1.3 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1.3 }}
 		zIndex={18}
 	>
 		Canaan
@@ -239,7 +239,7 @@
 		layout={{ x: 681.6, y: 280.3, width: 140.6, height: 43.9 }}
 		font={{ font_size: 33.6, bold: true, color: 'var(--bg-level-3)' }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1.3 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1.3 }}
 		zIndex={20}
 	>
 		Heaven
@@ -295,7 +295,7 @@
 		layout={{ x: 681.6, y: 400.1, width: 144, height: 43.9 }}
 		font={{ font_size: 33.6, bold: true, color: 'var(--bg-level-3)' }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1.3 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1.3 }}
 		zIndex={22}
 	>
 		Christ
@@ -318,7 +318,7 @@
 		layout={{ x: 137.1, y: 428.4, width: 160.2, height: 44.1 }}
 		font={{ font_size: 33.6, bold: true }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1.3 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1.3 }}
 		zIndex={30}
 	>
 		Abraham
@@ -335,7 +335,7 @@
 		layout={{ x: 328.8, y: 421.5, width: 64.2, height: 27.2 }}
 		font={{ font_size: 19.2, align: 'left' }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={45}
 	>
 		Isaac
@@ -352,7 +352,7 @@
 		layout={{ x: 392.1, y: 375.3, width: 62.1, height: 27.2 }}
 		font={{ font_size: 19.2, align: 'left' }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={27}
 	>
 		Esau
@@ -369,7 +369,7 @@
 		layout={{ x: 422.4, y: 421.5, width: 69.6, height: 27.2 }}
 		font={{ font_size: 19.2, align: 'left' }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={47}
 	>
 		Jacob
@@ -386,7 +386,7 @@
 		layout={{ x: 531.4, y: 422.3, width: 88.8, height: 46.5 }}
 		font={{ font_size: 19.2 }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={31}
 	>
 		12 Sons<br />(Tribes)
@@ -398,7 +398,7 @@
 		layout={{ x: 547, y: 398.8, width: 81.9, height: 27.2 }}
 		font={{ font_size: 19.2 }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={29}
 	>
 		Judah
@@ -410,7 +410,7 @@
 		layout={{ x: 564.2, y: 371.6, width: 75.2, height: 27.2 }}
 		font={{ font_size: 19.2 }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={28}
 	>
 		David
@@ -442,7 +442,7 @@
 		layout={{ x: 201.4, y: 478.1, width: 85.5, height: 27.2 }}
 		font={{ font_size: 19.2, align: 'left' }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={41}
 	>
 		Ishmael
@@ -459,7 +459,7 @@
 		layout={{ x: 307.2, y: 480, width: 147.5, height: 27.2 }}
 		font={{ font_size: 19.2 }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={39}
 	>
 		Arabic Nations
@@ -476,7 +476,7 @@
 		layout={{ x: 481.1, y: 480, width: 119.7, height: 27.2 }}
 		font={{ font_size: 19.2, align: 'left' }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={42}
 	>
 		Mohammed
@@ -493,7 +493,7 @@
 		layout={{ x: 572.9, y: 502.4, width: 75.9, height: 27.2 }}
 		font={{ font_size: 19.2 }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={43}
 	>
 		Islam

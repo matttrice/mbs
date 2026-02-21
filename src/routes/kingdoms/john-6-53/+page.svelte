@@ -18,7 +18,7 @@
 	<!-- Scripture text -->
 	<Fragment
 		layout={{ x: 90, y: 41, width: 721, height: 54 }}
-		font={{ wrap: true, color: '#000000' }}
+		font={{ wrap: true, color: 'var(--text-level-0)' }}
 		zIndex={1}
 	>
 		So Jesus said to them, "Truly, truly, I say to you, unless you eat the flesh of the Son of Man and drink His blood, you have no life in yourselves.
@@ -28,7 +28,7 @@
 	<Fragment
 		step={1}
 		layout={{ x: 90, y: 98, width: 761, height: 184 }}
-		font={{ wrap: true, font_size: 26.7, bold: true, color: '#000000' }}
+		font={{ wrap: true, font_size: 26.7, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={2}
 		animate="fade"
 	>
@@ -39,7 +39,7 @@
 	<Fragment
 		step={2}
 		layout={{ x: 90, y: 285, width: 783, height: 232 }}
-		font={{ wrap: true, font_size: 26.7, bold: true, color: '#000000' }}
+		font={{ wrap: true, font_size: 26.7, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={3}
 		animate="fade"
 	>

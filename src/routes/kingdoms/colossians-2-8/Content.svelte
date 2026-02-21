@@ -9,7 +9,7 @@
 <!-- Title: Colossians 2:8-14 -->
 <Fragment
 	layout={{ x: 101, y: 14, width: 756, height: 44 }}
-	font={{ font_size: 26.7, bold: true, color: '#000000' }}
+	font={{ font_size: 26.7, bold: true, color: 'var(--text-level-0)' }}
 	zIndex={0}
 >
 	Colossians 2:8-14
@@ -18,7 +18,7 @@
 <!-- Static scripture text -->
 <Fragment
 	layout={{ x: 102, y: 45, width: 781, height: 228 }}
-	font={{ wrap: true, font_size: 18.3, color: '#000000' }}
+	font={{ wrap: true, font_size: 18.3, color: 'var(--text-level-0)' }}
 	zIndex={1}
 >
 	See to it that no one takes you captive through philosophy and empty deception, according to the tradition of men, according to the elementary principles of the world, rather than according to Christ. 9 For in Him all the fullness of Deity dwells in bodily form, 10 and in Him you have been made complete, and He is the head over all rule and authority; 11 and in Him you were also circumcised with a circumcision made without hands, in the removal of the body of the flesh by the circumcision of Christ; 12 having been buried with Him in baptism, in which you were also raised up with Him through faith in the working of God, who raised Him from the dead. 13 When you were dead in your transgressions and the uncircumcision of your flesh, He made you alive together with Him, having forgiven us all our transgressions, 14 having canceled out the certificate of debt consisting of decrees against us, which was hostile to us
@@ -28,7 +28,7 @@
 <Fragment
 	step={1}
 	layout={{ x: 101, y: 287, width: 772, height: 156 }}
-	font={{ wrap: true, font_size: 23.3, bold: true, color: '#000000' }}
+	font={{ wrap: true, font_size: 23.3, bold: true, color: 'var(--text-level-0)' }}
 	zIndex={2}
 	animate="fade"
 >
@@ -40,7 +40,7 @@
 	step={2}
 	layout={{ x: 380, y: 460, width: 239, height: 30 }}
 	fill="#0000FF"
-	font={{ bold: true, color: '#F4F4F4' }}
+	font={{ bold: true, color: 'var(--text-light)' }}
 	zIndex={3}
 	animate="fade"
 >
@@ -49,5 +49,5 @@
 
 <!-- Step 2: Arrow pointing to question (with) -->
 <Fragment step={2} animate="wipe">
-	<Arrow from={{ x: 500, y: 388 }} to={{ x: 500, y: 460 }} stroke={{ width: 8, color: '#0000FF' }} zIndex={4} />
+	<Arrow from={{ x: 500, y: 388 }} to={{ x: 500, y: 460 }} stroke={{ width: 8, color: 'var(--stroke-level-3)' }} zIndex={4} />
 </Fragment>

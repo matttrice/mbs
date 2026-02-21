@@ -27,7 +27,7 @@
 	 * ```svelte
 	 * <Fragment step={2} animate="draw">
 	 *   <Arc from={{ x: 100, y: 370 }} to={{ x: 100, y: 420 }} rx={20} ry={57} largeArc
-	 *     stroke={{ width: 8, color: '#0000FF' }} arrow />
+	 *     stroke={{ width: 8, color: 'var(--stroke-level-3)' }} arrow />
 	 * </Fragment>
 	 * ```
 	 */
@@ -217,7 +217,7 @@
 		draw.viewbox(0, 0, width, height);
 
 		const strokeWidth = stroke?.width ?? 5;
-		const strokeColor = stroke?.color ?? '#0000FF';
+		const strokeColor = stroke?.color ?? 'var(--stroke-level-3)';
 
 		let pathData: string;
 		let arrowAngleAtEnd: number;

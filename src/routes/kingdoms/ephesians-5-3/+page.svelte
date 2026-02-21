@@ -39,7 +39,7 @@
 	<Fragment
 		step={2}
 		layout={{ x: 77, y: 379, width: 792, height: 26 }}
-		font={{ wrap: true, align: 'center', font_size: 16.7, italic: true, color: '#0000FF' }}
+		font={{ wrap: true, align: 'center', font_size: 16.7, italic: true, color: 'var(--text-level-3)' }}
 		zIndex={3}
 		animate="fade"
 	>

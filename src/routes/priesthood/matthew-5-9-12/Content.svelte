@@ -25,7 +25,7 @@
 	step={1}
 	layout={{ x: 104, y: 277, width: 751, height: 90 }}
 	font={{ font_size: 24, bold: true, align: 'center', wrap: true }}
-	line={{ width: 4, color: '#000000' }}
+	line={{ width: 4, color: 'var(--stroke-level-0)' }}
 >
 	Expectation is great. Understanding is great. The Reward is great!
 </Fragment>

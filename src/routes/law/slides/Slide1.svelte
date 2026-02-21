@@ -278,7 +278,7 @@
 
 	<!-- Step 15 (with): Law outer rectangle (orange background) -->
 	<Fragment step={15} animate="fade">
-		<Rect x={32.8} y={3.4} width={878.2} height={399.3} fill="var(--bg-cmd-law)" stroke={{ width: 1, color: '#000000' }} zIndex={0} />
+		<Rect x={32.8} y={3.4} width={878.2} height={399.3} fill="var(--bg-cmd-law)" stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={0} />
 	</Fragment>
 
 	<!-- Step 15.1: Top horizontal line -->

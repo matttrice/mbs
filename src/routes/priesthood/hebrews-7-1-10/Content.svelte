@@ -26,7 +26,7 @@
 <Fragment
 	step={1}
 	layout={{ x: 257, y: 437, width: 478, height: 52 }}
-	font={{ font_size: 28.8, bold: true, color: '#0000FF' }}
+	font={{ font_size: 28.8, bold: true, color: 'var(--text-level-3)' }}
 >
 	Only spiritual things last forever.
 </Fragment>

@@ -40,7 +40,7 @@
 
 	<!-- Step 1: Horizontal line divider under headers -->
 	<Fragment step={1} animate="wipe">
-		<Line from={{ x: 81.1, y: 66.7 }} to={{ x: 879, y: 66.7 }} stroke={{ width: 4.2, color: '#000000' }} zIndex={5} />
+		<Line from={{ x: 81.1, y: 66.7 }} to={{ x: 879, y: 66.7 }} stroke={{ width: 4.2, color: 'var(--stroke-level-0)' }} zIndex={5} />
 	</Fragment>
 
 	<!-- Step 1.1: "Body" header -->
@@ -57,7 +57,7 @@
 	<Fragment
 		step={1.2}
 		layout={{ x: 413.9, y: 60.2, width: 130.3, height: 61.4 }}
-		font={{ font_size: 50, align: 'center', color: '#0000FF', bold: true }}
+		font={{ font_size: 50, align: 'center', color: 'var(--text-level-3)', bold: true }}
 		zIndex={7}
 	>
 		Spirit
@@ -67,7 +67,7 @@
 	<Fragment
 		step={1.3}
 		layout={{ x: 683.3, y: 60.2, width: 112.5, height: 61.4 }}
-		font={{ font_size: 50, align: 'center', color: '#0000FF', bold: true }}
+		font={{ font_size: 50, align: 'center', color: 'var(--text-level-3)', bold: true }}
 		zIndex={8}
 	>
 		Soul
@@ -86,7 +86,7 @@
 
 	<!-- Step 2 (after): Dashed divider line -->
 	<Fragment step={2} animate="draw">
-		<Line from={{ x: 85, y: 238.6 }} to={{ x: 877.2, y: 238.6 }} stroke={{ width: 7, color: '#000000', dash: '10,5' }} zIndex={40} />
+		<Line from={{ x: 85, y: 238.6 }} to={{ x: 877.2, y: 238.6 }} stroke={{ width: 7, color: 'var(--stroke-level-0)', dash: '10,5' }} zIndex={40} />
 	</Fragment>
 
 	<!-- Step 2 (with): Body column (gray) -->
@@ -133,7 +133,7 @@
 
 	<!-- Step 4.1: Arrow Earth→Earth -->
 	<Fragment step={4.1} animate="wipe-down">
-		<Arrow from={{ x: 217.3, y: 211.8 }} to={{ x: 217.3, y: 271.8 }} stroke={{ width: 8.3, color: '#000000' }} zIndex={41} />
+		<Arrow from={{ x: 217.3, y: 211.8 }} to={{ x: 217.3, y: 271.8 }} stroke={{ width: 8.3, color: 'var(--stroke-level-0)' }} zIndex={41} />
 	</Fragment>
 
 	<!-- Step 5: "Earth" (destination) -->
@@ -213,7 +213,7 @@
 		step={11.1}
 		drillTo="life/hebrews-9-27"
 		layout={{ x: 658.4, y: 311.3, width: 189.6, height: 40.3 }}
-		font={{ font_size: 26.7, align: 'center', color: '#000000', bold: true }}
+		font={{ font_size: 26.7, align: 'center', color: 'var(--text-level-0)', bold: true }}
 		zIndex={11}
 	>
 		Hebrews 9:27
@@ -223,7 +223,7 @@
 	<Fragment
 		step={12}
 		layout={{ x: 622.9, y: 253.1, width: 229.7, height: 61.4 }}
-		font={{ font_size: 45, align: 'center', color: '#0000FF', bold: true }}
+		font={{ font_size: 45, align: 'center', color: 'var(--text-level-3)', bold: true }}
 		zIndex={17}
 	>
 		Judgment
@@ -375,7 +375,7 @@
 		layout={{ x: 301.9, y: 355.8, width: 143.3, height: 173.3 }}
 		font={{ font_size: 36.7, bold: true, align: 'center', wrap: true }}
 		fill="var(--bg-ghost)"
-		line={{ width: 0.8, color: '#000000' }}
+		line={{ width: 0.8, color: 'var(--stroke-level-0)' }}
 		zIndex={36}
 	>
 		House<br/>Spirits<br/>Person<br/><span style="font-size: 18px; position: relative; top: -15px;">("the man")</span>
@@ -404,7 +404,7 @@
 	<!-- Step 30: Question about characteristics -->
 	<Fragment
 		step={30}
-		layout={{ x: 610.9, y: 0.8, width: 277.4, height: 60.8 }}
+		layout={{ x: 610.9, y: 10.8, width: 297.4, height: 50.8 }}
 		font={{ font_size: 15, wrap: true, bold: true }}
 		line={{ width: 0.8 }}
 		zIndex={28}

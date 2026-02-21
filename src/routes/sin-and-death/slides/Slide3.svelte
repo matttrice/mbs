@@ -17,17 +17,17 @@
 
 	<!-- Static Content -->
 	<!-- Gray left column -->
-	<Rect x={73.9} y={0} width={287.1} height={382.5} fill="#969696" stroke={{ width: 1, color: '#000000' }} zIndex={0} />
+	<Rect x={73.9} y={0} width={287.1} height={382.5} fill="var(--bg-level-1)" stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={0} />
 
 	<!-- Orange right column -->
-	<Rect x={606.1} y={0} width={280} height={402} fill="#FD8017" stroke={{ width: 1, color: '#000000' }} zIndex={2} />
+	<Rect x={606.1} y={0} width={280} height={402} fill="var(--bg-cmd-law)" stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={2} />
 
 	<!-- Title: "Original Sin" -->
 	<Fragment
 		layout={{ x: 334.1, y: 0, width: 298.9, height: 59.2 }}
-		fill="#F4F4F4"
-		line={{ color: '#000000' }}
-		font={{ align: 'center', font_size: 39.2, bold: true, color: '#000000' }}
+		fill="var(--bg-ghost)"
+		line={{ width: 1, color: 'var(--stroke-level-0)' }}
+		font={{ align: 'center', font_size: 39.2, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={40}
 	>
 		"Original Sin"
@@ -39,10 +39,8 @@
 		step={1}
 		drillTo="sin-and-death/psalms-58-3"
 		layout={{ x: 116.9, y: 16.9, width: 174.2, height: 31.8 }}
-		line={{ width: 1.3 }}
-		font={{ v_align: 'middle', font_size: 26.7 }}
+		font={{ bold: true, v_align: 'middle', font_size: 26.7 }}
 		zIndex={4}
-		animate="fade"
 	>
 		Psalms 58:3
 	</Fragment>
@@ -52,10 +50,8 @@
 		step={2}
 		drillTo="sin-and-death/genesis-8-21"
 		layout={{ x: 116.1, y: 46.9, width: 175, height: 30.1 }}
-		line={{ width: 1.3 }}
-		font={{ v_align: 'middle', font_size: 26.7 }}
+		font={{ bold: true, v_align: 'middle', font_size: 26.7 }}
 		zIndex={5}
-		animate="fade"
 	>
 		Genesis 8:21
 	</Fragment>
@@ -65,17 +61,15 @@
 		step={3}
 		drillTo="sin-and-death/psalms-51-5"
 		layout={{ x: 116.9, y: 76.9, width: 174.2, height: 33.4 }}
-		line={{ width: 1.3 }}
-		font={{ v_align: 'middle', font_size: 26.7 }}
+		font={{ bold: true, v_align: 'middle', font_size: 26.7 }}
 		zIndex={6}
-		animate="fade"
 	>
 		Psalms 51:5
 	</Fragment>
 
 	<!-- Step 3 with: Horizontal line under left column -->
 	<Fragment step={3} animate="draw">
-		<Line from={{ x: 116.1, y: 120 }} to={{ x: 298.1, y: 120 }} stroke={{ width: 1, color: '#000000' }} zIndex={41} />
+		<Line from={{ x: 116.1, y: 120 }} to={{ x: 298.1, y: 120 }} stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={41} />
 	</Fragment>
 
 	<!-- Step 4: Arrow pointing right with "Compare to" -->
@@ -87,8 +81,8 @@
 	<Fragment
 		step={4}
 		layout={{ x: 325.4, y: 65.2, width: 178.8, height: 35.9 }}
-		fill="#F4F4F4"
-		line={{ width: 1.3, color: '#000000' }}
+		fill="var(--bg-ghost)"
+		line={{ width: 1.3, color: 'var(--stroke-level-0)' }}
 		font={{ v_align: 'middle', font_size: 26.7, italic: true }}
 		zIndex={11}
 		animate="fade"
@@ -101,10 +95,8 @@
 		step={4.1}
 		drillTo="sin-and-death/deuteronomy-1-39"
 		layout={{ x: 676.1, y: 19.4, width: 153.9, height: 30.6 }}
-		line={{ width: 1.3 }}
-		font={{ v_align: 'middle', font_size: 26.7 }}
+		font={{ bold: true, v_align: 'middle', font_size: 26.7 }}
 		zIndex={7}
-		animate="fade"
 	>
 		Duet. 1:39
 	</Fragment>
@@ -114,10 +106,8 @@
 		step={5}
 		drillTo="sin-and-death/isaiah-7-14"
 		layout={{ x: 662, y: 49.4, width: 210, height: 32.7 }}
-		line={{ width: 1.3 }}
-		font={{ v_align: 'middle', font_size: 26.7 }}
+		font={{ bold: true, v_align: 'middle', font_size: 26.7 }}
 		zIndex={9}
-		animate="fade"
 	>
 		Isaiah 7:14-16
 	</Fragment>
@@ -127,17 +117,15 @@
 		step={6}
 		drillTo="sin-and-death/psalms-139-14"
 		layout={{ x: 620, y: 79.4, width: 258.9, height: 36 }}
-		line={{ width: 1.3 }}
-		font={{ v_align: 'middle', font_size: 26.7 }}
+		font={{ bold: true, v_align: 'middle', font_size: 26.7 }}
 		zIndex={8}
-		animate="fade"
 	>
 		Psalms 139: 14-15
 	</Fragment>
 
 	<!-- Step 6.1: Horizontal line under right column -->
 	<Fragment step={6.1} animate="draw">
-		<Line from={{ x: 655, y: 120.1 }} to={{ x: 837, y: 120.1 }} stroke={{ width: 1, color: '#000000' }} zIndex={42} />
+		<Line from={{ x: 655, y: 120.1 }} to={{ x: 837, y: 120.1 }} stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={42} />
 	</Fragment>
 
 	<!-- Step 7: "Contradiction?" -->
@@ -192,13 +180,20 @@
 	<!-- Step 11: Internal interpretation -->
 	<Fragment
 		step={11}
-		layout={{ x: 357.5, y: 161.4, width: 248.6, height: 78.2 }}
-		line={{ width: 1 }}
-		font={{ align: 'center', font_size: 26.7, italic: true }}
+		layout={{ x: 384.5, y: 158, width: 200, height: 60 }}
+		font={{ align: 'center', bold: true, font_size: 26, italic: true, wrap: true }}
 		zIndex={16}
-		animate="fade"
 	>
-		Internal interpretation<br/>Where are like phrases?
+		Internal interpretation
+	</Fragment>
+
+	<Fragment
+		step={11}
+		layout={{ x: 359.5, y: 212, width: 248.6, height: 25 }}
+		font={{ align: 'center', font_size: 15, italic: true }}
+		zIndex={16}
+	>
+		Where are like phrases?
 	</Fragment>
 
 	<!-- Step 12: Romans 7:14-25 -->
@@ -246,7 +241,6 @@
 		line={{ width: 1 }}
 		font={{ font_size: 26.7, italic: true }}
 		zIndex={20}
-		animate="fade"
 	>
 		"hidden person"
 	</Fragment>
@@ -254,11 +248,10 @@
 	<!-- Step 16: "Why do we die?" -->
 	<Fragment
 		step={16}
-		layout={{ x: 375.1, y: 230.9, width: 230.9, height: 42 }}
+		layout={{ x: 375.1, y: 235.9, width: 230.9, height: 35 }}
 		line={{ width: 1 }}
-		font={{ font_size: 27.5, italic: true }}
+		font={{ bold: true, font_size: 27.5, italic: true }}
 		zIndex={21}
-		animate="fade"
 	>
 		Why do we die?
 	</Fragment>
@@ -293,7 +286,7 @@
 		step={19}
 		drillTo="sin-and-death/flesh"
 		layout={{ x: 101.2, y: 273.3, width: 154.1, height: 60 }}
-		line={{ width: 3, color: '#000000' }}
+		line={{ width: 3, color: 'var(--stroke-level-0)' }}
 		font={{ v_align: 'middle', align: 'center', font_size: 26.7 }}
 		zIndex={29}
 		animate="fade"
@@ -416,9 +409,8 @@
 	<Fragment
 		step={27}
 		layout={{ x: 57.5, y: 357.9, width: 462, height: 67.7 }}
-		fill="#33CCFF"
-		line={{ width: 1.3, color: '#33CCFF' }}
-		font={{ align: 'center', font_size: 26.7, color: '#0000FF' }}
+		fill="var(--bg-level-2)"
+		font={{ align: 'center', font_size: 26.7, color: 'var(--text-level-3)' }}
 		zIndex={33}
 		animate="fade"
 	>
@@ -442,9 +434,9 @@
 	<Fragment
 		step={28}
 		layout={{ x: 498, y: 397.3, width: 388.1, height: 28.3 }}
-		fill="#33CCFF"
-		line={{ width: 1.3, color: '#33CCFF' }}
-		font={{ v_align: 'middle', align: 'center', font_size: 23.3, color: '#0000FF' }}
+		fill="var(--bg-level-2)"
+		line={{ width: 1.3, color: 'var(--bg-level-2)' }}
+		font={{ v_align: 'middle', align: 'center', font_size: 23.3, color: 'var(--text-level-3)' }}
 		zIndex={43}
 		animate="fade"
 	>

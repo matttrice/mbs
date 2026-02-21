@@ -9,7 +9,7 @@
 	<!-- Static: Title -->
 	<Fragment
 		layout={{ x: 106, y: 26, width: 369, height: 51 }}
-		font={{ font_size: 45, bold: true, color: '#000000', align: 'left' }}
+		font={{ font_size: 45, bold: true, color: 'var(--text-level-0)', align: 'left' }}
 	>
 		Isaiah 53:1-2
 	</Fragment>

@@ -44,7 +44,7 @@
 	<!-- Static Eternity left -->
 	<Fragment
 		layout={{ x: 62.4, y: 302.4, width: 142.1, height: 48.3 }}
-		font={{ font_size: 33.3, bold: true, color: '#0000FF' }}
+		font={{ font_size: 33.3, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={5}
 	>
 		Eternity
@@ -52,7 +52,7 @@
 
 	<!-- Static horizontal blue line (DASHED) -->
 	<Fragment>
-		<Line from={{ x: 0, y: 260.5 }} to={{ x: 960, y: 260.5 }} stroke={{ width: 4.6, color: '#0000FF', dash: '10,5' }} zIndex={17} />
+		<Line from={{ x: 0, y: 260.5 }} to={{ x: 960, y: 260.5 }} stroke={{ width: 4.6, color: 'var(--text-level-3)', dash: '10,5' }} zIndex={17} />
 	</Fragment>
 
 	<!-- ===== ANIMATION SEQUENCE ===== -->
@@ -82,7 +82,7 @@
 	<Fragment
 		step={3}
 		layout={{ x: 94.3, y: 136.1, width: 70, height: 29.2 }}
-		font={{ font_size: 17.5, bold: true, color: '#0000FF' }}
+		font={{ font_size: 17.5, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={6}
 	>
 		Father
@@ -91,7 +91,7 @@
 	<Fragment
 		step={3}
 		layout={{ x: 104.6, y: 152.5, width: 49.3, height: 29.2 }}
-		font={{ font_size: 17.5, bold: true, color: '#0000FF' }}
+		font={{ font_size: 17.5, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={7}
 	>
 		Son
@@ -101,7 +101,7 @@
 	<Fragment
 		step={4}
 		layout={{ x: 77.1, y: 167.4, width: 104.3, height: 29.2 }}
-		font={{ font_size: 17.5, bold: true, color: '#0000FF' }}
+		font={{ font_size: 17.5, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={8}
 	>
 		Holy Spirit
@@ -111,7 +111,7 @@
 	<Fragment
 		step={5}
 		layout={{ x: 91.8, y: 186.6, width: 79.8, height: 50.4 }}
-		font={{ font_size: 17.5, bold: true, color: '#0000FF' }}
+		font={{ font_size: 17.5, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={9}
 	>
 		Angels<br/>Gospel
@@ -181,7 +181,7 @@
 	<Fragment
 		step={9}
 		layout={{ x: 738.9, y: 302.4, width: 142.2, height: 48.3 }}
-		font={{ font_size: 33.3, bold: true, color: '#0000FF' }}
+		font={{ font_size: 33.3, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={39}
 	>
 		Eternity
@@ -232,7 +232,7 @@
 	<Fragment
 		step={14}
 		layout={{ x: 346, y: 190, width: 128.6, height: 36.1, rotation: -55 }}
-		font={{ font_size: 23.3, bold: true, color: '#0000FF', align: 'center' }}
+		font={{ font_size: 23.3, bold: true, color: 'var(--text-level-3)', align: 'center' }}
 		zIndex={49}
 	>
 		Transition
@@ -353,7 +353,7 @@
 	<Fragment
 		step={17}
 		layout={{ x: 497.7, y: 124.7, width: 203, height: 45.3 }}
-		font={{ font_size: 30.8, bold: true, color: '#0000FF', align: 'center' }}
+		font={{ font_size: 30.8, bold: true, color: 'var(--text-level-3)', align: 'center' }}
 		zIndex={23}
 	>
 		SPIRITUAL
@@ -373,7 +373,7 @@
 	<Fragment
 		step={18}
 		layout={{ x: 216.7, y: 150.3, width: 130.8, height: 29.2 }}
-		font={{ font_size: 26.7, bold: true, italic: true, color: '#0000FF', v_align: 'middle', align: 'center' }}
+		font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--text-level-3)', v_align: 'middle', align: 'center' }}
 		zIndex={46}
 	>
 		Glory #1
@@ -383,7 +383,7 @@
 	<Fragment
 		step={19}
 		layout={{ x: 534, y: 65.3, width: 130.6, height: 29.2 }}
-		font={{ font_size: 26.7, bold: true, italic: true, color: '#0000FF', v_align: 'middle', align: 'center' }}
+		font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--text-level-3)', v_align: 'middle', align: 'center' }}
 		zIndex={25}
 	>
 		Glory #2
@@ -423,7 +423,7 @@
 	<Fragment
 		step={22.1}
 		layout={{ x: 738.3, y: 86.1, width: 128.9, height: 27.2 }}
-		font={{ font_size: 26.7, bold: true, color: '#0000FF', v_align: 'middle', align: 'center' }}
+		font={{ font_size: 26.7, bold: true, color: 'var(--text-level-3)', v_align: 'middle', align: 'center' }}
 		zIndex={21}
 		animate="fade"
 	>
@@ -434,7 +434,7 @@
 	<Fragment
 		step={23}
 		layout={{ x: 737.4, y: 16.1, width: 130.6, height: 29.2 }}
-		font={{ font_size: 26.7, bold: true, italic: true, color: '#0000FF', v_align: 'middle', align: 'center' }}
+		font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--text-level-3)', v_align: 'middle', align: 'center' }}
 		zIndex={18}
 	>
 		Glory #3
@@ -444,7 +444,7 @@
 	<Fragment
 		step={24}
 		layout={{ x: 713.8, y: 37.6, width: 177.8, height: 55.4 }}
-		font={{ font_size: 39.2, bold: true, color: '#0000FF', align: 'center' }}
+		font={{ font_size: 39.2, bold: true, color: 'var(--text-level-3)', align: 'center' }}
 		zIndex={45}
 	>
 		HEAVEN

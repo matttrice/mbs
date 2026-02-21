@@ -9,7 +9,7 @@
 	<!-- Static: Jude 5-6 scripture -->
 	<Fragment
 		layout={{ x: 41, y: 13, width: 868, height: 234 }}
-		font={{ wrap: true, font_name: '+mn-lt', font_size: 36.7, bold: true, color: '#000000' }}
+		font={{ wrap: true, font_name: '+mn-lt', font_size: 36.7, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={4}
 	>
 		Jude 5 Though you already know all this, I want to remind you that the Lord at one time delivered his people out of Egypt, but later destroyed those who did not believe. 6 And the angels who did not keep their positions of authority but abandoned their proper dwelling—these he has kept in darkness, bound with everlasting chains for judgment on the great Day. (NASB)

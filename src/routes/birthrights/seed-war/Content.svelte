@@ -77,7 +77,7 @@
 <Fragment
 	step={7}
 	layout={{ x: 129, y: 402, width: 418, height: 67 }}
-	font={{ font_size: 30.8, bold: true, color: '#0000FF', v_align: 'middle' }}
+	font={{ font_size: 30.8, bold: true, color: 'var(--text-level-3)', v_align: 'middle' }}
 	fill="var(--bg-light)"
 >
 	he will crush your head, and<br>you will strike his heel."
@@ -87,7 +87,7 @@
 <Fragment
 	step={8}
 	layout={{ x: 548, y: 308, width: 260, height: 50 }}
-	font={{ font_size: 26.7, bold: true, color: '#0000FF', align: 'center', v_align: 'middle' }}
+	font={{ font_size: 26.7, bold: true, color: 'var(--text-level-3)', align: 'center', v_align: 'middle' }}
 >
 	Who is the Woman?
 </Fragment>
@@ -156,7 +156,7 @@
 <Fragment
 	step={14.1}
 	layout={{ x: 126, y: 481, width: 98, height: 50 }}
-	font={{ font_size: 35, bold: true, color: '#0000FF' }}
+	font={{ font_size: 35, bold: true, color: 'var(--text-level-3)' }}
 >
 	Fatal
 </Fragment>

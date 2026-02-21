@@ -27,7 +27,7 @@
 <Fragment
 	step={1}
 	layout={{ x: 100, y: 203, width: 372, height: 38 }}
-	fill="#F4F4F4"
+	fill="var(--bg-ghost)"
 	font={{ font_size: 26.7, bold: true, align: 'center', wrap: true }}
 >
 	Is Baptism a "work"?
@@ -81,26 +81,26 @@
 <Fragment
 	step={6}
 	layout={{ x: 337, y: 258, width: 264, height: 34 }}
-	fill="#F4F4F4"
-	font={{ font_size: 23.3, bold: true, color: '#0000FF', v_align: 'middle', align: 'center' }}
-	line={{ width: 1, color: '#000000' }}
+	fill="var(--bg-ghost)"
+	font={{ font_size: 23.3, bold: true, color: 'var(--text-level-3)', v_align: 'middle', align: 'center' }}
+	line={{ width: 1, color: 'var(--stroke-level-0)' }}
 >
 	baptism now saves you
 </Fragment>
 
 <!-- Step 6: Multiple arrows pointing to key text (timing: with) -->
 <Fragment step={6} animate="wipe-down">
-	<Arrow from={{ x: 414, y: 108 }} to={{ x: 414, y: 267 }} stroke={{ width: 5, color: '#0000FF' }} zIndex={3} />
+	<Arrow from={{ x: 414, y: 108 }} to={{ x: 414, y: 267 }} stroke={{ width: 5, color: 'var(--stroke-level-3)' }} zIndex={3} />
 </Fragment>
 
 <Fragment step={6} animate="wipe-down">
-	<Arrow from={{ x: 568, y: 284 }} to={{ x: 568, y: 436 }} stroke={{ width: 5, color: '#0000FF' }} zIndex={4} />
+	<Arrow from={{ x: 568, y: 284 }} to={{ x: 568, y: 436 }} stroke={{ width: 5, color: 'var(--stroke-level-3)' }} zIndex={4} />
 </Fragment>
 
 <Fragment step={6} animate="wipe-down">
-	<Arrow from={{ x: 499, y: 287 }} to={{ x: 499, y: 469 }} stroke={{ width: 5, color: '#0000FF' }} zIndex={5} />
+	<Arrow from={{ x: 499, y: 287 }} to={{ x: 499, y: 469 }} stroke={{ width: 5, color: 'var(--stroke-level-3)' }} zIndex={5} />
 </Fragment>
 
 <Fragment step={6} animate="wipe-down">
-	<Arrow from={{ x: 462, y: 79 }} to={{ x: 462, y: 270 }} stroke={{ width: 5, color: '#0000FF' }} zIndex={6} />
+	<Arrow from={{ x: 462, y: 79 }} to={{ x: 462, y: 270 }} stroke={{ width: 5, color: 'var(--stroke-level-3)' }} zIndex={6} />
 </Fragment>

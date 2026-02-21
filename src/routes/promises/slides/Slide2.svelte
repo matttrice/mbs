@@ -258,7 +258,7 @@
 		layout={{ x: 85.4, y: 372, width: 362.9, height: 67 }}
 		font={{ font_size: 20, wrap: true, align: 'center', v_align: 'middle' }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={15}
 	>
 		<strong>Physical</strong> Jews Following Mosaical Law <strong>does not</strong> give salvation.
@@ -270,7 +270,7 @@
 		layout={{ x: 503.3, y: 446.3, width: 362.9, height: 64.8 }}
 		font={{ font_size: 24, bold: true, wrap: true, align: 'center' }}
 		fill="var(--bg-ghost)"
-		line={{ color: '#000000', width: 1 }}
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={25}
 	>
 		<span style="color: var(--bg-level-3);">Spiritual</span> Jews/Following Christ's Law <strong>gives</strong> salvation.

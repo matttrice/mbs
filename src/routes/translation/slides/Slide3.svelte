@@ -138,7 +138,7 @@
 	<Fragment
 		step={4}
 		layout={{ x: 131, y: 312, width: 252, height: 66 }}
-		font={{ v_align: 'middle', font_name: 'Arial Black', font_size: 59.2, bold: true, color: '#F4F4F4' }}
+		font={{ v_align: 'middle', font_name: 'Arial Black', font_size: 59.2, bold: true, color: 'var(--text-light)' }}
 		zIndex={34}
 		animate="fade"
 	>
@@ -163,7 +163,7 @@
 
 	<!-- Step 6: Green oval (Cleansed Earth) -->
 	<Fragment step={6} animate="fade">
-		<Ellipse cx={564} cy={368} rx={184} ry={175} fill="#05D000" stroke={{ width: 3, color: '#000000' }} zIndex={0} />
+		<Ellipse cx={564} cy={368} rx={184} ry={175} fill="#05D000" stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={0} />
 	</Fragment>
 
 	<!-- Step 6: Cleansed Earth text (with) -->
@@ -190,7 +190,7 @@
 
 	<!-- Step 8: Black down arrow -->
 	<Fragment step={8} animate="wipe">
-		<Rect x={526} y={176} width={64} height={48} fill="#000000" zIndex={32} />
+		<Rect x={526} y={176} width={64} height={48} fill="var(--stroke-level-0)" zIndex={32} />
 	</Fragment>
 
 	<!-- Step 8: Nephilim in rectangle (with) -->
@@ -242,8 +242,8 @@
 	<Fragment
 		step={11}
 		layout={{ x: 491, y: 305, width: 161, height: 69 }}
-		fill="#000000"
-		font={{ v_align: 'middle', align: 'center', font_size: 48.3, bold: true, color: '#F4F4F4' }}
+		fill="var(--bg-level-0)"
+		font={{ v_align: 'middle', align: 'center', font_size: 48.3, bold: true, color: 'var(--text-light)' }}
 		zIndex={12}
 		animate="fade"
 	>
@@ -289,7 +289,7 @@
 		step={14}
 		drillTo="translation/post-flood"
 		layout={{ x: 60, y: 500, width: 840, height: 41 }}
-		fill="#FFFFFF"
+		fill="var(--bg-ghost)"
 		font={{ align: 'center' }}
 		zIndex={14}
 		animate="fade"

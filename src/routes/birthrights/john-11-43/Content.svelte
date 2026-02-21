@@ -26,7 +26,7 @@
 	step={2}
 	layout={{ x: 94, y: 373, width: 512, height: 130 }}
 	font={{ font_size: 18.7, bold: true, align: 'center', wrap: true }}
-	line={{ color: '#0000FF' }}
+	line={{ color: 'var(--text-level-3)' }}
 >
 	While it's true that in resurrection some will not experience death (1 Thes 4:17), Lazarus was not resurrected – he was called from physical death back to physical life. Why? – Because it was not time for him to be resurrected.
 </Fragment>

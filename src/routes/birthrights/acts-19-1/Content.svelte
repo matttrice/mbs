@@ -26,7 +26,7 @@
 	step={2}
 	layout={{ x: 91, y: 369, width: 469, height: 143 }}
 	font={{ font_size: 18.7, bold: true, align: 'center', wrap: true }}
-	line={{ color: '#0000FF' }}
+	line={{ color: 'var(--stroke-level-3)' }}
 >
 	Several things happened here – 1. The apostles heard the gospel; 2. They were baptized; 3. Hands were laid on them and they received the Spirit; 4. It was demonstrated by tongues. It would be inaccurate to suggest that they received the Spirit before baptism.
 </Fragment>

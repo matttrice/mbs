@@ -27,13 +27,20 @@ All presentations use a **960×540 pixel fixed canvas** (16:9 aspect ratio). The
 
 Use CSS custom properties for semantic colors instead of hardcoded hex values. This ensures consistency across all presentations and enables future theming.
 
-| Variable | Value | Use For |
-|----------|-------|---------|
-| `var(--bg-level-1)` | `#808080` | Physical/earthly concepts, gray column backgrounds |
-| `var(--bg-level-2)` | `#00aaff` | Spiritual concepts, blue column backgrounds |
-| `var(--bg-level-3)` | `#0000cc` | Eternal/heavenly concepts, blue text |
-| `var(--color-highlight)` | `#ffd700` | Gold accent, emphasis |
-| `var(--bg-light)` | `#e8e8e8` | Light gray backgrounds |
+| Variable | Use For |
+|----------|---------|
+| `level-0` | Primary text/stroke, black |
+| `level-1` | Physical/earthly concepts, gray |
+| `level-2` | Spiritual concepts, light blue |
+| `level-3` | Eternal/heavenly concepts, dark blue |
+
+**When converting colors from PowerPoint JSON:**
+- `"#000000"` blacks: in font → `var(--text-level-0)` in fill → `var(--bg-level-0)` in stroke/line → `var(--stroke-level-0)`
+- `"#B3B3B3"` or `"#999999"` or similar grays: in font → `var(--text-level-1)` in fill → `var(--bg-level-1)` in stroke/line → `var(--stroke-level-1)`
+- `"#33CCFF"` or `"#00AAFF"` or similar blues: in font → `var(--text-level-2)` in fill → `var(--bg-level-2)` in stroke/line → `var(--stroke-level-2)`
+- `"#0000FF"` or `"#0000CC"` or similar dark blues: in font → `var(--text-level-3)`  in fill → `var(--bg-level-3)` in stroke/line → `var(--stroke-level-3)`
+- `"#FD8017"` or similar orange: in font → `var(--text-cmd-law)` in fill → `var(--bg-cmd-law)` in stroke/line → `var(--stroke-cmd-law)`
+
 
 **Example - Column backgrounds:**
 ```svelte
@@ -47,11 +54,6 @@ Use CSS custom properties for semantic colors instead of hardcoded hex values. T
   <Rect x={610} y={48} width={266} height={464} fill="var(--bg-level-2)" />
 </Fragment>
 ```
-
-**When converting from PowerPoint JSON:**
-- `fill: "#B3B3B3"` or similar grays → `fill="var(--bg-level-1)"`
-- `fill: "#33CCFF"` or `#00AAFF` → `fill="var(--bg-level-2)"`
-- `color: "#0000FF"` or `#0000CC"` in font → `color: '#0000FF'` (keep for text, or use `var(--bg-level-3)`)
 
 ## Fragment Component
 
@@ -95,7 +97,7 @@ The `Fragment` component handles hide/show for all slide content.
 <Fragment
   layout={{ x: 100, y: 50, width: 200, height: 40 }}
   font={{ font_size: 24, bold: true }}
-  fill="#E8E8E8"
+  fill="--var(--bg-light)"
 >
   Title Text
 </Fragment>
@@ -106,7 +108,7 @@ The `Fragment` component handles hide/show for all slide content.
 <Fragment
   step={1}
   layout={{ x: 100, y: 100, width: 180, height: 30 }}
-  font={{ font_size: 18, color: '#0000CC' }}
+  font={{ font_size: 18, color: 'var(--text-level-3)' }}
 >
   Genesis 12:1-3
 </Fragment>
@@ -118,27 +120,9 @@ The `Fragment` component handles hide/show for all slide content.
   step={2}
   drillTo="promises/genesis-12-1"
   layout={{ x: 100, y: 140, width: 180, height: 30 }}
-  font={{ font_size: 18, color: '#0000CC' }}
+  font={{ font_size: 18, color: 'var(--text-level-3)' }}
 >
   Click to see scripture
-</Fragment>
-```
-
-**Multi-line text with alignment (e.g., book lists):**
-```svelte
-<Fragment
-  step={3}
-  layout={{ x: 125, y: 100, width: 82, height: 180 }}
-  font={{ font_size: 11, align: 'left', v_align: 'top', wrap: true }}
->
-  Genesis<br/>Exodus<br/>Leviticus<br/>Numbers<br/>Deuteronomy
-</Fragment>
-```
-
-**SVG shape components:**
-```svelte
-<Fragment step={5} animate="draw">
-  		<Arc from={{ x: 125, y: 408 }} to={{ x: 125, y: 362 }} curve={-80} rx={12} ry={37} largeArc stroke={{ width: 3, color: 'var(--bg-level-3)' }} arrow zIndex={6} />
 </Fragment>
 ```
 
@@ -267,10 +251,10 @@ Arc, Arrow, Line, and Rect are self-positioning components that use **canvas coo
 
 ### Arrow Component
 
-Arrow uses the [perfect-arrows](https://github.com/steveruizok/perfect-arrows) library for consistent rendering. 
+Arrow uses the [perfect-arrows](https://github.com/steveruizok/perfect-arrows) library. 
 Arrow Supports two modes:
 Use Arrow for heavy, main diagram features as it produces a bolder shape and arrow head. 
-Arc can also be used for curved arrows and is better suited for connections between other content.
+Use Arc for curved arrows; better suited for connections between content.
 
 1. **Point-to-point**: Use `from`/`to` with `{x, y}` coordinates
 2. **Box-to-box**: Use `fromBox`/`toBox` with `{x, y, width, height}` for automatic curved arrows between rectangles
@@ -289,7 +273,7 @@ Arc can also be used for curved arrows and is better suited for connections betw
 
 ### Line Component
 
-Line is the same as Arrow but without an arrowhead.
+Line can have circular end caps.
 
 | Prop | Type | Description |
 |------|------|-------------|
@@ -297,6 +281,8 @@ Line is the same as Arrow but without an arrowhead.
 | `to` | `{ x, y }` | End point in canvas coordinates |
 | `stroke` | `StrokeStyle` | Stroke styling (width, color, dash) |
 | `zIndex` | `number` | Stacking order (default: 1) |
+| `startMarker` | `CircleMarker` | Show circular end cap at start point (default: false) |
+| `endMarker` | `CircleMarker` | Show circular end cap at end point (default: false) |
 
 ### Rect Component
 
@@ -321,92 +307,6 @@ interface StrokeStyle {
   color?: string;     // Stroke color (default: '#000000')
   dash?: string;      // Dash pattern (e.g., '10,5')
 }
-```
-
-### Arrow and Line Usage
-
-**Horizontal arrow (pointing right):**
-```svelte
-<Fragment step={14} animate="wipe">
-  <Arrow from={{ x: 307, y: 197 }} to={{ x: 666, y: 197 }} stroke={{ width: 10 }} zIndex={34} />
-</Fragment>
-```
-
-**Curved arrow (point-to-point with bow):**
-```svelte
-<Fragment step={15} animate="draw">
-  <Arrow from={{ x: 100, y: 200 }} to={{ x: 300, y: 200 }} bow={0.3} stroke={{ width: 5 }} />
-</Fragment>
-```
-
-**Curved arrow between boxes (for timeline self-references):**
-```svelte
-<script>
-  // Define boxes for timeline elements
-  const genesisBox = { x: 74, y: 362, width: 99, height: 29 };
-  const revelationBox = { x: 757, y: 356, width: 123, height: 32 };
-</script>
-
-<!-- Revelation → Genesis curved arrow (arcs upward) -->
-<Fragment step={27} animate="draw">
-  <Arrow fromBox={revelationBox} toBox={genesisBox} bow={0.5} flip={true} stroke={{ width: 5, color: '#0000FF' }} />
-</Fragment>
-
-<!-- Genesis → Revelation curved arrow (arcs downward) -->
-<Fragment step={27.1} animate="draw">
-  <Arrow fromBox={genesisBox} toBox={revelationBox} bow={0.5} stroke={{ width: 5, color: '#0000FF' }} headSize={0} />
-</Fragment>
-```
-
-**Vertical arrow (pointing down):**
-```svelte
-<Fragment step={15} animate="wipe">
-  <Arrow from={{ x: 265, y: 244 }} to={{ x: 265, y: 292 }} stroke={{ width: 24 }} headSize={1} zIndex={23} />
-</Fragment>
-```
-
-**Horizontal line (no arrowhead):**
-```svelte
-<Fragment step={17} animate="draw">
-  <Line from={{ x: 547, y: 285 }} to={{ x: 453, y: 285 }} stroke={{ width: 3 }} zIndex={8} />
-</Fragment>
-```
-
-**Diagonal arrow (angled connector):**
-```svelte
-<Fragment step={22} animate="wipe">
-  <Arrow from={{ x: 170, y: 252 }} to={{ x: 235, y: 228 }} stroke={{ width: 7 }} headSize={2} zIndex={32} />
-</Fragment>
-```
-
-**Dashed line:**
-```svelte
-<Fragment step={5} animate="draw">
-  <Line from={{ x: 100, y: 100 }} to={{ x: 300, y: 100 }} stroke={{ width: 2, dash: '10,5' }} zIndex={5} />
-</Fragment>
-```
-
-### Rect Usage
-
-**Background column (full height, wipes down):**
-```svelte
-<Fragment step={3} animate="wipe-down">
-  <Rect x={192.7} y={0} width={288} height={540} fill="var(--bg-level-2)" zIndex={2} />
-</Fragment>
-```
-
-**Box with border:**
-```svelte
-<Fragment step={22} animate="fade">
-  <Rect x={206} y={178} width={275} height={118.9} fill="var(--bg-light)" stroke={{ color: '#000000', width: 1 }} zIndex={6} />
-</Fragment>
-```
-
-**White background box:**
-```svelte
-<Fragment step={25} animate="fade">
-  <Rect x={481.1} y={295.4} width={258.6} height={127.7} fill="var(--bg-ghost)" zIndex={1} />
-</Fragment>
 ```
 
 ### Arc Component
@@ -435,27 +335,6 @@ Arc is a self-positioning curved line/arrow with two rendering modes:
 - `shift` moves the control point **parallel** to the from→to line (where along the line the peak sits)
 - With `shift={0}` (default), the arc peak is centered between from and to
 - Positive `shift` moves the peak toward the `to` endpoint, negative toward `from`
-
-**Arc curving upward:**
-```svelte
-<Fragment step={48} animate="draw">
-  <Arc from={{ x: 364, y: 382 }} to={{ x: 242, y: 382 }} curve={-34} stroke={{ width: 5, color: '#0000FF' }} arrow />
-</Fragment>
-```
-
-**Arc with shifted peak (asymmetric arc):**
-```svelte
-<Fragment step={49} animate="draw">
-  <Arc from={{ x: 100, y: 300 }} to={{ x: 500, y: 300 }} curve={-80} shift={50} stroke={{ width: 4 }} arrow />
-</Fragment>
-```
-
-**Arc curving downward (looping below timeline):**
-```svelte
-<Fragment step={49} animate="draw">
-  <Arc from={{ x: 400, y: 300 }} to={{ x: 600, y: 300 }} curve={50} stroke={{ width: 4 }} arrow />
-</Fragment>
-```
 
 **Near-complete circle (SVG elliptical arc mode):**
 Use `largeArc` when `from` and `to` are close together and you need a loop/oval shape (e.g., PowerPoint `arc (25)` autoShapes). Provide `rx`/`ry` for elliptical shapes, or let them auto-compute from `curve`.
@@ -586,32 +465,15 @@ For single-slide custom shows (linked slides that stand alone), use `<Slide>` wi
 ### Multi-Slide Custom Shows (CustomShowProvider)
 
 **Important Content.svelte pattern** A PowerPoint slide may have a hyperlink to a custom show. When a custom show contains multiple slides (e.g., json `custom_shows[id].slide_numbers` has >1 entries) use `CustomShowProvider` to import multiple Content.svelte files each represnting a slide or topic in the custom_show. You may also import other routes, but those would need to be transitioned to Content.svelte and +page.svelte. Thus it is flexible to aggregate mulitple routes and or its own special content into a single navigation sequence.
-When `custom_shows[id].slide_numbers` has 1 **single slide** in the array do NOT use the CustomShowProvider/Content.svelte pattern, instead create the route with a single +page.svelte with the <Slide> and Fragments within. In both cases, other slides can "drillTo" route and return to the origin slide when complete. Scan the repository for examples of both patterns and use the best fit for the custom show being created.
 
+**Single-slide custom shows**
+When `custom_shows[id].slide_numbers` has 1 **single slide** in the array do NOT use the CustomShowProvider/Content.svelte pattern, instead only a route/+page.svelte is needed with a <Slide>. Create the route with a single +page.svelte with the <Slide> and Fragments within and drillTo it. In both cases, other slides can "drillTo" route and return to the origin slide when complete. Scan the repository for examples of both patterns and use the best fit for the custom show being created. - **Flat structure**: Scripture routes live at the presentation level (e.g., `biblical-time/matthew-5`).
 
 **Key concepts:**
 - **Content.svelte components**: Slide content without `<Slide>` wrapper—just Fragment elements, named `Content<number>.svelte` used to differentiate multiple slides in a custom show and aggregated in CustomShowProvider in the `+page.svelte`.
 - **CustomShowProvider**: Wraps each content component in `<Slide={[Content1,Content2]}>`, manages fragment offsets
 - **Auto-return**: When the last fragment of the last slide is reached, navigation returns to origin
-- **Flat structure**: Scripture routes live at the presentation level (e.g., `translation/2-kings-2-11/`).
 
-**Content component (`Content.svelte`):**
-```svelte
-<script lang="ts">
-  import Fragment from '$lib/components/Fragment.svelte';
-</script>
-
-<!-- Content without Slide wrapper - steps are 1-indexed within this content -->
-<div class="slide-bg scripture"></div>
-
-<Fragment layout={{ x: 50, y: 20, width: 200, height: 40 }} font={{ font_size: 24 }}>
-  Scripture Title
-</Fragment>
-
-<Fragment step={1} layout={{ x: 50, y: 80, width: 200, height: 40 }}>
-  Verse text...
-</Fragment>
-```
 
 **How it works:**
 1. CustomShowProvider renders each content component wrapped in `<Slide slideIndex={n}>`
@@ -629,37 +491,20 @@ When `custom_shows[id].slide_numbers` has 1 **single slide** in the array do NOT
 5. Aggregate all routes and Content to the custom show route, +page.svelte CustomShowProvider.
 The custom show can now be linked to from other slides using `drillTo="presentation/custom-show-route"`.
 
-
-### Alternative: DrillTo
-
-For simpler cases of a single slide custom_show, only a route/+page.svelte is needed with a <Slide>. This allows a fragment to navigate directly to this route and return to the origin slide when complete.
-
 ### DrillTo Chaining
 DrillTo can mimick multi-slide show behavior by chaining each slide's last fragment with a `drillTo` prop pointing to the next slide but CustomShowProvider is still the preferred approach for multi-slide custom shows.
 
-For multi-slide drills, when the deepest drill completes, navigation returns **directly to the origin** (the original presentation slide), not back through each intermediate drill, unless `returnHere={true}` is set on a fragment in the drill chain.
-
 
 ### returnHere Prop
+For multi-slide drills, when the deepest drill completes, navigation returns **directly to the origin** (the original presentation slide), not back through each intermediate drill, unless `returnHere={true}` is set on a fragment in the drill chain.
+**Use case**: When a drill has multiple branches and you want to return to the parent drill to continue, not all the way to the origin.
 
 The `returnHere` prop changes return behavior for specific drill chains:
-
 | Prop | Return Behavior |
 |------|----------------|
 | `returnHere={false}` (default) | Return to origin (pop entire stack) |
 | `returnHere={true}` | Return to parent drill (pop one level) |
 
-**Use case**: When a drill has multiple branches and you want to return to the parent drill to continue, not all the way to the origin.
-
-```svelte
-<!-- In parent drill: return HERE after nested drill completes -->
-<Fragment step={2} drillTo="demo/nested-scripture" returnHere>
-  Scripture reference (returns here, not to origin)
-</Fragment>
-
-<!-- Continue in parent drill after nested returns -->
-<Fragment step={3}>More content after nested drill</Fragment>
-```
 
 ### Pending Drill Approach
 
@@ -671,12 +516,14 @@ Drills use a "pending drill" approach to ensure content is visible before drilli
 This ensures users always see the drillable content before the navigation happens.
 
 ## Commands
-
 ```bash
 npm run dev          # Dev server at localhost:5173
+npm run check        # TypeScript type checking
+```
+## Testing
+```bash
 npm run test:unit    # Run 154 navigation and component tests
 npm run test:e2e     # Run 19 end-to-end playwright tests
-npm run check        # TypeScript type checking
 ```
 
 ## Creating New Content
@@ -956,16 +803,7 @@ JSON entries with `shape_type: "picture"` represent embedded images. Images are 
   display: block;
 }
 ```
-
 **Drill route naming**: Convert `custom_shows[id].name` to lowercase route folder (e.g., `Gen12.1` → `genesis-12-1/`).
-
-**Multi-slide custom shows**: Use `CustomShowProvider` to aggregate multiple slides. Each scripture gets its own `Content.svelte` and `+page.svelte` at the presentation level for standalone access. The custom show route imports all Content components.
-
-## Testing Conventions
-- Tests are content-agnostic (test mechanics, not specific presentations)
-- Mock localStorage and `$app/navigation` in tests
-- Test file locations: `src/tests/*.test.ts` (unit), `tests/*.spec.ts` (E2E)
-- Both drill patterns are tested: drillTo chaining (`drill-navigation.spec.ts`) and CustomShowProvider (`custom-show-provider.spec.ts`)
 
 ## State Persistence
 Navigation state persists to `localStorage` key `mbs-nav-{route-name}`. The Reset button in the menu clears this.

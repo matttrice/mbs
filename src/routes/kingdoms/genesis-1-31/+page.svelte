@@ -28,7 +28,7 @@
 	<Fragment
 		step={1}
 		layout={{ x: 91, y: 102, width: 809, height: 82 }}
-		font={{ wrap: true, font_size: 23.3, bold: true, color: '#000000' }}
+		font={{ wrap: true, font_size: 23.3, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={2}
 		animate="fade"
 	>
@@ -39,7 +39,7 @@
 	<Fragment
 		step={2}
 		layout={{ x: 91, y: 200, width: 455, height: 301 }}
-		font={{ wrap: true, font_size: 23.3, bold: true, color: '#000000' }}
+		font={{ wrap: true, font_size: 23.3, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={3}
 		animate="fade"
 	>
@@ -50,7 +50,7 @@
 	<Fragment
 		step={3}
 		layout={{ x: 538, y: 192, width: 362, height: 131 }}
-		font={{ wrap: true, font_size: 23.3, bold: true, color: '#000000' }}
+		font={{ wrap: true, font_size: 23.3, bold: true, color: 'var(--text-level-0)' }}
 		zIndex={4}
 		animate="fade"
 	>
@@ -61,8 +61,8 @@
 	<Fragment
 		step={4}
 		layout={{ x: 525, y: 355, width: 366, height: 62 }}
-		fill="#0000FF"
-		font={{ wrap: true, align: 'center', font_size: 23.3, bold: true, color: '#FFFFFF' }}
+		fill="var(--stroke-level-3)"
+		font={{ wrap: true, align: 'center', font_size: 23.3, bold: true, color: 'var(--text-ghost)' }}
 		zIndex={5}
 		animate="fade"
 	>
