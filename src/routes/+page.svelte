@@ -27,7 +27,7 @@
 					class:active={$autoDrillAll}
 					onclick={toggleAutoDrill}
 					aria-pressed={$autoDrillAll}
-					title={$autoDrillAll ? 'Auto-drill enabled: all scripture references drill automatically' : 'Auto-drill disabled: only last reference drills automatically'}
+					title={$autoDrillAll ? 'Follow links' : 'Follow links disabled'}
 				>
 					<span class="toggle-knob"></span>
 				</button>

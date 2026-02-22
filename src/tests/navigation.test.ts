@@ -380,6 +380,7 @@ describe('Navigation Store - Persistence', () => {
 
 	it('clearPresentation removes localStorage and resets state', () => {
 		navigation.init('life', [9, 15, 12]);
+		navigation.setAutoDrillAll(false);
 		navigation.next();
 		navigation.next();
 		
@@ -398,6 +399,7 @@ describe('Navigation Store - Persistence', () => {
 		const state = get(navigation);
 		expect(state.current.fragment).toBe(0);
 		expect(state.current.presentation).toBe('');
+		expect(state.autoDrillAll).toBe(false);
 	});
 
 	it('persists state independently for each presentation', () => {

@@ -611,8 +611,12 @@ function createNavigationStore() {
 		 * @param presentation - presentation ID to clear, or undefined to clear all
 		 */
 		clearPresentation(presentation?: string) {
+			const currentAutoDrillAll = get({ subscribe }).autoDrillAll;
 			clearPersistedState(presentation);
-			set(initial);
+			set({
+				...initial,
+				autoDrillAll: currentAutoDrillAll
+			});
 			console.log('[Navigation] Cleared presentation:', presentation || 'all');
 		},
 
