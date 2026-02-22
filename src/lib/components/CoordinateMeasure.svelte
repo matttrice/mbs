@@ -41,12 +41,17 @@
 	let originalCode = $state<string>(''); // snapshot of outputCode at initial detection (before nudging)
 	let activeEndpoint = $state<'from' | 'to' | 'both'>('both'); // for line/arrow/arc endpoint toggle
 	let panelCorner = $state<'br' | 'bl' | 'tl' | 'tr'>('br');
+	let draggingSelectedShape = $state(false);
+	let dragTarget = $state<'shape' | 'from' | 'to' | null>(null);
+	let hoverTarget = $state<'shape' | 'from' | 'to' | null>(null);
+	let lastDragPos = $state<Point | null>(null);
 
 	// Shape detection state
 	let detectedShapes = $state<Array<{ type: string; coords: Record<string, unknown>; element: Element }>>([]);
 	let shapeIndex = $state(0);
 
 	const CLICK_THRESHOLD = 5;
+	let handleHitRadius = $state(10);
 	const ALL_SHAPE_TYPES: ShapeType[] = ['fragment', 'rect', 'arrow', 'line', 'arc', 'ellipse', 'circle', 'path', 'polygon'];
 
 	// --- Helpers ---
@@ -62,6 +67,10 @@
 		panelCorner = order[(idx + 1) % 4];
 	}
 
+	function adjustHandleHitRadius(delta: number) {
+		handleHitRadius = Math.max(2, Math.min(30, handleHitRadius + delta));
+	}
+
 	const cornerLabels = { br: '↘', bl: '↙', tl: '↖', tr: '↗' };
 
 	/** True if the shape type has from/to endpoints */
@@ -72,6 +81,16 @@
 	/** Compute midpoint between two points */
 	function midpoint(a: Point, b: Point): Point {
 		return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+	}
+
+	function distance(a: Point, b: Point): number {
+		const dx = a.x - b.x;
+		const dy = a.y - b.y;
+		return Math.sqrt(dx * dx + dy * dy);
+	}
+
+	function pointInBox(point: Point, box: Box, padding = 0): boolean {
+		return point.x >= box.x - padding && point.x <= box.x + box.width + padding && point.y >= box.y - padding && point.y <= box.y + box.height + padding;
 	}
 
 	/** Rotate a point around a center by angleDeg degrees */
@@ -194,7 +213,9 @@
 					shape = null;
 					dragStart = null;
 					dragCurrent = null;
+					hoverTarget = null;
 				}
+				return;
 			}
 		}
 
@@ -433,6 +454,96 @@
 		}
 	}
 
+	function getDragTargetAtPoint(point: Point): 'shape' | 'from' | 'to' | null {
+		if (!shape || !showPanel) return null;
+
+		if (shape.type === 'line' || shape.type === 'arc') {
+			if (distance(point, shape.from) <= handleHitRadius) return 'from';
+			if (distance(point, shape.to) <= handleHitRadius) return 'to';
+		}
+
+		if (shape.type === 'arrow') {
+			if (shape.from && shape.to) {
+				if (distance(point, shape.from) <= handleHitRadius) return 'from';
+				if (distance(point, shape.to) <= handleHitRadius) return 'to';
+			}
+			if (shape.fromBox && shape.toBox) {
+				const fromCenter = { x: shape.fromBox.x + shape.fromBox.width / 2, y: shape.fromBox.y + shape.fromBox.height / 2 };
+				const toCenter = { x: shape.toBox.x + shape.toBox.width / 2, y: shape.toBox.y + shape.toBox.height / 2 };
+				if (pointInBox(point, shape.fromBox, 3) || distance(point, fromCenter) <= handleHitRadius) return 'from';
+				if (pointInBox(point, shape.toBox, 3) || distance(point, toCenter) <= handleHitRadius) return 'to';
+			}
+		}
+
+		const bb = shapeBoundingBox(shape);
+		if (!bb) return null;
+		return pointInBox(point, bb, 2) ? 'shape' : null;
+	}
+
+	function dragSelectedBy(dx: number, dy: number, target: 'shape' | 'from' | 'to') {
+		if (!shape || (dx === 0 && dy === 0)) return;
+
+		switch (shape.type) {
+			case 'fragment':
+			case 'rect':
+				shape = { ...shape, x: shape.x + dx, y: shape.y + dy };
+				break;
+			case 'ellipse':
+				shape = { ...shape, cx: shape.cx + dx, cy: shape.cy + dy };
+				break;
+			case 'circle':
+				shape = { ...shape, cx: shape.cx + dx, cy: shape.cy + dy };
+				break;
+			case 'path':
+				shape = { ...shape, x: shape.x + dx, y: shape.y + dy };
+				break;
+			case 'polygon':
+				shape = { ...shape, x: shape.x + dx, y: shape.y + dy };
+				break;
+			case 'line':
+				if (target === 'from') {
+					shape = { ...shape, from: { x: shape.from.x + dx, y: shape.from.y + dy } };
+				} else if (target === 'to') {
+					shape = { ...shape, to: { x: shape.to.x + dx, y: shape.to.y + dy } };
+				} else {
+					shape = { ...shape, from: { x: shape.from.x + dx, y: shape.from.y + dy }, to: { x: shape.to.x + dx, y: shape.to.y + dy } };
+				}
+				break;
+			case 'arc':
+				if (target === 'from') {
+					shape = { ...shape, from: { x: shape.from.x + dx, y: shape.from.y + dy } };
+				} else if (target === 'to') {
+					shape = { ...shape, to: { x: shape.to.x + dx, y: shape.to.y + dy } };
+				} else {
+					shape = { ...shape, from: { x: shape.from.x + dx, y: shape.from.y + dy }, to: { x: shape.to.x + dx, y: shape.to.y + dy } };
+				}
+				break;
+			case 'arrow':
+				if (shape.fromBox && shape.toBox) {
+					if (target === 'from') {
+						shape = { ...shape, fromBox: { ...shape.fromBox, x: shape.fromBox.x + dx, y: shape.fromBox.y + dy } };
+					} else if (target === 'to') {
+						shape = { ...shape, toBox: { ...shape.toBox, x: shape.toBox.x + dx, y: shape.toBox.y + dy } };
+					} else {
+						shape = {
+							...shape,
+							fromBox: { ...shape.fromBox, x: shape.fromBox.x + dx, y: shape.fromBox.y + dy },
+							toBox: { ...shape.toBox, x: shape.toBox.x + dx, y: shape.toBox.y + dy }
+						};
+					}
+				} else if (shape.from && shape.to) {
+					if (target === 'from') {
+						shape = { ...shape, from: { x: shape.from.x + dx, y: shape.from.y + dy } };
+					} else if (target === 'to') {
+						shape = { ...shape, to: { x: shape.to.x + dx, y: shape.to.y + dy } };
+					} else {
+						shape = { ...shape, from: { x: shape.from.x + dx, y: shape.from.y + dy }, to: { x: shape.to.x + dx, y: shape.to.y + dy } };
+					}
+				}
+				break;
+		}
+	}
+
 	// --- Adjustment functions ---
 
 	function adjustRotation(delta: number) {
@@ -599,10 +710,28 @@
 		const coords = toCanvasCoords(e.clientX, e.clientY);
 		if (!coords) return;
 
+		const target = getDragTargetAtPoint(coords);
+		if (target) {
+			mouseDownPos = { clientX: e.clientX, clientY: e.clientY };
+			dragStart = coords;
+			dragCurrent = coords;
+			lastDragPos = coords;
+			measuring = true;
+			draggingSelectedShape = true;
+			dragTarget = target;
+			hoverTarget = null;
+			if (target === 'from' || target === 'to') activeEndpoint = target;
+			return;
+		}
+
 		mouseDownPos = { clientX: e.clientX, clientY: e.clientY };
 		dragStart = coords;
 		dragCurrent = coords;
+		lastDragPos = null;
 		measuring = true;
+		draggingSelectedShape = false;
+		dragTarget = null;
+		hoverTarget = null;
 		showPanel = false;
 		detectedShapes = [];
 		shapeIndex = 0;
@@ -613,10 +742,23 @@
 		e.preventDefault();
 		e.stopPropagation();
 
-		if (!measuring || !dragStart) return;
 		const coords = toCanvasCoords(e.clientX, e.clientY);
 		if (!coords) return;
+
+		if (!measuring || !dragStart) {
+			hoverTarget = getDragTargetAtPoint(coords);
+			return;
+		}
+
 		dragCurrent = coords;
+
+		if (draggingSelectedShape && lastDragPos && dragTarget) {
+			const dx = coords.x - lastDragPos.x;
+			const dy = coords.y - lastDragPos.y;
+			dragSelectedBy(dx, dy, dragTarget);
+			lastDragPos = coords;
+			showPanel = true;
+		}
 	}
 
 	function handleMouseUp(e: MouseEvent) {
@@ -626,6 +768,18 @@
 
 		if (!measuring || !mouseDownPos || !dragStart || !dragCurrent) return;
 		measuring = false;
+
+		if (draggingSelectedShape) {
+			draggingSelectedShape = false;
+			dragTarget = null;
+			lastDragPos = null;
+			hoverTarget = null;
+			mouseDownPos = null;
+			dragStart = null;
+			dragCurrent = null;
+			showPanel = !!shape;
+			return;
+		}
 
 		const dx = e.clientX - mouseDownPos.clientX;
 		const dy = e.clientY - mouseDownPos.clientY;
@@ -663,6 +817,9 @@
 		mouseDownPos = null;
 		dragStart = null;
 		dragCurrent = null;
+		dragTarget = null;
+		lastDragPos = null;
+		hoverTarget = null;
 	}
 
 	function closePanel() {
@@ -671,6 +828,10 @@
 		detectedShapes = [];
 		shapeIndex = 0;
 		activeEndpoint = 'both';
+		draggingSelectedShape = false;
+		dragTarget = null;
+		hoverTarget = null;
+		lastDragPos = null;
 	}
 
 	// --- Canvas overlay helpers ---
@@ -721,12 +882,27 @@
 
 	// Get the endpoint color based on active endpoint
 	function endpointColor(which: 'from' | 'to'): string {
+		if (draggingSelectedShape && dragTarget === which) return '#ffff00';
+		if (!draggingSelectedShape && hoverTarget === which) return '#c9ff4d';
+		if (draggingSelectedShape && dragTarget === 'shape') return 'rgba(0, 255, 0, 0.35)';
 		if (activeEndpoint === 'both') return '#00ff00';
 		return activeEndpoint === which ? '#ffff00' : 'rgba(0, 255, 0, 0.3)';
 	}
 	function endpointRadius(which: 'from' | 'to'): number {
+		if (draggingSelectedShape && dragTarget === which) return 7;
+		if (!draggingSelectedShape && hoverTarget === which) return 5;
 		if (activeEndpoint === 'both') return 4;
 		return activeEndpoint === which ? 6 : 3;
+	}
+
+	function shapeStrokeColor(): string {
+		if (!draggingSelectedShape && hoverTarget === 'shape') return '#80ff80';
+		return draggingSelectedShape && dragTarget === 'shape' ? '#ffff00' : '#00ff00';
+	}
+
+	function shapeStrokeWidth(base: number): number {
+		if (!draggingSelectedShape && hoverTarget === 'shape') return base + 0.5;
+		return draggingSelectedShape && dragTarget === 'shape' ? base + 1 : base;
 	}
 </script>
 
@@ -734,6 +910,9 @@
 	<!-- Full-screen overlay to capture mouse events and prevent text selection -->
 	<div 
 		class="measure-capture-overlay"
+		class:dragging-shape={draggingSelectedShape}
+		class:hover-shape={!!shape && hoverTarget === 'shape' && !draggingSelectedShape}
+		class:hover-handle={!!shape && (hoverTarget === 'from' || hoverTarget === 'to') && !draggingSelectedShape}
 		role="button"
 		tabindex="-1"
 		onmousedown={handleMouseDown}
@@ -744,7 +923,7 @@
 		<div class="measure-indicator">
 			<span class="indicator-dot"></span>
 			MEASURE MODE
-			<span class="hint">(CLICK SHAPE OR DRAG)</span>
+			<span class="hint">(CLICK, DRAG SELECTION, OR DRAG TO MEASURE)</span>
 		</div>
 
 		<!-- SVG overlay for shape preview -->
@@ -756,7 +935,7 @@
 					</marker>
 				</defs>
 
-				{#if measuring && dragBox}
+				{#if measuring && !draggingSelectedShape && dragBox}
 					<!-- Live drag preview (dashed green rect) -->
 					<rect
 						x={dragBox.x}
@@ -781,16 +960,16 @@
 							{@const stbw = tb.width * canvasScale}
 							{@const stbh = tb.height * canvasScale}
 							{@const arr = getBoxToBoxArrow(vfb.x, vfb.y, sfbw, sfbh, vtb.x, vtb.y, stbw, stbh, { bow: shape.bow, flip: shape.flip, stretch: 0.5, stretchMin: 40, stretchMax: 420, padStart: 0, padEnd: 8, straights: false })}
-							<path d="M{arr[0]},{arr[1]} Q{arr[2]},{arr[3]} {arr[4]},{arr[5]}" stroke="#00ff00" stroke-width="3" fill="none" />
-							<polygon points="0,-5 12,0 0,5" fill="#00ff00" transform="translate({arr[4]},{arr[5]}) rotate({arr[6] * 180 / Math.PI})" />
+							<path d="M{arr[0]},{arr[1]} Q{arr[2]},{arr[3]} {arr[4]},{arr[5]}" stroke={shapeStrokeColor()} stroke-width={shapeStrokeWidth(3)} fill="none" />
+							<polygon points="0,-5 12,0 0,5" fill={shapeStrokeColor()} transform="translate({arr[4]},{arr[5]}) rotate({arr[6] * 180 / Math.PI})" />
 							<rect x={vfb.x} y={vfb.y} width={sfbw} height={sfbh} stroke={endpointColor('from')} stroke-width="1" fill="none" stroke-dasharray="4,4" opacity="0.5" />
 							<rect x={vtb.x} y={vtb.y} width={stbw} height={stbh} stroke={endpointColor('to')} stroke-width="1" fill="none" stroke-dasharray="4,4" opacity="0.5" />
 						{:else if shape.from && shape.to}
 							{@const vf = canvasToViewport(shape.from.x, shape.from.y)}
 							{@const vt = canvasToViewport(shape.to.x, shape.to.y)}
 							{@const arr = getArrow(vf.x, vf.y, vt.x, vt.y, { bow: shape.bow, flip: shape.flip, stretch: shape.bow !== 0 ? 0.5 : 0, straights: shape.bow === 0, padEnd: 8 })}
-							<path d="M{arr[0]},{arr[1]} Q{arr[2]},{arr[3]} {arr[4]},{arr[5]}" stroke="#00ff00" stroke-width="3" fill="none" />
-							<polygon points="0,-5 12,0 0,5" fill="#00ff00" transform="translate({arr[4]},{arr[5]}) rotate({arr[6] * 180 / Math.PI})" />
+							<path d="M{arr[0]},{arr[1]} Q{arr[2]},{arr[3]} {arr[4]},{arr[5]}" stroke={shapeStrokeColor()} stroke-width={shapeStrokeWidth(3)} fill="none" />
+							<polygon points="0,-5 12,0 0,5" fill={shapeStrokeColor()} transform="translate({arr[4]},{arr[5]}) rotate({arr[6] * 180 / Math.PI})" />
 							<circle cx={vf.x} cy={vf.y} r={endpointRadius('from')} fill={endpointColor('from')} opacity="0.9" />
 							<circle cx={vt.x} cy={vt.y} r={endpointRadius('to')} fill={endpointColor('to')} opacity="0.9" />
 						{/if}
@@ -802,7 +981,7 @@
 							{@const srx = shape.rx * canvasScale}
 							{@const sry = shape.ry * canvasScale}
 							{@const sweepFlag = shape.curve >= 0 ? 1 : 0}
-							<path d="M{vf.x},{vf.y} A{srx},{sry} 0 1 {sweepFlag} {vt.x},{vt.y}" stroke="#00ff00" stroke-width="3" fill="none" />
+							<path d="M{vf.x},{vf.y} A{srx},{sry} 0 1 {sweepFlag} {vt.x},{vt.y}" stroke={shapeStrokeColor()} stroke-width={shapeStrokeWidth(3)} fill="none" />
 							<!-- Compute arrowhead tangent for SVG arc using endpoint parameterization -->
 							{@const adx = shape.to.x - shape.from.x}
 							{@const ady = shape.to.y - shape.from.y}
@@ -821,7 +1000,7 @@
 							{@const arcCy = (cyp * arcSq) + (shape.from.y + shape.to.y) / 2}
 							{@const theta2 = Math.atan2((shape.to.y - arcCy) / shape.ry, (shape.to.x - arcCx) / shape.rx)}
 							{@const tanAngle = sweepFlag === 1 ? Math.atan2(shape.rx * Math.cos(theta2), -shape.ry * Math.sin(theta2)) : Math.atan2(-shape.rx * Math.cos(theta2), shape.ry * Math.sin(theta2))}
-							<polygon points="0,-5 12,0 0,5" fill="#00ff00" transform="translate({vt.x},{vt.y}) rotate({tanAngle * 180 / Math.PI})" />
+							<polygon points="0,-5 12,0 0,5" fill={shapeStrokeColor()} transform="translate({vt.x},{vt.y}) rotate({tanAngle * 180 / Math.PI})" />
 							<!-- Show arc center -->
 							{@const vc = canvasToViewport(arcCx, arcCy)}
 							<circle cx={vc.x} cy={vc.y} r="3" fill="#ff00ff" opacity="0.6" />
@@ -841,9 +1020,9 @@
 							{@const scaledShift = shape.shift * canvasScale}
 							{@const cpx = mx + perpX * scaledCurve + parX * scaledShift}
 							{@const cpy = my + perpY * scaledCurve + parY * scaledShift}
-							<path d="M{vf.x},{vf.y} Q{cpx},{cpy} {vt.x},{vt.y}" stroke="#00ff00" stroke-width="3" fill="none" />
+							<path d="M{vf.x},{vf.y} Q{cpx},{cpy} {vt.x},{vt.y}" stroke={shapeStrokeColor()} stroke-width={shapeStrokeWidth(3)} fill="none" />
 							{@const endAngle = Math.atan2(vt.y - cpy, vt.x - cpx) * 180 / Math.PI}
-							<polygon points="0,-5 12,0 0,5" fill="#00ff00" transform="translate({vt.x},{vt.y}) rotate({endAngle})" />
+							<polygon points="0,-5 12,0 0,5" fill={shapeStrokeColor()} transform="translate({vt.x},{vt.y}) rotate({endAngle})" />
 							<circle cx={cpx} cy={cpy} r="3" fill="#00ffff" opacity="0.5" />
 							<line x1={mx} y1={my} x2={cpx} y2={cpy} stroke="#00ffff" stroke-width="1" stroke-dasharray="3,3" opacity="0.4" />
 						{/if}
@@ -853,7 +1032,7 @@
 					{:else if shape.type === 'line'}
 						{@const vf = canvasToViewport(shape.from.x, shape.from.y)}
 						{@const vt = canvasToViewport(shape.to.x, shape.to.y)}
-						<line x1={vf.x} y1={vf.y} x2={vt.x} y2={vt.y} stroke="#00ff00" stroke-width="3" />
+						<line x1={vf.x} y1={vf.y} x2={vt.x} y2={vt.y} stroke={shapeStrokeColor()} stroke-width={shapeStrokeWidth(3)} />
 						<circle cx={vf.x} cy={vf.y} r={endpointRadius('from')} fill={endpointColor('from')} opacity="0.9" />
 						<circle cx={vt.x} cy={vt.y} r={endpointRadius('to')} fill={endpointColor('to')} opacity="0.9" />
 
@@ -861,7 +1040,7 @@
 						{@const vc = canvasToViewport(shape.cx, shape.cy)}
 						{@const srx = shape.rx * canvasScale}
 						{@const sry = shape.ry * canvasScale}
-						<ellipse cx={vc.x} cy={vc.y} rx={srx} ry={sry} stroke="#00ff00" stroke-width="2" fill="rgba(0, 255, 0, 0.1)" transform="rotate({shape.rotation} {vc.x} {vc.y})" />
+						<ellipse cx={vc.x} cy={vc.y} rx={srx} ry={sry} stroke={shapeStrokeColor()} stroke-width={shapeStrokeWidth(2)} fill="rgba(0, 255, 0, 0.1)" transform="rotate({shape.rotation} {vc.x} {vc.y})" />
 						<circle cx={vc.x} cy={vc.y} r="3" fill="#00ff00" opacity="0.7" />
 						{#if shape.rotation !== 0}
 							{@const angleRad = (shape.rotation * Math.PI) / 180}
@@ -873,7 +1052,7 @@
 					{:else if shape.type === 'circle'}
 						{@const vc = canvasToViewport(shape.cx, shape.cy)}
 						{@const sr = shape.r * canvasScale}
-						<circle cx={vc.x} cy={vc.y} r={sr} stroke="#00ff00" stroke-width="2" fill="rgba(0, 255, 0, 0.1)" />
+						<circle cx={vc.x} cy={vc.y} r={sr} stroke={shapeStrokeColor()} stroke-width={shapeStrokeWidth(2)} fill="rgba(0, 255, 0, 0.1)" />
 						<circle cx={vc.x} cy={vc.y} r="3" fill="#00ff00" opacity="0.7" />
 
 					{:else if shape.type === 'path' || shape.type === 'polygon'}
@@ -885,8 +1064,8 @@
 							y={vp.y}
 							width={sw}
 							height={sh}
-							stroke="#00ff00"
-							stroke-width="2"
+							stroke={shapeStrokeColor()}
+							stroke-width={shapeStrokeWidth(2)}
 							fill="rgba(0, 255, 0, 0.08)"
 							stroke-dasharray="5,5"
 						/>
@@ -902,8 +1081,8 @@
 							y={vp.y}
 							width={sw}
 							height={sh}
-							stroke="#00ff00"
-							stroke-width="2"
+							stroke={shapeStrokeColor()}
+							stroke-width={shapeStrokeWidth(2)}
 							fill="rgba(0, 255, 0, 0.1)"
 							transform="rotate({shape.rotation} {cx} {cy})"
 						/>
@@ -919,8 +1098,8 @@
 							y={vp.y}
 							width={sw}
 							height={sh}
-							stroke="#00ff00"
-							stroke-width="2"
+							stroke={shapeStrokeColor()}
+							stroke-width={shapeStrokeWidth(2)}
 							fill="rgba(0, 255, 0, 0.1)"
 							stroke-dasharray="5,5"
 							transform="rotate({shape.rotation} {cx} {cy})"
@@ -958,7 +1137,11 @@
 						{/if}
 					{:else}
 						<span class="shape-type">{shapeLabel}</span>
-						<span class="shape-count">(drag)</span>
+						{#if measuring && !draggingSelectedShape && dragBox}
+							<span class="shape-count">(drag)</span>
+						{:else}
+							<span class="shape-count">(selected)</span>
+						{/if}
 					{/if}
 				</span>
 				<div class="header-buttons">
@@ -1007,6 +1190,14 @@
 					<button class="endpoint-btn" class:active={activeEndpoint === 'from'} onclick={() => activeEndpoint = activeEndpoint === 'from' ? 'both' : 'from'}>from</button>
 					<button class="endpoint-btn" class:active={activeEndpoint === 'both'} onclick={() => activeEndpoint = 'both'}>both</button>
 					<button class="endpoint-btn" class:active={activeEndpoint === 'to'} onclick={() => activeEndpoint = activeEndpoint === 'to' ? 'both' : 'to'}>to</button>
+				</div>
+			</div>
+			<div class="controls-row">
+				<div class="curve-controls">
+					<span class="curve-label">hit</span>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustHandleHitRadius(-1)} aria-label="Decrease handle hit radius">−</button>
+					<span class="curve-value">{handleHitRadius}</span>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustHandleHitRadius(1)} aria-label="Increase handle hit radius">+</button>
 				</div>
 			</div>
 			{/if}
@@ -1178,12 +1369,16 @@
 			</div>
 
 			<div class="panel-footer">
+				{#if draggingSelectedShape && dragTarget}
+					Dragging {dragTarget}
+				{:else}
 				{#if detectedShapes.length > 1}
 					Shift+click to cycle shapes
 				{:else if !isDetected}
 					Use type buttons to switch shape type
 				{:else}
-					Click shape to select · Shift+click to cycle
+					Click shape to select · Drag selected shape/handles to move · Shift+click to cycle
+				{/if}
 				{/if}
 			</div>
 		</div>
@@ -1200,6 +1395,18 @@
 		-webkit-user-select: none;
 		-moz-user-select: none;
 		-ms-user-select: none;
+	}
+
+	.measure-capture-overlay.dragging-shape {
+		cursor: grabbing;
+	}
+
+	.measure-capture-overlay.hover-shape {
+		cursor: grab;
+	}
+
+	.measure-capture-overlay.hover-handle {
+		cursor: pointer;
 	}
 
 	.measure-indicator {
