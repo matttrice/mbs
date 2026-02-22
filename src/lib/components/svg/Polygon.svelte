@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { SVG, type Container } from '@svgdotjs/svg.js';
 	import { onMount, onDestroy } from 'svelte';
+	import { dev } from '$app/environment';
 	import type { Point, StrokeStyle } from './types';
 
 	/**
@@ -28,9 +29,11 @@
 		fill?: string;
 		/** Stroke styling */
 		stroke?: StrokeStyle;
+		/** Z-index for stacking order */
+		zIndex?: number;
 	}
 
-	let { points, fill, stroke }: Props = $props();
+	let { points, fill, stroke, zIndex = 1 }: Props = $props();
 
 	let svgEl: SVGSVGElement;
 	let draw: Container | null = null;
@@ -86,13 +89,32 @@
 	});
 </script>
 
-<svg
-	bind:this={svgEl}
-	class="svg-shape svg-polygon"
-	style="width: 100%; height: 100%; overflow: visible;"
-></svg>
+<div
+	class="svg-polygon-container"
+	data-shape-type={dev ? 'polygon' : undefined}
+	data-coords={dev ? JSON.stringify({ points }) : undefined}
+	style="
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		z-index: {zIndex};
+		pointer-events: {dev ? 'auto' : 'none'};
+	"
+>
+	<svg
+		bind:this={svgEl}
+		class="svg-shape svg-polygon"
+		style="width: 100%; height: 100%; overflow: visible;"
+	></svg>
+</div>
 
 <style>
+	.svg-polygon-container {
+		overflow: visible;
+	}
+
 	.svg-shape {
 		display: block;
 	}

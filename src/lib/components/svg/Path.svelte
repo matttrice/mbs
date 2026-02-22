@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { SVG, type Container } from '@svgdotjs/svg.js';
 	import { onMount, onDestroy } from 'svelte';
+	import { dev } from '$app/environment';
 	import type { StrokeStyle } from './types';
 
 	/**
@@ -28,9 +29,11 @@
 		fill?: string;
 		/** Stroke styling */
 		stroke?: StrokeStyle;
+		/** Z-index for stacking order */
+		zIndex?: number;
 	}
 
-	let { d, fill, stroke }: Props = $props();
+	let { d, fill, stroke, zIndex = 1 }: Props = $props();
 
 	let svgEl: SVGSVGElement;
 	let draw: Container | null = null;
@@ -75,13 +78,32 @@
 	});
 </script>
 
-<svg
-	bind:this={svgEl}
-	class="svg-shape svg-path"
-	style="width: 100%; height: 100%; overflow: visible;"
-></svg>
+<div
+	class="svg-path-container"
+	data-shape-type={dev ? 'path' : undefined}
+	data-coords={dev ? JSON.stringify({ d }) : undefined}
+	style="
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		z-index: {zIndex};
+		pointer-events: {dev ? 'auto' : 'none'};
+	"
+>
+	<svg
+		bind:this={svgEl}
+		class="svg-shape svg-path"
+		style="width: 100%; height: 100%; overflow: visible;"
+	></svg>
+</div>
 
 <style>
+	.svg-path-container {
+		overflow: visible;
+	}
+
 	.svg-shape {
 		display: block;
 	}

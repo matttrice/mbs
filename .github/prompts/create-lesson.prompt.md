@@ -11,8 +11,10 @@ Details explaining the extracted json data is in [hsu-extractor copilot-instruct
 
 ## Your approch to planning the json to svelte conversion:
 First analyze the json structure to identify all the custom shows, linked slides and main slides.
-Plan to begin with the `custom_shows.{N}.slide_numbers` which is a list of ids to the linked_slides object and most dependent in relational model.
-- **json: `custom_shows{}`** are Define multi-slide sequences but may contain only a single slide reference in which case create simple +page.svelte route with the customshow name. When multiple slides are referenced you have 2 options: Create its associated slides as separate routes using the +page.svelte [CustomShowProvider](../../src/lib/components/CustomShowProvider.svelte) **Content.svelte pattern** to aggregate many slide routes to the custom show route, or optionally create each slide in a Content{N}.svelte files in the same route and aggregate to the +page.svelte file in the same route. 
+Plan to begin with the `custom_shows.{N>1}.slide_numbers` which is a list of ids to the linked_slides object and most dependent in relational model.
+- **json: `custom_shows{}`** Defines multi-slide sequences but may contain only a single slide reference. If only a single slide reference, create a "Standalone Drill Page" which is a +page.svelte route with the customshow name. If multiple slides are referenced in custom_shows json, you have 2 options: 
+1. Create its associated slides as separate routes using the +page.svelte [CustomShowProvider](../../src/lib/components/CustomShowProvider.svelte) **Content.svelte pattern** to aggregate multiple slide routes to the custom show route. Use this if the slide seems more complex and route might be reused in other custom shows or the main slides.
+2. The consolidated approach: create each slide in the same route in Content{N}.svelte files and import them them to the +page.svelte file in the same route. 
 
 With the reamaining linked_slides define individual slide routes:
 - **json:`linked_slides{}`** - Individual scripture/drill slides → create`routes/{lesson}/{reference}/+page.svelte` These may have already been crreated with custom_shows Content.svelte. If not, create the standard +page.svelte with <Slide> object and any fragments.

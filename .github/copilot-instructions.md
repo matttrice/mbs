@@ -97,7 +97,7 @@ The `Fragment` component handles hide/show for all slide content.
 <Fragment
   layout={{ x: 100, y: 50, width: 200, height: 40 }}
   font={{ font_size: 24, bold: true }}
-  fill="--var(--bg-light)"
+  fill="var(--bg-light)"
 >
   Title Text
 </Fragment>
@@ -225,7 +225,9 @@ Fragment supports **step-based keyframe motion** for animating position, size, r
 
 ## SVG Shape Components
 
-Arc, Arrow, Line, and Rect are self-positioning components that use **canvas coordinates** (960×540). Fragment only provides step-based visibility and animation timing—no `layout` prop needed for these components.
+Arc, Arrow, Line, Rect, Circle, and Ellipse are self-positioning components that use **canvas coordinates** (960×540). Fragment only provides step-based visibility and animation timing—no `layout` prop needed for these components.
+
+Path and Polygon are typically used inside a Fragment that provides a `layout` box (they render relative to that box). For freeform or polygonal JSON content, keep using Fragment `layout` as the positioning source unless you explicitly compute absolute bounds.
 
 **Important:** For shapes without text content (empty rectangles, lines, arrows), use SVG components directly inside Fragment rather than using Fragment's `layout` and `fill` props. Fragment requires children content—using it with layout/fill but no children causes TypeScript errors.
 
@@ -349,14 +351,14 @@ Use `largeArc` when `from` and `to` are close together and you need a loop/oval 
 
 ### Other SVG Components
 
-For other shapes (Circle, etc.), use Fragment with `layout` to position them:
+For other shapes:
 
 | Component | Purpose | Key Props |
 |-----------|---------|-----------|
-| `Circle` | Circle | `cx`, `cy`, `r`, `fill`, `stroke` |
-| `Ellipse` | Ellipse | `cx`, `cy`, `rx`, `ry`, `fill`, `stroke` |
-| `Path` | SVG path | `d`, `fill`, `stroke` |
-| `Polygon` | Multi-point shape | `points`, `fill`, `stroke` |
+| `Circle` | Self-positioning circle (canvas coords) | `cx`, `cy`, `r`, `fill`, `stroke`, `zIndex` |
+| `Ellipse` | Self-positioning ellipse (canvas coords) | `cx`, `cy`, `rx`, `ry`, `fill`, `stroke`, `zIndex` |
+| `Path` | SVG path (usually layout-relative via Fragment) | `d`, `fill`, `stroke`, `zIndex` |
+| `Polygon` | Multi-point shape (usually layout-relative via Fragment) | `points`, `fill`, `stroke`, `zIndex` |
 
 
 # Critical Patterns
@@ -464,13 +466,13 @@ For single-slide custom shows (linked slides that stand alone), use `<Slide>` wi
 
 ### Multi-Slide Custom Shows (CustomShowProvider)
 
-**Important Content.svelte pattern** A PowerPoint slide may have a hyperlink to a custom show. When a custom show contains multiple slides (e.g., json `custom_shows[id].slide_numbers` has >1 entries) use `CustomShowProvider` to import multiple Content.svelte files each represnting a slide or topic in the custom_show. You may also import other routes, but those would need to be transitioned to Content.svelte and +page.svelte. Thus it is flexible to aggregate mulitple routes and or its own special content into a single navigation sequence.
+**Important Content pattern** A PowerPoint slide may have a hyperlink to a custom show. When a custom show contains multiple slides (e.g., json `custom_shows[id].slide_numbers` has >1 entries) use `CustomShowProvider` to import multiple content components representing each slide/topic in the custom show. You may also aggregate other routes, but those should expose content components plus route `+page.svelte` entry points.
 
 **Single-slide custom shows**
 When `custom_shows[id].slide_numbers` has 1 **single slide** in the array do NOT use the CustomShowProvider/Content.svelte pattern, instead only a route/+page.svelte is needed with a <Slide>. Create the route with a single +page.svelte with the <Slide> and Fragments within and drillTo it. In both cases, other slides can "drillTo" route and return to the origin slide when complete. Scan the repository for examples of both patterns and use the best fit for the custom show being created. - **Flat structure**: Scripture routes live at the presentation level (e.g., `biblical-time/matthew-5`).
 
 **Key concepts:**
-- **Content.svelte components**: Slide content without `<Slide>` wrapper—just Fragment elements, named `Content<number>.svelte` used to differentiate multiple slides in a custom show and aggregated in CustomShowProvider in the `+page.svelte`.
+- **Content components**: Slide content without `<Slide>` wrapper—just Fragment elements. For multi-slide custom shows, name these `Content1.svelte`, `Content2.svelte`, etc. For single reusable content routes, `Content.svelte` is acceptable.
 - **CustomShowProvider**: Wraps each content component in `<Slide={[Content1,Content2]}>`, manages fragment offsets
 - **Auto-return**: When the last fragment of the last slide is reached, navigation returns to origin
 
@@ -571,6 +573,16 @@ PowerPoint has three animation timing modes that map to MBS decimal step notatio
 **Step numbering convention:**
 - Elements with the same integer step value appear together on the same click
 - Use decimal notation for cascading animations (e.g., `step={1.1}` = 500ms after step 1)
+
+**Deterministic timing conversion algorithm:**
+1. Keep `clickStep` integer counter (initialize to `0` as an internal seed only).
+2. For each JSON item in `animation_sequence` order:
+  - `timing: "click"` → increment `clickStep`; assign `step={clickStep}`.
+  - `timing: "with"` → assign same integer as prior item's click step.
+  - `timing: "after"` → assign decimal delay on prior item's click step, where `500ms => .1`, `1000ms => .2`, etc.
+3. Preserve source order for items sharing the same step value.
+
+This yields **1-indexed rendered Svelte steps** (`1, 2, 3, ...`).
 
 **Example - cascading animation:**
 ```svelte
@@ -711,6 +723,18 @@ The `.drill-content` class is defined in `$lib/styles/scripture.css`.
 
 JSON entries **without `text` or `font` properties** represent visual-only shapes (rectangles, lines, arrows). Convert these to SVG components inside Fragment:
 
+**Deterministic shape mapping priority (use first match):**
+1. `shape_type: "picture"` + `image` field → `<img>` inside `Fragment layout={...}`
+2. `line_endpoints` present:
+  - `arrow_ends` present (`headEnd` or `tailEnd`) → `Arrow`
+  - otherwise → `Line`
+3. `arc_path` present → `Arc` (use `from`, `to`, `curve` from JSON)
+4. Ellipse/Oval geometry in JSON → `Ellipse` (or `Circle` when `rx === ry`)
+5. Plain rectangle-like shape with `layout` (+ optional `fill`/`line`) → `Rect`
+6. Freeform/path/polygon geometry → `Path` / `Polygon` inside a `Fragment` with `layout` bounds
+
+When a JSON entry has both text and visual styling, keep text in a text Fragment and render visual-only geometry as SVG components as needed.
+
 **JSON entry (no text/font = visual shape):**
 ```json
 {
@@ -815,8 +839,8 @@ Navigation state persists to `localStorage` key `mbs-nav-{route-name}`. The Rese
 - Adding `"fade"` animate property when its the default (most Fragments fade by default)
 - Using zIndex on Fragment with svg Shapes which have their own zIndex
 - Nesting scripture routes under custom show folders (use flat structure at presentation level with CustomShowProvider)
-- Using custom names for Content files (use `Content.svelte` consistently; folder name provides context)
+- Inconsistent content component naming in custom shows. Use `Content1.svelte`, `Content2.svelte`, etc. for multi-slide custom shows; use `Content.svelte` for single reusable content routes.
 - Presence of a Slide<number>.png in [mbs/static/export/](mbs/static/export/) does NOT mean the slide is a top level presentation slide. It could be a slide or linked slide - Follow the JSON structure to determine slide type.
-- Forgetting to add zIndex - you should include the z_index value on any SVG component (Arrow, Line, Rect) within a Fragment but NOT on the Fragment itself when the Fragment has layout but no children. If not svg component, use zIndex on Fragment.
+- Forgetting to add zIndex - include z-index on SVG components (Arrow, Line, Rect, Arc, Circle, Ellipse, Path, Polygon). Use Fragment `zIndex` for text/layout Fragments. Avoid relying only on DOM order for overlaps.
 - **Inventing or modifying text content** when converting from PowerPoint JSON—use ONLY the exact `text` values from the JSON; never add, remove, or paraphrase content
 - **Inventing or estimating layout coordinates**—always use the EXACT `layout` values (x, y, width, height) from the JSON; the coordinates define the actual slide layout and must not be guessed based on conceptual understanding. Do this is batches to ensure accuracy and consistency across all slide conversions.

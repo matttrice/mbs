@@ -15,7 +15,7 @@
 	// --- Discriminated union for shape state ---
 	type Point = { x: number; y: number };
 	type Box = { x: number; y: number; width: number; height: number };
-	type ShapeType = 'fragment' | 'rect' | 'arrow' | 'line' | 'arc' | 'ellipse';
+	type ShapeType = 'fragment' | 'rect' | 'arrow' | 'line' | 'arc' | 'ellipse' | 'circle' | 'path' | 'polygon';
 
 	type FragmentShape = { type: 'fragment'; x: number; y: number; width: number; height: number; rotation: number };
 	type RectShape = { type: 'rect'; x: number; y: number; width: number; height: number; rotation: number };
@@ -23,8 +23,11 @@
 	type LineShape = { type: 'line'; from: Point; to: Point };
 	type ArcShape = { type: 'arc'; from: Point; to: Point; curve: number; shift: number; largeArc: boolean; rx: number; ry: number };
 	type EllipseShape = { type: 'ellipse'; cx: number; cy: number; rx: number; ry: number; rotation: number };
+	type CircleShape = { type: 'circle'; cx: number; cy: number; r: number };
+	type PathShape = { type: 'path'; d: string; x: number; y: number; width: number; height: number };
+	type PolygonShape = { type: 'polygon'; points: Point[]; x: number; y: number; width: number; height: number };
 
-	type ShapeState = FragmentShape | RectShape | ArrowShape | LineShape | ArcShape | EllipseShape;
+	type ShapeState = FragmentShape | RectShape | ArrowShape | LineShape | ArcShape | EllipseShape | CircleShape | PathShape | PolygonShape;
 
 	// --- Core state ---
 	let enabled = $state(false);
@@ -44,7 +47,7 @@
 	let shapeIndex = $state(0);
 
 	const CLICK_THRESHOLD = 5;
-	const ALL_SHAPE_TYPES: ShapeType[] = ['fragment', 'rect', 'arrow', 'line', 'arc', 'ellipse'];
+	const ALL_SHAPE_TYPES: ShapeType[] = ['fragment', 'rect', 'arrow', 'line', 'arc', 'ellipse', 'circle', 'path', 'polygon'];
 
 	// --- Helpers ---
 
@@ -96,6 +99,11 @@
 			case 'rect':
 			case 'ellipse':
 				return s.rotation;
+			case 'circle':
+				return 0;
+			case 'path':
+			case 'polygon':
+				return 0;
 			case 'line':
 				return getEndpointAngle(s.from, s.to);
 			case 'arc':
@@ -145,6 +153,12 @@
 				const rot = s.rotation !== 0 ? ` rotation={${fmt(s.rotation)}}` : '';
 				return `cx={${fmt(s.cx)}} cy={${fmt(s.cy)}} rx={${fmt(s.rx)}} ry={${fmt(s.ry)}}${rot}`;
 			}
+			case 'circle':
+				return `cx={${fmt(s.cx)}} cy={${fmt(s.cy)}} r={${fmt(s.r)}}`;
+			case 'path':
+				return `layout={{ x: ${fmt(s.x)}, y: ${fmt(s.y)}, width: ${fmt(s.width)}, height: ${fmt(s.height)} }} d="${s.d}"`;
+			case 'polygon':
+				return `layout={{ x: ${fmt(s.x)}, y: ${fmt(s.y)}, width: ${fmt(s.width)}, height: ${fmt(s.height)} }} points={${JSON.stringify(s.points)}}`;
 		}
 	}
 
@@ -159,7 +173,10 @@
 			arrow: 'Arrow',
 			line: 'Line',
 			arc: 'Arc',
-			ellipse: 'Ellipse'
+			ellipse: 'Ellipse',
+			circle: 'Circle',
+			path: 'Path',
+			polygon: 'Polygon'
 		};
 		return labels[shape.type];
 	});
@@ -250,6 +267,29 @@
 			return { type: 'arc', from: coords.from as Point, to: coords.to as Point, curve: coords.curve as number, shift: (coords.shift as number) ?? 0, largeArc: (coords.largeArc as boolean) ?? false, rx: (coords.rx as number) ?? 0, ry: (coords.ry as number) ?? 0 };
 		} else if (type === 'ellipse') {
 			return { type: 'ellipse', cx: coords.cx as number, cy: coords.cy as number, rx: coords.rx as number, ry: coords.ry as number, rotation: (coords.rotation as number) ?? 0 };
+		} else if (type === 'circle') {
+			if (typeof coords.r === 'number') {
+				return { type: 'circle', cx: coords.cx as number, cy: coords.cy as number, r: coords.r as number };
+			}
+			return { type: 'circle', cx: coords.cx as number, cy: coords.cy as number, r: (coords.rx as number) ?? 0 };
+		} else if (type === 'path') {
+			return {
+				type: 'path',
+				d: (coords.d as string) ?? '',
+				x: (coords.x as number) ?? 0,
+				y: (coords.y as number) ?? 0,
+				width: (coords.width as number) ?? 0,
+				height: (coords.height as number) ?? 0
+			};
+		} else if (type === 'polygon') {
+			return {
+				type: 'polygon',
+				points: (coords.points as Point[]) ?? [],
+				x: (coords.x as number) ?? 0,
+				y: (coords.y as number) ?? 0,
+				width: (coords.width as number) ?? 0,
+				height: (coords.height as number) ?? 0
+			};
 		}
 		return null;
 	}
@@ -274,6 +314,14 @@
 				return { type: 'arc', from: { ...start }, to: { ...end }, curve: 0, shift: 0, largeArc: false, rx: 0, ry: 0 };
 			case 'ellipse':
 				return { type: 'ellipse', cx: x + width / 2, cy: y + height / 2, rx: width / 2, ry: height / 2, rotation: 0 };
+			case 'circle': {
+				const radius = Math.min(width, height) / 2;
+				return { type: 'circle', cx: x + width / 2, cy: y + height / 2, r: radius };
+			}
+			case 'path':
+				return { type: 'path', d: '', x, y, width, height };
+			case 'polygon':
+				return { type: 'polygon', points: [], x, y, width, height };
 		}
 	}
 
@@ -285,7 +333,19 @@
 			const coordsStr = el.getAttribute('data-coords');
 			if (shapeType && coordsStr) {
 				try {
-					shapes.push({ type: shapeType, coords: JSON.parse(coordsStr), element: el });
+					const coords = JSON.parse(coordsStr) as Record<string, unknown>;
+					if (shapeType === 'path' || shapeType === 'polygon') {
+						const rect = (el as HTMLElement).getBoundingClientRect();
+						const topLeft = toCanvasCoords(rect.left, rect.top);
+						const bottomRight = toCanvasCoords(rect.right, rect.bottom);
+						if (topLeft && bottomRight) {
+							coords.x = topLeft.x;
+							coords.y = topLeft.y;
+							coords.width = Math.max(0, bottomRight.x - topLeft.x);
+							coords.height = Math.max(0, bottomRight.y - topLeft.y);
+						}
+					}
+					shapes.push({ type: shapeType, coords, element: el });
 				} catch { /* skip */ }
 			}
 		}
@@ -364,6 +424,12 @@
 			}
 			case 'ellipse':
 				return { x: s.cx - s.rx - P, y: s.cy - s.ry - P, width: (s.rx + P) * 2, height: (s.ry + P) * 2 };
+			case 'circle':
+				return { x: s.cx - s.r - P, y: s.cy - s.r - P, width: (s.r + P) * 2, height: (s.r + P) * 2 };
+			case 'path':
+				return { x: s.x, y: s.y, width: s.width, height: s.height };
+			case 'polygon':
+				return { x: s.x, y: s.y, width: s.width, height: s.height };
 		}
 	}
 
@@ -411,6 +477,15 @@
 			case 'ellipse':
 				shape = { ...shape, cx: shape.cx + dx, cy: shape.cy + dy };
 				break;
+			case 'circle':
+				shape = { ...shape, cx: shape.cx + dx, cy: shape.cy + dy };
+				break;
+			case 'path':
+				shape = { ...shape, x: shape.x + dx, y: shape.y + dy };
+				break;
+			case 'polygon':
+				shape = { ...shape, x: shape.x + dx, y: shape.y + dy };
+				break;
 			case 'line':
 				if (activeEndpoint === 'from') {
 					shape = { ...shape, from: { x: shape.from.x + dx, y: shape.from.y + dy } };
@@ -457,10 +532,20 @@
 		shape = { ...shape, [prop]: newVal };
 	}
 
-	function adjustRadius(prop: 'rx' | 'ry', delta: number) {
-		if (!shape || shape.type !== 'ellipse') return;
-		const newVal = Math.max(1, shape[prop] + delta);
-		shape = { ...shape, [prop]: newVal };
+	function adjustRadius(prop: 'rx' | 'ry' | 'r', delta: number) {
+		if (!shape) return;
+		if (shape.type === 'ellipse') {
+			if (prop === 'rx') {
+				shape = { ...shape, rx: Math.max(1, shape.rx + delta) };
+			} else if (prop === 'ry') {
+				shape = { ...shape, ry: Math.max(1, shape.ry + delta) };
+			}
+			return;
+		}
+		if (shape.type === 'circle') {
+			const newVal = Math.max(1, shape.r + delta);
+			shape = { ...shape, r: newVal };
+		}
 	}
 
 	function adjustBow(delta: number) {
@@ -785,6 +870,27 @@
 							<line x1={vc.x} y1={vc.y} x2={indicatorX} y2={indicatorY} stroke="#ff00ff" stroke-width="2" marker-end="url(#rotation-arrowhead)" />
 						{/if}
 
+					{:else if shape.type === 'circle'}
+						{@const vc = canvasToViewport(shape.cx, shape.cy)}
+						{@const sr = shape.r * canvasScale}
+						<circle cx={vc.x} cy={vc.y} r={sr} stroke="#00ff00" stroke-width="2" fill="rgba(0, 255, 0, 0.1)" />
+						<circle cx={vc.x} cy={vc.y} r="3" fill="#00ff00" opacity="0.7" />
+
+					{:else if shape.type === 'path' || shape.type === 'polygon'}
+						{@const vp = canvasToViewport(shape.x, shape.y)}
+						{@const sw = shape.width * canvasScale}
+						{@const sh = shape.height * canvasScale}
+						<rect
+							x={vp.x}
+							y={vp.y}
+							width={sw}
+							height={sh}
+							stroke="#00ff00"
+							stroke-width="2"
+							fill="rgba(0, 255, 0, 0.08)"
+							stroke-dasharray="5,5"
+						/>
+
 					{:else if shape.type === 'rect'}
 						{@const vp = canvasToViewport(shape.x, shape.y)}
 						{@const sw = shape.width * canvasScale}
@@ -1041,6 +1147,20 @@
 					<span class="curve-value">{fmt(shape.ry)}</span>
 					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustRadius('ry', 1)}>+1</button>
 					<button class="nudge-btn" onclick={() => adjustRadius('ry', 10)}>+10</button>
+				</div>
+			</div>
+			{/if}
+
+			<!-- Circle: radius -->
+			{#if shape.type === 'circle'}
+			<div class="controls-row">
+				<div class="size-controls">
+					<span class="curve-label">r</span>
+					<button class="nudge-btn" onclick={() => adjustRadius('r', -10)}>−10</button>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustRadius('r', -1)}>−1</button>
+					<span class="curve-value">{fmt(shape.r)}</span>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustRadius('r', 1)}>+1</button>
+					<button class="nudge-btn" onclick={() => adjustRadius('r', 10)}>+10</button>
 				</div>
 			</div>
 			{/if}

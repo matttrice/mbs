@@ -46,6 +46,8 @@ export type WipeDirection = 'left' | 'right' | 'up' | 'down' | 'auto';
 export interface BaseSvgProps {
 	/** Stroke styling */
 	stroke?: StrokeStyle;
-	/** Fill color (default: none for lines, '#000000' for shapes) */
+	/** Fill color (default: none for lines, 'var(--bg-level0)' for shapes) */
 	fill?: string;
+	/** Z-index for stacking order */
+	zIndex?: number;
 }

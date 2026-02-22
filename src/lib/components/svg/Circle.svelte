@@ -1,30 +1,17 @@
 <script lang="ts">
 	import { SVG, type Container } from '@svgdotjs/svg.js';
 	import { onMount, onDestroy } from 'svelte';
+	import { dev } from '$app/environment';
 	import type { StrokeStyle } from './types';
 
 	/**
-	 * Circle: SVG circle shape.
-	 * Uses svg.js for rendering. Integrates with Fragment's animation system.
-	 *
-	 * @example Filled circle
-	 * ```svelte
-	 * <Fragment step={5} layout={{ x: 100, y: 100, width: 80, height: 80 }}>
-	 *   <Circle cx={40} cy={40} r={38} fill="#FFD700" />
-	 * </Fragment>
-	 * ```
-	 *
-	 * @example Circle with stroke
-	 * ```svelte
-	 * <Fragment step={5} layout={{ x: 100, y: 100, width: 100, height: 100 }} animate="draw">
-	 *   <Circle cx={50} cy={50} r={45} stroke={{ width: 3, color: 'var(--stroke-level-3)' }} />
-	 * </Fragment>
-	 * ```
+	 * Circle: Self-positioning SVG circle shape.
+	 * Uses canvas coordinates (960×540) and renders its own absolutely-positioned SVG.
 	 */
 	interface Props {
-		/** Center X coordinate (relative to Fragment's layout) */
+		/** Center X coordinate in canvas coordinates (960×540) */
 		cx: number;
-		/** Center Y coordinate (relative to Fragment's layout) */
+		/** Center Y coordinate in canvas coordinates (960×540) */
 		cy: number;
 		/** Radius */
 		r: number;
@@ -32,29 +19,38 @@
 		fill?: string;
 		/** Stroke styling */
 		stroke?: StrokeStyle;
+		/** Z-index for stacking order */
+		zIndex?: number;
 	}
 
-	let { cx, cy, r, fill, stroke }: Props = $props();
+	let { cx, cy, r, fill, stroke, zIndex = 1 }: Props = $props();
 
 	let svgEl: SVGSVGElement;
 	let draw: Container | null = null;
+
+	const padding = $derived((stroke?.width ?? 1) + 2);
+	const minX = $derived(cx - r - padding);
+	const minY = $derived(cy - r - padding);
+	const width = $derived((r + padding) * 2);
+	const height = $derived((r + padding) * 2);
+
+	const localCx = $derived(r + padding);
+	const localCy = $derived(r + padding);
 
 	onMount(() => {
 		if (!svgEl) return;
 
 		draw = SVG(svgEl) as Container;
+		draw.viewbox(0, 0, width, height);
 
-		// Create circle
-		const circle = draw.circle(r * 2).center(cx, cy);
+		const circle = draw.circle(r * 2).center(localCx, localCy);
 
-		// Apply fill
 		if (fill) {
 			circle.fill(fill);
 		} else {
 			circle.fill('none');
 		}
 
-		// Apply stroke
 		if (stroke) {
 			circle.stroke({
 				width: stroke.width ?? 1,
@@ -63,7 +59,6 @@
 			});
 		}
 
-		// Set circumference for draw animation
 		const circumference = 2 * Math.PI * r;
 		svgEl.style.setProperty('--path-length', circumference.toString());
 	});
@@ -74,13 +69,32 @@
 	});
 </script>
 
-<svg
-	bind:this={svgEl}
-	class="svg-shape svg-circle"
-	style="width: 100%; height: 100%; overflow: visible;"
-></svg>
+<div
+	class="svg-circle-container"
+	data-shape-type={dev ? 'circle' : undefined}
+	data-coords={dev ? JSON.stringify({ cx, cy, r }) : undefined}
+	style="
+		position: absolute;
+		left: {minX}px;
+		top: {minY}px;
+		width: {width}px;
+		height: {height}px;
+		z-index: {zIndex};
+		pointer-events: {dev ? 'auto' : 'none'};
+	"
+>
+	<svg
+		bind:this={svgEl}
+		class="svg-shape svg-circle"
+		style="width: 100%; height: 100%; overflow: visible;"
+	></svg>
+</div>
 
 <style>
+	.svg-circle-container {
+		overflow: visible;
+	}
+
 	.svg-shape {
 		display: block;
 	}
