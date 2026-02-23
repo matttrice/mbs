@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { dev } from '$app/environment';
-	import type { Point, StrokeStyle, CircleMarker } from './types';
+	import type { Point, CircleMarker, BaseSvgProps } from './types';
 
 	/**
 	 * Line: SVG line shape without arrowhead.
@@ -27,19 +27,15 @@
 	 * </Fragment>
 	 * ```
 	 */
-	interface Props {
+	interface Props extends BaseSvgProps {
 		/** Start point of the line (canvas coordinates) */
 		from: Point;
 		/** End point of the line (canvas coordinates) */
 		to: Point;
-		/** Stroke styling */
-		stroke?: StrokeStyle;
 		/** Circle marker at the start point */
 		startMarker?: CircleMarker;
 		/** Circle marker at the end point */
 		endMarker?: CircleMarker;
-		/** Z-index for layering */
-		zIndex?: number;
 	}
 
 	let { from, to, stroke = {}, startMarker, endMarker, zIndex = 1 }: Props = $props();

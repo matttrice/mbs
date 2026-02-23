@@ -301,15 +301,65 @@ Rect positions itself absolutely on the canvas. Use for background columns, boxe
 | `radius` | `number` | Corner radius for rounded rectangles |
 | `zIndex` | `number` | Stacking order (default: 1) |
 
-### StrokeStyle Type
+### StrokeStyle and RectStrokeStyle
 
 ```typescript
 interface StrokeStyle {
-  width?: number;     // Stroke width in pixels (default: 2)
-  color?: string;     // Stroke color (default: '#000000')
-  dash?: string;      // Dash pattern (e.g., '10,5')
+  // Uniform SVG stroke style (all non-Rect shapes)
+  width?: number;
+  color?: string;
+  dash?: string;
+  linecap?: 'butt' | 'round' | 'square';
+  linejoin?: 'miter' | 'round' | 'bevel';
+}
+
+interface RectStrokeStyle extends StrokeStyle {
+  // Optional Rect-only side overrides (named)
+  top?: StrokeSegmentStyle;
+  right?: StrokeSegmentStyle;
+  bottom?: StrokeSegmentStyle;
+  left?: StrokeSegmentStyle;
+
+  // Optional Rect-only side overrides (position): [top, right, bottom, left]
+  sides?: RectStrokeSides;
 }
 ```
+
+**Per-side stroke examples (Rect only):**
+```svelte
+<!-- Named sides -->
+<Rect
+  x={100}
+  y={100}
+  width={220}
+  height={120}
+  fill="var(--bg-ghost)"
+  stroke={{
+    width: 1,
+    color: 'var(--stroke-level-0)',
+    top: { width: 4, color: 'var(--stroke-level-3)' },
+    bottom: { width: 4, color: 'var(--stroke-level-1)', dash: '8,4' }
+  }}
+/>
+
+<!-- Positional sides: [top, right, bottom, left] -->
+<Rect
+  x={360}
+  y={100}
+  width={220}
+  height={120}
+  stroke={{
+    sides: [
+      { width: 3, color: 'var(--stroke-level-3)' },
+      { width: 2, color: 'var(--stroke-level-2)' },
+      { width: 3, color: 'var(--stroke-level-1)' },
+      { width: 2, color: 'var(--stroke-level-0)' }
+    ]
+  }}
+/>
+```
+
+For `Line`, `Arrow`, `Arc`, `Circle`, `Ellipse`, `Path`, and `Polygon`, keep `stroke` uniform (`width`, `color`, `dash`, `linecap`, `linejoin`) with no side overrides.
 
 ### Arc Component
 
@@ -495,7 +545,6 @@ The custom show can now be linked to from other slides using `drillTo="presentat
 
 ### DrillTo Chaining
 DrillTo can mimick multi-slide show behavior by chaining each slide's last fragment with a `drillTo` prop pointing to the next slide but CustomShowProvider is still the preferred approach for multi-slide custom shows.
-
 
 ### returnHere Prop
 For multi-slide drills, when the deepest drill completes, navigation returns **directly to the origin** (the original presentation slide), not back through each intermediate drill, unless `returnHere={true}` is set on a fragment in the drill chain.

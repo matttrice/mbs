@@ -2,7 +2,7 @@
 	import { SVG, type Container } from '@svgdotjs/svg.js';
 	import { onMount, onDestroy } from 'svelte';
 	import { dev } from '$app/environment';
-	import type { Point, StrokeStyle } from './types';
+	import type { Point, BaseSvgProps } from './types';
 
 	/**
 	 * Polygon: SVG polygon shape from array of points.
@@ -22,15 +22,9 @@
 	 * </Fragment>
 	 * ```
 	 */
-	interface Props {
+	interface Props extends BaseSvgProps {
 		/** Array of points defining the polygon vertices */
 		points: Point[];
-		/** Fill color */
-		fill?: string;
-		/** Stroke styling */
-		stroke?: StrokeStyle;
-		/** Z-index for stacking order */
-		zIndex?: number;
 	}
 
 	let { points, fill, stroke, zIndex = 1 }: Props = $props();

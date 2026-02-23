@@ -2,25 +2,19 @@
 	import { SVG, type Container } from '@svgdotjs/svg.js';
 	import { onMount, onDestroy } from 'svelte';
 	import { dev } from '$app/environment';
-	import type { StrokeStyle } from './types';
+	import type { BaseSvgProps } from './types';
 
 	/**
 	 * Circle: Self-positioning SVG circle shape.
 	 * Uses canvas coordinates (960×540) and renders its own absolutely-positioned SVG.
 	 */
-	interface Props {
+	interface Props extends BaseSvgProps {
 		/** Center X coordinate in canvas coordinates (960×540) */
 		cx: number;
 		/** Center Y coordinate in canvas coordinates (960×540) */
 		cy: number;
 		/** Radius */
 		r: number;
-		/** Fill color */
-		fill?: string;
-		/** Stroke styling */
-		stroke?: StrokeStyle;
-		/** Z-index for stacking order */
-		zIndex?: number;
 	}
 
 	let { cx, cy, r, fill, stroke, zIndex = 1 }: Props = $props();

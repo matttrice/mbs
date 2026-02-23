@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { dev } from '$app/environment';
 	import { getArrow, getBoxToBoxArrow } from 'perfect-arrows';
-	import type { StrokeStyle, CircleMarker } from './types';
+	import type { CircleMarker, BaseSvgProps } from './types';
 
 	/**
 	 * Arrow: SVG arrow using perfect-arrows library for consistent rendering.
@@ -42,16 +42,14 @@
 	 *   />
 	 * </Fragment>
 	 */
-	interface Props {
+	interface Props extends BaseSvgProps {
 		from?: { x: number; y: number };
 		to?: { x: number; y: number };
 		fromBox?: { x: number; y: number; width: number; height: number };
 		toBox?: { x: number; y: number; width: number; height: number };
-		stroke?: StrokeStyle;
 		headSize?: number;
 		startMarker?: CircleMarker;
 		endMarker?: CircleMarker;
-		zIndex?: number;
 		bow?: number;
 		flip?: boolean;
 	}

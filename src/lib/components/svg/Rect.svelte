@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { dev } from '$app/environment';
-	import type { StrokeStyle } from './types';
+	import type { BaseSvgProps, StrokeSegmentStyle, StrokeLineCap, RectStrokeStyle } from './types';
+	import { hasRectSideStroke, resolveRectStrokeSide } from './types';
 
 	/**
 	 * Rect: SVG rectangle shape with self-positioning.
@@ -30,7 +31,7 @@
 	 * </Fragment>
 	 * ```
 	 */
-	interface Props {
+	interface Props extends BaseSvgProps<RectStrokeStyle> {
 		/** X position on canvas (960×540) */
 		x: number;
 		/** Y position on canvas */
@@ -39,22 +40,23 @@
 		width: number;
 		/** Rectangle height */
 		height: number;
-		/** Fill color */
-		fill?: string;
-		/** Stroke styling */
-		stroke?: StrokeStyle;
 		/** Corner radius for rounded rectangles */
 		radius?: number;
-		/** Z-index for stacking order */
-		zIndex?: number;
 		/** Rotation in degrees (rotates around center) */
 		rotation?: number;
 	}
 
 	let { x, y, width, height, fill, stroke, radius = 0, zIndex = 1, rotation = 0 }: Props = $props();
 
-	const strokeWidth = $derived(stroke?.width ?? 0);
-	const strokeColor = $derived(stroke?.color ?? 'var(--stroke-level-0)');
+	const hasPerSide = $derived(hasRectSideStroke(stroke));
+	const uniformStroke = $derived(stroke);
+	const topStroke = $derived(resolveRectStrokeSide(stroke, 'top'));
+	const rightStroke = $derived(resolveRectStrokeSide(stroke, 'right'));
+	const bottomStroke = $derived(resolveRectStrokeSide(stroke, 'bottom'));
+	const leftStroke = $derived(resolveRectStrokeSide(stroke, 'left'));
+
+	const strokeWidth = $derived(uniformStroke?.width ?? 0);
+	const strokeColor = $derived(uniformStroke?.color ?? 'var(--stroke-level-0)');
 	const fillColor = $derived(fill ?? 'none');
 
 	// Calculate perimeter for draw animation
@@ -63,6 +65,22 @@
 	// Calculate center point for rotation
 	const centerX = $derived(width / 2);
 	const centerY = $derived(height / 2);
+
+	function strokeLineCap(edgeStroke?: StrokeSegmentStyle): StrokeLineCap {
+		return edgeStroke?.linecap ?? 'butt';
+	}
+
+	function strokeDash(edgeStroke?: StrokeSegmentStyle): string | undefined {
+		return edgeStroke?.dash;
+	}
+
+	function strokeColorFor(edgeStroke?: StrokeSegmentStyle): string {
+		return edgeStroke?.color ?? 'var(--stroke-level-0)';
+	}
+
+	function strokeWidthFor(edgeStroke?: StrokeSegmentStyle): number {
+		return edgeStroke?.width ?? 0;
+	}
 </script>
 
 <svg
@@ -79,10 +97,62 @@
 		width={width - strokeWidth}
 		height={height - strokeWidth}
 		fill={fillColor}
-		stroke={strokeWidth > 0 ? strokeColor : 'none'}
-		stroke-width={strokeWidth}
-		stroke-dasharray={stroke?.dash}
+		stroke={!hasPerSide && strokeWidth > 0 ? strokeColor : 'none'}
+		stroke-width={!hasPerSide ? strokeWidth : 0}
+		stroke-dasharray={!hasPerSide ? uniformStroke?.dash : undefined}
+		stroke-linecap={!hasPerSide ? uniformStroke?.linecap ?? 'butt' : undefined}
+		stroke-linejoin={!hasPerSide ? uniformStroke?.linejoin ?? 'miter' : undefined}
 		rx={radius}
 		ry={radius}
 	/>
+	{#if hasPerSide}
+		{#if strokeWidthFor(topStroke) > 0}
+			<line
+				x1={strokeWidthFor(leftStroke) / 2}
+				y1={strokeWidthFor(topStroke) / 2}
+				x2={width - strokeWidthFor(rightStroke) / 2}
+				y2={strokeWidthFor(topStroke) / 2}
+				stroke={strokeColorFor(topStroke)}
+				stroke-width={strokeWidthFor(topStroke)}
+				stroke-dasharray={strokeDash(topStroke)}
+				stroke-linecap={strokeLineCap(topStroke)}
+			/>
+		{/if}
+		{#if strokeWidthFor(rightStroke) > 0}
+			<line
+				x1={width - strokeWidthFor(rightStroke) / 2}
+				y1={strokeWidthFor(topStroke) / 2}
+				x2={width - strokeWidthFor(rightStroke) / 2}
+				y2={height - strokeWidthFor(bottomStroke) / 2}
+				stroke={strokeColorFor(rightStroke)}
+				stroke-width={strokeWidthFor(rightStroke)}
+				stroke-dasharray={strokeDash(rightStroke)}
+				stroke-linecap={strokeLineCap(rightStroke)}
+			/>
+		{/if}
+		{#if strokeWidthFor(bottomStroke) > 0}
+			<line
+				x1={width - strokeWidthFor(rightStroke) / 2}
+				y1={height - strokeWidthFor(bottomStroke) / 2}
+				x2={strokeWidthFor(leftStroke) / 2}
+				y2={height - strokeWidthFor(bottomStroke) / 2}
+				stroke={strokeColorFor(bottomStroke)}
+				stroke-width={strokeWidthFor(bottomStroke)}
+				stroke-dasharray={strokeDash(bottomStroke)}
+				stroke-linecap={strokeLineCap(bottomStroke)}
+			/>
+		{/if}
+		{#if strokeWidthFor(leftStroke) > 0}
+			<line
+				x1={strokeWidthFor(leftStroke) / 2}
+				y1={height - strokeWidthFor(bottomStroke) / 2}
+				x2={strokeWidthFor(leftStroke) / 2}
+				y2={strokeWidthFor(topStroke) / 2}
+				stroke={strokeColorFor(leftStroke)}
+				stroke-width={strokeWidthFor(leftStroke)}
+				stroke-dasharray={strokeDash(leftStroke)}
+				stroke-linecap={strokeLineCap(leftStroke)}
+			/>
+		{/if}
+	{/if}
 </svg>

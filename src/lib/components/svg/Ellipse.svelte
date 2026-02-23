@@ -2,7 +2,7 @@
 	import { SVG, type Container } from '@svgdotjs/svg.js';
 	import { onMount, onDestroy } from 'svelte';
 	import { dev } from '$app/environment';
-	import type { StrokeStyle } from './types';
+	import type { BaseSvgProps } from './types';
 
 	/**
 	 * Ellipse: Self-positioning SVG ellipse shape.
@@ -23,7 +23,7 @@
 	 * </Fragment>
 	 * ```
 	 */
-	interface Props {
+	interface Props extends BaseSvgProps {
 		/** Center X coordinate in canvas coordinates (960×540) */
 		cx: number;
 		/** Center Y coordinate in canvas coordinates (960×540) */
@@ -32,12 +32,6 @@
 		rx: number;
 		/** Vertical radius */
 		ry: number;
-		/** Fill color */
-		fill?: string;
-		/** Stroke styling */
-		stroke?: StrokeStyle;
-		/** Z-index for stacking order */
-		zIndex?: number;
 	}
 
 	let { cx, cy, rx, ry, fill, stroke, zIndex = 1 }: Props = $props();

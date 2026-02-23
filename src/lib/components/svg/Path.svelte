@@ -2,7 +2,7 @@
 	import { SVG, type Container } from '@svgdotjs/svg.js';
 	import { onMount, onDestroy } from 'svelte';
 	import { dev } from '$app/environment';
-	import type { StrokeStyle } from './types';
+	import type { BaseSvgProps } from './types';
 
 	/**
 	 * Path: Arbitrary SVG path using SVG path data string.
@@ -22,15 +22,9 @@
 	 * </Fragment>
 	 * ```
 	 */
-	interface Props {
+	interface Props extends BaseSvgProps {
 		/** SVG path data string (d attribute) */
 		d: string;
-		/** Fill color */
-		fill?: string;
-		/** Stroke styling */
-		stroke?: StrokeStyle;
-		/** Z-index for stacking order */
-		zIndex?: number;
 	}
 
 	let { d, fill, stroke, zIndex = 1 }: Props = $props();

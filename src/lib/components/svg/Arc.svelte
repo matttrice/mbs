@@ -2,7 +2,7 @@
 	import { dev } from '$app/environment';
 	import { SVG, type Container } from '@svgdotjs/svg.js';
 	import { onMount, onDestroy } from 'svelte';
-	import type { StrokeStyle, Point } from './types';
+	import type { Point, BaseSvgProps } from './types';
 
 	/**
 	 * Arc: Self-positioning curved arrow/line using SVG arc or quadratic bezier.
@@ -31,7 +31,7 @@
 	 * </Fragment>
 	 * ```
 	 */
-	interface Props {
+	interface Props extends BaseSvgProps {
 		/** Start point in canvas coordinates (960×540) */
 		from: Point;
 		/** End point in canvas coordinates (960×540) */
@@ -48,16 +48,10 @@
 		rx?: number;
 		/** Y-radius for elliptical arc (largeArc mode). If omitted, defaults to rx (circular). */
 		ry?: number;
-		/** Stroke styling */
-		stroke?: StrokeStyle;
-		/** Fill color (typically 'none' for arcs) */
-		fill?: string;
 		/** Show arrowhead at end */
 		arrow?: boolean;
 		/** Arrow head size multiplier (default: 3) */
 		headSize?: number;
-		/** Z-index for stacking order */
-		zIndex?: number;
 	}
 
 	let { from, to, curve = -50, shift = 0, largeArc = false, rx: rxProp, ry: ryProp, stroke, fill, arrow = false, headSize = 3, zIndex = 1 }: Props = $props();

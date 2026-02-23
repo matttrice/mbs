@@ -11,6 +11,13 @@ Details explaining the extracted json data is in [hsu-extractor copilot-instruct
 
 ## Your approch to planning the json to svelte conversion:
 First analyze the json structure to identify all the custom shows, linked slides and main slides.
+
+### Legacy fallback when `custom_shows` is empty
+If `custom_shows` is empty (or missing), treat the deck as a legacy hyperlink-chain drill model:
+- Use `hyperlink.type: "slide"` relationships to reconstruct drill chains (slide → slide → ... → return-to-main).
+- Treat `linked_slides` as drill content and `slides[]` as the top-level presentation slides.
+- If classification looks ambiguous (for example too many apparent main slides), note that hyperlink-only decks should be preprocessed by hiding non-main drill slides before extraction.
+
 Plan to begin with the `custom_shows.{N>1}.slide_numbers` which is a list of ids to the linked_slides object and most dependent in relational model.
 - **json: `custom_shows{}`** Defines multi-slide sequences but may contain only a single slide reference. If only a single slide reference, create a "Standalone Drill Page" which is a +page.svelte route with the customshow name. If multiple slides are referenced in custom_shows json, you have 2 options: 
 1. Create its associated slides as separate routes using the +page.svelte [CustomShowProvider](../../src/lib/components/CustomShowProvider.svelte) **Content.svelte pattern** to aggregate multiple slide routes to the custom show route. Use this if the slide seems more complex and route might be reused in other custom shows or the main slides.
