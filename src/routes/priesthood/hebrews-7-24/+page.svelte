@@ -9,14 +9,14 @@
 	<!-- Title -->
 	<Fragment
 		layout={{ x: 106, y: 32, width: 778, height: 40 }}
-		font={{ font_size: 33.6, bold: true, align: 'left' }}
+		font={{ font_size: 36, bold: true, align: 'left' }}
 	>
 		Hebrews 7:24
 	</Fragment>
 
-	<!-- Scripture content -->
+	<!-- Scripture -->
 	<Fragment
-		layout={{ x: 106, y: 74, width: 763, height: 68 }}
+		layout={{ x: 106, y: 76, width: 764, height: 65 }}
 		font={{ font_size: 24, v_align: 'middle', wrap: true }}
 	>
 		but Jesus, on the other hand, because He continues forever, holds His priesthood permanently.

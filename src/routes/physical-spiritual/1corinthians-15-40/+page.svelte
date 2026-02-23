@@ -11,7 +11,7 @@
 
 	<div class="content">
 		<Fragment>
-			<blockquote class="scripture scripture-long">
+			<blockquote class="scripture">
 				<p>
 					So it is with the resurrection of the dead. What is sown is perishable, what is raised is imperishable. It is sown in dishonor, it is raised in glory. It is sown in weakness, it is raised in power. It is sown a physical body, it is raised a spiritual body. If there is a physical body, there is also a spiritual body.
 				</p>
@@ -23,9 +23,3 @@
 	</div>
 </div>
 </Slide>
-
-<style>
-	.scripture-long {
-		font-size: 0.95em;
-	}
-</style>

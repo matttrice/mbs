@@ -185,6 +185,7 @@
 
 	<Fragment step={4} animate="draw">
 		<Arc from={{ x: 141, y: 86 }} to={{ x: 68, y: 74 }} curve={90} shift={20} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} arrow />
+		<Arc from={{ x: 142, y: 89 }} to={{ x: 54, y: 67 }} curve={90} shift={20} stroke={{ width: 3, color: 'var(--stroke-level-3)' }} arrow />
 	</Fragment>
 
 	<!-- Step 2: Background columns swap (gray left, blue right) -->
@@ -332,7 +333,7 @@
 	>
 		Glory #3
 	</Fragment>
-
+np
 	<Fragment
 		step={17}
 		layout={{ x: center(GR, 177.8), y: 150, width: 177.8, height: 55.4 }}

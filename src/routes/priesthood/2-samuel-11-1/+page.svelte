@@ -1,8 +1,10 @@
 <script lang="ts">
-	import Slide from '$lib/components/Slide.svelte';
-	import Content from './Content.svelte';
+	import CustomShowProvider from '$lib/components/CustomShowProvider.svelte';
+	import Content1 from './Content1.svelte';
+	import Content2 from './Content2.svelte';
 </script>
 
-<Slide>
-	<Content />
-</Slide>
+<CustomShowProvider
+	name="2-samuel-11-1"
+	slides={[Content1, Content2]}
+/>

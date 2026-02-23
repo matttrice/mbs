@@ -2,7 +2,7 @@
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
 	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
-	import { Arrow, Line, Rect } from '$lib/components/svg';
+	import { Arrow, Circle, Line, Path, Rect } from '$lib/components/svg';
 
 	/**
 	 * Slide 4: Man - Soul, Spirit, Body characteristics and Trinity analogy
@@ -53,7 +53,7 @@
 	<Fragment
 		drillTo="life/hebrews-4-12"
 		layout={{ x: 355.2, y: 5.7, width: 254.6, height: 48.5 }}
-		font={{ font_size: 35, v_align: 'middle' }}
+		font={{ font_size: 35, bold: true, align: 'center'}}
 		fill="var(--bg-ghost)"
 		zIndex={39}
 	>
@@ -66,7 +66,7 @@
 	<Fragment
 		step={1}
 		layout={{ x: 140.5, y: 76.7, width: 129.5, height: 42.9 }}
-		font={{ font_size: 45, color: 'var(--text-level-3)' }}
+		font={{ font_size: 45, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={9}
 	>
 		Soul
@@ -86,7 +86,7 @@
 	<Fragment
 		step={3}
 		layout={{ x: 131.4, y: 188.6, width: 148.4, height: 62.7 }}
-		font={{ font_size: 45, color: 'var(--text-level-3)' }}
+		font={{ font_size: 45, bold: true, color: 'var(--text-level-3)' }}
 		line={{ width: 0.8 }}
 		zIndex={10}
 	>
@@ -97,8 +97,8 @@
 	<Fragment
 		step={4}
 		drillTo="life/jude-1-10"
-		layout={{ x: 85.2, y: 247.2, width: 133.9, height: 34.3 }}
-		font={{ font_size: 21.7, color: 'var(--text-level-3)' }}
+		layout={{ x: 85.2, y: 247.2, width: 120, height: 34.3 }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={13}
 	>
 		Jude 1:10
@@ -109,7 +109,7 @@
 		step={5}
 		drillTo="life/2peter-2-12"
 		layout={{ x: 206.6, y: 247.2, width: 132.7, height: 34.3 }}
-		font={{ font_size: 21.7, color: 'var(--text-level-3)' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={14}
 	>
 		2 Peter 2:12
@@ -170,7 +170,7 @@
 		step={10}
 		drillTo="life/proverbs-16-32"
 		layout={{ x: 384.1, y: 299.3, width: 172.8, height: 34.2 }}
-		font={{ font_size: 21.7, color: 'var(--text-level-3)' }}
+		font={{ font_size: 21.7, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={7}
 	>
 		Proverbs 16:32
@@ -180,7 +180,7 @@
 	<Fragment
 		step={11}
 		layout={{ x: 138.3, y: 391.6, width: 146.3, height: 62.9 }}
-		font={{ font_size: 45 }}
+		font={{ font_size: 45, bold: true }}
 		line={{ width: 0.8 }}
 		zIndex={11}
 	>
@@ -201,7 +201,7 @@
 	<Fragment
 		step={13}
 		drillTo="life/greek-hebrew-soul-spirit"
-		layout={{ x: 289.8, y: 187.5, width: 187.9, height: 64.2 }}
+		layout={{ x: 289.8, y: 186, width: 187.9, height: 64.2 }}
 		font={{ font_size: 23.3, align: 'center' }}
 		fill="var(--bg-ghost)"
 		line={{ width: 0.8, color: 'var(--stroke-level-0)' }}
@@ -214,11 +214,11 @@
 	<Fragment
 		step={14}
 		drillTo="life/1corinthians-5-5"
-		layout={{ x: 358.4, y: 391.4, width: 267.6, height: 118.5 }}
-		font={{ font_size: 26.7, align: 'center' }}
+		layout={{ x: 358.4, y: 400, width: 260, height: 118.5 }}
+		font={{ font_size: 26.7, align: 'center', wrap: true }}
 		zIndex={5}
 	>
-		1Corinthians 5:5 "spirit may be saved"<br/>John 4:24<br/>"God is spirit"
+		<strong>1 Corinthians 5:5</strong> "spirit may be saved"<br/><strong>John 4:24</strong><br/>"God is spirit"
 	</Fragment>
 
 	<!-- Step 15: Dashed line divider -->
@@ -231,14 +231,32 @@
 		<Rect x={81.1} y={394} width={286.4} height={138} fill="var(--bg-level-1)" zIndex={2} />
 	</Fragment>
 
+	<!-- Step 15.1 (with): Thought-bubble tail from 1 Corinthians 5:5 -->
+	<Fragment step={15.1}>
+		<Circle cx={568} cy={399} r={3.2} fill="var(--bg-ghost)" stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={9} />
+		<Circle cx={562} cy={392} r={5} fill="var(--bg-ghost)" stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={9} />
+		<Circle cx={552} cy={383} r={7.2} fill="var(--bg-ghost)" stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={9} />
+	</Fragment>
+
 	<!-- Step 15.1: Cloud callout - Spirit description -->
 	<Fragment
 		step={15.1}
-		layout={{ x: 362, y: 269.4, width: 271.5, height: 108.1 }}
-		font={{ font_size: 30, v_align: 'middle', align: 'center', wrap: true }}
-		fill="var(--bg-ghost)"
-		line={{ width: 0.6, color: 'var(--stroke-level-0)' }}
+		layout={{ x: 416, y: 247, width: 168, height: 148 }}
 		zIndex={8}
+	>
+		<Path
+			d="M 30,116 C 16,116 8,104 10,90 C 4,78 10,60 24,54 C 28,36 42,24 60,26 C 70,12 88,8 102,18 C 118,10 136,16 144,30 C 154,34 162,50 158,66 C 166,80 162,100 146,110 C 142,128 124,140 106,136 C 90,146 70,146 56,136 C 42,140 28,132 22,120 C 16,120 12,118 10,114 C 8,108 20,116 30,116 Z"
+			fill="var(--bg-ghost)"
+			stroke={{ width: 1, color: 'var(--stroke-level-0)' }}
+			zIndex={8}
+		/>
+	</Fragment>
+
+	<Fragment
+		step={15.1}
+		layout={{ x: 431, y: 286, width: 138, height: 83 }}
+		font={{ font_size: 12, v_align: 'middle', align: 'center', wrap: true }}
+		zIndex={10}
 	>
 		Invisible part.<br/>1. Ingredient of animal and human life.<br/>2. Collective invisible nature of life.
 	</Fragment>
@@ -319,7 +337,7 @@
 
 	<!-- Step 23: Arrow Soul→Father -->
 	<Fragment step={23} animate="wipe">
-		<Arrow from={{ x: 246.2, y: 92.2 }} to={{ x: 661.9, y: 100.3 }} stroke={{ width: 3.5, color: 'var(--text-level-3)' }} zIndex={24} />
+		<Arrow from={{ x: 260.2, y: 100.2 }} to={{ x: 689.9, y: 100.3 }} stroke={{ width: 3.5, color: 'var(--text-level-3)' }} zIndex={24} />
 	</Fragment>
 
 	<!-- Step 24: Arrow Spirit→Body (of Christ) -->

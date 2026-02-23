@@ -8,16 +8,16 @@
 
 	<!-- Title -->
 	<Fragment
-		layout={{ x: 91, y: 41, width: 778, height: 40 }}
-		font={{ font_size: 33.6, bold: true, align: 'left' }}
+		layout={{ x: 92, y: 41, width: 778, height: 40 }}
+		font={{ font_size: 36, bold: true, align: 'left' }}
 	>
 		Malachi 2:7
 	</Fragment>
 
-	<!-- Scripture content -->
+	<!-- Scripture -->
 	<Fragment
-		layout={{ x: 84, y: 82, width: 814, height: 132 }}
-		font={{ font_size: 33.6, v_align: 'middle' }}
+		layout={{ x: 84, y: 40, width: 814, height: 216 }}
+		font={{ font_size: 43, v_align: 'middle', wrap: true }}
 	>
 		"For the lips of a priest should preserve knowledge, and men should seek instruction from his mouth; for he is the messenger of the LORD of hosts.
 	</Fragment>

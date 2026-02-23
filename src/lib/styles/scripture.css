@@ -38,37 +38,6 @@
 	overflow-y: auto;
 }
 
-/* Scripture blockquote styling */
-.scripture {
-	background: var(--bg-ghost);
-	padding: 24px 32px;
-	margin: 0;
-	font-size: var(--font-size-scripture);
-	line-height: 1.6;
-	border-radius: var(--radius-card);
-	box-shadow: 0 2px 8px var(--color-shadow);
-}
-
-/* Smaller font for longer passages */
-.scripture-long {
-	font-size: var(--font-size-body);
-	line-height: 1.5;
-}
-
-.scripture-long sup {
-	font-size: 11px;
-}
-
-.scripture p {
-	margin: 0;
-}
-
-.scripture sup {
-	color: var(--text-level-1);
-	font-size: var(--font-size-verse);
-	margin-right: 2px;
-}
-
 /* Debug overlay for development */
 .debug {
 	position: fixed;

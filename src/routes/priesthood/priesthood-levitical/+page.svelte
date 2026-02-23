@@ -1,7 +1,7 @@
 <script lang="ts">
 	import CustomShowProvider from '$lib/components/CustomShowProvider.svelte';
-	import Content1 from '../levitical-priesthood/Content.svelte';
-	import Content2 from '../hebrews-9-8-10/Content.svelte';
+	import Content1 from './Content1.svelte';
+	import Content2 from './Content2.svelte';
 </script>
 
 <CustomShowProvider

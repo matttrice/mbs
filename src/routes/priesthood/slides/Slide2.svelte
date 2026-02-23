@@ -1,8 +1,7 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
-	import { Arrow, Rect, Line } from '$lib/components/svg';
+	import { Arrow, Line, Rect } from '$lib/components/svg';
 
 	interface Props {
 		slideIndex?: number;
@@ -13,30 +12,30 @@
 
 <Slide {slideIndex}>
 	<div class="slide-bg"></div>
-	<ReferenceOverlay src="/export/10-The_Priesthood/Slide2.png" />
 
 	<!-- Static: Physical Israel title -->
 	<Fragment
 		layout={{ x: 98, y: 8, width: 308, height: 40 }}
-		font={{ bold: true, color: 'var(--text-level-0)', align: 'left' }}
+		font={{ font_size: 36, bold: true, align: 'left' }}
+		zIndex={37}
 	>
 		Physical Israel
 	</Fragment>
 
-	<!-- Static: Top line -->
+	<!-- Static: Horizontal line separator -->
 	<Fragment>
-		<Line from={{ x: 48, y: 54 }} to={{ x: 912, y: 54 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={31} />
+		<Line from={{ x: 48, y: 54 }} to={{ x: 912, y: 54 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={38} />
 	</Fragment>
 
-	<!-- Step 1: Gray rectangle (left column) - instant with rectangle visible -->
-	<Fragment step={1} animate="fade">
-		<Rect x={48} y={54} width={418} height={364} fill="var(--bg-level-1)" zIndex={1} />
+	<!-- Step 1: Gray background rect -->
+	<Fragment step={1}>
+		<Rect x={48} y={54} width={418} height={364} fill="var(--bg-level-1)" zIndex={2} />
 	</Fragment>
 
-	<!-- Step 1.1: Is everyone a priest? - after -->
+	<!-- Step 1.1: Is everyone a priest? -->
 	<Fragment
 		step={1.1}
-		layout={{ x: 90, y: 84, width: 177, height: 30 }}
+		layout={{ x: 90, y: 83, width: 172, height: 28 }}
 		font={{ font_size: 16.8 }}
 		zIndex={3}
 	>
@@ -46,17 +45,17 @@
 	<!-- Step 2: No, just the Levites -->
 	<Fragment
 		step={2}
-		layout={{ x: 253, y: 84, width: 168, height: 30 }}
+		layout={{ x: 254, y: 83, width: 164, height: 28 }}
 		font={{ font_size: 16.8, italic: true }}
 		zIndex={4}
 	>
-		No, just the Levites.
+		<em>No, just the Levites.</em>
 	</Fragment>
 
-	<!-- Step 3: Could a Levite be King of Israel? -->
+	<!-- Step 3: Could a Levite be King? -->
 	<Fragment
 		step={3}
-		layout={{ x: 90, y: 104, width: 264, height: 30 }}
+		layout={{ x: 90, y: 105, width: 260, height: 28 }}
 		font={{ font_size: 16.8, v_align: 'middle' }}
 		zIndex={5}
 	>
@@ -66,442 +65,425 @@
 	<!-- Step 4: No. -->
 	<Fragment
 		step={4}
-		layout={{ x: 336, y: 104, width: 46, height: 30 }}
+		layout={{ x: 336, y: 105, width: 41, height: 28 }}
 		font={{ font_size: 16.8, italic: true, v_align: 'middle' }}
 		zIndex={6}
 	>
-		No.
+		<em>No.</em>
 	</Fragment>
 
-	<!-- Step 5: Levitical Priesthood title + frames -->
+	<!-- Step 5: Levitical Priesthood title + frames + Offices Divided -->
 	<Fragment
 		step={5}
-		layout={{ x: 120, y: 54, width: 296, height: 45 }}
+		layout={{ x: 120, y: 53, width: 291, height: 42 }}
 		font={{ font_size: 28.8, bold: true }}
-		zIndex={56}
-	>
-		Levitical Priesthood
-	</Fragment>
-
-	<!-- Step 5: Half frames (black boxes for Priests/Kings) - with previous -->
-	<Fragment step={5} animate="fade">
-		<Rect x={55} y={129} width={202} height={125} fill="var(--bg-level-0)" stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={33} />
-	</Fragment>
-	<Fragment step={5} animate="fade">
-		<Rect x={250} y={129} width={202} height={125} fill="var(--bg-level-0)" stroke={{ width: 1, color: 'var(--stroke-level-0)' }} zIndex={32} />
-	</Fragment>
-
-	<!-- Step 5: Offices Divided - with previous -->
-	<Fragment
-		step={5}
-		layout={{ x: 134, y: 184, width: 234, height: 36 }}
-		font={{ font_size: 21.6, bold: true, color: '#FFC000', wrap: true, align: 'center' }}
-		fill="var(--bg-level-0)"
-		zIndex={50}
-	>
-		Offices Divided
-	</Fragment>
-
-	<!-- Step 5.1: Priests - after -->
-	<Fragment
-		step={5.1}
-		layout={{ x: 114, y: 141, width: 116, height: 45 }}
-		font={{ font_size: 28.8, bold: true }}
-		zIndex={49}
-	>
-		Priests
-	</Fragment>
-
-	<!-- Step 5.1: Kings - with previous -->
-	<Fragment
-		step={5.1}
-		layout={{ x: 288, y: 141, width: 100, height: 45 }}
-		font={{ font_size: 28.8, bold: true }}
-		zIndex={48}
-	>
-		Kings
-	</Fragment>
-
-	<!-- Step 6: Clergy/Laity list -->
-	<Fragment
-		step={6}
-		layout={{ x: 61, y: 226, width: 275, height: 152 }}
-		font={{ font_size: 16.8, wrap: true }}
 		zIndex={7}
 	>
-		- Clergy (Levitical) / Laity<br />- Born into it<br />- Mediators  i.e. Moses<br />- Oversee holy worship<br />   (tabernacle)<br />- All die and need to be replaced<br />- Weak because of own sins
+		<strong>Levitical Priesthood</strong>
 	</Fragment>
 
-	<!-- Step 7: Arrow down + Genesis 49:10 drillTo -->
-	<Fragment step={7} animate="draw">
-		<Arrow from={{ x: 378, y: 178 }} to={{ x: 378, y: 241 }} stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={41} />
+	<Fragment step={5}>
+        <Line from={{ x: 118, y: 135 }} to={{ x: 394, y: 136 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={41} />
+    </Fragment>
+
+	<Fragment
+		step={5}
+		layout={{ x: 134, y: 184, width: 234, height: 34 }}
+		font={{ font_size: 21.6, bold: true, align: 'center', color: '#FFC000', wrap: true }}
+		fill="var(--bg-level-0)"
+		zIndex={41}
+	>
+		<strong>Offices Divided</strong>
 	</Fragment>
 
-	<!-- Step 7.1: Genesis 49:10 - after -->
+	<!-- Step 5.1: Priests + Kings -->
+	<Fragment
+		step={5.1}
+		layout={{ x: 115, y: 141, width: 112, height: 42 }}
+		font={{ font_size: 28.8, bold: true }}
+		zIndex={9}
+	>
+		<strong>Priests</strong>
+	</Fragment>
+
+	<Fragment
+		step={5.1}
+		layout={{ x: 288, y: 141, width: 95, height: 42 }}
+		font={{ font_size: 28.8, bold: true }}
+		zIndex={8}
+	>
+		<strong>Kings</strong>
+	</Fragment>
+
+	<!-- Step 6: Priest duties list -->
+	<Fragment
+		step={6}
+		layout={{ x: 62, y: 226, width: 275, height: 150 }}
+		font={{ font_size: 16.8, wrap: true }}
+		zIndex={10}
+	>
+		- Clergy (Levitical) / Laity<br />
+		- Born into it<br />
+		- Mediators  i.e. Moses<br />
+		- Oversee holy worship<br />
+		  (tabernacle)<br />
+		- All die and need to be replaced<br />
+		- Weak because of own sins
+	</Fragment>
+
+	<!-- Step 7: Vertical arrow -->
+	<Fragment step={7}>
+		<Arrow from={{ x: 376, y: 178 }} to={{ x: 376, y: 241 }} stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={49} />
+	</Fragment>
+
+	<!-- Step 7.1: Genesis 49:10 drill -->
 	<Fragment
 		step={7.1}
 		drillTo="priesthood/genesis-49-10"
-		layout={{ x: 235, y: 233, width: 236, height: 50 }}
-		font={{ font_size: 16.8, bold: true, align: 'center' }}
-		zIndex={8}
+		layout={{ x: 238, y: 233, width: 232, height: 48 }}
+		font={{ font_size: 16.8, bold: true, align: 'center', wrap: true }}
+		zIndex={11}
 	>
-		Genesis 49:10<br />Psalms 60:7, Hebrews 7:14
+		<strong>Genesis 49:10</strong><br /><strong>Psalms 60:7, Hebrews 7:14</strong>
 	</Fragment>
 
-	<!-- Step 8: Judah = Kings -->
+	<!-- Step 8: Judah = Kings + Throne of David -->
 	<Fragment
 		step={8}
-		layout={{ x: 302, y: 275, width: 167, height: 62 }}
+		layout={{ x: 302, y: 274, width: 167, height: 34 }}
 		font={{ font_size: 21.6, bold: true, wrap: true }}
-		zIndex={9}
+		zIndex={12}
 	>
-		Judah = Kings
+		<strong>Judah = Kings</strong>
 	</Fragment>
 
-	<!-- Step 8: Throne of David - with previous -->
 	<Fragment
 		step={8}
-		layout={{ x: 312, y: 301, width: 149, height: 30 }}
+		layout={{ x: 312, y: 302, width: 143, height: 28 }}
 		font={{ font_size: 16.8, bold: true }}
-		zIndex={10}
+		zIndex={13}
 	>
-		Throne of David
+		<strong>Throne of David</strong>
 	</Fragment>
 
-	<!-- Step 9: Arrow to Christ + Luke 1:30-33 drillTo -->
-	<Fragment step={9} animate="draw">
-		<Arrow from={{ x: 380, y: 324 }} to={{ x: 380, y: 350 }} stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={11} />
+	<!-- Step 9: Vertical arrow + Christ / Luke 1:30-33 drill -->
+	<Fragment step={9}>
+		<Arrow from={{ x: 380, y: 324 }} to={{ x: 380, y: 350 }} stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={14} />
 	</Fragment>
 
-	<!-- Step 9: Christ Luke 1:30-33 drillTo - with previous -->
 	<Fragment
 		step={9}
 		drillTo="priesthood/luke-1-30-33"
-		layout={{ x: 306, y: 342, width: 151, height: 62 }}
-		font={{ font_size: 21.6, bold: true, align: 'center' }}
-		zIndex={12}
+		layout={{ x: 309, y: 341, width: 147, height: 59 }}
+		font={{ font_size: 21.6, bold: true, align: 'center', wrap: true }}
+		zIndex={15}
 	>
-		Christ Luke 1:30-33
+		<strong>Christ </strong><br /><strong>Luke 1:30-33</strong>
 	</Fragment>
 
 	<!-- Step 10: What is the name of Christ's Kingdom? -->
 	<Fragment
 		step={10}
-		layout={{ x: 275, y: 405, width: 193, height: 50 }}
-		font={{ font_size: 16.8, bold: true, color: 'var(--text-level-3)', align: 'center' }}
+		layout={{ x: 278, y: 405, width: 187, height: 48 }}
+		font={{ font_size: 16.8, bold: true, align: 'center', color: 'var(--text-level-3)', wrap: true }}
 		fill="var(--bg-ghost)"
-		zIndex={13}
+		line={{ width: 4 }}
+		zIndex={16}
 	>
-		What is the name<br />of Christ's Kingdom?
+		<strong>What is the name</strong><br /><strong>of Christ's Kingdom?</strong>
 	</Fragment>
 
-	<!-- Step 11: Church title -->
+	<!-- Step 11: Church title + blue rect + question + frames -->
 	<Fragment
 		step={11}
 		layout={{ x: 597, y: 8, width: 149, height: 40 }}
-		font={{ font_size: 38.4, color: 'var(--text-level-3)', v_align: 'middle', align: 'left' }}
-		zIndex={35}
+		font={{ font_size: 38.4, v_align: 'middle', align: 'left', color: 'var(--text-level-3)' }}
+		line={{ width: 1 }}
+		zIndex={43}
 	>
 		Church
 	</Fragment>
 
-	<!-- Step 11: Blue rectangle (right column) - with previous -->
-	<Fragment step={11} animate="wipe-down">
-		<Rect x={466} y={54} width={446} height={400} fill="var(--bg-level-2)" zIndex={0} />
+	<Fragment step={11}>
+		<Rect x={466} y={54} width={446} height={400} fill="var(--bg-level-2)" zIndex={1} />
 	</Fragment>
 
-	<!-- Step 11: What is the name of the Priesthood over the CHURCH? - with previous -->
 	<Fragment
 		step={11}
-		layout={{ x: 465, y: 83, width: 447, height: 30 }}
-		font={{ font_size: 16.8, wrap: true, align: 'center' }}
-		zIndex={14}
+		layout={{ x: 464, y: 82, width: 448, height: 28 }}
+		font={{ font_size: 16.8, align: 'center', wrap: true }}
+		zIndex={17}
 	>
 		What is the name of the Priesthood over the CHURCH?
 	</Fragment>
 
-	<!-- Step 11: Half frames (black boxes for Priest/King) - with previous -->
-	<Fragment step={11} animate="fade">
-		<Rect x={682} y={129} width={202} height={125} fill="var(--bg-level-0)" zIndex={39} />
+	<Fragment step={11}>
+		<Rect x={682} y={129} width={202} height={125} fill="var(--bg-level-0)" zIndex={47} />
 	</Fragment>
-	<Fragment step={11} animate="fade">
-		<Rect x={488} y={129} width={202} height={125} fill="var(--bg-level-0)" zIndex={40} />
-	</Fragment>
+
+	<Fragment step={11}>
+        <Line from={{ x: 118, y: 135 }} to={{ x: 394, y: 136 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={41} />
+    </Fragment>
 
 	<!-- Step 12: MELCHIZEDEK -->
 	<Fragment
 		step={12}
-		layout={{ x: 575, y: 54, width: 230, height: 45 }}
+		layout={{ x: 575, y: 53, width: 224, height: 42 }}
 		font={{ font_size: 28.8, bold: true, color: 'var(--text-level-3)' }}
-		zIndex={55}
+		zIndex={18}
 	>
-		MELCHIZEDEK
+		<strong>MELCHIZEDEK</strong>
 	</Fragment>
 
-	<!-- Step 13: Priest? + Hebrews 7:23-28 drillTo -->
+	<!-- Step 13: Priest? + Hebrews 7:23-28 drill -->
 	<Fragment
 		step={13}
-		layout={{ x: 523, y: 140, width: 118, height: 45 }}
+		layout={{ x: 523, y: 140, width: 113, height: 42 }}
 		font={{ font_size: 28.8, bold: true }}
-		zIndex={52}
+		zIndex={19}
 	>
-		Priest?
+		<strong>Priest?</strong>
 	</Fragment>
 
-	<!-- Step 13: Hebrews 7:23-28 drillTo - with previous -->
 	<Fragment
 		step={13}
 		drillTo="priesthood/hebrews-7-23-28"
-		layout={{ x: 514, y: 214, width: 169, height: 29 }}
-		font={{ font_size: 16.8, bold: true, wrap: true, align: 'center' }}
-		zIndex={43}
+		layout={{ x: 514, y: 214, width: 169, height: 28 }}
+		font={{ font_size: 16.8, bold: true, align: 'center', wrap: true }}
+		zIndex={51}
 	>
-		Hebrews 7:23-28
+		<strong>Hebrews 7:23-28  </strong>
 	</Fragment>
 
-	<!-- Step 14: CHRIST (priest) -->
+	<!-- Step 14: CHRIST (under Priest) -->
 	<Fragment
 		step={14}
-		layout={{ x: 501, y: 176, width: 146, height: 50 }}
-		font={{ font_size: 33.6, bold: true, align: 'center' }}
-		zIndex={53}
+		layout={{ x: 486, y: 176, width: 176, height: 59 }}
+		font={{ font_size: 43, bold: true, align: 'center' }}
+		zIndex={20}
 	>
-		CHRIST
+		<strong>CHRIST</strong>
 	</Fragment>
 
-	<!-- Step 15: King? + Revelation 17:14 drillTo -->
+	<!-- Step 15: King? + Revelation 17:14 drill -->
 	<Fragment
 		step={15}
-		layout={{ x: 732, y: 140, width: 102, height: 45 }}
+		layout={{ x: 732, y: 140, width: 97, height: 42 }}
 		font={{ font_size: 28.8, bold: true }}
-		zIndex={15}
+		zIndex={21}
 	>
-		King?
+		<strong>King?</strong>
 	</Fragment>
 
-	<!-- Step 15: Revelation 17:14 drillTo - with previous -->
 	<Fragment
 		step={15}
 		drillTo="priesthood/revelation-17-14"
-		layout={{ x: 684, y: 215, width: 202, height: 28 }}
+		layout={{ x: 683, y: 214, width: 202, height: 28 }}
 		font={{ font_size: 16.8, bold: true, v_align: 'middle', wrap: true }}
-		zIndex={47}
+		zIndex={56}
 	>
-		Revelation 17:14,19:16
+		<strong>Revelation 17:14,19:16</strong>
 	</Fragment>
 
-	<!-- Step 16: CHRIST (king) -->
+	<!-- Step 16: CHRIST (under King) -->
 	<Fragment
 		step={16}
-		layout={{ x: 731, y: 176, width: 146, height: 50 }}
-		font={{ font_size: 33.6, bold: true, align: 'center' }}
-		zIndex={54}
+		layout={{ x: 716, y: 176, width: 176, height: 59 }}
+		font={{ font_size: 43, bold: true, align: 'center' }}
+		zIndex={22}
 	>
-		CHRIST
+		<strong>CHRIST</strong>
 	</Fragment>
 
-	<!-- Step 17: Jeremiah 33:17-18 drillTo (multi-slide custom show) -->
+	<!-- Step 17: Jeremiah 33:17-18 drill + Luke 1:30-36 drill -->
 	<Fragment
 		step={17}
-		drillTo="priesthood/jeremiah-33-17-18-custom"
-		layout={{ x: 523, y: 234, width: 186, height: 50 }}
+		drillTo="priesthood/jeremiah-33-17-18"
+		layout={{ x: 523, y: 234, width: 186, height: 48 }}
 		font={{ font_size: 16.8, bold: true, wrap: true }}
-		zIndex={16}
+		zIndex={23}
 	>
-		Jeremiah 33:17-18<br />Zechariah 6:11-13
+		<strong>Jeremiah 33:17-18</strong><br /><strong>Zechariah 6:11-13</strong>
 	</Fragment>
 
-	<!-- Step 17: Luke 1:30-36 drillTo - with previous -->
 	<Fragment
 		step={17}
 		drillTo="priesthood/luke-1-30-36"
-		layout={{ x: 685, y: 234, width: 172, height: 50 }}
+		layout={{ x: 685, y: 234, width: 172, height: 48 }}
 		font={{ font_size: 16.8, bold: true, wrap: true }}
-		zIndex={42}
+		zIndex={50}
 	>
-		Luke 1:30-36, 1:5<br />Matthew 1:1-16
+		<strong>Luke 1:30-36, 1:5</strong><br /><strong>Matthew 1:1-16</strong>
 	</Fragment>
 
-	<!-- Step 18: JESUS = High Priest and King -->
+	<!-- Step 18: JESUS = High Priest and King + rect divider + curved connector + Peace -->
 	<Fragment
 		step={18}
-		layout={{ x: 465, y: 275, width: 404, height: 39 }}
-		font={{ font_size: 24, bold: true, color: 'var(--text-level-3)', wrap: true, align: 'right' }}
-		zIndex={17}
+		layout={{ x: 465, y: 274, width: 404, height: 36 }}
+		font={{ font_size: 24, bold: true, align: 'right', color: 'var(--text-level-3)', wrap: true }}
+		zIndex={24}
 	>
-		JESUS = High Priest and King
+		<strong>JESUS = High Priest and King</strong>
 	</Fragment>
 
-	<!-- Step 18: Blue fill between frames - with previous -->
-	<Fragment step={18} animate="fade">
-		<Rect x={673} y={147} width={25} height={67} fill="var(--bg-level-2)" zIndex={44} />
+	<Fragment step={18}>
+		<Rect x={677} y={147} width={18} height={68} fill="var(--bg-level-2)" stroke={{ width: 1 }} zIndex={52} />
 	</Fragment>
 
-	<!-- Step 18: Curved arrow - with previous (simplified to straight arrow) -->
-	<Fragment step={18} animate="draw">
-		<Arrow from={{ x: 837, y: 76 }} to={{ x: 837, y: 294 }} stroke={{ width: 6, color: 'var(--stroke-level-0)' }} zIndex={36} />
+	<Fragment step={18}>
+		<Arrow from={{ x: 800, y: 75 }} to={{ x: 869, y: 293 }} stroke={{ width: 6, color: 'var(--stroke-level-0)' }} bow={0.3} zIndex={44} />
 	</Fragment>
 
-	<!-- Step 18: Peace - with previous -->
 	<Fragment
 		step={18}
 		layout={{ x: 642, y: 145, width: 90, height: 35 }}
-		font={{ font_size: 21.6, bold: true, color: '#FFC000', wrap: true, align: 'center' }}
+		font={{ font_size: 21.6, bold: true, align: 'center', color: '#FFC000', wrap: true }}
 		fill="var(--bg-level-0)"
-		zIndex={51}
+		zIndex={53}
 	>
-		Peace
+		<strong>Peace</strong>
 	</Fragment>
 
-	<!-- Step 19: Ephesians 5:22-25 drillTo (multi-slide custom show) -->
+	<!-- Step 19: Ephesians 5:22-25 drill -->
 	<Fragment
 		step={19}
-		drillTo="priesthood/ephesians-galatians-peter"
-		layout={{ x: 660, y: 304, width: 238, height: 79 }}
+		drillTo="priesthood/ephesians-5-22-25"
+		layout={{ x: 660, y: 304, width: 238, height: 77 }}
 		font={{ font_size: 19.2, bold: true, wrap: true }}
-		zIndex={18}
+		zIndex={25}
 	>
-		Ephesians 5:22-25<br />Galatians 3:26<br />1 Peter 2:9, James 1:12
+		<strong>Ephesians 5:22-25</strong><br /><strong>Galatians 3:26</strong><br /><strong>1 Peter 2:9, James 1:12</strong>
 	</Fragment>
 
-	<!-- Step 20: Christ Church King/Priests -->
+	<!-- Step 20: Christ/Church/King/Priests -->
 	<Fragment
 		step={20}
-		layout={{ x: 480, y: 300, width: 110, height: 71 }}
-		font={{ font_size: 16.8 }}
-		zIndex={19}
+		layout={{ x: 480, y: 301, width: 105, height: 68 }}
+		font={{ font_size: 16.8, wrap: true }}
+		zIndex={26}
 	>
 		Christ<br />Church<br />King/Priests
 	</Fragment>
 
-	<!-- Step 21: Husband Woman Sons -->
+	<!-- Step 21: Husband/Woman/Sons -->
 	<Fragment
 		step={21}
-		layout={{ x: 579, y: 301, width: 87, height: 71 }}
-		font={{ font_size: 16.8 }}
-		zIndex={20}
+		layout={{ x: 579, y: 301, width: 82, height: 68 }}
+		font={{ font_size: 16.8, wrap: true }}
+		zIndex={27}
 	>
 		Husband<br />Woman<br />Sons
 	</Fragment>
 
-	<!-- Step 22: If you were born into this family... -->
+	<!-- Step 22: If you were born... -->
 	<Fragment
 		step={22}
-		layout={{ x: 467, y: 371, width: 437, height: 27 }}
-		font={{ font_size: 14.4, bold: true, align: 'center' }}
-		zIndex={21}
+		layout={{ x: 471, y: 370, width: 429, height: 25 }}
+		font={{ font_size: 14.4, bold: true, align: 'center', wrap: true }}
+		zIndex={28}
 	>
-		If you were born into this family, what would that make you?
+		<strong>If you were born into this family, what would that make you?</strong>
 	</Fragment>
 
-	<!-- Step 23: Revelation 5:9-10 drillTo -->
+	<!-- Step 23: Revelation 5:9-10 drill -->
 	<Fragment
 		step={23}
 		drillTo="priesthood/revelation-5-9-10"
-		layout={{ x: 586, y: 390, width: 190, height: 30 }}
+		layout={{ x: 586, y: 390, width: 184, height: 28 }}
 		font={{ font_size: 16.8, bold: true }}
-		zIndex={38}
+		zIndex={46}
 	>
-		Revelation 5:9-10 NKJV
+		<strong>Revelation 5:9-10 NKJV</strong>
 	</Fragment>
 
 	<!-- Step 24: Sons = Kings and Priests -->
 	<Fragment
 		step={24}
-		layout={{ x: 541, y: 410, width: 311, height: 39 }}
+		layout={{ x: 541, y: 410, width: 306, height: 36 }}
 		font={{ font_size: 24, bold: true }}
-		zIndex={37}
+		zIndex={45}
 	>
-		Sons = Kings and Priests
+		<strong>Sons = Kings and Priests</strong>
 	</Fragment>
 
 	<!-- Step 25: Responsibilities / Duties -->
 	<Fragment
 		step={25}
-		layout={{ x: 221, y: 404, width: 357, height: 50 }}
-		font={{ font_size: 24, bold: true, v_align: 'middle', wrap: true, align: 'center' }}
+		layout={{ x: 220, y: 404, width: 357, height: 50 }}
+		font={{ font_size: 24, bold: true, v_align: 'middle', align: 'center', wrap: true }}
 		fill="var(--bg-level-2)"
-		zIndex={22}
+		zIndex={29}
 	>
-		Responsibilities / Duties:
+		<strong>Responsibilities / Duties:</strong>
 	</Fragment>
 
-	<!-- Step 26: Malachi 2:7 drillTo -->
+	<!-- Step 26: Malachi 2:7 drill -->
 	<Fragment
 		step={26}
 		drillTo="priesthood/malachi-2-7"
-		layout={{ x: 69, y: 411, width: 157, height: 39 }}
+		layout={{ x: 68, y: 410, width: 152, height: 36 }}
 		font={{ font_size: 24, bold: true }}
-		zIndex={34}
+		zIndex={42}
 	>
-		Malachi 2:7
+		<strong> Malachi 2:7</strong>
 	</Fragment>
 
-	<!-- Step 27: Duties to the Priesthood -->
+	<!-- Step 27: Duties to the Priesthood + arrow + HOLY -->
 	<Fragment
 		step={27}
-		layout={{ x: 266, y: 449, width: 501, height: 33 }}
-		font={{ font_size: 19.2, bold: true }}
-		zIndex={23}
+		layout={{ x: 266, y: 449, width: 496, height: 31 }}
+		font={{ font_size: 19.2, bold: true, wrap: true }}
+		zIndex={30}
 	>
-		Duties to the Priesthood:  Oversee the Holy Worship
+		<strong>Duties to the Priesthood:  Oversee the Holy Worship</strong>
 	</Fragment>
 
-	<!-- Step 27: Arrow + HOLY - with previous -->
-	<Fragment step={27} animate="wipe">
-		<Arrow from={{ x: 207, y: 464 }} to={{ x: 272, y: 464 }} stroke={{ width: 8, color: 'var(--stroke-level-3)' }} zIndex={28} />
+	<Fragment step={27}>
+		<Arrow from={{ x: 206, y: 464 }} to={{ x: 270, y: 464 }} stroke={{ width: 8, color: 'var(--stroke-level-3)' }} zIndex={35} />
 	</Fragment>
 
 	<Fragment
 		step={27}
-		layout={{ x: 85, y: 436, width: 124, height: 56 }}
+		layout={{ x: 85, y: 436, width: 118, height: 54 }}
 		font={{ font_size: 38.4, bold: true, color: 'var(--text-level-3)' }}
-		zIndex={26}
+		zIndex={33}
 	>
-		HOLY
+		<strong>HOLY</strong>
 	</Fragment>
 
-	<!-- Step 28: Duties to the Nation drillTo (multi-slide custom show) -->
+	<!-- Step 28: Duties to the Nation drill CS 11 -->
 	<Fragment
 		step={28}
-		drillTo="priesthood/2-samuel-11-1-custom"
-		layout={{ x: 267, y: 472, width: 620, height: 53 }}
+		drillTo="priesthood/2-samuel-11-1"
+		layout={{ x: 268, y: 472, width: 620, height: 51 }}
 		font={{ font_size: 19.2, bold: true, wrap: true }}
-		zIndex={24}
+		zIndex={31}
 	>
-		Duties to the Nation:  2 Samuel 11:1, Ephesians 6:10-12, Matthew 28:18-19, 2 Corinthians 10:3-6
+		<strong>Duties to the Nation:  </strong><br /><strong>2 Samuel 11:1, Ephesians 6:10-12, Matthew 28:18-19, 2 Corinthians 10:3-6</strong>
 	</Fragment>
 
-	<!-- Step 29: Spiritual Battle drillTo -->
+	<!-- Step 29: Spiritual Battle drill CS 11 -->
 	<Fragment
 		step={29}
-		drillTo="priesthood/2-corinthians-10-3-6"
-		layout={{ x: 473, y: 473, width: 367, height: 33 }}
+		drillTo="priesthood/2-samuel-11-1"
+		layout={{ x: 472, y: 472, width: 367, height: 31 }}
 		font={{ font_size: 19.2, bold: true, color: 'var(--text-level-3)', wrap: true }}
-		zIndex={2}
+		zIndex={0}
 	>
-		Spiritual Battle, Expand the boarders
+		<strong>Spiritual Battle, Expand the boarders</strong>
 	</Fragment>
 
-	<!-- Step 29.1: Arrow + ROYAL - after -->
-	<Fragment step={29.1} animate="wipe">
-		<Arrow from={{ x: 221, y: 486 }} to={{ x: 271, y: 486 }} stroke={{ width: 8, color: 'var(--stroke-level-3)' }} zIndex={29} />
+	<!-- Step 29.1: Arrow + ROYAL -->
+	<Fragment step={29.1}>
+		<Arrow from={{ x: 220, y: 486 }} to={{ x: 270, y: 486 }} stroke={{ width: 8, color: 'var(--stroke-level-3)' }} zIndex={36} />
 	</Fragment>
 
 	<Fragment
 		step={29.1}
-		layout={{ x: 77, y: 472, width: 151, height: 56 }}
+		layout={{ x: 76, y: 472, width: 147, height: 54 }}
 		font={{ font_size: 38.4, bold: true, color: 'var(--text-level-3)' }}
-		zIndex={27}
+		zIndex={34}
 	>
-		ROYAL
+		<strong>ROYAL</strong>
 	</Fragment>
 </Slide>
-
-<style>
-	:global(.slide-bg) {
-		position: absolute;
-		inset: 0;
-		background: var(--bg-ghost);
-	}
-</style>

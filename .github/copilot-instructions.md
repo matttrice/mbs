@@ -40,6 +40,7 @@ Use CSS custom properties for semantic colors instead of hardcoded hex values. T
 - `"#33CCFF"` or `"#00AAFF"` or similar blues: in font → `var(--text-level-2)` in fill → `var(--bg-level-2)` in stroke/line → `var(--stroke-level-2)`
 - `"#0000FF"` or `"#0000CC"` or similar dark blues: in font → `var(--text-level-3)`  in fill → `var(--bg-level-3)` in stroke/line → `var(--stroke-level-3)`
 - `"#FD8017"` or similar orange: in font → `var(--text-cmd-law)` in fill → `var(--bg-cmd-law)` in stroke/line → `var(--stroke-cmd-law)`
+-- `"#F4F4F4"` or similar whites: in font `var(--text-ghost)` in fill → `var(--bg-ghost)` in stroke/line → `var(--stroke-ghost)`
 
 
 **Example - Column backgrounds:**
@@ -391,9 +392,9 @@ Arc is a self-positioning curved line/arrow with two rendering modes:
 **Near-complete circle (SVG elliptical arc mode):**
 Use `largeArc` when `from` and `to` are close together and you need a loop/oval shape (e.g., PowerPoint `arc (25)` autoShapes). Provide `rx`/`ry` for elliptical shapes, or let them auto-compute from `curve`.
 ```svelte
-<Fragment step={32} animate="fade">
+<Fragment step={32} animate="draw">
   <Arc from={{ x: 154, y: 448 }} to={{ x: 132, y: 448 }} curve={-50} rx={22} ry={57} largeArc
-    stroke={{ width: 8, color: '#0000FF' }} arrow zIndex={10} />
+    stroke={{ width: 8, color: 'var(--stroke-level-3)' }} arrow zIndex={10} />
 </Fragment>
 ```
 
@@ -536,12 +537,19 @@ When `custom_shows[id].slide_numbers` has 1 **single slide** in the array do NOT
 
 **Converting Custom Shows from PowerPoint JSON when multiple slides are involved:**
 1. Find custom show: `custom_shows[id]` with `slide_numbers: [5, 6, 7, 8]`
+  - These `slide_numbers` are references to `linked_slides` entries by `slide_number` key.
 2. Find linked slides: `linked_slides["5"]`, `linked_slides["6"]`, etc.
 3. Find name for custom show by `custom_shows[id].name` (other slides link to it by hyperlink.type = "customshow", id = id, name = name)
 3. Create a route for the custom show with +page.svelte for the CustomShowProvider.
 4. For each linked slide, create its own route with Content.svelte which contains Fragments without a <Slide> wrapper. Also create a +page.svelte so the route can be directly accessed but Content can be imported to any CustomShowProvider, including this one.
 5. Aggregate all routes and Content to the custom show route, +page.svelte CustomShowProvider.
 The custom show can now be linked to from other slides using `drillTo="presentation/custom-show-route"`.
+
+**Legacy hyperlink-chain drills (no `custom_shows` present):**
+- When `custom_shows` is absent/empty, expect a legacy drill pattern where a main slide links to one or more linked slides and the chain eventually links back to the main slide.
+- This return-to-main hyperlink chain is valid presentation behavior and should be converted as a multi-slide drill sequence using the `CustomShowProvider` pattern.
+- Build the chain from `hyperlink.type = "slide"` relationships among linked slides while preserving extractor classification (`slides[]` remains top-level; `linked_slides{}` remains drill content).
+- Do not reclassify slide membership from hyperlink inference; only derive sequence/order from the hyperlink chain.
 
 ### DrillTo Chaining
 DrillTo can mimick multi-slide show behavior by chaining each slide's last fragment with a `drillTo` prop pointing to the next slide but CustomShowProvider is still the preferred approach for multi-slide custom shows.
@@ -600,6 +608,9 @@ npm run test:e2e     # Run 19 end-to-end playwright tests
 
 The [hsu-extractor](../../hsu-extractor/) parses `.pptx` files into JSON. See [hsu-extractor/README.md](../../hsu-extractor/README.md) for full JSON structure reference.
 
+> **Classification rule**: Treat `slides[]` as top-level presentation slides and `linked_slides{}` as drill content. This classification comes from extractor hidden-slide detection (hidden = linked, non-hidden = top-level).
+> Preserve this partition exactly during conversion; do not reclassify slide membership from hyperlink inference.
+
 > **CRITICAL**: The JSON is the single source of truth. Use EXACT values from the JSON for all `text`, `layout` (x, y, width, height), `font`, and `fill` properties. Never invent coordinates or estimate positions based on conceptual understanding of what the slide "should" look like. The JSON coordinates define the actual PowerPoint layout. Use batch conversion scripts or automated tools to ensure accuracy.
 
 #### Font Size Conversion
@@ -636,7 +647,7 @@ This yields **1-indexed rendered Svelte steps** (`1, 2, 3, ...`).
 **Example - cascading animation:**
 ```svelte
 <!-- Click 1: Arrow appears -->
-<Fragment step={1} animate="wipe">
+<Fragment step={1} animate="draw">
   <Arrow from={{ x: 0, y: 5 }} to={{ x: 200, y: 5 }} stroke={{ width: 10 }} />
 </Fragment>
 
@@ -817,7 +828,7 @@ When a JSON entry has both text and visual styling, keep text in a text Fragment
 
 **Becomes:**
 ```svelte
-<Fragment step={14} animate="wipe">
+<Fragment step={14} animate="draw">
   <Arrow from={{ x: 0, y: 285.3 }} to={{ x: 750.3, y: 285.3 }} stroke={{ width: 9.4 }} zIndex={30} />
 </Fragment>
 ```
@@ -885,7 +896,8 @@ Navigation state persists to `localStorage` key `mbs-nav-{route-name}`. The Rese
 - Using `step={0}` (steps are 1-indexed)
 - Using absolute paths in `drillTo` (use `"demo/ref"` not `"/demo/ref"`)
 - Using Svelte transitions on positioned Fragments (use `animate` prop instead)
-- Adding `"fade"` animate property when its the default (most Fragments fade by default)
+- Adding `"fade"` animate property when its the default for Fragments (only use `animate` when you need a non-default animation like `"draw"` or `"wipe-down"`)
+  - Arrow and Arc components should default to `"draw"` animation, not `"fade"`
 - Using zIndex on Fragment with svg Shapes which have their own zIndex
 - Nesting scripture routes under custom show folders (use flat structure at presentation level with CustomShowProvider)
 - Inconsistent content component naming in custom shows. Use `Content1.svelte`, `Content2.svelte`, etc. for multi-slide custom shows; use `Content.svelte` for single reusable content routes.

@@ -214,7 +214,7 @@
 		step={13}
 		layout={{ x: 532, y: 448, width: 376, height: 81 }}
 		fill="var(--bg-blood)"
-		font={{ font_size: 30, bold: true, align: 'left', wrap: true }}
+		font={{ font_size: 30, bold: true, align: 'center', wrap: true }}
 		line={{ width: 1, color: 'var(--stroke-level-0)' }}
         zIndex={2}
 	>
