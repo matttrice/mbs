@@ -52,14 +52,70 @@
 	z-index: 1000;
 }
 
-/* Discussion question styling */
-.question {
-	font-size: 24px;
-	font-style: italic;
-	text-align: center;
-	color: #333;
-	padding: 20px;
-	background: var(--bg-ghost);
-	border-radius: var(--radius-card);
-	box-shadow: 0 2px 8px var(--color-shadow);
+.scripture p {
+	font-size: var(--font-size-verse);
+	line-height: 1.5;
+	margin: 0;
+}
+
+.scripture sup,
+.scripture sub {
+	font-size: var(--font-size-verse);
+	line-height: 1;
+}
+
+.scripture sup {
+	vertical-align: super;
+}
+
+.scripture sub {
+	vertical-align: sub;
+}
+
+.scripture-block {
+	--scripture-title-size: var(--font-size-heading);
+	--scripture-body-size: var(--font-size-scripture);
+	--scripture-line-height: 1.18;
+	display: flex;
+	flex-direction: column;
+	gap: 0.06em;
+	width: 100%;
+	height: 100%;
+	color: var(--text-level-0);
+}
+
+.scripture-title {
+	font-size: var(--scripture-title-size);
+	font-weight: 700;
+	line-height: 1.02;
+	margin: 0;
+}
+
+.scripture-text {
+	font-size: var(--scripture-body-size);
+	line-height: var(--scripture-line-height);
+	margin: 0;
+}
+
+.scripture-text :where(sup, sub) {
+	font-size: 0.65em;
+	line-height: 1;
+}
+
+.scripture-scale-sm {
+	--scripture-title-size: 22px;
+	--scripture-body-size: 16px;
+	--scripture-line-height: 1.1;
+}
+
+.scripture-scale-md {
+	--scripture-title-size: var(--font-size-heading);
+	--scripture-body-size: var(--font-size-scripture);
+	--scripture-line-height: 1.18;
+}
+
+.scripture-scale-lg {
+	--scripture-title-size: var(--font-size-title);
+	--scripture-body-size: 24px;
+	--scripture-line-height: 1.22;
 }

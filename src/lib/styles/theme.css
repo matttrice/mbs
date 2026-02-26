@@ -65,16 +65,4 @@
 	--radius-card: 4px;
 }
 
-.scripture sup,
-.scripture sub {
-	font-size: var(--font-size-verse);
-	line-height: 1;
-}
 
-.scripture sup {
-	vertical-align: super;
-}
-
-.scripture sub {
-	vertical-align: sub;
-}
