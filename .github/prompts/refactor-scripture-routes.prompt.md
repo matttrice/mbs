@@ -20,17 +20,34 @@ If any required input is missing, ask concise clarifying questions before editin
 - Preserve original route structure and file names
 
 ## Workflow
-1. **Gather JSON entries**: Read `linked_slides` and relevant `slides` from the JSON for all scripture drill routes in scope
-2. **Match routes to JSON**: For each scripture route, match existing Fragment content to a JSON entry by comparing plain-text substrings (strip HTML from both sides). Do not analyze text differences—once matched, the JSON replaces the old content entirely.
-3. **Apply consolidation rules**: Per SKILL.md — consolidate title + body, extract inline titles, determine static vs step
-4. **Replace content**: Swap existing Fragment content with JSON `text` wrapped in `ScriptureBlock`. Use JSON `layout`, `font`, and `z_index` values for the Fragment props.
-5. **Validate**: Run diagnostics/autofix on changed files
+1. **Check for existing Route Map**: Look for a `{Lesson}-Svelte-Route-Map.md` file in the JSON folder. If one exists, use it to skip or accelerate the route-to-JSON matching step — the mappings are already established.
+2. **Gather JSON entries**: Read `linked_slides` and relevant `slides` from the JSON for all scripture drill routes in scope
+3. **Match routes to JSON**: For each scripture route, match existing Fragment content to a JSON entry by comparing plain-text substrings (strip HTML from both sides). Do not analyze text differences—once matched, the JSON replaces the old content entirely.
+4. **Save/update Svelte Route Map**: Create or update the route map file (see below).
+5. **Apply consolidation rules**: Per SKILL.md — consolidate title + body, extract inline titles, determine static vs step
+6. **Replace content**: Swap existing Fragment content with JSON `text` wrapped in `ScriptureBlock`. Use JSON `layout`, `font`, and `z_index` values for the Fragment props.
+7. **Validate**: Run diagnostics/autofix on changed files
 
 ## Validation requirements
 After edits:
 - Run Svelte autofixer for changed Svelte files
 - Run diagnostics/errors on changed files
 - Fix any introduced issues
+
+## Svelte Route Map file (required)
+After matching routes to JSON entries (step 2), create or update a **Svelte Route Map** markdown file in the same folder as the source JSON file:
+- **Path**: `{json_folder}/{Lesson}-Svelte-Route-Map.md` (e.g., `extracted/10-The_Priesthood/Priesthood-Svelte-Route-Map.md`)
+- **Purpose**: Documents the mapping between Svelte routes and JSON `linked_slides` / `custom_shows` entries for future reference and downstream tasks.
+- **If the file already exists**, update it to reflect the current state (add new routes, correct changed mappings).
+- **Format**:
+  ```markdown
+  # {Lesson} - Route-to-Slide Mapping
+
+  ## Route → JSON Linked Slide
+  - route-name/ → Slide N
+  - aggregator-route/ → CustomShowProvider (Slides N, M)
+  ```
+  List every route in scope alphabetically. For CustomShowProvider aggregators, list the constituent slide numbers.
 
 ## Output/report format (required)
 Return a concise summary including:

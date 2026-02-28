@@ -12,7 +12,7 @@
 	zIndex={1}
 >
 	<ScriptureBlock title="Ephesians 5:22-25">
-		Wives, be subject to your own husbands, as to the Lord. <sup>23</sup>&nbsp;For the husband is the head of the wife, as <strong>Christ also is the head of the church</strong>, He Himself being the Savior of the body. <sup>24</sup>&nbsp;But as the <strong>church is subject to Christ</strong>, so also the wives ought to be to their husbands in everything. <sup>25</sup>&nbsp;Husbands, love your wives, just as Christ also loved the church and gave Himself up for her,
+		Wives, be subject to your own husbands, as to the Lord. <sup>23</sup> For the husband is the head of the wife, as <strong>Christ also is the head of the church</strong>, He Himself being the Savior of the body. <sup>24</sup> But as the <strong>church is subject to Christ</strong>, so also the wives ought to be to their husbands in everything. <sup>25</sup> Husbands, love your wives, just as Christ also loved the church and gave Himself up for her,
 	</ScriptureBlock>
 </Fragment>
 

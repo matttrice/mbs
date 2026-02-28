@@ -12,7 +12,7 @@
 	font={{ v_align: 'middle', wrap: true }}
 >
 	<ScriptureBlock title="Luke 1:30-33">
-		The angel said to her, "Do not be afraid, Mary; for you have found favor with God. <sup>31</sup>&nbsp;"And behold, you will conceive in your womb and bear a son, and you shall name Him Jesus. <sup>32</sup>&nbsp;"He will be great and will be called the Son of the Most High; and the Lord God will give Him the throne of His father David; <sup>33</sup>&nbsp;and He will reign over the house of Jacob forever, and His kingdom will have no end."
+		The angel said to her, "Do not be afraid, Mary; for you have found favor with God. <sup>31</sup> "And behold, you will conceive in your womb and bear a son, and you shall name Him Jesus. <sup>32</sup> "He will be great and will be called the Son of the Most High; and the Lord God will give Him the throne of His father David; <sup>33</sup> and He will reign over the house of Jacob forever, and His kingdom will have no end."
 	</ScriptureBlock>
 </Fragment>
 

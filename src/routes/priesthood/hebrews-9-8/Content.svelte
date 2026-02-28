@@ -11,7 +11,7 @@
 	font={{ wrap: true, color: 'var(--text-ghost)', align: 'left' }}
 >
 	<ScriptureBlock title="Hebrews 9:8-10">
-		The Holy Spirit was showing by this that the way into the Most Holy Place had not yet been disclosed as long as the <strong><u>first tabernacle</u></strong> was still standing. <sup>9</sup> This is an <strong><u>illustration</u></strong> for the present time, indicating that the gifts and sacrifices being offered were <u>not able to clear the conscience</u> of the worshiper. <sup>10</sup> They are only a matter of food and drink and various ceremonial washings — <strong>external</strong> regulations applying <strong><u>until</u></strong> the time of the <strong><u>new order</u></strong>.
+		The Holy Spirit was showing by this that the way into the Most Holy Place had not yet been disclosed as long as the <strong><u>first tabernacle</u></strong> was still standing. <sup>9</sup> This is an <strong><u>illustration</u></strong> for the present time, indicating that the gifts and sacrifices being offered were <u>not able to clear the conscience</u> of the worshiper. <sup>10</sup> They are only a matter of food and drink and various ceremonial washings -- <strong>external</strong> regulations applying <strong><u>until</u></strong> the time of the <strong><u>new order</u></strong>.
 	</ScriptureBlock>
 </Fragment>
 

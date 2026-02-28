@@ -12,7 +12,7 @@
 	zIndex={4}
 >
 	<ScriptureBlock title="Jeremiah 33:17-18">
-		"For thus says the Lord: 'David shall never lack a man to sit on the throne of the house of Israel; <sup>18</sup>&nbsp;nor shall the priests, the Levites, lack a man to offer burnt offerings before Me, to kindle grain offerings, and to sacrifice continually.'
+		"For thus says the Lord: 'David shall never lack a man to sit on the throne of the house of Israel; <sup>18</sup> nor shall the priests, the Levites, lack a man to offer burnt offerings before Me, to kindle grain offerings, and to sacrifice continually.'
 	</ScriptureBlock>
 </Fragment>
 
@@ -23,7 +23,7 @@
 	zIndex={1}
 >
 	<ScriptureBlock>
-		<strong>Zechariah 6:11-13</strong><br/>"Take silver and gold, make an &#123;ornate&#125; crown and set &#123;it&#125; on the head of Joshua the son of Jehozadak, the high priest. <sup>12</sup>&nbsp;"Then say to him, 'Thus says the LORD of hosts, "Behold, a man whose name is Branch, for He will branch out from where He is; and He will build the temple of the LORD. <sup>13</sup>&nbsp;"Yes, it is He who will build the temple of the LORD, and He who will bear the honor and sit and rule on His throne. Thus, He will be a priest on His throne, and the counsel of peace will be between the two offices.'"
+		<strong>Zechariah 6:11-13</strong><br/>"Take silver and gold, make an &#123;ornate&#125; crown and set &#123;it&#125; on the head of Joshua the son of Jehozadak, the high priest. <sup>12</sup> "Then say to him, 'Thus says the LORD of hosts, "Behold, a man whose name is Branch, for He will branch out from where He is; and He will build the temple of the LORD. <sup>13</sup> "Yes, it is He who will build the temple of the LORD, and He who will bear the honor and sit and rule on His throne. Thus, He will be a priest on His throne, and the counsel of peace will be between the two offices.'"
 	</ScriptureBlock>
 </Fragment>
 
@@ -36,7 +36,7 @@
 	zIndex={3}
 >
 	<ScriptureBlock>
-		"For thus says the Lord: '<strong>David shall never lack a man </strong>to sit <strong>on the throne </strong>of the house of Israel; <sup>18</sup>&nbsp;<strong>nor shall the priests, the Levites, lack a man </strong>to offer burnt offerings before Me, to kindle grain offerings, and to sacrifice continually.'
+		"For thus says the Lord: '<strong>David shall never lack a man </strong>to sit <strong>on the throne </strong>of the house of Israel; <sup>18</sup> <strong>nor shall the priests, the Levites, lack a man </strong>to offer burnt offerings before Me, to kindle grain offerings, and to sacrifice continually.'
 	</ScriptureBlock>
 </Fragment>
 
@@ -49,7 +49,7 @@
 	zIndex={2}
 >
 	<ScriptureBlock>
-		<strong>Zechariah 6:11-13</strong><br/>"Take silver and gold, make an &#123;ornate&#125; crown and set &#123;it&#125; on the head of Joshua the son of Jehozadak, the high priest. <sup>12</sup>&nbsp;"Then say to him, 'Thus says the LORD of hosts, "Behold, a man whose name is Branch, for He will branch out from where He is; and He will build the temple of the LORD. <sup>13</sup>&nbsp;"Yes, it is He who will build the temple of the LORD, and He who will bear the honor and sit and rule on His throne. Thus, He will be a <u>priest</u> on <u>His throne</u>, and the counsel of <strong>peace will be between the two offices</strong>.'"
+		<strong>Zechariah 6:11-13</strong><br/>"Take silver and gold, make an &#123;ornate&#125; crown and set &#123;it&#125; on the head of Joshua the son of Jehozadak, the high priest. <sup>12</sup> "Then say to him, 'Thus says the LORD of hosts, "Behold, a man whose name is Branch, for He will branch out from where He is; and He will build the temple of the LORD. <sup>13</sup> "Yes, it is He who will build the temple of the LORD, and He who will bear the honor and sit and rule on His throne. Thus, He will be a <u>priest</u> on <u>His throne</u>, and the counsel of <strong>peace will be between the two offices</strong>.'"
 	</ScriptureBlock>
 </Fragment>
 

@@ -29,7 +29,7 @@
 	zIndex={1}
 >
 	<ScriptureBlock>
-		<strong>Ephesians 6:10-12</strong><br/>Finally, my brethren, be strong in the Lord and in the power of His might. <sup>11</sup>&nbsp;Put on the whole armor of God, that you may be able to stand against the wiles of the devil. <sup>12</sup>&nbsp;For we do not wrestle against flesh and blood, but against principalities, against powers, against the rulers of the darkness of this age, against spiritual hosts of wickedness in the heavenly places.
+		<strong>Ephesians 6:10-12</strong><br/>Finally, my brethren, be strong in the Lord and in the power of His might. <sup>11</sup> Put on the whole armor of God, that you may be able to stand against the wiles of the devil. <sup>12</sup> For we do not wrestle against flesh and blood, but against principalities, against powers, against the rulers of the darkness of this age, against spiritual hosts of wickedness in the heavenly places.
 	</ScriptureBlock>
 </Fragment>
 
@@ -40,7 +40,7 @@
 	zIndex={2}
 >
 	<ScriptureBlock>
-		<strong>Matthew 28:18-19</strong><br/>And Jesus came and spoke to them, saying, "All authority has been given to Me in heaven and on earth. <sup>19</sup>&nbsp;Go therefore and make disciples of all the nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit
+		<strong>Matthew 28:18-19</strong><br/>And Jesus came and spoke to them, saying, "All authority has been given to Me in heaven and on earth. <sup>19</sup> Go therefore and make disciples of all the nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit
 	</ScriptureBlock>
 </Fragment>
 

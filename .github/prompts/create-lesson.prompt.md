@@ -16,6 +16,8 @@ First analyze the json structure to identify all the custom shows, linked slides
 Use `slides[]` as the authoritative top-level slide set and `linked_slides{}` as drillTo/custom show content.
 Do not move slides between these sets based on hyperlink inference; preserve extractor classification exactly.
 
+**Check for existing Route Map**: Before building the plan from scratch, look for a `{Lesson}-Svelte-Route-Map.md` file in the JSON folder. If one exists from a prior run, use it to accelerate planning — the route-to-slide mappings and CustomShowProvider groupings are already established.
+
 Plan to begin with the `custom_shows.{N>1}.slide_numbers` which is a list of `slide_number` references into `linked_slides{}` and is the most dependent relational mapping.
 - **json: `custom_shows{}`** Defines multi-slide sequences but may contain only a single slide reference. If only a single slide reference is in the custom_shows, create a "Standalone Drill Page" which is a single +page.svelte with the <Slide> and Fragments within and drillTo it - this is most common. 
 If multiple slides are referenced in custom_shows json, you have 2 options: 
@@ -33,3 +35,21 @@ Next process the main top-level slides array:
 - **json:`slides[]`** - This array defines the main presentation slides in `routes/{lesson}/slides/Slide{N}.svelte` and are the most complex (unless its the The End slide) with potentially many fragment elements and drillTo links which maybe a custom show or direct reference depending on what was created earlier. These slides drive the presentation you should be careful to get all animations, shape structures and positioning translated correctly to the svelte app. At the end of the conversion process you should check you have `routes/{lesson}/slides/Slide{N}.svelte` representing each entry in this array.
 
 Finally run the test suite to check for errors and fix any issues found.
+
+## Svelte Route Map file (required)
+After creating all routes, create a **Svelte Route Map** markdown file in the same folder as the source JSON file:
+- **Path**: `{json_folder}/{Lesson}-Svelte-Route-Map.md` (e.g., `extracted/10-The_Priesthood/Priesthood-Svelte-Route-Map.md`)
+- **Purpose**: Documents the mapping between Svelte routes and JSON `linked_slides` / `custom_shows` / `slides[]` entries for future reference and downstream tasks (e.g., scripture refactoring).
+- **Format**:
+  ```markdown
+  # {Lesson} - Route-to-Slide Mapping
+
+  ## Route → JSON Linked Slide
+  - route-name/ → Slide N
+  - aggregator-route/ → CustomShowProvider (Slides N, M)
+
+  ## Main Slides
+  - Slide1.svelte → JSON slides[0] (slide_number N)
+  - Slide2.svelte → JSON slides[1] (slide_number M)
+  ```
+  List every route alphabetically under "Route → JSON Linked Slide". For CustomShowProvider aggregators, list the constituent slide numbers. Under "Main Slides", map each `Slide{N}.svelte` to its `slides[]` entry.

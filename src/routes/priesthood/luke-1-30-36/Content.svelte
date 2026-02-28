@@ -73,7 +73,7 @@
 	zIndex={8}
 >
 	<ScriptureBlock>
-		<strong>Matthew 1:1, 16</strong><br/>The&nbsp;record of the genealogy of&nbsp;Jesus&nbsp;the Messiah,&nbsp;the son of David,&nbsp;the son of Abraham: <sup>2</sup>Abraham was the father of Isaac, Isaac the father of Jacob, and Jacob the father of Judah and his brothers. <sup>3 </sup>Judah was the father of Perez and Zerah by Tamar, Perez… Obed the father of Jesse,<sup>6&nbsp;</sup>and Jesse the father of King David…<br/><sup>16</sup> Jacob was the father of Joseph the husband of Mary, by whom Jesus was born, who is called the Messiah.
+		<strong>Matthew 1:1, 16</strong><br/>The record of the genealogy of Jesus the Messiah, the son of David, the son of Abraham: <sup>2</sup>Abraham was the father of Isaac, Isaac the father of Jacob, and Jacob the father of Judah and his brothers. <sup>3 </sup>Judah was the father of Perez and Zerah by Tamar, Perez... Obed the father of Jesse,<sup>6 </sup>and Jesse the father of King David...<br/><sup>16</sup> Jacob was the father of Joseph the husband of Mary, by whom Jesus was born, who is called the Messiah.
 	</ScriptureBlock>
 </Fragment>
 
