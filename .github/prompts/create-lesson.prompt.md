@@ -9,6 +9,9 @@ Images for `"shape_type": "picture"` are located in the [static/export](../../st
 
 Details explaining the extracted json data is in [hsu-extractor copilot-instructions](../../../hsu-extractor/.github/copilot-instructions.md) and details on the svelte destination structure are in [mbs copilot-instructions](../copilot-instructions.md).
 
+#### Scripture Reference Routes
+When you encounter scripture reference slides (drillto/custom shows), use the [scripture-references SKILL.md](../skills/scripture-references/SKILL.md) skill to convert them to the appropriate structure and `ScriptureBlock` usage in drillto routes. You will need to plan ahead for this for each drill during the json to svelte conversion for fragments as it has key consolidation instructions for sequences. This will ensure consistency across all scripture reference content in the project.
+
 ## Your approach to planning the json to svelte conversion:
 First analyze the json structure to identify all the custom shows, linked slides and main slides.
 Use `slides[]` as the authoritative top-level slide set and `linked_slides{}` as drillTo/custom show content.

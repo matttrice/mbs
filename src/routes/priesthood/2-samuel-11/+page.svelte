@@ -1,10 +1,10 @@
 <script lang="ts">
 	import CustomShowProvider from '$lib/components/CustomShowProvider.svelte';
-	import Content1 from '../jeremiah-33-17/Content.svelte';
-	import Content2 from '../luke-1-30-36/Content.svelte';
+	import Content1 from '../2-samuel-11-1/Content.svelte';
+	import Content2 from '../2-corinthians-10-3/Content.svelte';
 </script>
 
 <CustomShowProvider
-	name="jeremiah-33-17-18"
+	name="2-samuel-11"
 	slides={[Content1, Content2]}
 />

@@ -111,7 +111,7 @@ The `Fragment` component handles hide/show for all slide content.
   layout={{ x: 100, y: 100, width: 180, height: 30 }}
   font={{ font_size: 18, color: 'var(--text-level-3)' }}
 >
-  Genesis 12:1-3
+  First click reveals this text
 </Fragment>
 ```
 
@@ -506,10 +506,8 @@ For single-slide custom shows (linked slides that stand alone), use `<Slide>` wi
 
 <Slide>
   <div class="drill-content">
-    <h1>Genesis 12:1-3</h1>
-    
     <Fragment step={1}>
-      <p>Scripture content here...</p>
+      <p>Content here...</p>
     </Fragment>
   </div>
 </Slide>
@@ -676,7 +674,7 @@ This yields **1-indexed rendered Svelte steps** (`1, 2, 3, ...`).
       "timing": "click",
       "text": "Genesis 12:1-3",
       "layout": { "x": 100, "y": 50, "width": 200, "height": 30 },
-      "font": { "font_size": 24, "bold": true, "color": "#0000CC" },
+      "font": {"color": "#0000CC" },
       "hyperlink": { "type": "customshow", "id": 2 }
     },
     { 
@@ -734,7 +732,7 @@ Becomes:
     layout={{ x: 100, y: 50, width: 200, height: 30 }}
     font={{ font_size: 24, bold: true, color: 'var(--bg-level-3)' }}
   >
-    Genesis 12:1-3
+    Promises
   </Fragment>
   
   <!-- timing: "with" = same step as previous click -->
@@ -766,18 +764,13 @@ Becomes:
 </script>
 
 <Slide>  <!-- No slideIndex = standalone drill mode -->
-  <div class="drill-content">
-    <Fragment layout={{ x: 50, y: 20, width: 860, height: 40 }} font={{ font_size: 28, bold: true }}>
-      Genesis 12:1-3
+    <Fragment layout={...} font={{ align: 'left', v_align: 'middle', wrap: true }}>
+      <ScriptureBlock title="Hebrews 7:24">
+        ...scripture text...
+      </ScriptureBlock>
     </Fragment>
-    <Fragment step={1} layout={{ x: 50, y: 80, width: 860, height: 400 }} font={{ font_size: 20 }}>
-      <blockquote>1 Now the LORD said...</blockquote>
-    </Fragment>
-  </div>
 </Slide>
 ```
-
-The `.drill-content` class is defined in `$lib/styles/scripture.css`.
 
 #### Shapes Without Text (SVG Components)
 

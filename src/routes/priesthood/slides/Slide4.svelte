@@ -12,9 +12,10 @@
 <Slide {slideIndex}>
 	<div class="slide-bg"></div>
 
+	<!-- Static: Title -->
 	<Fragment
 		layout={{ x: 76, y: 26, width: 778, height: 40 }}
-		font={{ font_size: 36, bold: true, align: 'left' }}
+		font={{ align: 'left', bold: true }}
 	>
 		The End
 	</Fragment>
