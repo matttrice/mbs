@@ -1,4 +1,4 @@
-# MBS (Master Bible Study) - AI Coding Guidelines
+# MBS (Master Bible Study) - AI Coding and JSON Conversion Guidelines
 
 ## Architecture Overview
 
@@ -456,7 +456,7 @@ Presentations use `PresentationProvider` to orchestrate slides. Each slide compo
 </PresentationProvider>
 ```
 
-**Slide component (`slides/Slide1.svelte`):**
+**Main Slide components (`slides/Slide1.svelte`):**
 ```svelte
 <script lang="ts">
   import Slide from '$lib/components/Slide.svelte';
@@ -518,7 +518,9 @@ For single-slide custom shows (linked slides that stand alone), use `<Slide>` wi
 **Important Content pattern** A PowerPoint slide may have a hyperlink to a custom show. When a custom show contains multiple slides (e.g., json `custom_shows[id].slide_numbers` has >1 entries) use `CustomShowProvider` to import multiple content components representing each slide/topic in the custom show. You may also aggregate other routes, but those should expose content components plus route `+page.svelte` entry points.
 
 **Single-slide custom shows**
-When `custom_shows[id].slide_numbers` has 1 **single slide** in the array do NOT use the CustomShowProvider/Content.svelte pattern, instead only a route/+page.svelte is needed with a <Slide>. Create the route with a single +page.svelte with the <Slide> and Fragments within and drillTo it. In both cases, other slides can "drillTo" route and return to the origin slide when complete. Scan the repository for examples of both patterns and use the best fit for the custom show being created. - **Flat structure**: Scripture routes live at the presentation level (e.g., `biblical-time/matthew-5`).
+When `custom_shows[id].slide_numbers` has 1 **single slide** in the array do NOT use the CustomShowProvider/Content.svelte pattern, instead only a route/+page.svelte is needed with a <Slide> within the +page.svelte. Create the route with a single +page.svelte with the <Slide> and Fragments within and drillTo it. 
+In both cases, other slides can "drillTo" route and return to the origin slide when complete.  
+- **Flat structure**: Scripture routes live at the presentation level (e.g., `biblical-time/matthew-5`).
 
 **Key concepts:**
 - **Content components**: Slide content without `<Slide>` wrapper—just Fragment elements. For multi-slide custom shows, name these `Content1.svelte`, `Content2.svelte`, etc. For single reusable content routes, `Content.svelte` is acceptable.
@@ -828,7 +830,8 @@ When a JSON entry has both text and visual styling, keep text in a text Fragment
 
 #### Images (Pictures)
 
-JSON entries with `shape_type: "picture"` represent embedded images. Images are saved to `mbs/static/export/{presentation}/`. Find the image  and use Fragment's `layout` prop to position them.
+Images for `"shape_type": "picture"` are located in the `mbs/static/export/{presentation}/` folder and identified by the `image` field in the json.
+Find the image  and use Fragment's `layout` prop to position them.
 
 **JSON picture entry:**
 ```json
