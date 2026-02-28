@@ -463,7 +463,7 @@
 	<!-- Step 33: Genesis 1:1-3 (hyperlink) -->
 	<Fragment
 		step={33}
-		drillTo="physical-spiritual/genesis-1-1"
+		drillTo="physical-spiritual/creation-equation"
 		layout={{ x: center(GL, 160.2), y: 437.5, width: 160.2, height: 30.8 }}
 		font={{ font_size: 20, bold: true }}
 		fill="var(--bg-ghost)"

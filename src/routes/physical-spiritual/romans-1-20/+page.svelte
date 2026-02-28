@@ -1,31 +1,27 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <Slide>
-<div class="drill-content">
-	<header>
-		<h1>Romans 1:20</h1>
-	</header>
+	<div class="slide-bg"></div>
 
-	<div class="content">
-		<Fragment>
-			<blockquote class="scripture">
-				<p>
-					<sup>20</sup> For since the creation of the world God's invisible qualities—his eternal power and divine nature—have been clearly seen, being understood from what has been made, so that men are without excuse.
-				</p>
-			</blockquote>
-		</Fragment>
+	<Fragment
+		layout={{ x: 111, y: 73, width: 768, height: 309 }}
+		font={{ align: 'left', wrap: true }}
+	>
+		<ScriptureBlock title="Romans 1:20">
+			<sup>20</sup>For since the creation of the world God's invisible qualities--his eternal power and divine nature--have been clearly seen, being understood from what has been made, so that men are without excuse. <br/>
+		</ScriptureBlock>
+	</Fragment>
 
-		<Fragment 
+	<Fragment
 		step={1}
-		layout={{ x: 73, y: 49, width: 796, height: 476 }}
-		font={{ font_size: 33, align: 'center', wrap: true, color: 'var(--bg-level-3)', bold: true }}
-
-		>
-			How can invisible qualities be clearly seen?
-		</Fragment>
-	</div>
-</div>
+		layout={{ x: 170, y: 382, width: 650, height: 42 }}
+		font={{ font_size: 30, bold: true, color: 'var(--text-level-3)', wrap: true }}
+		zIndex={2}
+	>
+		<strong>How can <u>invisible qualities</u> be <u>clearly seen</u>? </strong>
+	</Fragment>
 </Slide>

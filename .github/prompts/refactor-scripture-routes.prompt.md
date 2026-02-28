@@ -13,19 +13,16 @@ This refactor applies to scripture routes only (`src/routes/{scope}`) and does *
 
 If any required input is missing, ask concise clarifying questions before editing.
 
-## Scope guardrails
-- Do not edit SVG components (`Arrow`, `Arc`, `Line`, `Rect`, etc.)
-- Do not change `step`, `exitStep`, `drillTo`, `returnHere`, `autoDrill`, `animate`, `zIndex`, layout coordinates, fill, or line props unless consolidation requires moving equivalent wrappers
-- Do not alter non-scripture Fragments
-- Preserve original route structure and file names
+## Route name guardrails
+- If you change a route name, you must change all Fragments in the presentation that drillTo it to match the new route name. This is critical to maintain drillTo integrity and must be applied to the required output Svelte Route Map file described below.
 
 ## Workflow
-1. **Check for existing Route Map**: Look for a `{Lesson}-Svelte-Route-Map.md` file in the JSON folder. If one exists, use it to skip or accelerate the route-to-JSON matching step — the mappings are already established.
+1. **Check for existing Route Map**: Look for a `{Lesson}-Svelte-Route-Map.md` file in the JSON folder. If one exists, use it to skip or accelerate the route-to-JSON matching step — the mappings are already established. Othwise, you will need to do the matching yourself as described in step 2 and build the route map which will be an expected (required) output.
 2. **Gather JSON entries**: Read `linked_slides` and relevant `slides` from the JSON for all scripture drill routes in scope
 3. **Match routes to JSON**: For each scripture route, match existing Fragment content to a JSON entry by comparing plain-text substrings (strip HTML from both sides). Do not analyze text differences—once matched, the JSON replaces the old content entirely.
 4. **Save/update Svelte Route Map**: Create or update the route map file (see below).
 5. **Apply consolidation rules**: Per SKILL.md — consolidate title + body, extract inline titles, determine static vs step
-6. **Replace content**: Swap existing Fragment content with JSON `text` wrapped in `ScriptureBlock`. Use JSON `layout`, `font`, and `z_index` values for the Fragment props.
+6. **Replace content**: For each matched route, replace the **entire** scripture text block with the JSON `text` value. Do not diff or patch individual characters — overwrite the whole block. Use JSON `layout`, `font`, and `z_index` values for the Fragment props.
 7. **Validate**: Run diagnostics/autofix on changed files
 
 ## Validation requirements
@@ -62,4 +59,4 @@ MBS Coding guidance: [mbs copilot-instructions](../copilot-instructions.md)
 
 ## Non-negotiable rules
 - **Inventing or modifying text content is forbidden.** Use exact JSON `text` values only.
-- **JSON replaces existing Svelte text unconditionally.** Do not compare or merge — the JSON is the new source of truth. Existing route text is only used for matching purposes to identify the correct JSON entry.
+- **JSON replaces existing Svelte text unconditionally.** Do not compare, diff, or merge — the JSON is the new source of truth. Existing route text is only used for matching purposes to identify the correct JSON entry. Once matched, overwrite the entire scripture text block wholesale. Do not catalog or report character-level differences (e.g., `&nbsp;` vs space, em dash vs `--`); those details are irrelevant when doing a full replacement.

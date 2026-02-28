@@ -180,12 +180,12 @@
 
 	<!-- EMC2 Arrows -->
 	<Fragment step={3} animate="draw">
-		<Arc from={{ x: 77, y: 80 }} to={{ x: 114, y: 79 }} curve={-50} stroke={{ width: 3, color: 'var(--bg-level-3)' }} arrow  />
+		<Arc from={{ x: 77, y: 80 }} to={{ x: 109, y: 81 }} curve={-50} stroke={{ width: 3, color: 'var(--bg-level-3)' }} arrow  />
 	</Fragment>
 
 	<Fragment step={4} animate="draw">
-		<Arc from={{ x: 141, y: 86 }} to={{ x: 68, y: 74 }} curve={90} shift={20} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} arrow />
-		<Arc from={{ x: 142, y: 89 }} to={{ x: 54, y: 67 }} curve={90} shift={20} stroke={{ width: 3, color: 'var(--stroke-level-3)' }} arrow />
+		<Arc from={{ x: 122, y: 89 }} to={{ x: 51, y: 79 }} curve={90} shift={20} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} arrow />
+		<Arc from={{ x: 152, y: 93 }} to={{ x: 65, y: 80 }} curve={90} shift={20} stroke={{ width: 3, color: 'var(--stroke-level-3)' }} arrow />
 	</Fragment>
 
 	<!-- Step 2: Background columns swap (gray left, blue right) -->

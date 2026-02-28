@@ -1,32 +1,26 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <Slide>
-<div class="drill-content">
-	<header>
-		<h1>Colossians 1:15-16</h1>
-	</header>
+	<div class="slide-bg"></div>
 
-	<div class="content">
-		<Fragment>
-			<blockquote class="scripture">
-				<p>
-					<sup>15</sup> He is the image of the invisible God, the firstborn of all creation. <sup>16</sup> For by Him all things were created, both in the heavens and on earth, visible and invisible, whether thrones or dominions or rulers or authorities—all things have been created through Him and for Him.
-				</p>
-			</blockquote>
-			<p class="version">NASB95</p>
-		</Fragment>
-	</div>
-</div>
+	<Fragment
+		layout={{ x: 99, y: 53, width: 773, height: 302 }}
+		font={{ align: 'left', wrap: true }}
+	>
+		<ScriptureBlock title="Colossians 1:15-16">
+			He is the image of the invisible God, the firstborn of all creation.  <sup>16</sup>For by Him <u>all things were created</u>, both in the <strong>heavens and on earth, visible and invisible</strong>, whether thrones or dominions or rulers or authorities--<u>all things</u> have been created through Him and for Him.
+		</ScriptureBlock>
+	</Fragment>
+
+	<Fragment
+		layout={{ x: 805, y: 424, width: 77, height: 26 }}
+		font={{ font_size: 16.7 }}
+		zIndex={2}
+	>
+		NASB95
+	</Fragment>
 </Slide>
-
-<style>
-	.version {
-		text-align: right;
-		font-size: 0.9em;
-		color: #666;
-		margin-top: 1em;
-	}
-</style>
