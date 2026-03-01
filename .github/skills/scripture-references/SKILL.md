@@ -111,7 +111,31 @@ Use: `src/lib/components/ScriptureBlock.svelte`
 
 - `title` is optional but rarely used without a title. Absences of title is more common in reveal blocks where the title is revealed in an earlier step and the body of multiple verses is revealed in a later step.
 - default scale is `md` (do not pass `scale="md"` unless explicitly needed)
-- pass `scale="sm"` or `scale="lg"` only when content density requires it as overflow is obvious
+- pass `scale="sm"` or `scale="lg"` based on the scale heuristic below
+
+### Scale selection heuristic
+
+Apply this heuristic **regardless of JSON font sizes** — scale choice is a layout concern driven by content density and slide composition, not by the source PowerPoint styling.
+
+**Use `scale="lg"` when ALL of the following are true:**
+1. **Low word count**: Total scripture body text across all ScriptureBlocks on the page/content is roughly ≤ 120 words. As a rule of thumb, a single block of ~50 words is a guaranteed `lg`; even 3 blocks of ~50 words each (~150 total) still warrants `lg`.
+2. **Scripture-only content**: The page has no SVG shape elements (Arrow, Line, Rect, Arc, Circle, Ellipse, Path, Polygon) that compete for canvas space.
+3. **Few scripture blocks**: ≤ 3 ScriptureBlock Fragments on the page.
+
+**Confidence modifiers:**
+- **High confidence** for `lg`: Scripture Fragments are the only content on the slide (possibly with small non-scripture labels like version/translation indicators). This covers the vast majority of single-slide drill routes.
+- **Lower confidence** for `lg`: Other visual elements (shapes, arrows, lines, images) coexist on the slide. In this case, default to `md` unless the scripture is clearly small and the layout has ample room.
+
+**Use default `md` (omit scale prop) when:**
+- Total scripture text is roughly 120–200 words, or
+- SVG shapes / visual elements are present alongside scripture, or
+- More than 3 ScriptureBlock Fragments share the page
+
+**Use `scale="sm"` when:**
+- A single ScriptureBlock contains ~250+ words (dense multi-verse passages), or
+- Total scripture text across all blocks exceeds ~250 words
+
+**The word-count thresholds are guidelines, not hard rules.** When in doubt, prefer `lg` for scripture-only drill routes with modest text and `md` when other elements are present.
 
 ### Preferred patterns
 
