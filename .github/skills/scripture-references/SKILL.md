@@ -110,8 +110,49 @@ Example: `{Book} {Chapter}:{VerseOrRange}` title in `animation_sequence` step 1 
 Use: `src/lib/components/ScriptureBlock.svelte`
 
 - `title` is optional but rarely used without a title. Absences of title is more common in reveal blocks where the title is revealed in an earlier step and the body of multiple verses is revealed in a later step.
+- `version` is optional. Use it to indicate the Bible translation (e.g., `"NIV"`, `"NASB95"`, `"KJV"`). The value is free text—not restricted to a fixed list. Common values include: KJV, NKJV, NIV, NIV2020, NASB, NASB95, NASB2020, RSV, NET.
 - default scale is `md` (do not pass `scale="md"` unless explicitly needed)
 - pass `scale="sm"` or `scale="lg"` based on the scale heuristic below
+
+### Version prop extraction rules
+When converting from JSON or refactoring existing routes, extract inline Bible version references to the `version` prop. This standardizes the citation position and styling.
+
+**Inline version indicators to extract:**
+- Parenthesized at end of text: `(NIV)`, `(NASB95)`, `(KJV)`, etc.
+- Wrapped in `<sub>` or `<sup>` or `<em>` tags: `<sub>(NIV)</sub>`
+- Plain text after scripture body: `NASB95` at end of text
+
+**Extraction rule:** Remove the version text (including surrounding parentheses, `<sub>` tags, and leading whitespace) from the ScriptureBlock body content and move it to the `version` prop.
+
+**Separate Fragment version labels:** When a version label exists as its own standalone Fragment (e.g., a Fragment containing just `NIV` positioned at the bottom-right of the slide), remove that Fragment entirely and add the `version` prop to the associated ScriptureBlock(s) instead.
+
+**When the version is part of the title** (e.g., `title="2 Corinthians 4:3-4 NIV"`), leave it in the title as-is — do not extract it to the `version` prop.
+
+**Example — inline extraction:**
+```svelte
+<!-- Before: version inline in text -->
+<ScriptureBlock title="Jeremiah 33:14-18">
+	"'The days are coming,' declares the LORD... <sub>(NIV)</sub>
+</ScriptureBlock>
+
+<!-- After: version extracted to prop -->
+<ScriptureBlock title="Jeremiah 33:14-18" version="NIV">
+	"'The days are coming,' declares the LORD...
+</ScriptureBlock>
+```
+
+**Example — separate Fragment removal:**
+```svelte
+<!-- Before: version as standalone Fragment -->
+<Fragment layout={{ x: 829, y: 486, width: 48, height: 30 }} font={{ font_size: 20 }}>
+	NIV
+</Fragment>
+
+<!-- After: Fragment removed, version added to ScriptureBlock -->
+<ScriptureBlock title="2 Corinthians 3:7-11" version="NIV">
+	...scripture text...
+</ScriptureBlock>
+```
 
 ### Scale selection heuristic
 
@@ -127,15 +168,19 @@ Apply this heuristic **regardless of JSON font sizes** — scale choice is a lay
 - **Lower confidence** for `lg`: Other visual elements (shapes, arrows, lines, images) coexist on the slide. In this case, default to `md` unless the scripture is clearly small and the layout has ample room.
 
 **Use default `md` (omit scale prop) when:**
-- Total scripture text is roughly 120–200 words, or
+- Total scripture text is roughly 120–350 words in a single Fragment, or
 - SVG shapes / visual elements are present alongside scripture, or
 - More than 3 ScriptureBlock Fragments share the page
 
-**Use `scale="sm"` when:**
-- A single ScriptureBlock contains ~250+ words (dense multi-verse passages), or
-- Total scripture text across all blocks exceeds ~250 words
+A single large Fragment (e.g., `layout={{ x: 38, y: 18, width: 884, height: 487 }}`) can comfortably hold ~300 words at `md` scale with room to spare. Reference: `law/romans-3-19-niv` and `law/romans-3-19-nasb` are ~280 words each and represent the approximate threshold for `md`.
 
-**The word-count thresholds are guidelines, not hard rules.** When in doubt, prefer `lg` for scripture-only drill routes with modest text and `md` when other elements are present.
+**Use `scale="sm"` when:**
+- **Multiple Fragments** compete for vertical space on the same page and text overflows at `md`, or
+- Total scripture text across all blocks exceeds ~350 words **and** layout space is constrained
+
+`sm` is rarely appropriate for a single large Fragment—even dense single-block passages of 300+ words typically fit at `md` when the Fragment layout is near-full-canvas. Only reach for `sm` when multiple Fragments must share limited canvas space.
+
+**The word-count thresholds are guidelines, not hard rules.** When in doubt, prefer `lg` for scripture-only drill routes with modest text and `md` for everything else. Reserve `sm` for genuine multi-fragment space constraints.
 
 ### Preferred patterns
 
@@ -143,6 +188,15 @@ Single consolidated block:
 ```svelte
 <Fragment layout={...} font={{ align: 'left', v_align: 'middle', wrap: true }}>
 	<ScriptureBlock title="Hebrews 7:24">
+		...scripture text...
+	</ScriptureBlock>
+</Fragment>
+```
+
+With version attribution:
+```svelte
+<Fragment layout={...} font={{ align: 'left', v_align: 'middle', wrap: true }}>
+	<ScriptureBlock title="Hebrews 7:11-19" version="NASB95">
 		...scripture text...
 	</ScriptureBlock>
 </Fragment>

@@ -10,8 +10,8 @@
 	layout={{ x: 92, y: 18, width: 784, height: 337 }}
 	font={{ wrap: true, align: 'left' }}
 >
-	<ScriptureBlock title="Jeremiah 33:14-18">
-		"'The days are coming,' declares the LORD, 'when I will fulfill the gracious promise I made to the house of Israel and to the house of Judah. <sup>15</sup> "'In those days and at that time I will make a righteous Branch sprout from David's line; he will do what is just and right in the land. <sup>16</sup> In those days Judah will be saved and Jerusalem will live in safety. This is the name by which it will be called: The LORD Our Righteousness.' <sup>17</sup> For this is what the LORD says: 'David will never fail to have a man to sit on the throne of the house of Israel, <sup>18</sup> <u>nor will the priests, who are Levites, ever fail to have a man to stand before me</u> continually to offer burnt offerings, to burn grain offerings and to present sacrifices.'" <sub>(NIV)</sub>
+	<ScriptureBlock title="Jeremiah 33:14-18" version="NIV">
+		"'The days are coming,' declares the LORD, 'when I will fulfill the gracious promise I made to the house of Israel and to the house of Judah. <sup>15</sup> "'In those days and at that time I will make a righteous Branch sprout from David's line; he will do what is just and right in the land. <sup>16</sup> In those days Judah will be saved and Jerusalem will live in safety. This is the name by which it will be called: The LORD Our Righteousness.' <sup>17</sup> For this is what the LORD says: 'David will never fail to have a man to sit on the throne of the house of Israel, <sup>18</sup> <u>nor will the priests, who are Levites, ever fail to have a man to stand before me</u> continually to offer burnt offerings, to burn grain offerings and to present sacrifices.'"
 	</ScriptureBlock>
 </Fragment>
 

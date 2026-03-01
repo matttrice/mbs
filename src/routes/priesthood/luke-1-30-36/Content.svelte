@@ -12,8 +12,8 @@
 	font={{ wrap: true }}
 	zIndex={2}
 >
-	<ScriptureBlock title="Luke 1:30-36">
-		"Do not be afraid, Mary, you have found favor with God. <sup>31</sup> You will be with child and give birth to a son, and you are to give him the name Jesus. <sup>32</sup> He will be great and will be called the Son of the Most High. The Lord God will give him the throne of his father David, <sup>33</sup> and he will reign over the house of Jacob forever; his kingdom will never end." <sup>34</sup> "How will this be," Mary asked the angel, "since I am a virgin?" <sup>35</sup> The angel answered, "The Holy Spirit will come upon you, and the power of the Most High will overshadow you. So the holy one to be born will be called the Son of God. <sup>36</sup> Even Elizabeth your relative is going to have a child in her old age, and she who was said to be barren is in her sixth month. <sub>(NIV)</sub>
+	<ScriptureBlock title="Luke 1:30-36" version="NIV">
+		"Do not be afraid, Mary, you have found favor with God. <sup>31</sup> You will be with child and give birth to a son, and you are to give him the name Jesus. <sup>32</sup> He will be great and will be called the Son of the Most High. The Lord God will give him the throne of his father David, <sup>33</sup> and he will reign over the house of Jacob forever; his kingdom will never end." <sup>34</sup> "How will this be," Mary asked the angel, "since I am a virgin?" <sup>35</sup> The angel answered, "The Holy Spirit will come upon you, and the power of the Most High will overshadow you. So the holy one to be born will be called the Son of God. <sup>36</sup> Even Elizabeth your relative is going to have a child in her old age, and she who was said to be barren is in her sixth month.
 	</ScriptureBlock>
 </Fragment>
 
@@ -30,8 +30,8 @@
 	font={{ wrap: true }}
 	zIndex={5}
 >
-	<ScriptureBlock>
-		"Do not be afraid, <u>Mary</u>, you have found favor with God. <sup>31</sup> You will be with child and give birth to a son, and you are to give him the name Jesus. <sup>32</sup> He will be great and will be called the Son of the Most High. The Lord God will give him the throne of his father David, <sup>33</sup> and he will reign over the house of Jacob forever; his kingdom will never end." <sup>34</sup> "How will this be," Mary asked the angel, "since I am a virgin?" <sup>35</sup> The angel answered, "The Holy Spirit will come upon you, and the power of the Most High will overshadow you. So the holy one to be born will be called the Son of God. <sup>36</sup> Even <u>Elizabeth your relative </u>is going to have a child in her old age, and she who was said to be barren is in her sixth month. <sub>(NIV)</sub>
+	<ScriptureBlock version="NIV">
+		"Do not be afraid, <u>Mary</u>, you have found favor with God. <sup>31</sup> You will be with child and give birth to a son, and you are to give him the name Jesus. <sup>32</sup> He will be great and will be called the Son of the Most High. The Lord God will give him the throne of his father David, <sup>33</sup> and he will reign over the house of Jacob forever; his kingdom will never end." <sup>34</sup> "How will this be," Mary asked the angel, "since I am a virgin?" <sup>35</sup> The angel answered, "The Holy Spirit will come upon you, and the power of the Most High will overshadow you. So the holy one to be born will be called the Son of God. <sup>36</sup> Even <u>Elizabeth your relative </u>is going to have a child in her old age, and she who was said to be barren is in her sixth month.
 	</ScriptureBlock>
 </Fragment>
 
@@ -42,8 +42,8 @@
 	font={{ wrap: true }}
 	zIndex={1}
 >
-	<ScriptureBlock>
-		<strong>Luke 1:5</strong><br/>In the time of Herod king of Judea there was a priest named Zechariah, who belonged to the priestly division of Abijah; his wife Elizabeth was also a descendant of Aaron. <sub>(NIV)</sub>
+	<ScriptureBlock version="NIV">
+		<strong>Luke 1:5</strong><br/>In the time of Herod king of Judea there was a priest named Zechariah, who belonged to the priestly division of Abijah; his wife Elizabeth was also a descendant of Aaron.
 	</ScriptureBlock>
 </Fragment>
 
@@ -60,8 +60,8 @@
 	font={{ wrap: true }}
 	zIndex={4}
 >
-	<ScriptureBlock>
-		<strong>Luke 1:5</strong><br/>In the time of Herod king of Judea there was a priest named Zechariah, who belonged to the priestly division of Abijah; his wife <u>Elizabeth was also a descendant of Aaron</u>. <sub>(NIV)</sub>
+	<ScriptureBlock version="NIV">
+		<strong>Luke 1:5</strong><br/>In the time of Herod king of Judea there was a priest named Zechariah, who belonged to the priestly division of Abijah; his wife <u>Elizabeth was also a descendant of Aaron</u>.
 	</ScriptureBlock>
 </Fragment>
 

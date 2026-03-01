@@ -12,8 +12,8 @@
 	line={{ width: 1 }}
 	zIndex={2}
 >
-	<ScriptureBlock title="2 Corinthians 10:3-6">
-		For though we live in the world, we do not wage war as the world does. <sup>4</sup> The weapons we fight with are not the weapons of the world. On the contrary, they have divine power to demolish strongholds. <sup>5 </sup>We demolish arguments and every pretension that sets itself up against the knowledge of God, and we take captive every thought to make it obedient to Christ. <sup>6</sup> And we will be ready to punish every act of disobedience, once your obedience is complete. <sub>(NIV)</sub>
+	<ScriptureBlock title="2 Corinthians 10:3-6" version="NIV">
+		For though we live in the world, we do not wage war as the world does. <sup>4</sup> The weapons we fight with are not the weapons of the world. On the contrary, they have divine power to demolish strongholds. <sup>5 </sup>We demolish arguments and every pretension that sets itself up against the knowledge of God, and we take captive every thought to make it obedient to Christ. <sup>6</sup> And we will be ready to punish every act of disobedience, once your obedience is complete.
 	</ScriptureBlock>
 </Fragment>
 

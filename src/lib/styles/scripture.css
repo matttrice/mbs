@@ -102,6 +102,14 @@
 	line-height: 1;
 }
 
+.scripture-version {
+	align-self: flex-end;
+	font-style: italic;
+	font-size: calc(var(--scripture-body-size) * 0.72);
+	line-height: 1;
+	color: var(--text-level-1);
+}
+
 .scripture-scale-sm {
 	--scripture-title-size: 22px;
 	--scripture-body-size: 16px;
