@@ -24,12 +24,12 @@ Similarly, depending on your approach, if you encounter scripture body text with
 Finally, if the scripture title and body are in the same sequence step, you should extract the Scripture Title for use as the `ScriptureBlock` "title" prop and the body text as the `ScriptureBlock` content, as they are logically revealed together.
 
 ### Inline title extraction rule
-When JSON text begins with a bold scripture reference followed by a line break (e.g., `<strong>Genesis 2:4</strong><br/>`), extract the reference text as the ScriptureBlock `title` prop and use the remaining text as the body content. ScriptureBlock handles title styling uniformly—do not preserve `<strong>` or `<br/>` for the extracted title portion. Strip the leading `<strong>{Title}</strong><br/>` from the body content.
+When JSON text begins with a bold scripture reference followed by a line break (e.g., `<strong>Genesis 2:4</strong><br>`), extract the reference text as the ScriptureBlock `title` prop and use the remaining text as the body content. ScriptureBlock handles title styling uniformly—do not preserve `<strong>` or `<br>` for the extracted title portion. Strip the leading `<strong>{Title}</strong><br>` from the body content.
 
 Example JSON entry (note `is_scripture: true` flag):
 ```json
 {
-  "text": "<strong>Genesis 2:4</strong><br/>This is the account of the heavens...",
+  "text": "<strong>Genesis 2:4</strong><br>This is the account of the heavens...",
   "is_scripture": true
 }
 ```
@@ -40,7 +40,7 @@ Becomes:
 </ScriptureBlock>
 ```
 
-When a single JSON text block contains **multiple** bold scripture references (e.g., `<strong>Genesis 2:4</strong><br/>...text...<strong>Genesis 2:18, 21-23</strong><br/>...text...`), extract only the **first** reference as the `title` prop. Keep subsequent references inline as `<strong>` within the body content.
+When a single JSON text block contains **multiple** bold scripture references (e.g., `<strong>Genesis 2:4</strong><br>...text...<strong>Genesis 2:18, 21-23</strong><br>...text...`), extract only the **first** reference as the `title` prop. Keep subsequent references inline as `<strong>` within the body content.
 
 These properties commonly indicate consolidation is necessary: `"shape_name": "Title 1"` or `"shape_type": "placeholder (14)"`. Sometimes they are both present, sometimes only one. The key signal is the scripture title pattern in the text and the absence of additional text in that same JSON entry and not hyperlink, combined with the presence of scripture body text in a next sequence step. If these conditions are met, this is a strong signal that consolidation into one `ScriptureBlock` Fragment is appropriate.
 Example JSON sequence indicating consolidation:
@@ -137,7 +137,9 @@ Title-less reveal block (same scripture continued later):
 For scripture Fragments:
 - Do **not** set `font_size` (let `ScriptureBlock` CSS control size)
 - Keep alignment/wrap/italic/bold in `Fragment.font` only when semantically needed
-- Preserve existing emphasis from JSON text markup (`<strong>`, `<em>`, `<u>`, `<sup>`, `<sub>`, `<br/>`)
+- Preserve existing emphasis from JSON text markup (`<strong>`, `<em>`, `<u>`, `<sup>`, `<sub>`, `<br>`)
+- If the text contains HTML tags like <strong>,<em> and <u> inline that apply to the entire text, use the Fragment `font` props to apply that formatting instead of the HTML tags while preserving other inline tags like `<sup>` and `<br>` as they are. 
+  - If the HTML tags only apply to part of the text, preserve them inline in the `ScriptureBlock` content and remove the overlapping Fragment font props.
 
 ## Refactor approach: Replace, don't merge
 When refactoring existing routes, the JSON is the **replacement source**, not a diff target. Do not compare existing Svelte text against JSON to find differences (dashes, spacing, superscript formatting, etc.). Instead:
@@ -160,5 +162,4 @@ The extractor adds `"is_scripture": true` to JSON entries that contain scripture
 ## JSON-to-text fidelity
 - Use ONLY exact `text` from JSON
 - Never invent, paraphrase, or "fix" wording
-- Preserve line breaks and inline markup as provided
-- When extracting a title from inline `<strong>Title</strong><br/>`, strip those tags from the body but preserve all other markup
+- When extracting a scripture title from inline `<strong>Title</strong><br>`, strip those tags from the body but preserve all other markup

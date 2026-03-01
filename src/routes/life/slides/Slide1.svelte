@@ -183,7 +183,7 @@
 		line={{ width: 0.8 }}
 		zIndex={10}
 	>
-		Body = Visible
+		<strong>Body = Visible</strong>
 	</Fragment>
 
 	<!-- Step 13: Ecclesiastes 3:19-21 (drill) -->
@@ -199,17 +199,18 @@
 
 	<!-- Step 14: Blue spirit box (Animals) + dashed line + Spirit text -->
 	<Fragment step={14} animate="wipe-down">
-		<Rect x={345.5} y={256.1} width={280.3} height={117.2} fill="var(--bg-level-2)" zIndex={9} />
+		<Rect x={345.5} y={246.1} width={280.3} height={127.2} fill="var(--bg-level-2)" zIndex={9} />
 	</Fragment>
 
 	<Fragment step={14} animate="draw">
-		<Line from={{ x: 345, y: 252 }} to={{ x: 877, y: 252 }} stroke={{ width: 8, color: 'var(--bg-level-3)', dash: '10,5' }} zIndex={51} />
+		<Line from={{ x: 345, y: 252 }} to={{ x: 877, y: 252 }} stroke={{ width: 10, color: 'var(--bg-level-3)', dash: '10,5' }} zIndex={51} />
 	</Fragment>
 
 	<Fragment
 		step={14}
-		layout={{ x: 396.4, y: 282.9, width: 144.9, height: 68.6 }}
+		layout={{ x: 396.4, y: 295.9, width: 144.9, height: 50.6 }}
 		font={{ font_size: 50, color: 'var(--bg-level-3)', bold: true }}
+		fill="var(--bg-level-2)"
 		zIndex={55}
 	>
 		Spirit
@@ -217,7 +218,7 @@
 
 	<!-- Step 15: Blue spirit box (Man) + Spirit text -->
 	<Fragment step={15} animate="wipe-down">
-		<Rect x={625} y={256.1} width={252} height={117.2} fill="var(--bg-level-2)" zIndex={6} />
+		<Rect x={625} y={246.1} width={252} height={127.2} fill="var(--bg-level-2)" zIndex={6} />
 	</Fragment>
 
 	<Fragment
@@ -234,11 +235,11 @@
 		step={16}
 		layout={{ x: 345, y: 255, width: 532, height: 40 }}
 		font={{ font_size: 34, align: 'center', v_align: 'middle', color: 'var(--bg-ghost)', bold:true }}
-		fill="var(--bg-level-3)"
+		fill="var(--bg-level-2)"
 		line={{ width: 0.1 }}
 		zIndex={46}
 	>
-		Spirit = Invisible
+		<strong>Spirit = Invisible</strong>
 	</Fragment>
 
 	<!-- Step 17: James 2:26 (drill) -->
@@ -256,10 +257,10 @@
 	<Fragment
 		step={18}
 		layout={{ x: 403.5, y: 399.2, width: 154.1, height: 38.3 }}
-		font={{ font_size: 26.7, color: 'var(--text-level-3)' }}
+		font={{ bold: true, font_size: 26.7, color: 'var(--text-level-3)' }}
 		zIndex={42}
 	>
-		Life = Spirit
+		<strong>Life = Spirit</strong>
 	</Fragment>
 
 	<!-- Step 19: Leviticus 17:11 (drill) -->
@@ -277,22 +278,22 @@
 	<Fragment
 		step={20}
 		layout={{ x: 401.8, y: 468.8, width: 161.1, height: 38.3 }}
-		font={{ font_size: 26.7, color: '#FF0000' }}
+		font={{ bold: true, font_size: 26.7, color: '#FF0000' }}
 		zIndex={44}
 	>
-		Blood = Life
+		<strong>Blood = Life</strong>
 	</Fragment>
 
 	<!-- Step 21: "Blood = Spirit" box -->
 	<Fragment
 		step={21}
 		layout={{ x: 595.8, y: 452.4, width: 283.4, height: 56.4 }}
-		font={{ font_size: 40, color: '#FF0000' }}
+		font={{ bold: true, font_size: 40, color: '#FF0000' }}
 		fill="var(--bg-ghost)"
 		line={{ width: 0.6, color: 'var(--stroke-level-0)' }}
 		zIndex={22}
 	>
-		Blood = Spirit
+		<strong>Blood = Spirit</strong>
 	</Fragment>
 
 	<!-- Step 22: "Do plants have blood?" -->
@@ -318,10 +319,8 @@
 	<!-- Step 24: Arc 103 (breath to blood circulation arc) -->
 	<Fragment step={24} animate="draw">
 		<Arc 
-			from={{ x: 300, y: 345 }} 
-			to={{ x: 250, y: 500 }} 
-			curve={-180} 
-			stroke={{ width: 5, color: 'var(--bg-level-2)' }} 
+			from={{ x: 321, y: 339 }} to={{ x: 268, y: 482 }} curve={-180}
+			stroke={{ width: 5, color: 'var(--bg-level-3)' }} 
 			arrow 
 			zIndex={10} 
 		/>
@@ -364,10 +363,8 @@
 	<!-- Step 25: Arc 104 (return arc) -->
 	<Fragment step={25} animate="draw">
 		<Arc 
-			from={{ x: 195, y: 503.5 }} 
-			to={{ x: 131.3, y: 330.8 }} 
-			curve={-180} 
-			stroke={{ width: 4.3, color: '#0099CC' }} 
+			from={{ x: 170, y: 481.5 }} to={{ x: 130.3, y: 336.8 }} curve={-210} shift={40}
+			stroke={{ width: 4.3, color: 'var(--bg-level-3)' }} 
 			arrow 
 			zIndex={11} 
 		/>
@@ -406,18 +403,14 @@
 	<!-- Step 26: Lines 68 and 106 (arrows to spirit columns) -->
 	<Fragment step={26} animate="wipe">
 		<Arrow 
-			from={{ x: 307.5, y: 324.4 }} 
-			to={{ x: 405.8, y: 324.4 }} 
-			stroke={{ width: 6.25 }} 
-			zIndex={49} 
+			from={{ x: 318.5, y: 335.6 }} to={{ x: 397.8, y: 318.6 }} stroke={{ width: 6.25 }} zIndex={55} 
 		/>
 	</Fragment>
 
 	<Fragment step={26} animate="wipe">
 		<Arrow 
-			from={{ x: 315.5, y: 335.6 }} 
-			to={{ x: 671.8, y: 335.6 }} 
-			stroke={{ width: 6.25 }} 
+			from={{ x: 315.5, y: 335.6 }} to={{ x: 661.8, y: 319.6 }}
+			stroke={{ width: 6.25, color: 'var(--bg-level-3)' }} 
 			zIndex={50} 
 		/>
 	</Fragment>
@@ -425,10 +418,8 @@
 	<!-- Step 27: Arc 70 (CO2 exhale arc) -->
 	<Fragment step={27} animate="draw">
 		<Arc 
-			from={{ x: 140, y: 315.1 }} 
-			to={{ x: 104.1, y: 257.1 }} 
-			curve={-46.4} 
-			stroke={{ width: 4.3, color: '#0099CC' }} 
+			from={{ x: 140, y: 315.1 }} to={{ x: 104.1, y: 257.1 }} curve={-46.4}
+			stroke={{ width: 4.3, color: 'var(--bg-level-3)' }} 
 			arrow 
 			zIndex={29} 
 		/>
@@ -437,7 +428,7 @@
 	<!-- Step 27.1: "CO2" label -->
 	<Fragment
 		step={27.1}
-		layout={{ x: 91.6, y: 210.4, width: 74.2, height: 45.3 }}
+		layout={{ x: 101.6, y: 196.4, width: 74.2, height: 45.3 }}
 		font={{ font_size: 33.3, align: 'center', color: 'var(--bg-ghost)', bold: true }}
 		zIndex={30}
 	>
@@ -447,19 +438,24 @@
 	<!-- Step 27.2: Arc 74 (O2 inhale arc from plants) -->
 	<Fragment step={27.2} animate="draw">
 		<Arc 
-			from={{ x: 111.0, y: 210 }} 
-			to={{ x: 280, y: 215.5 }} 
-			curve={-200} 
-			stroke={{ width: 4.3, color: '#0099CC' }} 
+			from={{ x: 123, y: 181 }} to={{ x: 200, y: 146.5 }} curve={-60}
+			stroke={{ width: 4.3, color: 'var(--bg-level-3)' }} 
 			arrow 
 			zIndex={12} 
 		/>
 	</Fragment>
-
+	<Fragment step={27.3} animate="draw">
+		<Arc 
+			from={{ x: 229, y: 144 }} to={{ x: 288, y: 179.5 }} curve={-50}
+			stroke={{ width: 4.3, color: 'var(--bg-level-3)' }} 
+			arrow 
+			zIndex={12} 
+		/>
+	</Fragment>
 	<!-- Step 27.3: "O2" label (from plants) -->
 	<Fragment
 		step={27.3}
-		layout={{ x: 268.9, y: 208.6, width: 51.7, height: 45.3 }}
+		layout={{ x: 248.9, y: 196.6, width: 51.7, height: 45.3 }}
 		font={{ font_size: 33.3, align: 'center', color: 'var(--bg-ghost)', bold: true }}
 		zIndex={31}
 	>
@@ -472,7 +468,7 @@
 			from={{ x: 280.7, y: 245.6 }} 
 			to={{ x: 278.8, y: 313.2 }} 
 			curve={-54.1} 
-			stroke={{ width: 4.3, color: '#0099CC' }} 
+			stroke={{ width: 4.3, color: 'var(--bg-level-3)' }} 
 			arrow 
 			zIndex={53} 
 		/>
@@ -482,8 +478,8 @@
 	<Fragment
 		step={28}
 		drillTo="life/1thessalonians-5-23"
-		layout={{ x: 647, y: 347.3, width: 157.4, height: 28.9 }}
-		font={{ font_size: 23.3, align: 'center', color: 'var(--bg-ghost)' }}
+		layout={{ x: 647, y: 344.3, width: 157.4, height: 28.9 }}
+		font={{ bold: true, font_size: 23.3, align: 'center', color: 'var(--bg-ghost)' }}
 		zIndex={33}
 	>
 		1Thess. 5:23
@@ -491,7 +487,7 @@
 
 	<!-- Step 29: Blue Soul box (Man) + Soul text -->
 	<Fragment step={29} animate="wipe-down">
-		<Rect x={625.8} y={364.8} width={252.4} height={80.3} fill="var(--bg-level-2)" zIndex={5} />
+		<Rect x={624.8} y={364.8} width={252} height={80.3} fill="var(--bg-level-2)" zIndex={5} />
 	</Fragment>
 
 	<Fragment
@@ -508,6 +504,7 @@
 		step={30}
 		layout={{ x: 110.8, y: 64.8, width: 201.9, height: 34.2 }}
 		font={{ font_size: 21.7 }}
+		line={{ width: 0.1, color: 'var(--stroke-level-0)' }}
 		fill="var(--bg-ghost)"
 		zIndex={0}
 	>
@@ -519,6 +516,7 @@
 		step={30.1}
 		layout={{ x: 376.8, y: 64.8, width: 195.8, height: 34.2 }}
 		font={{ font_size: 21.7 }}
+		line={{ width: 0.1, color: 'var(--stroke-level-0)' }}
 		fill="var(--bg-ghost)"
 		zIndex={1}
 	>
@@ -530,6 +528,7 @@
 		step={30.2}
 		layout={{ x: 639.3, y: 64.8, width: 193.4, height: 34.2 }}
 		font={{ font_size: 21.7 }}
+		line={{ width: 0.1, color: 'var(--stroke-level-0)' }}
 		fill="var(--bg-ghost)"
 		zIndex={2}
 	>

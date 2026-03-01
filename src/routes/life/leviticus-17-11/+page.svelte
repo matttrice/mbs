@@ -1,32 +1,22 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-
-	/**
-	 * Drill: Leviticus 17:11 - Life in the blood
-	 */
-
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <Slide>
 	<Fragment
-		layout={{ x: 62, y: 52.2, width: 373.8, height: 44.4 }}
-		font={{ font_size: 44.2, align: 'left', bold: true }}
+		layout={{ x: 57, y: 75, width: 795, height: 127 }}
+		font={{ align: 'left', v_align: 'middle', wrap: true }}
 	>
-		Leviticus 17:11
+		<ScriptureBlock title="Leviticus 17:11" scale="lg">
+			For the life of the flesh is in the blood, and I have given it to you on the altar to make atonement for your souls; for it is the blood by reason of the life that makes atonement.
+		</ScriptureBlock>
 	</Fragment>
 
 	<Fragment
-		step={1}
-		layout={{ x: 62, y: 125, width: 835, height: 218.8 }}
-		font={{ font_size: 30, v_align: 'top', wrap: true }}
-	>
-		For the life of the flesh is in the blood, and I have given it to you on the altar to make atonement for your souls; for it is the blood by reason of the life that makes atonement.
-	</Fragment>
-
-	<Fragment
-		layout={{ x: 840.4, y: 442.8, width: 75, height: 30.3 }}
-		font={{ font_size: 20 }}
+		layout={{ x: 753, y: 432, width: 134, height: 30 }}
+		font={{ font_size: 20, wrap: true }}
 	>
 		NASB95
 	</Fragment>

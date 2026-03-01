@@ -556,7 +556,7 @@
 	</Fragment>
 
 	<!-- Step 30: Arrow pointing up to Deductive -->
-	<Fragment step={30}>
+	<Fragment step={30} animate="wipe-up">
 		<Arrow to={{ x: 670, y: 182 }} from={{ x: 735, y: 270 }} stroke={{ width: 6.7 }} zIndex={50} />
 	</Fragment>
 

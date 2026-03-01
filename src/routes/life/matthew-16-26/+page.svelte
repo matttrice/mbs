@@ -1,32 +1,22 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-
-	/**
-	 * Drill: Matthew 16:26 - What profit to gain world, forfeit soul?
-	 */
-
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <Slide>
 	<Fragment
-		layout={{ x: 97.8, y: 52.2, width: 373.8, height: 44.4 }}
-		font={{ font_size: 44.2, align: 'left', bold: true }}
+		layout={{ x: 100, y: 94, width: 708, height: 120 }}
+		font={{ align: 'left', v_align: 'middle', wrap: true }}
 	>
-		Matthew 16:26
+		<ScriptureBlock title="Matthew 16:26" scale="lg">
+			For what good will it do a person if he gains the whole world, but forfeits his soul? Or what will a person give in exchange for his soul?
+		</ScriptureBlock>
 	</Fragment>
 
 	<Fragment
-		step={1}
-		layout={{ x: 62.5, y: 137.5, width: 835, height: 187.5 }}
-		font={{ font_size: 32, v_align: 'top', wrap: true }}
-	>
-		For what good will it do a person if he gains the whole world, but forfeits his soul? Or what will a person give in exchange for his soul?
-	</Fragment>
-
-	<Fragment
-		layout={{ x: 812.5, y: 442.8, width: 112.5, height: 30.3 }}
-		font={{ font_size: 20 }}
+		layout={{ x: 753, y: 432, width: 134, height: 30 }}
+		font={{ font_size: 20, wrap: true }}
 	>
 		NASB2020
 	</Fragment>

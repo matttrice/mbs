@@ -1,33 +1,39 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-
-	/**
-	 * Drill: Hebrews 9:27 - Appointed to die once
-	 */
-
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <Slide>
 	<Fragment
-		layout={{ x: 97.8, y: 52.2, width: 373.8, height: 44.4 }}
-		font={{ font_size: 44.2, align: 'left', bold: true }}
+		layout={{ x: 121, y: 87, width: 696, height: 150 }}
+		font={{ align: 'left', v_align: 'middle', wrap: true }}
 	>
-		Hebrews 9:27
+		<ScriptureBlock title="Hebrews 9:27" scale="lg">
+			And just as it is destined for people to die once, and after this comes judgment,
+		</ScriptureBlock>
 	</Fragment>
 
 	<Fragment
-		step={1}
-		layout={{ x: 62.5, y: 137.5, width: 835, height: 187.5 }}
-		font={{ font_size: 32, v_align: 'top', wrap: true }}
-	>
-		And just as it is destined for people to die once, and after this comes judgment,
-	</Fragment>
-
-	<Fragment
-		layout={{ x: 812.5, y: 442.8, width: 112.5, height: 30.3 }}
-		font={{ font_size: 20 }}
+		layout={{ x: 664, y: 188, width: 134, height: 30 }}
+		font={{ font_size: 20, wrap: true, align: 'right' }}
 	>
 		NASB2020
+	</Fragment>
+
+	<Fragment
+		layout={{ x: 121, y: 241, width: 696, height: 124 }}
+		font={{ font_size: 20, wrap: true, align: 'left' }}
+	>
+		<ScriptureBlock title="Hebrews 9:27" scale="lg">
+
+		And inasmuch as it is appointed for men to die once and after this comes judgment,
+		</ScriptureBlock>
+	</Fragment>
+	<Fragment
+		layout={{ x: 664, y: 331, width: 134, height: 30 }}
+		font={{ font_size: 20, wrap: true, align: 'right' }}
+	>
+		NASB95
 	</Fragment>
 </Slide>

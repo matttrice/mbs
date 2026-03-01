@@ -1,41 +1,39 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-
-	/**
-	 * Drill: Ecclesiastes 12:7 - Spirit returns to God
-	 */
-
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <Slide>
 	<Fragment
-		layout={{ x: 97.8, y: 52.2, width: 373.8, height: 44.4 }}
-		font={{ font_size: 44.2, align: 'left', bold: true }}
+		layout={{ x: 99, y: 91, width: 773, height: 190 }}
+		font={{ align: 'left', v_align: 'middle', wrap: true }}
 	>
-		Ecclesiastes 12:7
+		<ScriptureBlock title="Ecclesiastes 12:7">
+			Remember him--before the silver cord is severed, and the golden bowl is broken; before the pitcher is shattered at the spring, and the wheel broken at the well, <sup>[7] </sup>and the dust returns to the ground it came from, and the spirit returns to God who gave it.
+		</ScriptureBlock>
 	</Fragment>
 
 	<Fragment
-		step={1}
-		layout={{ x: 62.5, y: 100, width: 835, height: 50 }}
-		font={{ font_size: 22, v_align: 'top', italic: true }}
+		layout={{ x: 99, y: 266, width: 788, height: 115 }}
+		font={{ align: 'left', v_align: 'middle', wrap: true }}
 	>
-		Ecclesiastes 3:20 All go to the same place; all come from dust, and to dust all return.
+		<ScriptureBlock title="Ecclesiastes 3:20">
+		All go to the same place; all come from dust, and to dust all return.
+		</ScriptureBlock>
 	</Fragment>
 
 	<Fragment
-		step={2}
-		layout={{ x: 62.5, y: 162.5, width: 835, height: 187.5 }}
-		font={{ font_size: 28, v_align: 'top', wrap: true }}
+		layout={{ x: 823, y: 213, width: 74, height: 30 }}
+		font={{ font_size: 20, wrap: true }}
 	>
-		Remember him—before the silver cord is severed, and the golden bowl is broken; before the pitcher is shattered at the spring, and the wheel broken at the well, [7] and the dust returns to the ground it came from, and the spirit returns to God who gave it.
+		NIV
 	</Fragment>
 
 	<Fragment
-		layout={{ x: 812.5, y: 442.8, width: 112.5, height: 30.3 }}
-		font={{ font_size: 20 }}
+		layout={{ x: 793, y: 325, width: 134, height: 30 }}
+		font={{ font_size: 20, wrap: true }}
 	>
-		NASB2020 / NIV
+		NASB2020
 	</Fragment>
 </Slide>
