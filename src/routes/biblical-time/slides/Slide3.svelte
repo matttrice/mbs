@@ -26,15 +26,15 @@
 	<!-- Title: Biblical Time -->
 	<Fragment
 		layout={{ x: 300.5, y: 0, width: 292.4, height: 44.4 }}
-		font={{ font_size: 32 }}
+		font={{ bold: true, font_size: 32 }}
 		zIndex={16}
 	>
-		Biblical Time
+		<strong>Biblical Time</strong>
 	</Fragment>
 
 	<!-- Genesis 1:1 In the beginning… -->
 	<Fragment
-		layout={{ x: 83.6, y: 0, width: 212.1, height: 60.5 }}
+		layout={{ x: 23.6, y: 0, width: 212.1, height: 60.5 }}
 		font={{ font_size: 21.7, bold: true }}
 		zIndex={10}
 	>
@@ -71,7 +71,7 @@
 	<Fragment
 		step={2}
 		drillTo="biblical-time/ephesians-1-3"
-		layout={{ x: 71.8, y: 352.8, width: 152.8, height: 88.8 }}
+		layout={{ x: 61.8, y: 352.8, width: 152.8, height: 88.8 }}
 		font={{ font_size: 16.7, bold: true }}
 		zIndex={linkLayer}
 	>
@@ -473,7 +473,7 @@
 	<!-- Step 26 (click): Does God Change? link -->
 	<Fragment
 		step={26}
-		drillTo="biblical-time/james-1-17"
+		drillTo="biblical-time/unchanging-god"
 		layout={{ x: 770.6, y: 403.1, width: 115.8, height: 50.4 }}
 		font={{ font_size: 17.5, bold: true }}
 		line={{ width: 0.8 }}
@@ -510,10 +510,8 @@
 		...How?
 	</Fragment>
 
-	<!-- Step 30 (click): Tutor + Galatians 3:24-25 link -->
 	<Fragment
 		step={30}
-		drillTo="biblical-time/galatians-3-24"
 		layout={{ x: 290, y: 413.4, width: 79.6, height: 34.3 }}
 		font={{ font_size: 23.3, bold: true }}
 		zIndex={linkLayer}
@@ -523,7 +521,7 @@
 
 	<Fragment
 		step={30}
-		drillTo="biblical-time/galatians-3-24"
+		drillTo="biblical-time/the-tutor"
 		layout={{ x: 377.9, y: 417.8, width: 385, height: 46.4 }}
 		font={{ font_size: 16.7 }}
 		line={{ width: 1 }}
