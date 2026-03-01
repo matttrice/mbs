@@ -16,10 +16,10 @@
 
 	<Fragment
 		step={1}
-		layout={{ x: 88, y: 246, width: 791, height: 205 }}
+		layout={{ x: 88, y: 206, width: 791, height: 145 }}
 		font={{ v_align: 'middle', wrap: true }}
 	>
-		<ScriptureBlock title="Galatians 3:19">
+		<ScriptureBlock title="Galatians 3:19" scale="lg">
 			Why the Law then? It was <u>added</u> because of transgressions, having been ordained through angels by the agency of a mediator, until the seed would come to whom the promise had been made.
 		</ScriptureBlock>
 	</Fragment>

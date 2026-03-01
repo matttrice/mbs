@@ -127,6 +127,23 @@ The `Fragment` component handles hide/show for all slide content.
 </Fragment>
 ```
 
+**Click-only drill (excluded from autoDrillAll and arrow-key navigation):**
+Use this when a link should be clickable but NOT included in the normal drill sequence (e.g., alternate-version, optional links like "link to NIV version"). Omit `drillTo` and call `navigation.drillInto()` directly in an `onclick` handler. This keeps the link off the drill target registry so arrow keys and `autoDrillAll` ignore it entirely, while still pushing onto the drill stack for proper return behavior. This is uncommon but helpful for optional or alternate links that shouldn't disrupt the main drill flow.
+```svelte
+<script lang="ts">
+  import { navigation } from '$lib/stores/navigation';
+</script>
+
+<Fragment
+  layout={{ x: 696, y: 491, width: 181, height: 28 }}
+  font={{ font_size: 16.7, italic: true }}
+>
+  <span style="cursor: pointer;" onclick={() => navigation.drillInto('law/romans-3-19-niv', 0, false)}>
+    - link to NIV version -
+  </span>
+</Fragment>
+```
+
 ### Keyframe Motion
 
 Fragment supports **step-based keyframe motion** for animating position, size, rotation, and opacity AFTER a fragment has appeared. This is separate from the `animate` prop (which controls the entrance animation).

@@ -17,10 +17,10 @@
 	<Fragment
 		step={1}
 		layout={{ x: 137, y: 360, width: 665, height: 108 }}
-		font={{ align: 'center', wrap: true }}
+		font={{ font_size: 26.7, align: 'center', wrap: true }}
 		fill="var(--bg-cmd-law)"
-		line={{ width: 8 }}
+		line={{ color: 'var(--stroke-level-0)', width: 2 }}
 	>
-		"commanded" <br>evokes what thoughts?
+		"<strong>commanded</strong>" <br>evokes what thoughts?
 	</Fragment>
 </Slide>
