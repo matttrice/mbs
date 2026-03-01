@@ -9,7 +9,7 @@
 		layout={{ x: 114, y: 121, width: 742, height: 195 }}
 		font={{ align: 'left', v_align: 'middle', wrap: true }}
 	>
-		<ScriptureBlock title="Hebrews 4:12">
+		<ScriptureBlock title="Hebrews 4:12" scale="lg">
 			For the word of God is living and active and sharper than any two-edged sword, and piercing as far as the <u>division of soul</u> and <u>spirit</u>, of both joints and marrow, and able to judge the thoughts and intentions of the heart.
 		</ScriptureBlock>
 	</Fragment>

@@ -1,32 +1,32 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-
-	/**
-	 * Drill: 1 Corinthians 6:9-11 - The washed, sanctified, and justified
-	 */
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <Slide>
 	<Fragment
-		layout={{ x: 104.4, y: 17.2, width: 755.9, height: 44.4 }}
-		font={{ font_size: 36.7, bold: true }}
+		layout={{ x: 38, y: 25, width: 897, height: 276 }}
+		font={{ v_align: 'middle', wrap: true }}
 	>
-		1 Corinthians 6:9-11
+		<ScriptureBlock title="1 Corinthians 6:9">
+			Do you not know that the wicked will not inherit the kingdom of God? Do not be deceived: Neither the sexually immoral nor idolaters nor adulterers nor male prostitutes nor homosexual offenders <sup>10</sup> nor thieves nor the greedy nor drunkards nor slanderers nor swindlers will inherit the kingdom of God. <sup>11</sup> And that is what some of you were. But you were washed, you were sanctified, you were justified in the name of the Lord Jesus Christ and by the Spirit of our God.<sup>12</sup> <br>"Everything is permissible for me"--but not everything is beneficial. "Everything is permissible for me"--but I will not be mastered by anything.
+		</ScriptureBlock>
 	</Fragment>
 
 	<Fragment
-		layout={{ x: 108.4, y: 61.6, width: 742.4, height: 351.6 }}
-		font={{ font_size: 26, wrap: true }}
+		layout={{ x: 39, y: 302, width: 896, height: 166 }}
+		font={{ v_align: 'middle', wrap: true }}
 	>
-		Or do you not know that the unrighteous will not inherit the kingdom of God? Do not be deceived; neither fornicators, nor idolaters, nor adulterers, nor effeminate, nor homosexuals, 10 nor thieves, nor the covetous, nor drunkards, nor revilers, nor swindlers, will inherit the kingdom of God. 11 Such were some of you; but you were washed, but you were sanctified, but you were justified in the name of the Lord Jesus Christ and in the Spirit of our God.
+		<ScriptureBlock title="1 Corinthians 10:23">
+			"Everything is permissible"--but not everything is beneficial. "Everything is permissible"--but not everything is constructive. <sup>24</sup> Nobody should seek his own good, but the good of others.<sup> 25 </sup>Eat anything that is sold in the meat market without asking questions for <u>conscience' sake</u>;
+		</ScriptureBlock>
 	</Fragment>
 
 	<Fragment
-		step={1}
-		layout={{ x: 178.7, y: 406.7, width: 606.9, height: 103.7 }}
-		font={{ font_size: 28, align: 'center', color: '#0066CC' }}
+		layout={{ x: 196, y: 462, width: 609, height: 71 }}
+		font={{ v_align: 'middle', font_size: 26.7 }}
 	>
-		"such were some of you"<br/>Washed, Sanctified, Justified
+		[NIV] Permissible = <strong>[NASB, KJV] </strong>Lawful
 	</Fragment>
 </Slide>

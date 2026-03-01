@@ -6,7 +6,7 @@
 <!-- Static: Title -->
 <Fragment
 	layout={{ x: 102, y: 0, width: 756, height: 44 }}
-	font={{ bold: true }}
+	font={{ font_size: 44.2, bold: true, italic: true }}
 >
 	SOUL (Psyche, Gk.)
 </Fragment>
@@ -18,7 +18,9 @@
 	font={{ font_size: 15 }}
 	zIndex={1}
 >
-	1Peter 1:9  obtaining as the outcome of your faith the salvation of your souls.
+	<ScriptureBlock>
+		<strong>1Peter 1:9</strong> obtaining as the outcome of your faith, the salvation of your souls.
+	</ScriptureBlock>
 </Fragment>
 
 <!-- Step 2: Matthew 16:26 (is_scripture) -->
@@ -29,7 +31,7 @@
 	zIndex={2}
 >
 	<ScriptureBlock>
-		Matthew 16:26    "For what will a man be profited, if he gains the whole world, and forfeits his soul? Or what will a man give in exchange for his soul?
+		<strong>Matthew 16:26</strong> "For what will a man be profited, if he gains the whole world, and forfeits his soul? Or what will a man give in exchange for his soul?
 	</ScriptureBlock>
 </Fragment>
 
@@ -41,7 +43,7 @@
 	zIndex={3}
 >
 	<ScriptureBlock>
-		Matthew 10:28    "And do not fear those who kill the body, but are unable to kill the soul; but rather fear Him who is able to destroy both soul and body in hell.
+		<strong>Matthew 10:28</strong> "And do not fear those who kill the body, but are unable to kill the soul; but rather fear Him who is able to destroy both soul and body in hell.
 	</ScriptureBlock>
 </Fragment>
 
@@ -53,7 +55,7 @@
 	zIndex={4}
 >
 	<ScriptureBlock>
-		Acts 2:27    Because Thou wilt not abandon my soul to Hades, Nor ALLOW Thy Holy One to UNDERGO DECAY.
+		<strong>Acts 2:27</strong>    Because Thou wilt not abandon my soul to Hades, Nor ALLOW Thy Holy One to UNDERGO DECAY.
 	</ScriptureBlock>
 </Fragment>
 
@@ -65,7 +67,7 @@
 	zIndex={5}
 >
 	<ScriptureBlock>
-		Acts 2:41    So  then, those who had received his word were baptized; and there were added that day about three thousand souls.
+		<strong>Acts 2:41</strong> So  then, those who had received his word were baptized; and there were added that day about three thousand souls.
 	</ScriptureBlock>
 </Fragment>
 
@@ -77,7 +79,7 @@
 	zIndex={6}
 >
 	<ScriptureBlock>
-		Hebrews 4:12    For the word of God is living and active and sharper than any two-edged sword, and piercing as far as the division of soul and spirit, of both joints and marrow, and able to judge the thoughts and intentions of the heart
+		<strong>Hebrews 4:12</strong>    For the word of God is living and active and sharper than any two-edged sword, and piercing as far as the division of soul and spirit, of both joints and marrow, and able to judge the thoughts and intentions of the heart
 	</ScriptureBlock>
 </Fragment>
 
@@ -89,7 +91,7 @@
 	zIndex={7}
 >
 	<ScriptureBlock>
-		Hebrews 10:39    But we are not of those who shrink back to destruction, but of those who have faith to the preserving of the soul.
+		<strong>Hebrews 10:39</strong> But we are not of those who shrink back to destruction, but of those who have faith to the preserving of the soul.
 	</ScriptureBlock>
 </Fragment>
 
@@ -101,7 +103,7 @@
 	zIndex={8}
 >
 	<ScriptureBlock>
-		Hebrews 13:17    Obey your leaders, and submit to them; for they keep watch over your soul s, as those who will give an account. Let them do this with joy and not with grief, for this would be unprofitable for you.
+		<strong>Hebrews 13:17</strong>  Obey your leaders, and submit to them; for they keep watch over your soul s, as those who will give an account. Let them do this with joy and not with grief, for this would be unprofitable for you.
 	</ScriptureBlock>
 </Fragment>
 
@@ -113,7 +115,7 @@
 	zIndex={9}
 >
 	<ScriptureBlock>
-		James 1:21    Therefore putting aside all filthiness and all that remains of wickedness, in humility receive the word implanted, which is able to save your soul.
+		<strong>James 1:21</strong> Therefore putting aside all filthiness and all that remains of wickedness, in humility receive the word implanted, which is able to save your soul.
 	</ScriptureBlock>
 </Fragment>
 
@@ -125,28 +127,18 @@
 	zIndex={10}
 >
 	<ScriptureBlock>
-		James 5:20    let him know that he who turns a sinner from the error of his way will save his soul from death, and will cover a multitude of sins.
+		<strong>James 5:20</strong> let him know that he who turns a sinner from the error of his way will save his soul from death, and will cover a multitude of sins.
 	</ScriptureBlock>
-</Fragment>
-
-<!-- Step 11: 1Peter 1:9 (second instance) -->
-<Fragment
-	step={11}
-	layout={{ x: 95, y: 439, width: 541, height: 26 }}
-	font={{ font_size: 15, wrap: true }}
-	zIndex={11}
->
-	1Peter 1:9    obtaining as the outcome of your faith the salvation of your souls.
 </Fragment>
 
 <!-- Step 12: Romans 6:9 (is_scripture) -->
 <Fragment
-	step={12}
+	step={11}
 	layout={{ x: 95, y: 463, width: 810, height: 44 }}
 	font={{ align: 'left', v_align: 'middle', wrap: true }}
 	zIndex={12}
 >
 	<ScriptureBlock>
-		Romans 6:9    And when He broke the fifth seal, I saw underneath the altar the souls of those who had been slain because of the word of God, and because of the testimony which they had maintained;
+		<strong>Romans 6:9</strong> And when He broke the fifth seal, I saw underneath the altar the souls of those who had been slain because of the word of God, and because of the testimony which they had maintained;
 	</ScriptureBlock>
 </Fragment>

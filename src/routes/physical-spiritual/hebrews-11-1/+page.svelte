@@ -11,8 +11,8 @@
 		layout={{ x: 109, y: 39, width: 744, height: 392 }}
 		font={{ align: 'left', wrap: true }}
 	>
-		<ScriptureBlock title="Hebrews 11:1-3">
-			Now faith is the substance of things hoped for, the <u>evidence of things not seen</u>.  <sup>2</sup>For by it the elders obtained a good testimony.  <br/><sup>3</sup>By faith we understand that the worlds were framed by the word of God, so that the <br/><strong><u>things which are seen</u></strong> were <br/><strong><u>not made of things which are visible</u></strong>.<br/>
+		<ScriptureBlock title="Hebrews 11:1-3" scale="lg">
+			Now faith is the substance of things hoped for, the <u>evidence of things not seen</u>.  <sup>2</sup>For by it the elders obtained a good testimony. <sup>3</sup>By faith we understand that the worlds were framed by the word of God, so that the <strong><u>things which are seen</u></strong> were <strong><u>not made of things which are visible</u></strong>.<br/>
 		</ScriptureBlock>
 	</Fragment>
 

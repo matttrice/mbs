@@ -11,7 +11,7 @@
 		layout={{ x: 111, y: 73, width: 768, height: 309 }}
 		font={{ align: 'left', wrap: true }}
 	>
-		<ScriptureBlock title="Romans 1:20">
+		<ScriptureBlock title="Romans 1:20" scale="lg">
 			<sup>20</sup>For since the creation of the world God's invisible qualities--his eternal power and divine nature--have been clearly seen, being understood from what has been made, so that men are without excuse. <br/>
 		</ScriptureBlock>
 	</Fragment>

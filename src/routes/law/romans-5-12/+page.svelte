@@ -2,28 +2,20 @@
 	import Slide from '$lib/components/Slide.svelte';
 	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 	import { Arrow, Line, Rect } from '$lib/components/svg';
-
-	/**
-	 * Drill: Romans 5:12-14 - Sin before the Law
-	 */
 </script>
 
 <Slide>
 	<ReferenceOverlay src="/export/05-Law/Slide10.png" />
 
 	<Fragment
-		layout={{ x: 38.8, y: 10.1, width: 756.1, height: 44.4 }}
-		font={{ font_size: 44.2, bold: true }}
+		layout={{ x: 39, y: 10, width: 874, height: 216 }}
+		font={{ align: 'left', v_align: 'middle', wrap: true }}
 	>
-		Romans 5:12-14
-	</Fragment>
-
-	<Fragment
-		layout={{ x: 38.8, y: 47.2, width: 874, height: 177.6 }}
-		font={{ font_size: 23.3, v_align: 'middle', wrap: true }}
-	>
-		Therefore, just as sin entered the world through one man, and death through sin, and in this way death came to all men, because all sinned— 13 for before the law was given, sin was in the world. But sin is not taken into account when there is no law. 14 Nevertheless, death reigned from the time of Adam to the time of Moses, even over those who did not sin by breaking a command, as did Adam, who was a pattern of the one to come.
+		<ScriptureBlock title="Romans 5:12-14">
+			Therefore, just as sin entered the world through one man, and death through sin, and in this way death came to all men, because all sinned-- <sup>13 </sup>for before the law was given, sin was in the world. But sin is not taken into account when there is no law. <sup>14</sup>Nevertheless, death reigned from the time of Adam to the time of Moses, even over those who did not sin by breaking a command, as did Adam, who was a pattern of the one to come.
+		</ScriptureBlock>
 	</Fragment>
 
 	<!-- Timeline elements -->

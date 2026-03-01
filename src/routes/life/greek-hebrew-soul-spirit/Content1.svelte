@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Fragment from '$lib/components/Fragment.svelte';
-	import { Line } from '$lib/components/svg';
+	import { Arrow } from '$lib/components/svg';
 </script>
 
 <!-- Static: Title -->
@@ -51,10 +51,12 @@
 	Meah (spirit) Hebrew<br/>Nephesh (soul) Hebrew<br/>Psyche (soul) Greek<br/>Pneuma (soul) Greek
 </Fragment>
 
-<Fragment step={4} animate="draw">
-	<Line from={{ x: 288, y: 83 }} to={{ x: 370, y: 83 }} stroke={{ width: 9, color: 'var(--stroke-level-3)' }} zIndex={2} />
+<Fragment step={4} animate="wipe-right">
+	<Arrow from={{ x: 328, y: 83 }} to={{ x: 370, y: 83 }} stroke={{ width: 9, color: 'var(--stroke-level-2)' }} zIndex={2} />
 </Fragment>
-
+<Fragment step={4} animate="wipe-left">
+	<Arrow from={{ x: 330, y: 83 }} to={{ x: 288, y: 83 }} stroke={{ width: 9, color: 'var(--stroke-level-2)' }} zIndex={2} />
+</Fragment>
 <!-- Step 5: Cognition, Mind, Moral Character header -->
 <Fragment
 	step={5}
@@ -75,8 +77,11 @@
 	Ruwach (spirit) Hebrew<br/>Nephesh (soul) Hebrew<br/>Pneuma (spirit) Greek<br/>Psyche (soul) Greek
 </Fragment>
 
-<Fragment step={6} animate="draw">
-	<Line from={{ x: 545, y: 80 }} to={{ x: 627, y: 80 }} stroke={{ width: 9, color: 'var(--stroke-level-3)' }} zIndex={3} />
+<Fragment step={6} animate="wipe-right">
+	<Arrow from={{ x: 580, y: 83 }} to={{ x: 627, y: 83 }} stroke={{ width: 9, color: 'var(--stroke-level-2)' }} zIndex={2} />
+</Fragment>
+<Fragment step={6} animate="wipe-left">
+	<Arrow from={{ x: 600, y: 83 }} to={{ x: 545, y: 83 }} stroke={{ width: 9, color: 'var(--stroke-level-2)' }} zIndex={2} />
 </Fragment>
 
 <!-- Step 7: Interchangeability note -->
@@ -86,28 +91,28 @@
 	font={{ align: 'center', font_size: 26.7, wrap: true }}
 	zIndex={7}
 >
-	The Greek and Hebrew terms for soul and spirit are often used interchangeably <em>in physical contexts only</em>.
+	The Greek and Hebrew terms for <u>soul</u> and <u>spirit</u> are often used interchangeably <strong><u><em>in physical contexts only</em></u></strong>.
 </Fragment>
 
 <!-- Step 8: Context: Angels, Demons box -->
 <Fragment
 	step={8}
-	layout={{ x: 158, y: 312, width: 273, height: 81 }}
+	layout={{ x: 158, y: 319, width: 273, height: 81 }}
 	fill="var(--bg-level-2)"
-	line={{ width: 4, color: 'var(--stroke-level-0)' }}
-	font={{ font_size: 20, wrap: true }}
+	line={{ width: 2, color: 'var(--stroke-level-0)' }}
+	font={{ align: 'center', font_size: 20, wrap: true }}
 	zIndex={16}
 >
-	<em><u>Context</u></em>:  Angels, Demons,<br/>           Evil spirits.<br/>Greek: <em>pneuma</em> (spirit)
+	<em><u>Context</u></em>:  Angels, Demons, Evil spirits.<br/>Greek: <em>pneuma</em> (spirit)
 </Fragment>
 
 <!-- Step 9: Context: Spirit of God box -->
 <Fragment
 	step={9}
-	layout={{ x: 536, y: 312, width: 237, height: 81 }}
+	layout={{ x: 536, y: 319, width: 237, height: 81 }}
 	fill="var(--bg-level-2)"
-	line={{ width: 4, color: 'var(--stroke-level-0)' }}
-	font={{ font_size: 20, wrap: true }}
+	line={{ width: 2, color: 'var(--stroke-level-0)' }}
+	font={{ align: 'center', font_size: 20, wrap: true }}
 	zIndex={17}
 >
 	<em><u>Context</u></em>: Spirit of God.<br/>Hebrew: <em>ruach</em> (spirit)<br/>Greek: <em>pneuma</em> (spirit)
@@ -120,7 +125,7 @@
 	font={{ font_size: 26.7, wrap: true }}
 	zIndex={8}
 >
-	In scripture the word <em>psyche</em> (soul) is used invariably in the <u>context of eternal life</u>. The words that refer to spirit are never mentioned in the context of everlasting life.
+	In scripture the word <u><em>psyche</em> (soul)</u> is used invariably in the <strong><u>context of eternal life</u></strong>. The words that refer to spirit are never mentioned in the context of everlasting life.
 </Fragment>
 
 <!-- Step 11: Link to biblical examples -->
@@ -130,5 +135,5 @@
 	font={{ font_size: 21.7 }}
 	zIndex={18}
 >
-	Biblical examples of Psyche (Soul)
+	Biblical examples of Psyche (Soul) →
 </Fragment>

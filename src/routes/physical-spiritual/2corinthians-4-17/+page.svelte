@@ -11,8 +11,8 @@
 		layout={{ x: 78, y: 61, width: 804, height: 334 }}
 		font={{ align: 'left', wrap: true }}
 	>
-		<ScriptureBlock title="2 Corinthians 4:17">
-			For momentary, light affliction is producing for us an eternal weight of glory far beyond all comparison,<sup>18 </sup>while we <strong>look not at the things which are seen</strong>, but at the things which are <br/><strong>not seen</strong>; <br/>for the <strong>things which are <u>seen are temporal</u></strong>, but the <strong>things which are <u>not seen are eternal</u></strong>.
+		<ScriptureBlock title="2 Corinthians 4:17" scale="lg">
+			For momentary, light affliction is producing for us an eternal weight of glory far beyond all comparison,<sup>18 </sup>while we <strong>look not at the things which are seen</strong>, but at the things which are <strong>not seen</strong>; for the <strong>things which are <u>seen are temporal</u></strong>, but the <strong>things which are <u>not seen are eternal</u></strong>.
 		</ScriptureBlock>
 	</Fragment>
 

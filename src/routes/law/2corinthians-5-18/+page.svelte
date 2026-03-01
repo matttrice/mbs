@@ -1,32 +1,25 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-
-	/**
-	 * Drill: 2 Corinthians 5:18-20 - Ministry of reconciliation
-	 */
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <Slide>
 	<Fragment
-		layout={{ x: 104.4, y: 21.5, width: 755.9, height: 44.4 }}
-		font={{ font_size: 40, bold: true }}
+		layout={{ x: 52, y: 24, width: 883, height: 371 }}
+		font={{ wrap: true }}
 	>
-		2 Corinthians 5:18-20
-	</Fragment>
-
-	<Fragment
-		layout={{ x: 104.4, y: 72.5, width: 759.7, height: 359.2 }}
-		font={{ font_size: 28, wrap: true }}
-	>
-		Now all these things are from God, who reconciled us to Himself through Christ and gave us the ministry of reconciliation, 19 namely, that God was in Christ reconciling the world to Himself, not counting their trespasses against them, and He has committed to us the word of reconciliation. 20 Therefore, we are ambassadors for Christ, as though God were making an appeal through us; we beg you on behalf of Christ, be reconciled to God.
+		<ScriptureBlock title="2 Corinthians 5:17-20">
+			Therefore, if anyone is in Christ, he is a new creation; the old has <br>gone, the new has come! <sup>18</sup> All this is from God, who reconciled us<br>to himself through Christ and gave us the ministry of reconciliation:<br><sup>19</sup> that God was reconciling the world to himself in Christ, not <br>counting men's sins against them. And he has committed to us <br>the message of reconciliation. <sup>20</sup> We are therefore Christ's <br>ambassadors, as though God were making his appeal through <br>us. We implore you on Christ's behalf: Be reconciled to God.
+		</ScriptureBlock>
 	</Fragment>
 
 	<Fragment
 		step={1}
-		layout={{ x: 138.5, y: 432.3, width: 668.5, height: 76.3 }}
-		font={{ font_size: 24, align: 'center', color: '#00AA00' }}
+		layout={{ x: 99, y: 384, width: 782, height: 94 }}
+		font={{ v_align: 'middle', align: 'center', font_size: 26.7, wrap: true }}
+		fill="var(--bg-level-2)"
 	>
-		Ambassadors have diplomatic immunity;<br/>while at work for another King.
+		Under the Law, sins <em><u>are</u></em> counted against mankind.<br>Christ's ambassadors' sins <em><u>are NOT</u></em> counted against them
 	</Fragment>
 </Slide>

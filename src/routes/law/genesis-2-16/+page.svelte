@@ -1,34 +1,26 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-
-	/**
-	 * Drill: Genesis 2:16-17 - The first command
-	 */
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <Slide>
 	<Fragment
-		layout={{ x: 102.7, y: 45.6, width: 756.1, height: 44.4 }}
-		font={{ font_size: 44.2, bold: true }}
+		layout={{ x: 102, y: 46, width: 756, height: 270 }}
+		font={{ v_align: 'middle', wrap: true }}
 	>
-		Genesis 2:16-17
-	</Fragment>
-
-	<Fragment
-		layout={{ x: 108.9, y: 96.3, width: 742.1, height: 220 }}
-		font={{ font_size: 35, v_align: 'middle', wrap: true }}
-	>
-		The LORD God commanded the man, saying, "From any tree of the garden you may eat freely;  but from the tree of the knowledge of good and evil you shall not eat, for in the day that you eat from it you will surely die."
+		<ScriptureBlock title="Genesis 2:16-17" scale="lg">
+			The LORD God commanded the man, saying, "From any tree of the garden you may eat freely;  but from the tree of the knowledge of good and evil you shall not eat, for in the day that you eat from it you will surely die."
+		</ScriptureBlock>
 	</Fragment>
 
 	<Fragment
 		step={1}
 		layout={{ x: 137, y: 360, width: 665, height: 108 }}
-		font={{ font_size: 48, align: 'center' }}
+		font={{ align: 'center', wrap: true }}
 		fill="var(--bg-cmd-law)"
 		line={{ width: 8 }}
 	>
-		"commanded" evokes what thoughts?
+		"commanded" <br>evokes what thoughts?
 	</Fragment>
 </Slide>

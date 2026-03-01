@@ -1,32 +1,24 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-
-	/**
-	 * Drill: Romans 6:17-18 - Slaves to righteousness
-	 */
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <Slide>
 	<Fragment
-		layout={{ x: 99.2, y: 23.9, width: 755.9, height: 44.4 }}
-		font={{ font_size: 36.7, bold: true }}
+		layout={{ x: 99, y: 24, width: 759, height: 263 }}
+		font={{ wrap: true }}
 	>
-		Romans 6:17-18
-	</Fragment>
-
-	<Fragment
-		layout={{ x: 102.8, y: 75, width: 755.9, height: 212.1 }}
-		font={{ font_size: 30, wrap: true }}
-	>
-		But thanks be to God that, though you used to be slaves to sin, you wholeheartedly obeyed the form of teaching to which you were entrusted. 18 You have been set free from sin and have become slaves to righteousness.
+		<ScriptureBlock title="Romans 6:17-18">
+			But thanks be to God that, though you used to be <br>slaves to sin, you wholeheartedly obeyed the form of <br>teaching to which you were entrusted. <br><br><sup>18</sup> You have been <em><u>set free from sin</u></em> and have<br> become <em><u>slaves to righteousness</u></em>.
+		</ScriptureBlock>
 	</Fragment>
 
 	<Fragment
 		step={1}
-		layout={{ x: 66, y: 323.8, width: 849.2, height: 141.2 }}
-		font={{ font_size: 30, align: 'center', color: '#0099CC' }}
+		layout={{ x: 66, y: 324, width: 849, height: 141 }}
+		font={{ align: 'center', font_size: 30, color: 'var(--text-level-3)', wrap: true }}
 	>
-		Freedom from sin but a slave to righteousness.<br/>This dictates a new standard; a responsibility to live by.<br/>Are God's standards easy to meet?
+		Freedom from sin but a slave to righteousness.<br>This dictates a new standard; a responsibility to live by.<br>Are God's standards easy to meet?
 	</Fragment>
 </Slide>

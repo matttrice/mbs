@@ -11,7 +11,7 @@
 		layout={{ x: 99, y: 53, width: 773, height: 302 }}
 		font={{ align: 'left', wrap: true }}
 	>
-		<ScriptureBlock title="Colossians 1:15-16">
+		<ScriptureBlock title="Colossians 1:15-16" scale="lg">
 			He is the image of the invisible God, the firstborn of all creation.  <sup>16</sup>For by Him <u>all things were created</u>, both in the <strong>heavens and on earth, visible and invisible</strong>, whether thrones or dominions or rulers or authorities--<u>all things</u> have been created through Him and for Him.
 		</ScriptureBlock>
 	</Fragment>
