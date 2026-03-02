@@ -1,25 +1,17 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <Slide>
-	<!-- Title -->
 	<Fragment
-		layout={{ x: 102.7, y: 9.0, width: 756.1, height: 44.4 }}
-		font={{ font_size: 33.3, bold: true }}
-	>
-		Isaiah 59:1-2
-	</Fragment>
-
-	<!-- Scripture text -->
-	<Fragment
-		step={1}
-		layout={{ x: 107.8, y: 55.5, width: 744.4, height: 169.5 }}
+		layout={{ x: 109, y: 89, width: 748, height: 342 }}
 		line={{ width: 1 }}
-		font={{ font_size: 30.8 }}
-		animate="fade"
+		font={{ wrap: true }}
 	>
-		Behold, the LORD's hand is not so short That it cannot save; Nor is His ear so dull That it cannot hear. 2 But your iniquities have made a separation between you and your God, And your sins have hidden His face from you so that He does not hear.
+		<ScriptureBlock title="Isaiah 59:1-2" version="NASB" scale="lg">
+			Behold, the LORD'S hand is not so short <br>That it cannot save; <br>	Nor is His ear so dull <br>That it cannot hear. <br><sup>2</sup><sup> </sup>But your iniquities have made a separation between you and your God,<br>And your sins have hidden His face from you so that He does not hear.
+		</ScriptureBlock>
 	</Fragment>
 </Slide>

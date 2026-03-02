@@ -1,24 +1,17 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <Slide>
-	<!-- Title -->
 	<Fragment
-		layout={{ x: 101.1, y: 15.1, width: 755.9, height: 44.4 }}
-		font={{ bold: true }}
-	>
-		Psalms 51:5-6
-	</Fragment>
-
-	<!-- Scripture text -->
-	<Fragment
-		layout={{ x: 107.8, y: 57.7, width: 744.4, height: 194.8 }}
+		layout={{ x: 108, y: 58, width: 744, height: 195 }}
 		line={{ width: 1 }}
-		font={{ font_size: 30.8, wrap: true }}
-		animate="fade"
+		font={{ wrap: true }}
 	>
-		Behold, I was brought forth in iniquity, And in sin my mother conceived me. 6 Behold, You desire truth in the innermost being, And in the hidden part You will make me know wisdom.
+		<ScriptureBlock title="Psalms 51:5-6" scale="lg">
+			Behold, I was brought  forth in iniquity, And in sin my mother conceived me. <sup>6</sup> Behold, You desire truth  in the innermost  being, And in the hidden part You will make  me know wisdom. <br>
+		</ScriptureBlock>
 	</Fragment>
 </Slide>

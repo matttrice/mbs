@@ -201,10 +201,8 @@
 		step={12}
 		drillTo="sin-and-death/romans-7-14"
 		layout={{ x: 92.7, y: 117.6, width: 228.6, height: 36.1 }}
-		line={{ width: 1.3 }}
-		font={{ font_size: 26.7 }}
+		font={{ bold: true, font_size: 26.7 }}
 		zIndex={17}
-		animate="fade"
 	>
 		Romans 7:14-25
 	</Fragment>
@@ -225,13 +223,11 @@
 	<Fragment
 		step={14}
 		drillTo="sin-and-death/1-peter-3-1"
-		layout={{ x: 669.5, y: 190.9, width: 176.9, height: 30 }}
-		line={{ width: 1.3 }}
-		font={{ v_align: 'middle', align: 'center', font_size: 26.7 }}
+		layout={{ x: 670, y: 190.9, width: 176.9, height: 30 }}
+		font={{ bold: true, v_align: 'middle', align: 'center', font_size: 26.7 }}
 		zIndex={19}
-		animate="fade"
 	>
-		1Peter 3:1-4
+		1 Peter 3:1-4
 	</Fragment>
 
 	<!-- Step 15: "hidden person" -->
@@ -262,9 +258,8 @@
 		drillTo="sin-and-death/romans-8-10"
 		layout={{ x: 114.8, y: 177, width: 191.4, height: 34.6 }}
 		line={{ width: 1.3 }}
-		font={{ v_align: 'middle', font_size: 26.7 }}
+		font={{ bold: true, v_align: 'middle', font_size: 26.7 }}
 		zIndex={22}
-		animate="fade"
 	>
 		Romans 8:10
 	</Fragment>
@@ -272,13 +267,12 @@
 	<!-- Step 18: Flesh dead because of sin -->
 	<Fragment
 		step={18}
-		layout={{ x: 88, y: 203, width: 245, height: 65.9 }}
+		layout={{ x: 80, y: 205, width: 275, height: 55.9 }}
 		line={{ width: 1 }}
-		font={{ font_size: 21.7, italic: true }}
+		font={{ align: 'center', font_size: 20, italic: true, wrap: true }}
 		zIndex={23}
-		animate="fade"
 	>
-		Flesh dead because<br/>of sin. Where did the<br/>sin come from?
+		Flesh is dead because of sin. Where did the sin come from?
 	</Fragment>
 
 	<!-- Step 19: Definition of "flesh" -->
@@ -287,24 +281,32 @@
 		drillTo="sin-and-death/flesh"
 		layout={{ x: 101.2, y: 273.3, width: 154.1, height: 60 }}
 		line={{ width: 3, color: 'var(--stroke-level-0)' }}
-		font={{ v_align: 'middle', align: 'center', font_size: 26.7 }}
+		font={{ bold: true, v_align: 'middle', align: 'center', font_size: 24 }}
 		zIndex={29}
-		animate="fade"
 	>
 		Definition of<br/>"flesh"
 	</Fragment>
-
-	<!-- Step 20: MORTALITY - Limited to flesh -->
+	
 	<Fragment
 		step={20}
 		layout={{ x: 277, y: 276.1, width: 203, height: 83.1 }}
-		line={{ width: 1 }}
-		font={{ align: 'center', font_size: 30.8 }}
+		font={{ align: 'center', v_align: 'top', font_size: 30, bold: true }}
 		fill="var(--bg-level-1)"
 		zIndex={24}
-		animate="fade"
+		animate="wipe-right"
 	>
-		MORTALITY<br/>Limited to flesh
+		MORTALITY
+	</Fragment>
+	
+	<Fragment
+		step={20}
+		layout={{ x: 277, y: 310, width: 203, height: 40 }}
+		line={{ width: 1 }}
+		font={{ align: 'center', font_size: 28 }}
+		zIndex={25}
+		animate="wipe-right"
+	>
+		<em>Limited to flesh</em>
 	</Fragment>
 
 	<!-- Step 20: "Why does the inner man die?" -->
@@ -344,16 +346,25 @@
 		soul sins and dies
 	</Fragment>
 
-	<!-- Step 22.1: MORALITY - Limited to "inner man" (soul) -->
 	<Fragment
 		step={22.1}
-		layout={{ x: 493.9, y: 282, width: 182.1, height: 96.1 }}
-		line={{ width: 1 }}
-		font={{ align: 'center', font_size: 30.8 }}
+		layout={{ x: 480.9, y: 277, width: 182.1, height: 124.1 }}
+		fill="var(--bg-cmd-law)"
+		font={{ align: 'center', v_align: 'top', font_size: 30, bold: true }}
+		animate="wipe-left"
 		zIndex={28}
-		animate="fade"
 	>
-		MORALITY<br/>Limited to<br/>"inner man" (soul)
+		MORALITY
+	</Fragment>
+
+	<Fragment
+		step={22.1}
+		layout={{ x: 480.9, y: 307, width: 182.1, height: 79.1 }}
+		font={{ align: 'center', font_size: 23 }}
+		zIndex={29}
+		animate="wipe-left"
+	>
+		<em>Limited to</em><br><em>"inner man"</em><br>(soul)
 	</Fragment>
 
 	<!-- Step 23: "Children" -->

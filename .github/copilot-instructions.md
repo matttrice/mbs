@@ -581,6 +581,21 @@ The `returnHere` prop changes return behavior for specific drill chains:
 | `returnHere={false}` (default) | Return to origin (pop entire stack) |
 | `returnHere={true}` | Return to parent drill (pop one level) |
 
+**Critical: `drillTo` inside CustomShowProvider content requires `returnHere`.**
+When a Fragment with `drillTo` appears inside a CustomShowProvider slide (Content component), it **must** also set `returnHere` on the Fragment. Without it, completing the drill returns directly to the main presentation origin—skipping all remaining fragments and slides in the custom show. With `returnHere`, the drill returns to the custom show slide so navigation continues through the remaining content.
+
+```svelte
+<!-- Inside a CustomShowProvider Content component -->
+<Fragment
+  step={3}
+  drillTo="sin-and-death/romans-8-1"
+  returnHere
+  layout={{ x: 95, y: 207, width: 456, height: 54 }}
+>
+  Romans 8:1-14
+</Fragment>
+```
+
 
 ### Pending Drill Approach
 

@@ -1,24 +1,17 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <Slide>
-	<!-- Title -->
 	<Fragment
-		layout={{ x: 105.1, y: 37.4, width: 755.9, height: 44.4 }}
-		font={{ font_size: 33.3, bold: true, color: 'var(--text-level-0)' }}
-	>
-		Romans 6:23
-	</Fragment>
-
-	<!-- Scripture text -->
-	<Fragment
-		layout={{ x: 112.9, y: 90.5, width: 740.8, height: 88.8 }}
+		layout={{ x: 113, y: 91, width: 741, height: 89 }}
 		line={{ width: 1 }}
-		font={{ font_size: 33.3, wrap: true }}
-		animate="fade"
+		font={{ wrap: true }}
 	>
-		For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord
+		<ScriptureBlock title="Romans 6:23" scale="lg">
+			For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord
+		</ScriptureBlock>
 	</Fragment>
 </Slide>

@@ -1,24 +1,17 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <Slide>
-	<!-- Title -->
 	<Fragment
-		layout={{ x: 102.8, y: 23.1, width: 756, height: 44.4 }}
-		font={{ bold: true }}
-	>
-		Romans 5:12
-	</Fragment>
-
-	<!-- Scripture text -->
-	<Fragment
-		layout={{ x: 107.8, y: 80.8, width: 744.4, height: 169.5 }}
+		layout={{ x: 108, y: 81, width: 744, height: 169 }}
 		line={{ width: 1 }}
-		font={{ font_size: 33.3, wrap: true }}
-		animate="fade"
+		font={{ wrap: true }}
 	>
-		12 Therefore, just as through one man sin entered into the world, and death through sin, and so death spread to all men, because all sinned—
+		<ScriptureBlock title="Romans 5:12" scale="lg">
+			<sup>12</sup> Therefore, just as through one man sin entered into the world, and death through sin, and so death spread to all men, because all sinned--
+		</ScriptureBlock>
 	</Fragment>
 </Slide>

@@ -4,12 +4,17 @@ description: Refactor existing scripture routes
 ---
 Your goal is to scan lesson [routes](../../src/routes) for the route name provided and refactor scripture reference Fragments so they are consistent and use svelte `ScriptureBlock` component combined with newly extracted JSON text that includes HTML tags. Use the [scripture-references SKILL.md](../skills/scripture-references/SKILL.md) skill to process the updated JSON file provided for reference and should be used to help guide your refactor decisions.
 
-This refactor applies to scripture routes only (`src/routes/{scope}`) and does **not** apply to main presentation slides routes under `src/routes/{scope}/slides`.
+This refactor applies to scripture routes only (`src/routes/{scope}`) and does **not** apply to main presentation slide components under `src/routes/{scope}/slides/` folders.
 
 ## Required inputs (from user)
-- Route scope (default batch): presentation folder name such as `ark`, `priesthood`, etc. This means process all scripture routes under `src/routes/{scope}`.
-- Optional single-route override: full route path such as `src/routes/priesthood/2-samuel-11-1` to process only that route.
+- Route scope: presentation folder name such as `ark`, `priesthood`, etc.
 - JSON file path (extractor output)
+- Scope modifier (optional, one of):
+  - **All routes** (default): Process every scripture route under `src/routes/{scope}` — including CustomShowProvider aggregator routes that contain scripture references. Excludes only the `slides/` folder.
+  - **Specific route**: A single route path such as `src/routes/priesthood/2-samuel-11-1` to process only that route.
+  - **Exclude list**: All routes except those explicitly listed (e.g., "all except acts-2-37/ and romans-8-1/").
+
+When no scope modifier is given, process **all** routes (excluding `slides/`). Do not independently decide to skip routes — including CustomShowProvider content routes that contain scripture references or drill links to scripture.
 
 If any required input is missing, ask concise clarifying questions before editing.
 
@@ -17,7 +22,7 @@ If any required input is missing, ask concise clarifying questions before editin
 - If you change a route name, you must change all Fragments in the presentation that drillTo it to match the new route name. This is critical to maintain drillTo integrity and must be applied to the required output Svelte Route Map file described below.
 
 ## Workflow
-1. **Check for existing Route Map**: Look for a `{Lesson}-Svelte-Route-Map.md` file in the JSON folder. If one exists, use it to skip or accelerate the route-to-JSON matching step — the mappings are already established. Othwise, you will need to do the matching yourself as described in step 2 and build the route map which will be an expected (required) output.
+1. **Check for existing Route Map**: Look for a `{Lesson}-Svelte-Route-Map.md` file in the JSON folder. If one exists, use it to skip or accelerate the route-to-JSON matching step — the mappings are already established. Otherwise, you will need to do the matching yourself as described in step 2 and build the route map which will be an expected (required) output.
 2. **Gather JSON entries**: Read `linked_slides` and relevant `slides` from the JSON for all scripture drill routes in scope
 3. **Match routes to JSON**: For each scripture route, match existing Fragment content to a JSON entry by comparing plain-text substrings (strip HTML from both sides). Do not analyze text differences—once matched, the JSON replaces the old content entirely.
 4. **Save/update Svelte Route Map**: Create or update the route map file (see below).
