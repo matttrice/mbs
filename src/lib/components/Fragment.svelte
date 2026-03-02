@@ -448,7 +448,6 @@
 	<div
 		class="fragment"
 		class:fragment-positioned={layout}
-		class:fragment-wrap={font?.wrap}
 		class:drillable={drillTo}
 		class:animate-fade={showAnimation && animate === 'fade'}
 		class:animate-fly-up={showAnimation && animate === 'fly-up'}
@@ -468,8 +467,8 @@
 		data-shape-type={dev && layout ? 'fragment' : undefined}
 		data-coords={dev && layout ? JSON.stringify({ x: layout.x, y: layout.y, width: layout.width, height: layout.height, rotation: layout.rotation }) : undefined}
 	>
-		{#if font?.wrap}
-			<span class="wrap-content">{@render children()}</span>
+		{#if layout && font}
+			<span class="fragment-text">{@render children()}</span>
 		{:else}
 			{@render children()}
 		{/if}
@@ -484,9 +483,11 @@
 		overflow: visible;
 	}
 
-	/* Wrap content - inner span allows inline elements to flow naturally */
-	.wrap-content {
-		display: inline;
+	/* Block formatting context for text content inside flex container.
+	   Ensures <br>, <em>, <strong> etc. work correctly. */
+	.fragment-text {
+		display: block;
+		width: 100%;
 	}
 
 	/* Drillable styling */
