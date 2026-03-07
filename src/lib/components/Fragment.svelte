@@ -81,6 +81,12 @@
 		 */
 		drillTo?: string;
 		/**
+		 * Route to navigate to when clicked, excluded from auto-drill.
+		 * Unlike drillTo, this is NOT registered with arrow-key navigation
+		 * or autoDrillAll. Use for optional/alternate links.
+		 */
+		clickTo?: string;
+		/**
 		 * If true, the drilled content returns here (to this drill),
 		 * instead of all the way back to the origin presentation.
 		 * Use for nested drills that should return to their caller.
@@ -122,6 +128,7 @@
 		exitStep,
 		delay,
 		drillTo,
+		clickTo,
 		returnHere = false,
 		autoDrill = false,
 		layout,
@@ -438,6 +445,8 @@
 	function handleClick() {
 		if (drillTo && visible()) {
 			navigation.drillInto(drillTo, 0, returnHere);
+		} else if (clickTo && visible()) {
+			navigation.drillInto(clickTo, 0, false);
 		}
 	}
 </script>
@@ -448,7 +457,7 @@
 	<div
 		class="fragment"
 		class:fragment-positioned={layout}
-		class:drillable={drillTo}
+		class:drillable={drillTo || clickTo}
 		class:animate-fade={showAnimation && animate === 'fade'}
 		class:animate-fly-up={showAnimation && animate === 'fly-up'}
 		class:animate-fly-down={showAnimation && animate === 'fly-down'}
@@ -463,7 +472,7 @@
 		class:animate-draw={showAnimation && animate === 'draw'}
 		class:revealed={animationReady && !showAnimation}
 		style="{computedStyle()}--animation-delay: {animationDelay}ms;"
-		onclick={drillTo ? handleClick : undefined}
+		onclick={drillTo || clickTo ? handleClick : undefined}
 		data-shape-type={dev && layout ? 'fragment' : undefined}
 		data-coords={dev && layout ? JSON.stringify({ x: layout.x, y: layout.y, width: layout.width, height: layout.height, rotation: layout.rotation }) : undefined}
 	>

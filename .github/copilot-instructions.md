@@ -66,6 +66,7 @@ The `Fragment` component handles hide/show for all slide content.
 |------|------|-------------|
 | `step` | `number` | Animation sequence. Integer = click number, decimal = delay (e.g., `2.1` = step 2 with 500ms delay). Omit for static content. |
 | `drillTo` | `string` | Route to drill into on click (e.g., `"promises/genesis-12-1"`) |
+| `clickTo` | `string` | Route to navigate to on click, excluded from auto-drill. For optional/alternate links. |
 | `layout` | `BoxLayout` | Absolute positioning: `{ x, y, width, height, rotation? }` |
 | `font` | `BoxFont` | Typography: `{ font_name?, font_size?, bold?, italic?, color?, align?, v_align?, wrap? }` |
 | `fill` | `string` | Background color (e.g., `"var(--bg-ghost)"`) |
@@ -127,20 +128,15 @@ The `Fragment` component handles hide/show for all slide content.
 </Fragment>
 ```
 
-**Click-only drill (excluded from autoDrillAll and arrow-key navigation):**
-Use this when a link should be clickable but NOT included in the normal drill sequence (e.g., alternate-version, optional links like "link to NIV version"). Omit `drillTo` and call `navigation.drillInto()` directly in an `onclick` handler. This keeps the link off the drill target registry so arrow keys and `autoDrillAll` ignore it entirely, while still pushing onto the drill stack for proper return behavior. This is uncommon but helpful for optional or alternate links that shouldn't disrupt the main drill flow.
+**Click-only links (excluded from autoDrillAll and arrow-key navigation):**
+Use `clickTo` when a link should be clickable but NOT included in the normal drill sequence (e.g., alternate-version, optional links like "link to NIV version"). Unlike `drillTo`, `clickTo` is NOT registered with the drill target registry so arrow keys and `autoDrillAll` ignore it entirely, while still pushing onto the drill stack for proper return behavior. This is uncommon but helpful for optional or alternate links that shouldn't disrupt the main drill flow.
 ```svelte
-<script lang="ts">
-  import { navigation } from '$lib/stores/navigation';
-</script>
-
 <Fragment
+  clickTo="law/romans-3-19-niv"
   layout={{ x: 696, y: 491, width: 181, height: 28 }}
   font={{ font_size: 16.7, italic: true }}
 >
-  <span style="cursor: pointer;" onclick={() => navigation.drillInto('law/romans-3-19-niv', 0, false)}>
-    - link to NIV version -
-  </span>
+  - link to NIV version -
 </Fragment>
 ```
 

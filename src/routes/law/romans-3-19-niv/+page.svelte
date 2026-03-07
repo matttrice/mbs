@@ -2,7 +2,6 @@
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
 	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
-    import { navigation } from '$lib/stores/navigation';
 </script>
 
 <Slide>
@@ -16,16 +15,10 @@
 	</Fragment>
 
 	<Fragment
+		clickTo="law/romans-3-19-nasb"
 		layout={{ x: 765, y: 488, width: 148, height: 28 }}
 		font={{ font_size: 16.7, italic: true, align: 'center' }}
 	>
-	<!-- svelte-ignore a11y_click_events_have_key_events -->
-    <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <span
-        style="cursor: pointer;"
-        onclick={() => navigation.drillInto('law/romans-3-19-nasb', 0, false)}
-    >
-        - link to NASB version -
-    </span>
+		- link to NASB version -
 	</Fragment>
 </Slide>

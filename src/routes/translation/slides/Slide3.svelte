@@ -13,15 +13,13 @@
 <Slide {slideIndex}>
 	<div class="slide-bg"></div>
 
-	<!-- Static: Vertical line (Line 21) -->
 	<Fragment>
 		<Line from={{ x: 594, y: 419 }} to={{ x: 594, y: 461 }} stroke={{ width: 1 }} zIndex={6} />
 	</Fragment>
 
-	<!-- Static: Title "Genesis 6:1-8" (drillTo genesis-6-1) -->
 	<Fragment
-		drillTo="translation/genesis-6-1"
-		layout={{ x: 84, y: 13, width: 293, height: 62 }}
+		clickTo="translation/genesis-6-1"
+		layout={{ x: 84, y: 13, width: 293, height: 40 }}
 		font={{ v_align: 'top', font_size: 39.2, bold: true }}
 		zIndex={17}
 	>
@@ -52,7 +50,7 @@
 		step={1}
 		drillTo="translation/angels"
 		layout={{ x: 73, y: 99, width: 306, height: 93 }}
-		font={{ align: 'center', font_size: 20, bold: true, wrap: true }}
+		font={{ align: 'center', font_size: 20,wrap: true }}
 		zIndex={18}
 	>
 		<strong>Used 5 times in Old Testament</strong><br>Job 38:1-7, Job 1:6-7, Job 2:1-2 <br>Genesis 6:2, Genesis 6:4
