@@ -5,6 +5,6 @@
 </script>
 
 <CustomShowProvider
-	name="post-flood"
+	name="ezekiel-1-daniel-10"
 	slides={[Content1, Content2]}
 />

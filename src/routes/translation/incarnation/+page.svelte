@@ -1,25 +1,16 @@
 <script lang="ts">
 	import CustomShowProvider from '$lib/components/CustomShowProvider.svelte';
-	import IncarnationContent from './Content.svelte';
-	import Genesis18Content from '../genesis-18-1/Content.svelte';
-	import Exodus33Content from '../exodus-33-21/Content.svelte';
-	import Numbers22Content from '../numbers-22-29/Content.svelte';
-	import Ezekiel1Content from '../ezekiel-1-25/Content.svelte';
-	import Daniel10Content from '../daniel-10-4/Content.svelte';
-	import Acts10Content from '../acts-10-30/Content.svelte';
-	import Acts22Content from '../acts-22-6/Content.svelte';
+	import Genesis3Content from '../genesis-3-1-5/Content.svelte';
+	import Genesis18Content from '../genesis-18-1-3/Content.svelte';
+	import ExodusContent from '../exodus-33-21-23/Content.svelte';
+	import NumbersContent from '../numbers-22-29-33/Content.svelte';
+	import Ezekiel1Content from '../ezekiel-1-daniel-10/Content1.svelte';
+	import Daniel10Content from '../ezekiel-1-daniel-10/Content2.svelte';
+	import Acts10Content from '../acts-10-30-31/Content.svelte';
+	import Acts22Content from '../acts-22-6-9/Content.svelte';
 </script>
 
 <CustomShowProvider
 	name="incarnation"
-	slides={[
-		IncarnationContent,
-		Genesis18Content,
-		Exodus33Content,
-		Numbers22Content,
-		Ezekiel1Content,
-		Daniel10Content,
-		Acts10Content,
-		Acts22Content
-	]}
+	slides={[Genesis3Content, Genesis18Content, ExodusContent, NumbersContent, Ezekiel1Content, Daniel10Content, Acts10Content, Acts22Content]}
 />

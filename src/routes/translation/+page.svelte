@@ -24,13 +24,12 @@
 			</div>
 		</div>
 
-		<!-- Slide indicator dots -->
 		<div class="slide-indicators">
-			{#each {length: 4} as _, index}
-				<button 
+			{#each { length: 4 } as _, index}
+				<button
 					class="indicator-dot"
 					class:active={$currentSlide === index}
-					onclick={() => import('$lib/stores/navigation').then(m => m.navigation.goToSlide(index))}
+					onclick={() => import('$lib/stores/navigation').then((m) => m.navigation.goToSlide(index))}
 					aria-label="Go to slide {index + 1}"
 				>
 					{index + 1}
@@ -39,59 +38,3 @@
 		</div>
 	</div>
 </PresentationProvider>
-
-<style>
-	.presentation {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-	}
-
-	.slide-container {
-		flex: 1;
-		position: relative;
-		overflow: hidden;
-	}
-
-	.slide-wrapper {
-		position: absolute;
-		inset: 0;
-		visibility: hidden;
-	}
-
-	.slide-wrapper.active {
-		visibility: visible;
-	}
-
-	.slide-indicators {
-		display: flex;
-		justify-content: center;
-		gap: 8px;
-		padding: 16px;
-		background: var(--bg-light);
-	}
-
-	.indicator-dot {
-		width: 32px;
-		height: 32px;
-		border-radius: 50%;
-		border: 2px solid var(--bg-level-3);
-		background: transparent;
-		color: var(--bg-level-3);
-		font-size: 14px;
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.2s ease;
-	}
-
-	.indicator-dot:hover {
-		background: var(--bg-level-3);
-		color: white;
-	}
-
-	.indicator-dot.active {
-		background: var(--bg-level-3);
-		color: white;
-	}
-</style>
