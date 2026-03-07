@@ -18,7 +18,7 @@
 
 <!-- Ezekiel 8:1-2 -->
 <Fragment
-	layout={{ x: 56, y: 329, width: 845, height: 193 }}
+	layout={{ x: 56, y: 280, width: 845, height: 193 }}
 	font={{ align: 'left', v_align: 'middle', wrap: true }}
 	zIndex={3}
 >

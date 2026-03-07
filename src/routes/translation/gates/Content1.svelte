@@ -6,27 +6,17 @@
 
 <div class="slide-bg"></div>
 
-<!-- Static: John 10:1-6 title -->
-<Fragment
-	layout={{ x: 41, y: 12, width: 756, height: 44 }}
-	font={{ font_size: 36.7, bold: true }}
-	zIndex={0}
->
-	John 10:1-6
-</Fragment>
-
 <!-- Static: Scripture text -->
 <Fragment
-	layout={{ x: 49, y: 54, width: 845, height: 216 }}
+	layout={{ x: 49, y: 40, width: 890, height: 216 }}
 	font={{ align: 'left', v_align: 'middle', wrap: true }}
 	zIndex={2}
 >
-	<ScriptureBlock>
+	<ScriptureBlock title="John 10:1-6">
 		"I tell you the truth, the man who does not enter the sheep pen by the gate, but climbs in by some other way, is a thief and a robber. <sup>2</sup> The man who enters by the gate is the shepherd of his sheep. <sup>3</sup> The watchman opens the gate for him, and the sheep listen to his voice. He calls his own sheep by name and leads them out. <sup>4</sup> When he has brought out all his own, he goes on ahead of them, and his sheep follow him because they know his voice. <sup>5</sup> But they will never follow a stranger; in fact, they will run away from him because they do not recognize a stranger's voice." <sup>6</sup> Jesus used this figure of speech, but they did not understand what he was telling them."
 	</ScriptureBlock>
 </Fragment>
 
-<!-- Step 1: "Shepherd:" -->
 <Fragment
 	step={1}
 	layout={{ x: 170, y: 282, width: 188, height: 42 }}
@@ -36,17 +26,15 @@
 	<strong>Shepherd: </strong>
 </Fragment>
 
-<!-- Step 1: Horizontal line -->
 <Fragment step={1}>
-	<Line from={{ x: 164, y: 331 }} to={{ x: 778, y: 331 }} stroke={{ width: 9 }} zIndex={13} />
+	<Line from={{ x: 164, y: 331 }} to={{ x: 778, y: 331 }} stroke={{ width: 4 }} zIndex={13} />
 </Fragment>
 
 <!-- Step 1: Vertical line -->
 <Fragment step={1}>
-	<Line from={{ x: 491, y: 296 }} to={{ x: 491, y: 399 }} stroke={{ width: 9 }} zIndex={14} />
+	<Line from={{ x: 491, y: 296 }} to={{ x: 491, y: 399 }} stroke={{ width: 4 }} zIndex={14} />
 </Fragment>
 
-<!-- Step 1: "Thief:" -->
 <Fragment
 	step={1}
 	layout={{ x: 529, y: 286, width: 111, height: 38 }}
@@ -57,8 +45,8 @@
 </Fragment>
 
 <!-- Step 2: Top horizontal line -->
-<Fragment step={2}>
-	<Line from={{ x: 309, y: 110 }} to={{ x: 483, y: 110 }} stroke={{ width: 9 }} zIndex={17} />
+<Fragment step={2} animate="draw">
+	<Line from={{ x: 164, y: 127 }} to={{ x: 338, y: 127 }} stroke={{ width: 3 }} zIndex={17} />
 </Fragment>
 
 <!-- Step 3: "Satan" -->
@@ -72,15 +60,15 @@
 </Fragment>
 
 <!-- Step 4: Blue horizontal line -->
-<Fragment step={4}>
-	<Line from={{ x: 55, y: 136 }} to={{ x: 273, y: 136 }} stroke={{ width: 9, color: 'var(--stroke-level-3)' }} zIndex={18} />
+<Fragment step={4} animate="draw">
+	<Line from={{ x: 660, y: 128 }} to={{ x: 894, y: 128 }} stroke={{ width: 3, color: 'var(--stroke-level-3)' }} zIndex={18} />
 </Fragment>
 
 <!-- Step 5: "Christ" -->
 <Fragment
 	step={5}
 	layout={{ x: 347, y: 284, width: 111, height: 41 }}
-	font={{ font_size: 33.3, bold: true, wrap: true }}
+	font={{ font_size: 33.3, bold: true, wrap: true, color: 'var(--text-level-3)' }}
 	zIndex={9}
 >
 	<strong>Christ</strong>
@@ -100,10 +88,10 @@
 <Fragment
 	step={7}
 	layout={{ x: 197, y: 331, width: 271, height: 34 }}
-	font={{ font_size: 23.3, bold: true, wrap: true }}
+	font={{ font_size: 23.3, bold: true, wrap: true, color: 'var(--text-level-3)' }}
 	zIndex={8}
 >
-	<strong>Watchman opens gate</strong>
+	Watchman opens gate
 </Fragment>
 
 <!-- Step 8: "Some other way" -->
@@ -113,7 +101,7 @@
 	font={{ font_size: 23.3, bold: true, wrap: true }}
 	zIndex={6}
 >
-	<strong>Some other way</strong>
+	Some other way
 </Fragment>
 
 <!-- Step 9: "Mary" -->
@@ -129,6 +117,7 @@
 <!-- Step 10: "Incarnation" -->
 <Fragment
 	step={10}
+	animate="fly-down"
 	layout={{ x: 541, y: 364, width: 190, height: 42 }}
 	font={{ font_size: 30, bold: true, wrap: true }}
 	zIndex={12}
@@ -148,14 +137,14 @@
 
 <!-- Step 12: Green oval -->
 <Fragment step={12}>
-	<Ellipse cx={490.5} cy={454.5} rx={64.5} ry={56.5} fill="#05D000" stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={15} />
+	<Ellipse cx={490.5} cy={454.5} rx={64.5} ry={56.5} fill="var(--bg-earth)" stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={15} />
 </Fragment>
 
 <!-- Step 12: "Earth" -->
 <Fragment
 	step={12}
 	layout={{ x: 446, y: 431, width: 89, height: 42 }}
-	font={{ font_size: 30, bold: true }}
+	font={{ font_size: 30, bold: true, align: 'center', v_align: 'middle' }}
 	zIndex={16}
 >
 	<strong>Earth</strong>

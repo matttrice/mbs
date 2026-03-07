@@ -81,6 +81,7 @@
 	gap: 0.06em;
 	width: 100%;
 	height: 100%;
+	box-sizing: border-box;
 	color: var(--text-level-0);
 }
 
@@ -95,6 +96,8 @@
 	font-size: var(--scripture-body-size);
 	line-height: var(--scripture-line-height);
 	margin: 0;
+	flex: 1 1 auto;
+	min-height: 0;
 }
 
 .scripture-text :where(sup, sub) {
@@ -103,6 +106,7 @@
 }
 
 .scripture-version {
+	margin-top: auto;
 	align-self: flex-end;
 	font-style: italic;
 	font-size: calc(var(--scripture-body-size) * 0.72);

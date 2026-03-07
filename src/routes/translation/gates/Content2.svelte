@@ -6,22 +6,13 @@
 
 <div class="slide-bg"></div>
 
-<!-- Static: Title -->
-<Fragment
-	layout={{ x: 61, y: 16, width: 756, height: 44 }}
-	font={{ font_size: 36.7, bold: true }}
-	zIndex={0}
->
-	John 10:7-10 <em>cont... </em>
-</Fragment>
-
 <!-- Static: Scripture text -->
 <Fragment
 	layout={{ x: 61, y: 60, width: 850, height: 148 }}
 	font={{ align: 'left', v_align: 'middle', wrap: true }}
 	zIndex={1}
 >
-	<ScriptureBlock>
+	<ScriptureBlock title="John 10:7-10...">
 		"Therefore Jesus said again, "I tell you the truth, I am the gate for the sheep. <sup>8</sup> All who ever came before me were thieves and robbers, but the sheep did not listen to them. <sup>9</sup> I am the gate; whoever enters through me will be saved. He will come in and go out, and find pasture. <sup>10</sup> The thief comes only to steal and kill and destroy; I have come that they may have life, and have it to the full."
 	</ScriptureBlock>
 </Fragment>
@@ -36,14 +27,21 @@
 	<strong>Shepherd: </strong>
 </Fragment>
 
+<Fragment
+	step={1}
+	animate="fly-down"
+>
+	<Line from={{ x: 487, y: 114 }} to={{ x: 726, y: 114 }} stroke={{ width: 3, color: 'var(--stroke-level-3)' }} zIndex={18} />
+</Fragment>
+
 <!-- Step 1: Horizontal line -->
 <Fragment step={1}>
-	<Line from={{ x: 172, y: 261 }} to={{ x: 786, y: 261 }} stroke={{ width: 9 }} zIndex={16} />
+	<Line from={{ x: 172, y: 261 }} to={{ x: 786, y: 261 }} stroke={{ width: 4 }} zIndex={16} />
 </Fragment>
 
 <!-- Step 1: Vertical line -->
 <Fragment step={1}>
-	<Line from={{ x: 499, y: 226 }} to={{ x: 499, y: 414 }} stroke={{ width: 9 }} zIndex={17} />
+	<Line from={{ x: 499, y: 226 }} to={{ x: 499, y: 414 }} stroke={{ width: 4 }} zIndex={17} />
 </Fragment>
 
 <!-- Step 1: "Thief:" -->
@@ -103,7 +101,7 @@
 	font={{ font_size: 16.7, wrap: true }}
 	zIndex={2}
 >
-	Verse 7:  "<strong><em>I am the gate for the sheep</em></strong><em>"  </em>- Jesus becomes the gate of spiritual life.
+	<em>Verse 7</em>: Jesus <em>becomes</em> the gate of <strong style="color: var(--text-level-2)">Spiritual Life</strong>.
 </Fragment>
 
 <!-- Step 2: "I am the Gate" -->
@@ -113,10 +111,9 @@
 	font={{ font_size: 23.3, bold: true, align: 'center', wrap: true }}
 	zIndex={11}
 >
-	<strong>I am the Gate</strong>
+	I am the Gate
 </Fragment>
 
-<!-- Step 2: "Christ" (gate) -->
 <Fragment
 	step={2}
 	layout={{ x: 282, y: 288, width: 118, height: 42 }}
@@ -127,43 +124,38 @@
 </Fragment>
 
 <!-- Step 2: Blue oval (Spirit Born) -->
-<Fragment step={2}>
-	<Ellipse cx={341} cy={383} rx={59} ry={51} fill="var(--bg-level-2)" stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={18} />
+<Fragment step={3}>
+	<Ellipse cx={333} cy={383} rx={59} ry={51} fill="var(--bg-level-2)" stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={18} />
 </Fragment>
 
 <!-- Step 2: "Spirit Born" text -->
 <Fragment
-	step={2}
-	layout={{ x: 298, y: 342, width: 98, height: 79 }}
-	font={{ font_size: 30, bold: true, wrap: true }}
+	step={3}
+	layout={{ x: 285, y: 342, width: 98, height: 79 }}
+	font={{ font_size: 30, bold: true, wrap: true, align: 'center', v_align: 'middle' }}
 	zIndex={19}
 >
 	<strong>Spirit </strong><br><strong>Born</strong>
 </Fragment>
 
-<!-- Step 3: Verse 8 text -->
 <Fragment
-	step={3}
-	layout={{ x: 54, y: 460, width: 902, height: 46 }}
-	font={{ font_size: 16.7, wrap: true }}
-	zIndex={3}
+	step={4}
+	animate="fly-down"
 >
-	Verse 8: "<strong><em>All who ever came before me were thieves and robbers</em></strong><em>" </em><br><em>	- </em>Who came before him? There were many angelic defectors and false prophets deceiving many, still to this day.
+	<Line from={{ x: 64, y: 185 }} to={{ x: 448, y: 185 }} stroke={{ width: 3}} zIndex={18} />
 </Fragment>
 
-<!-- Step 3: "Steal Kill Destroy" -->
 <Fragment
-	step={3}
+	step={4}
 	layout={{ x: 542, y: 259, width: 224, height: 34 }}
 	font={{ font_size: 23.3, bold: true, wrap: true }}
 	zIndex={9}
 >
-	<strong>Steal Kill Destroy</strong>
+	Steal Kill Destroy
 </Fragment>
 
-<!-- Step 4: "Deceived" -->
 <Fragment
-	step={4}
+	step={5}
 	layout={{ x: 560, y: 290, width: 190, height: 42 }}
 	font={{ font_size: 30, bold: true, wrap: true }}
 	zIndex={15}
@@ -171,16 +163,26 @@
 	<strong>Deceived</strong>
 </Fragment>
 
+<Fragment
+	step={5}
+	layout={{ x: 54, y: 460, width: 902, height: 46 }}
+	font={{ font_size: 16.7, wrap: true }}
+	zIndex={3}
+>
+	<em>Verse 8</em>: Who came before him? Many angelic defectors + false prophets deceiving many. 
+	Defectors were locked up but to this day the gate of deception is wide that does not lead to birth and true spiritual life.
+</Fragment>
+
 <!-- Step 4: Gray oval (Earth Born) -->
-<Fragment step={4}>
-	<Ellipse cx={655} cy={379} rx={59} ry={51} fill="var(--bg-level-1)" stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={20} />
+<Fragment step={6}>
+	<Ellipse cx={636} cy={379} rx={59} ry={51} fill="var(--bg-level-1)" stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={20} />
 </Fragment>
 
 <!-- Step 4: "Earth Born" text -->
 <Fragment
-	step={4}
-	layout={{ x: 615, y: 341, width: 98, height: 79 }}
-	font={{ font_size: 30, bold: true, wrap: true }}
+	step={6}
+	layout={{ x: 587, y: 341, width: 98, height: 79 }}
+	font={{ font_size: 30, bold: true, wrap: true, align: 'center', v_align: 'middle' }}
 	zIndex={21}
 >
 	<strong>Earth </strong><br><strong>Born</strong>
@@ -188,10 +190,10 @@
 
 <!-- Step 5: Verse 9-10 text -->
 <Fragment
-	step={5}
+	step={7}
 	layout={{ x: 44, y: 505, width: 565, height: 26 }}
 	font={{ font_size: 16.7, wrap: true }}
 	zIndex={4}
 >
-	Verse 9-10: "<strong><em>I am the gate; whoever enters through me will be saved.</em></strong>"
+	<em>Verse 9-10</em>: "<strong style="color: var(--text-level-3)"><em>I am the gate; whoever enters through me will be saved.</em></strong>"
 </Fragment>

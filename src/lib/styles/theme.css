@@ -37,6 +37,7 @@
 	--bg-danger: #FF0000;
 	--bg-danger-dark: #cc0000;
 	--bg-blood: #b01a1a;
+	--bg-earth: #05D000;
 	
 	--text-bright: #f804fc;
 
@@ -64,5 +65,3 @@
 	/* Borders */
 	--radius-card: 4px;
 }
-
-

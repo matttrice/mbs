@@ -21,17 +21,17 @@
 
 	<!-- Step 1: Rounded rectangle outline -->
 	<Fragment step={1}>
-		<Rect x={263} y={232} width={651} height={58} stroke={{ width: 4, color: 'var(--stroke-level-0)' }} radius={10} zIndex={3} />
+		<Rect x={263} y={215} width={651} height={58} stroke={{ width: 2, color: 'var(--stroke-level-0)' }} radius={10} zIndex={3} />
 	</Fragment>
 
 	<!-- Step 1: "If they abandoned Heaven where did they go?" -->
 	<Fragment
 		step={1}
-		layout={{ x: 270, y: 231, width: 642, height: 67 }}
+		layout={{ x: 270, y: 210, width: 642, height: 67 }}
 		font={{ align: 'center', font_size: 30, v_align: 'middle', wrap: true }}
 		zIndex={2}
 	>
-		If they <em>abandoned </em>Heaven where did they go?
+		If they <strong><em>abandoned</em></strong> <strong style="color: var(--text-level-3);">Heaven</strong> where did they go?
 	</Fragment>
 
 	<!-- Step 2: 2 Peter 2:4 -->
@@ -62,14 +62,14 @@
 
 	<!-- Step 4: Consider evidence box -->
 	<Fragment step={4}>
-		<Rect x={463} y={166} width={301} height={115} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} radius={10} zIndex={6} />
+		<Rect x={473} y={386} width={301} height={115} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} radius={10} zIndex={6} />
 	</Fragment>
 	<Fragment
 		step={4}
-		layout={{ x: 497, y: 179, width: 230, height: 89 }}
+		layout={{ x: 484, y: 395, width: 280, height: 99 }}
 		font={{ v_align: 'middle', align: 'center', font_size: 23.3, wrap: true }}
 		zIndex={5}
 	>
-		Consider evidence from:<br>Ancient Cultures<br>Book of Enoch<br>Dead Sea Scrolls
+		<strong>Consider evidence from:</strong><br>Ancient Cultures<br>Book of Enoch<br>Dead Sea Scrolls
 	</Fragment>
 </Slide>

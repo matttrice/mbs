@@ -21,7 +21,7 @@
 		<p class="subtitle">Select a lesson</p>
 		<div class="auto-drill-toggle">
 			<label class="toggle-label">
-				<span class="toggle-text">Auto-drill</span>
+				<span class="toggle-text">Auto-load scripture</span>
 				<button 
 					class="toggle-switch"
 					class:active={$autoDrillAll}
