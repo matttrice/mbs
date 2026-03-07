@@ -20,8 +20,9 @@ export interface SlidePosition {
 export function getSlideFragmentOffsets(slideMaxSteps: number[]): number[] {
 	const offsets: number[] = [0];
 	for (let i = 1; i < slideMaxSteps.length; i++) {
-		// Use at least 1 for each slide so static-only slides get a fragment position
-		offsets.push(offsets[i - 1] + Math.max(slideMaxSteps[i - 1], 1));
+		// Each slide owns local fragment 0 (static view) plus its animated steps.
+		// Example: maxStep 3 => local fragments 0,1,2,3 (count = 4).
+		offsets.push(offsets[i - 1] + slideMaxSteps[i - 1] + 1);
 	}
 	return offsets;
 }
@@ -34,7 +35,10 @@ export function getSlideFragmentOffsets(slideMaxSteps: number[]): number[] {
  * @returns Total number of fragments
  */
 export function getTotalFragments(slideMaxSteps: number[]): number {
-	return slideMaxSteps.reduce((sum, max) => sum + Math.max(max, 1), 0);
+	if (slideMaxSteps.length === 0) return 0;
+	// Total positions is sum(maxStep + 1) for each slide; maxFragment is last index.
+	const totalPositions = slideMaxSteps.reduce((sum, max) => sum + max + 1, 0);
+	return totalPositions - 1;
 }
 
 /**
@@ -42,15 +46,17 @@ export function getTotalFragments(slideMaxSteps: number[]): number {
  *
  * Key concepts:
  * - Each slide has a maxStep (number of animated fragments, 0 if static-only)
- * - Offset = sum of all previous slides' effective maxSteps (min 1 each)
- * - A slide "owns" global fragments from offset to offset + effectiveMaxStep (inclusive)
+ * - Offset = sum of all previous slides' (maxStep + 1)
+ * - A slide "owns" global fragments from offset to offset + maxStep (inclusive)
+ * - Every slide starts at local fragment 0 (its static state)
  *
  * Offset calculation example:
  * - Slide 0: offset=0, maxStep=4 → owns global fragments 0,1,2,3,4
- * - Slide 1: offset=4, maxStep=2 → owns global fragments 5,6
+ * - Slide 1: offset=5, maxStep=2 → owns global fragments 5,6,7
  *
  * Boundary handling:
  * - At globalFragment = 4, slide 0 wins (its last step) not slide 1
+ * - At globalFragment = 5, slide 1 is at local fragment 0 (static state)
  * - We iterate first-to-last with <= for upper bound; first match wins
  *
  * @param globalFragment - The global fragment position
@@ -66,11 +72,10 @@ export function getSlideForFragment(
 
 	for (let i = 0; i < slideCount; i++) {
 		const slideOffset = offsets[i];
-		// Each slide owns at least 1 fragment position (for static content)
-		const effectiveMaxStep = Math.max(slideMaxSteps[i], 1);
-		const upperBound = slideOffset + effectiveMaxStep;
+		// Each slide owns local fragments 0..maxStep (inclusive).
+		const upperBound = slideOffset + slideMaxSteps[i];
 
-		// Slide i owns fragments where: offset <= globalFragment <= offset + effectiveMaxStep
+		// Slide i owns fragments where: offset <= globalFragment <= offset + maxStep
 		if (globalFragment >= slideOffset && globalFragment <= upperBound) {
 			return {
 				slideIndex: i,
