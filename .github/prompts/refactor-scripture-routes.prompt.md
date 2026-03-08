@@ -62,6 +62,13 @@ Return a concise summary including:
 Extractor JSON details: [hsu-extractor copilot-instructions](../../../hsu-extractor/.github/copilot-instructions.md)
 MBS Coding guidance: [mbs copilot-instructions](../copilot-instructions.md)
 
+## Wrap handling for inline markup (required)
+When scripture or drill text includes inline flow markup (`<br>`, `<em>`, `<strong>`, `<u>`, `<sup>`, `<sub>`), ensure the enclosing Fragment uses `font.wrap: true`.
+
+- Do not globally force wrap for every Fragment.
+- Keep nowrap for short labels/symbols that must stay single-line.
+- If JSON omits wrap, this is an allowed rendering guardrail only for preserving inline text flow.
+
 ## Non-negotiable rules
 - **Inventing or modifying text content is forbidden.** Use exact JSON `text` values only.
 - **JSON replaces existing Svelte text unconditionally.** Do not compare, diff, or merge — the JSON is the new source of truth. Existing route text is only used for matching purposes to identify the correct JSON entry. Once matched, overwrite the entire scripture text block wholesale. Do not catalog or report character-level differences (e.g., `&nbsp;` vs space, em dash vs `--`); those details are irrelevant when doing a full replacement.

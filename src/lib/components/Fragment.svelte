@@ -100,7 +100,13 @@
 		autoDrill?: boolean;
 		/** Position and dimensions for absolute placement within the slide canvas. */
 		layout?: BoxLayout;
-		/** Font styling (size, weight, color, alignment). */
+		/**
+		 * Font styling (size, weight, color, alignment).
+		 *
+		 * Note: when content includes inline markup that needs line flow
+		 * (for example <br>, <em>, <strong>), set font.wrap=true so
+		 * inline text formatting renders predictably within the layout box.
+		 */
 		font?: BoxFont;
 		/** Background fill color. */
 		fill?: string;
@@ -457,6 +463,7 @@
 	<div
 		class="fragment"
 		class:fragment-positioned={layout}
+		class:fragment-wrap={font?.wrap}
 		class:drillable={drillTo || clickTo}
 		class:animate-fade={showAnimation && animate === 'fade'}
 		class:animate-fly-up={showAnimation && animate === 'fly-up'}
@@ -476,8 +483,8 @@
 		data-shape-type={dev && layout ? 'fragment' : undefined}
 		data-coords={dev && layout ? JSON.stringify({ x: layout.x, y: layout.y, width: layout.width, height: layout.height, rotation: layout.rotation }) : undefined}
 	>
-		{#if layout && font}
-			<span class="fragment-text">{@render children()}</span>
+		{#if font?.wrap}
+			<span class="wrap-content">{@render children()}</span>
 		{:else}
 			{@render children()}
 		{/if}
@@ -492,11 +499,9 @@
 		overflow: visible;
 	}
 
-	/* Block formatting context for text content inside flex container.
-	   Ensures <br>, <em>, <strong> etc. work correctly. */
-	.fragment-text {
-		display: block;
-		width: 100%;
+	/* Wrap content - inner span allows inline elements to flow naturally */
+	.wrap-content {
+		display: inline;
 	}
 
 	/* Drillable styling */

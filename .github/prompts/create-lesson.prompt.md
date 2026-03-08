@@ -36,6 +36,19 @@ Next process the main top-level slides array:
 
 Finally run the test suite to check for errors and fix any issues found.
 
+## Wrap policy for inline markup (required)
+When converted text contains inline flow markup (`<br>`, `<em>`, `<strong>`, `<u>`, `<sup>`, `<sub>`), set `font.wrap: true` on that Fragment.
+
+- Apply this even when JSON omits `font.wrap`.
+- Do not use `wrap: true` as a global/default toggle for all Fragments.
+- Keep nowrap for short labels, symbols, and tightly centered single-line elements.
+
+### PowerPoint JSON conflict note
+This can appear to conflict with the "exact JSON" rule. Treat it as an explicit rendering guardrail:
+- Keep JSON `text` and `layout` exact.
+- Keep all coordinates exact.
+- Only elevate `font.wrap` to `true` when required to preserve inline markup flow.
+
 ## Svelte Route Map file (required)
 After creating all routes, create a **Svelte Route Map** markdown file in the same folder as the source JSON file:
 - **Path**: `{json_folder}/{Lesson}-Svelte-Route-Map.md` (e.g., `extracted/10-The_Priesthood/Priesthood-Svelte-Route-Map.md`)

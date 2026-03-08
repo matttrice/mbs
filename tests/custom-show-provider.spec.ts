@@ -93,6 +93,7 @@ test.describe('CustomShowProvider - Basic Navigation', () => {
 		await pressArrowRight(page);
 		await expect(page.getByText('Slide B Content')).toBeVisible();
 		await page.waitForTimeout(300);
+		await pressArrowRight(page);
 		await expect(page.getByText('B Step 1: Different content')).toBeVisible();
 
 		// SlideB Step 2 (last fragment)
@@ -111,14 +112,18 @@ test.describe('CustomShowProvider - Basic Navigation', () => {
 		
 		await page.waitForTimeout(300);
 		await expect(page.getByText('Slide B Content')).toBeVisible();
+		await pressArrowRight(page);
 		await expect(page.getByText('B Step 2: More content')).toBeVisible();
 
 		// Go back one step — SlideB local 1 (Step 1 still visible, Step 2 hidden)
 		await pressArrowLeft(page);
 		await page.waitForTimeout(300);
 		await expect(page.getByText('Slide B Content')).toBeVisible();
+		await expect(page.getByText('B Step 1: Different content')).toBeVisible();
 
 		// Go back to SlideA (fragment 3, local 3)
+		await pressArrowLeft(page);
+		await pressArrowLeft(page);
 		await pressArrowLeft(page);
 		await page.waitForTimeout(300);
 		await expect(page.getByText('Slide A Content')).toBeVisible();
@@ -143,10 +148,25 @@ test.describe('CustomShowProvider - Drill Integration', () => {
 		await pressArrowRight(page); // SlideA Step 2 (fragment 2)
 		await pressArrowRight(page); // SlideA Step 3 (fragment 3)
 		await pressArrowRight(page); // Transition to SlideB (fragment 4)
-		await pressArrowRight(page); // SlideB Step 2 (fragment 5, last)
+		await pressArrowRight(page); // SlideB Step 1 (fragment 5)
+		await pressArrowRight(page); // SlideB Step 2 (fragment 6, last)
 
 		// Verify we're at the end with content visible
 		await expect(page).toHaveURL('/test-custom-show');
+		await expect(page.getByText('B Step 2: More content')).toBeVisible();
+
+		// Go back to Slide A
+		await pressArrowLeft(page);
+		await pressArrowLeft(page);
+		await pressArrowLeft(page);
+		
+		await expect(page.getByText('Slide A Content')).toBeVisible({ timeout: 5000 });
+		await expect(page.getByText('Step 3: Third item')).toBeVisible();
+		
+		// Go back to SlideB end again
+		await pressArrowRight(page);
+		await pressArrowRight(page);
+		await pressArrowRight(page);
 		await expect(page.getByText('B Step 2: More content')).toBeVisible();
 
 		// One more press at end of presentation → navigates to home

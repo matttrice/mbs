@@ -359,7 +359,7 @@
 	<Fragment
 		step={22.1}
 		layout={{ x: 480.9, y: 307, width: 182.1, height: 79.1 }}
-		font={{ align: 'center', font_size: 23 }}
+		font={{ align: 'center', font_size: 23, wrap: true }}
 		zIndex={29}
 		animate="wipe-left"
 	>

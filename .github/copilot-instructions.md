@@ -90,7 +90,12 @@ The `Fragment` component handles hide/show for all slide content.
 | `color` | `string` | Text color (hex or CSS variable) |
 | `align` | `'left' \| 'center' \| 'right'` | Horizontal text alignment (default: `'center'`) |
 | `v_align` | `'top' \| 'middle' \| 'bottom'` | Vertical text alignment (default: `'middle'`) |
-| `wrap` | `boolean` | Allow text to wrap within the box (default: `false`) |
+| `wrap` | `boolean` | Allow text to wrap within the box (default: `false`). Required when text contains inline flow markup such as `<br>`, `<em>`, or `<strong>` so rendering stays stable. |
+
+**Wrap guidance for conversion and authoring:**
+- Use `wrap: true` for paragraph/scripture-style text and any Fragment content containing inline flow tags (`<br>`, `<em>`, `<strong>`, `<u>`, `<sup>`, `<sub>`).
+- Keep `wrap` omitted/false for short labels, symbols, and tight center-aligned boxes where line wrapping should never occur.
+- Do not enable `wrap` globally as a blanket fix; it can change line-break and centering behavior across slides.
 
 ### Usage Patterns
 
@@ -640,6 +645,8 @@ The [hsu-extractor](../../hsu-extractor/) parses `.pptx` files into JSON. See [h
 > Preserve this partition exactly during conversion; do not reclassify slide membership from hyperlink inference.
 
 > **CRITICAL**: The JSON is the single source of truth. Use EXACT values from the JSON for all `text`, `layout` (x, y, width, height), `font`, and `fill` properties. Never invent coordinates or estimate positions based on conceptual understanding of what the slide "should" look like. The JSON coordinates define the actual PowerPoint layout. Use batch conversion scripts or automated tools to ensure accuracy.
+
+> **Conflict resolution (JSON fidelity vs rendering safety):** If JSON text contains inline flow markup (for example `<br>`, `<em>`, `<strong>`, `<u>`, `<sup>`, `<sub>`) and `font.wrap` is omitted/false, set `wrap: true` in the Fragment font during Svelte conversion. This is the one allowed rendering guardrail because it preserves the intended text flow from PowerPoint markup; do not alter `text` or coordinates.
 
 #### Font Size Conversion
 PowerPoint uses points (72 DPI), CSS uses pixels (96 DPI):

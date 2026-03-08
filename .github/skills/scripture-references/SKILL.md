@@ -216,8 +216,12 @@ For scripture Fragments:
 - Do **not** set `font_size` (let `ScriptureBlock` CSS control size)
 - Keep alignment/wrap/italic/bold in `Fragment.font` only when semantically needed
 - Preserve existing emphasis from JSON text markup (`<strong>`, `<em>`, `<u>`, `<sup>`, `<sub>`, `<br>`)
+- If scripture text contains inline flow markup (`<br>`, `<em>`, `<strong>`, `<u>`, `<sup>`, `<sub>`), ensure `font.wrap: true` on the Fragment so inline flow renders reliably.
 - If the text contains HTML tags like <strong>,<em> and <u> inline that apply to the entire text, use the Fragment `font` props to apply that formatting instead of the HTML tags while preserving other inline tags like `<sup>` and `<br>` as they are. 
   - If the HTML tags only apply to part of the text, preserve them inline in the `ScriptureBlock` content and remove the overlapping Fragment font props.
+
+### JSON fidelity conflict note
+If JSON omits `font.wrap`, still set `wrap: true` when inline flow markup is present. This is a rendering guardrail only; keep JSON `text`, `layout`, and timing values exact.
 
 ## Refactor approach: Replace, don't merge
 When refactoring existing routes, the JSON is the **replacement source**, not a diff target. Do not compare existing Svelte text against JSON to find differences (dashes, spacing, superscript formatting, etc.). Instead:

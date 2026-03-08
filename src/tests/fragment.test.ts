@@ -388,6 +388,34 @@ describe('Fragment Component - Font Styling', () => {
 		getMockFragment().set(5);
 	});
 
+	it('uses wrap-content helper only when wrap is enabled', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 0, y: 0, width: 140, height: 60 },
+				font: { wrap: true, align: 'right' },
+				children: mockChildren
+			}
+		});
+
+		expect(container.querySelector('.fragment-wrap')).not.toBeNull();
+		expect(container.querySelector('.wrap-content')).not.toBeNull();
+	});
+
+	it('does not add wrap-content helper when wrap is disabled', () => {
+		const { container } = render(Fragment, {
+			props: {
+				step: 1,
+				layout: { x: 0, y: 0, width: 140, height: 60 },
+				font: { align: 'center' },
+				children: mockChildren
+			}
+		});
+
+		expect(container.querySelector('.fragment-wrap')).toBeNull();
+		expect(container.querySelector('.wrap-content')).toBeNull();
+	});
+
 	it('applies font-size when provided', () => {
 		const { container } = render(Fragment, {
 			props: {
