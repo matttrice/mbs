@@ -8,6 +8,10 @@
 	}
 
 	let { slideIndex }: Props = $props();
+	const BASE_LAYER = 0;
+	const SHAPE_LAYER = 2;
+	const ARROW_LAYER = 4;
+	const LINK_LAYER = 100;
 </script>
 
 <Slide {slideIndex}>
@@ -15,8 +19,8 @@
 	<Fragment
 		clickTo="translation/genesis-6-1"
 		layout={{ x: 84, y: 13, width: 293, height: 40 }}
-		font={{ v_align: 'top', font_size: 39.2, bold: true }}
-		zIndex={17}
+		font={{ v_align: 'middle', font_size: 39.2, bold: true }}
+		zIndex={LINK_LAYER}
 	>
 		<u>Genesis 6:1-8</u>
 	</Fragment>
@@ -24,8 +28,8 @@
 	<!-- Static: Question text -->
 	<Fragment
 		layout={{ x: 356, y: 10, width: 494, height: 38 }}
-		font={{ align: 'center', font_size: 23.3 }}
-		zIndex={15}
+		font={{ align: 'center', font_size: 23.3, v_align: 'middle' }}
+		zIndex={BASE_LAYER}
 	>
 		Why <em>"Sons of God" &amp; "daughters of men" </em> ??
 	</Fragment>
@@ -35,7 +39,7 @@
 		step={1}
 		layout={{ x: 84, y: 60, width: 259, height: 46 }}
 		font={{ align: 'center', font_size: 30.8, bold: true }}
-		zIndex={16}
+		zIndex={BASE_LAYER}
 	>
 		"Sons of God"
 	</Fragment>
@@ -46,7 +50,7 @@
 		drillTo="translation/angels"
 		layout={{ x: 63, y: 99, width: 306, height: 93 }}
 		font={{ align: 'center', font_size: 20,wrap: true }}
-		zIndex={18}
+		zIndex={BASE_LAYER}
 	>
 		<strong>Used 5 times in Old Testament</strong><br>Job 38:1-7, Job 1:6-7, Job 2:1-2 <br>Genesis 6:2, Genesis 6:4
 	</Fragment>
@@ -55,7 +59,7 @@
 		step={3}
 		layout={{ x: 395, y: 41, width: 196, height: 38 }}
 		font={{ font_size: 26.7 }}
-		zIndex={19}
+		zIndex={BASE_LAYER}
 	>
 		Sons of God =
 	</Fragment>
@@ -64,7 +68,7 @@
 		step={3.1}
 		layout={{ x: 566, y: 42, width: 134, height: 38 }}
 		font={{ font_size: 26.7 }}
-		zIndex={24}
+		zIndex={BASE_LAYER}
 	>
 		Angels =
 	</Fragment>
@@ -73,7 +77,7 @@
 		step={3.2}
 		layout={{ x: 675, y: 41, width: 149, height: 38 }}
 		font={{ font_size: 26.7 }}
-		zIndex={20}
+		zIndex={BASE_LAYER}
 	>
 		Nephilim =
 	</Fragment>
@@ -82,7 +86,7 @@
 		step={3.3}
 		layout={{ x: 434, y: 75, width: 184, height: 32 }}
 		font={{ font_size: 26.7, bold: true, color: 'var(--text-level-3)' }}
-		zIndex={22}
+		zIndex={BASE_LAYER}
 	>
 		Fallen Ones =
 	</Fragment>
@@ -92,7 +96,7 @@
 		step={3.4}
 		layout={{ x: 608, y: 75, width: 153, height: 32 }}
 		font={{ font_size: 26.7, bold: true }}
-		zIndex={21}
+		zIndex={BASE_LAYER}
 	>
 		Earth Born
 	</Fragment>
@@ -102,24 +106,22 @@
 		step={4}
 		layout={{ x: 12, y: 228, width: 222, height: 59 }}
 		font={{ v_align: 'middle', align: 'center', font_size: 44.2, bold: true }}
-		zIndex={11}
+		zIndex={BASE_LAYER}
 	>
 		Nephilim
 	</Fragment>
 
-	<!-- Step 4: FLOOD text -->
+	<Fragment step={4} animate="draw">
+		<Arrow from={{ x: -2, y: 342 }} to={{ x: 428, y: 342 }} stroke={{ width: 82, color: 'var(--stroke-level-3)' }} zIndex={ARROW_LAYER} />
+	</Fragment>
+
 	<Fragment
 		step={4}
 		layout={{ x: 131, y: 309, width: 252, height: 66 }}
 		font={{ v_align: 'middle', align: 'center', font_size: 59.2, bold: true, color: 'var(--text-ghost)' }}
-		zIndex={34}
+		zIndex={ARROW_LAYER}
 	>
 		<strong>FLOOD</strong>
-	</Fragment>
-
-	<!-- Step 4: FLOOD arrow (thick blue horizontal bar) -->
-	<Fragment step={4} animate="draw">
-		<Arrow from={{ x: -2, y: 342 }} to={{ x: 428, y: 342 }} stroke={{ width: 82, color: 'var(--stroke-level-3)' }} zIndex={33} />
 	</Fragment>
 
 	<!-- Step 5: "in those days" / Pre-Flood box -->
@@ -127,14 +129,14 @@
 		step={5}
 		layout={{ x: 20, y: 389, width: 226, height: 111 }}
 		font={{ v_align: 'middle', align: 'center', font_size: 26.7, bold: true, wrap: true }}
-		zIndex={10}
+		zIndex={BASE_LAYER}
 	>
 		"in those days"<br><strong>Pre-Flood</strong>
 	</Fragment>
 
 	<!-- Step 6: Green oval (Cleansed Earth) -->
 	<Fragment step={6}>
-		<Ellipse cx={563} cy={368} rx={184} ry={175} fill="var(--bg-earth)" stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={0} />
+		<Ellipse cx={563} cy={368} rx={184} ry={175} fill="var(--bg-earth)" stroke={{ width: 3, color: 'var(--stroke-level-0)' }} zIndex={BASE_LAYER} />
 	</Fragment>
 
 	<!-- Step 6: Cleansed Earth text -->
@@ -158,7 +160,7 @@
 	</Fragment>
 
 	<Fragment step={8} animate="fly-down">
-		<Arrow from={{ x: 370, y: 162 }} to={{ x: 473, y: 226 }} stroke={{ width: 20 }} headSize={2} zIndex={32} />
+		<Arrow from={{ x: 370, y: 162 }} to={{ x: 473, y: 226 }} stroke={{ width: 20 }} headSize={2} zIndex={ARROW_LAYER} />
 	</Fragment>
 
 	<!-- Step 8: Nephilim rect label -->
@@ -255,7 +257,7 @@
 		font={{ align: 'center', wrap: true, font_size: 23.3, bold: true }}
 		fill="white"
 		line={{ width: 2, color: 'var(--bg-blood)' }}
-		zIndex={14}
+		zIndex={LINK_LAYER}
 	>
 		Numbers 13:32-33, Deuteronomy 1:27-28, Deuteronomy 3:10-11, Amos 2:9
 	</Fragment>
@@ -276,7 +278,7 @@
 		drillTo="translation/gates"
 		layout={{ x: 441, y: 153, width: 236, height: 34 }}
 		font={{ font_size: 23.3, align: 'center', v_align: 'middle'}}
-		zIndex={13}
+		zIndex={LINK_LAYER}
 	>
 		<strong>Gates:</strong> John 10:1-7
 	</Fragment>

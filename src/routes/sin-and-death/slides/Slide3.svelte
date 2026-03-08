@@ -83,7 +83,7 @@
 		layout={{ x: 325.4, y: 65.2, width: 178.8, height: 35.9 }}
 		fill="var(--bg-ghost)"
 		line={{ width: 1.3, color: 'var(--stroke-level-0)' }}
-		font={{ v_align: 'middle', font_size: 26.7, italic: true }}
+		font={{ align: 'center', v_align: 'middle', font_size: 26.7, italic: true }}
 		zIndex={11}
 		animate="fade"
 	>
@@ -146,7 +146,7 @@
 		drillTo="sin-and-death/psalms-51-5-6"
 		layout={{ x: 387.6, y: 120, width: 202.4, height: 41.5 }}
 		line={{ width: 1.3 }}
-		font={{ font_size: 26.7 }}
+		font={{ align: 'center', font_size: 26.7 }}
 		zIndex={13}
 		animate="fade"
 	>
@@ -201,7 +201,7 @@
 		step={12}
 		drillTo="sin-and-death/romans-7-14"
 		layout={{ x: 92.7, y: 117.6, width: 228.6, height: 36.1 }}
-		font={{ bold: true, font_size: 26.7 }}
+		font={{ align: 'center', bold: true, font_size: 26.7 }}
 		zIndex={17}
 	>
 		Romans 7:14-25
@@ -210,13 +210,13 @@
 	<!-- Step 13: "inner man" v.s. "flesh" -->
 	<Fragment
 		step={13}
-		layout={{ x: 73.9, y: 143.3, width: 280, height: 30 }}
+		layout={{ x: 73.9, y: 145, width: 280, height: 25 }}
 		line={{ width: 1 }}
-		font={{ font_size: 26.7, italic: true }}
+		font={{ align: 'center', font_size: 26.7, italic: true }}
 		zIndex={18}
 		animate="fade"
 	>
-		"inner man" v.s."flesh"
+		"inner man" v.s. "flesh"
 	</Fragment>
 
 	<!-- Step 14: 1Peter 3:1-4 -->
@@ -252,13 +252,12 @@
 		Why do we die?
 	</Fragment>
 
-	<!-- Step 17: Romans 8:10 -->
 	<Fragment
 		step={17}
 		drillTo="sin-and-death/romans-8-10"
 		layout={{ x: 114.8, y: 177, width: 191.4, height: 34.6 }}
 		line={{ width: 1.3 }}
-		font={{ bold: true, v_align: 'middle', font_size: 26.7 }}
+		font={{ align: 'center', bold: true, v_align: 'middle', font_size: 26.7 }}
 		zIndex={22}
 	>
 		Romans 8:10
@@ -409,11 +408,10 @@
 		step={26}
 		layout={{ x: 73.9, y: 489.9, width: 309.7, height: 48 }}
 		line={{ width: 1.3 }}
-		font={{ v_align: 'middle', font_size: 40 }}
+		font={{ bold: true, v_align: 'middle', font_size: 40, color: 'var(--text-level-3)' }}
 		zIndex={35}
-		animate="fade"
 	>
-		INNOCENCE
+		<strong>INNOCENCE</strong>
 	</Fragment>
 
 	<!-- Step 27: What is the purpose of baptism? -->
@@ -421,7 +419,7 @@
 		step={27}
 		layout={{ x: 57.5, y: 357.9, width: 462, height: 67.7 }}
 		fill="var(--bg-level-2)"
-		font={{ align: 'center', font_size: 26.7, color: 'var(--text-level-3)' }}
+		font={{ bold: true, align: 'center', v_align: 'top', font_size: 27, color: 'var(--text-level-3)' }}
 		zIndex={33}
 		animate="fade"
 	>
@@ -447,9 +445,9 @@
 		layout={{ x: 498, y: 397.3, width: 388.1, height: 28.3 }}
 		fill="var(--bg-level-2)"
 		line={{ width: 1.3, color: 'var(--bg-level-2)' }}
-		font={{ v_align: 'middle', align: 'center', font_size: 23.3, color: 'var(--text-level-3)' }}
+		font={{ bold: true, v_align: 'middle', align: 'center', font_size: 23.3, color: 'var(--text-level-3)' }}
 		zIndex={43}
-		animate="fade"
+		animate="wipe-left"
 	>
 		Forgiveness of sins.
 	</Fragment>
@@ -461,7 +459,6 @@
 		line={{ width: 1 }}
 		font={{ v_align: 'middle', font_size: 30.8, italic: true }}
 		zIndex={36}
-		animate="fade"
 	>
 		Why baptize babies?
 	</Fragment>
@@ -469,9 +466,9 @@
 	<!-- Step 30: Scriptures Concerning Christ -->
 	<Fragment
 		step={30}
-		layout={{ x: 645.9, y: 430.3, width: 242.1, height: 22 }}
+		layout={{ x: 665, y: 430, width: 242.1, height: 22 }}
 		line={{ width: 1.3 }}
-		font={{ v_align: 'middle', font_size: 16.7 }}
+		font={{ align: 'center', v_align: 'middle', font_size: 16.7 }}
 		zIndex={37}
 		animate="fade"
 	>
@@ -498,13 +495,12 @@
 		line={{ width: 1 }}
 		font={{ v_align: 'middle', font_size: 20, italic: true }}
 		zIndex={39}
-		animate="fade"
 	>
 		Was Christ separated from God at birth?
 	</Fragment>
 
 	<!-- Step 33: Vertical arrow pointing down -->
-	<Fragment step={33} animate="wipe">
-		<Arrow from={{ x: 481.6, y: 336.4 }} to={{ x: 481.6, y: 463 }} stroke={{ width: 13.3 }} zIndex={44} />
+	<Fragment step={33} animate="wipe-up">
+		<Arrow from={{ x: 520.6, y: 473.4 }} to={{ x: 437.6, y: 350 }} stroke={{ width: 10 }} zIndex={44} />
 	</Fragment>
 </Slide>

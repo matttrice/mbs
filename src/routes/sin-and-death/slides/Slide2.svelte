@@ -43,9 +43,8 @@
 		layout={{ x: 121.6, y: 118.1, width: 730.7, height: 59.9 }}
 		fill="var(--bg-ghost)"
 		line={{ width: 1.3, color: 'var(--stroke-level-0)' }}
-		font={{ v_align: 'middle', align: 'center', font_size: 36.7 }}
+		font={{ bold: true, v_align: 'middle', align: 'center', font_size: 36.7 }}
 		zIndex={13}
-		animate="fade"
 	>
 		Original Sin: Genesis 2 &amp; 3
 	</Fragment>
@@ -55,11 +54,10 @@
 		step={2}
 		layout={{ x: 195.4, y: 191.4, width: 201.8, height: 61.4 }}
 		line={{ width: 8 }}
-		font={{ align: 'center', font_size: 44.2 }}
+		font={{ bold: true, align: 'center', font_size: 44.2 }}
 		zIndex={2}
-		animate="fade"
 	>
-		Mortality
+		<strong>Mortality</strong>
 	</Fragment>
 
 	<!-- Step 2 with: Gray rectangle behind Mortality -->
@@ -71,7 +69,7 @@
 	<Fragment
 		step={2}
 		layout={{ x: 453.6, y: 207.7, width: 54.5, height: 34.3 }}
-		font={{ font_size: 23.3 }}
+		font={{ font_size: 23.3, align: 'center'}}
 		zIndex={12}
 		animate="fade"
 	>
@@ -83,11 +81,11 @@
 		step={2.1}
 		layout={{ x: 571.5, y: 191.4, width: 186.9, height: 61.4 }}
 		line={{ width: 8 }}
-		font={{ align: 'center', font_size: 44.2 }}
+		font={{ bold: true, align: 'center', font_size: 44.2 }}
 		zIndex={3}
 		animate="fade"
 	>
-		Morality
+		<strong>Morality</strong>
 	</Fragment>
 
 	<!-- Step 2.1 with: Orange rectangle behind Morality -->

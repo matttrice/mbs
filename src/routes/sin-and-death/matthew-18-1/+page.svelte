@@ -7,29 +7,29 @@
 <Slide>
 	<!-- Matthew 18:1-3 (static) -->
 	<Fragment
-		layout={{ x: 88, y: 46, width: 776, height: 113 }}
+		layout={{ x: 88, y: 46, width: 776, height: 140 }}
 		line={{ width: 1 }}
 		font={{ wrap: true }}
 	>
 		<ScriptureBlock title="Matthew 18:1-3">
-			At  that time  the disciples came to Jesus and said, "Who  then is greatest in the kingdom of heaven?" <sup>2</sup> And He called a child to Himself and set him before  them, <sup>3</sup> and said, "Truly I say to you, unless you are converted and become  like children, you will not enter the kingdom of heaven.
+			At  that time the disciples came to Jesus and said, "Who  then is greatest in the kingdom of heaven?" <sup>2</sup> And He called a child to Himself and set him before  them, <sup>3</sup> and said, "Truly I say to you, unless you are converted and become  like children, you will not enter the kingdom of heaven.
 		</ScriptureBlock>
 	</Fragment>
 
 	<!-- Matthew 19:13-14 (static) -->
 	<Fragment
-		layout={{ x: 88, y: 154, width: 798, height: 150 }}
+		layout={{ x: 88, y: 180, width: 798, height: 140 }}
 		line={{ width: 1 }}
 		font={{ v_align: 'middle', wrap: true }}
 	>
 		<ScriptureBlock title="Matthew 19:13-14">
-			<sup>13</sup> Then  some children were brought to Him so that He might lay His hands on them and pray; and the disciples rebuked them. <sup>14</sup> But Jesus said, "Let  the children alone, and do not hinder them from coming to Me; for the  kingdom of heaven belongs to such as these."
+			<sup>13</sup> Then some children were brought to Him so that He might lay His hands on them and pray; and the disciples rebuked them. <sup>14</sup> But Jesus said, "Let  the children alone, and do not hinder them from coming to Me; for the  kingdom of heaven belongs to such as these."
 		</ScriptureBlock>
 	</Fragment>
 
 	<!-- 2 Samuel 12:21-23 (static) -->
 	<Fragment
-		layout={{ x: 88, y: 306, width: 803, height: 215 }}
+		layout={{ x: 88, y: 326, width: 803, height: 140 }}
 		line={{ width: 1 }}
 		font={{ v_align: 'middle', wrap: true }}
 	>

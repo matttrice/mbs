@@ -268,7 +268,7 @@
 		step={6}
 		clickTo="translation/genesis-5-21-24"
 		layout={{ x: 637, y: 77, width: 201, height: 31 }}
-		font={{ v_align: 'middle', bold: true, color: 'var(--text-level-3)' }}
+		font={{ font_size: 20, v_align: 'middle', bold: true, color: 'var(--text-level-3)' }}
 		zIndex={11}
 	>
 		Genesis 5:21-24

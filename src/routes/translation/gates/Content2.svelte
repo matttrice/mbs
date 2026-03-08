@@ -31,7 +31,7 @@
 	step={1}
 	animate="fly-down"
 >
-	<Line from={{ x: 487, y: 114 }} to={{ x: 726, y: 114 }} stroke={{ width: 3, color: 'var(--stroke-level-3)' }} zIndex={18} />
+	<Line from={{ x: 487, y: 112 }} to={{ x: 726, y: 112 }} stroke={{ width: 2, color: 'var(--stroke-level-3)' }} zIndex={0} />
 </Fragment>
 
 <!-- Step 1: Horizontal line -->
@@ -97,7 +97,7 @@
 <!-- Step 2: Verse 7 text -->
 <Fragment
 	step={2}
-	layout={{ x: 54, y: 432, width: 622, height: 26 }}
+	layout={{ x: 54, y: 438, width: 622, height: 26 }}
 	font={{ font_size: 16.7, wrap: true }}
 	zIndex={2}
 >
@@ -142,7 +142,7 @@
 	step={4}
 	animate="fly-down"
 >
-	<Line from={{ x: 64, y: 185 }} to={{ x: 448, y: 185 }} stroke={{ width: 3}} zIndex={18} />
+	<Line from={{ x: 64, y: 183 }} to={{ x: 450, y: 183 }} stroke={{ width: 2}} zIndex={18} />
 </Fragment>
 
 <Fragment
@@ -165,12 +165,12 @@
 
 <Fragment
 	step={5}
-	layout={{ x: 54, y: 460, width: 902, height: 46 }}
+	layout={{ x: 54, y: 460, width: 920, height: 46 }}
 	font={{ font_size: 16.7, wrap: true }}
 	zIndex={3}
 >
-	<em>Verse 8</em>: Who came before him? Many angelic defectors + false prophets deceiving many. 
-	Defectors were locked up but to this day the gate of deception is wide that does not lead to birth and true spiritual life.
+	<em>Verse 8</em>: Who came before him? Many angelic defectors + false prophets deceiving many.<br> 
+	&nbsp;&nbsp;&nbsp; The defectors are locked up but <u>the gate of deception</u> remains wide open.
 </Fragment>
 
 <!-- Step 4: Gray oval (Earth Born) -->
@@ -191,7 +191,7 @@
 <!-- Step 5: Verse 9-10 text -->
 <Fragment
 	step={7}
-	layout={{ x: 44, y: 505, width: 565, height: 26 }}
+	layout={{ x: 54, y: 500, width: 565, height: 26 }}
 	font={{ font_size: 16.7, wrap: true }}
 	zIndex={4}
 >
