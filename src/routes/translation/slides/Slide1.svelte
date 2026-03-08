@@ -118,7 +118,7 @@
 		step={4}
 		clickTo="translation/genesis-18-1-3"
 		layout={{ x: 79, y: 117, width: 222, height: 31 }}
-		font={{ v_align: 'middle', font_size: 21.7, bold: true }}
+		font={{ align:'left', v_align: 'middle', font_size: 21.7, bold: true }}
 		zIndex={26}
 	>
 		Genesis 18:1-2  3
@@ -128,7 +128,7 @@
 	<Fragment
 		step={4}
 		layout={{ x: 95, y: 136, width: 262, height: 34 }}
-		font={{ v_align: 'middle', font_size: 20, color: 'var(--text-level-1)' }}
+		font={{ align: 'left', v_align: 'middle', font_size: 20, color: 'var(--text-level-1)' }}
 		zIndex={19}
 	>
 		Visitors surprise Abraham
@@ -139,7 +139,7 @@
 		step={4}
 		clickTo="translation/exodus-33-21-23"
 		layout={{ x: 79, y: 161, width: 203, height: 31 }}
-		font={{ v_align: 'middle', font_size: 21.7, bold: true }}
+		font={{ align: 'left', v_align: 'middle', font_size: 21.7, bold: true }}
 		zIndex={23}
 	>
 		Exodus 33:21-23
@@ -149,7 +149,7 @@
 	<Fragment
 		step={4}
 		layout={{ x: 95, y: 182, width: 210, height: 51 }}
-		font={{ v_align: 'middle', font_size: 20, color: 'var(--text-level-1)', wrap: true }}
+		font={{ align: 'left', v_align: 'middle', font_size: 20, color: 'var(--text-level-1)', wrap: true }}
 		zIndex={15}
 	>
 		Moses protected <br>from glory of God
@@ -160,7 +160,7 @@
 		step={4}
 		clickTo="translation/numbers-22-29-33"
 		layout={{ x: 79, y: 229, width: 239, height: 31 }}
-		font={{ v_align: 'middle', font_size: 21.7, bold: true }}
+		font={{ align: 'left', v_align: 'middle', font_size: 21.7, bold: true }}
 		zIndex={27}
 	>
 		Numbers 22:29-33
@@ -170,7 +170,7 @@
 	<Fragment
 		step={4}
 		layout={{ x: 95, y: 248, width: 178, height: 29 }}
-		font={{ v_align: 'middle', font_size: 20, color: 'var(--text-level-1)' }}
+		font={{ align: 'left', v_align: 'middle', font_size: 20, color: 'var(--text-level-1)' }}
 		zIndex={20}
 	>
 		Balaam's donkey
@@ -181,7 +181,7 @@
 		step={4}
 		clickTo="translation/ezekiel-1-daniel-10"
 		layout={{ x: 79, y: 269, width: 294, height: 34 }}
-		font={{ v_align: 'middle', font_size: 21.7, bold: true }}
+		font={{ align: 'left', v_align: 'middle', font_size: 21.7, bold: true }}
 		zIndex={25}
 	>
 		Ezekiel 1:25;8:1 Daniel 10:4
@@ -191,7 +191,7 @@
 	<Fragment
 		step={4}
 		layout={{ x: 95, y: 289, width: 235, height: 38 }}
-		font={{ v_align: 'middle', font_size: 20, color: 'var(--text-level-1)' }}
+		font={{ align: 'left', v_align: 'middle', font_size: 20, color: 'var(--text-level-1)' }}
 		zIndex={18}
 	>
 		Glowing metal, chrysolite
@@ -202,7 +202,7 @@
 		step={4}
 		clickTo="translation/acts-10-30-31"
 		layout={{ x: 79, y: 318, width: 169, height: 31 }}
-		font={{ v_align: 'middle', font_size: 21.7, bold: true }}
+		font={{ align: 'left', v_align: 'middle', font_size: 21.7, bold: true }}
 		zIndex={24}
 	>
 		Acts 10:30-31
@@ -212,7 +212,7 @@
 	<Fragment
 		step={4}
 		layout={{ x: 95, y: 339, width: 181, height: 29 }}
-		font={{ v_align: 'middle', font_size: 20, color: 'var(--text-level-1)' }}
+		font={{ align: 'left', v_align: 'middle', font_size: 20, color: 'var(--text-level-1)' }}
 		zIndex={17}
 	>
 		Shining clothes
@@ -223,7 +223,7 @@
 		step={4}
 		clickTo="translation/acts-22-6-9"
 		layout={{ x: 79, y: 359, width: 122, height: 32 }}
-		font={{ v_align: 'middle', font_size: 21.7, bold: true }}
+		font={{ align: 'left', v_align: 'middle', font_size: 21.7, bold: true }}
 		zIndex={28}
 	>
 		Acts 22:6
@@ -233,7 +233,7 @@
 	<Fragment
 		step={4}
 		layout={{ x: 95, y: 382, width: 229, height: 49 }}
-		font={{ v_align: 'middle', font_size: 20, color: 'var(--text-level-1)', wrap: true }}
+		font={{ align: 'left', v_align: 'middle', font_size: 20, color: 'var(--text-level-1)', wrap: true }}
 		zIndex={21}
 	>
 		Paul blinded by light on <br>Damascus road
@@ -243,7 +243,7 @@
 	<Fragment
 		step={5}
 		layout={{ x: 402, y: 434, width: 104, height: 67 }}
-		font={{ font_size: 40, bold: true, color: 'var(--text-light)' }}
+		font={{ align: 'left', v_align: 'middle', font_size: 40, bold: true, color: 'var(--text-light)' }}
 		zIndex={31}
 	>
 		<strong>Exit</strong>
@@ -258,7 +258,7 @@
 		step={6}
 		drillTo="translation/excarnation"
 		layout={{ x: 637, y: 25, width: 242, height: 56 }}
-		font={{ v_align: 'middle', font_size: 39.2, bold: true, color: 'var(--text-level-3)' }}
+		font={{ align:'left', v_align: 'middle', font_size: 39.2, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={5}
 	>
 		<u>Excarnation</u>
@@ -268,7 +268,7 @@
 		step={6}
 		clickTo="translation/genesis-5-21-24"
 		layout={{ x: 637, y: 77, width: 201, height: 31 }}
-		font={{ font_size: 20, v_align: 'middle', bold: true, color: 'var(--text-level-3)' }}
+		font={{ align: 'left', v_align: 'middle', font_size: 20, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={11}
 	>
 		Genesis 5:21-24
@@ -277,17 +277,17 @@
 	<Fragment
 		step={6}
 		layout={{ x: 651, y: 94, width: 246, height: 34 }}
-		font={{ v_align: 'middle', font_size: 20, color: 'var(--text-level-3)' }}
+		font={{ align: 'left', v_align: 'middle', font_size: 20, color: 'var(--text-level-1)' }}
 		zIndex={8}
 	>
-		Enoch- "took him away"
+		Enoch - "took him away"
 	</Fragment>
 
 	<Fragment
 		step={6}
 		clickTo="translation/2-kings-2-11-12"
 		layout={{ x: 637, y: 118, width: 163, height: 32 }}
-		font={{ v_align: 'middle', font_size: 20, bold: true, color: 'var(--text-level-3)' }}
+		font={{ align: 'left', v_align: 'middle', font_size: 20, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={12}
 	>
 		2 Kings 2:11-12
@@ -296,7 +296,7 @@
     <Fragment
 		step={6}
 		layout={{ x: 651, y: 138, width: 277, height: 34 }}
-		font={{ v_align: 'middle', font_size: 20, color: 'var(--text-level-3)' }}
+		font={{ align: 'left', v_align: 'middle', font_size: 20, color: 'var(--text-level-1)' }}
 		zIndex={9}
 	>
 		Elijah- "went up to heaven"
@@ -306,7 +306,7 @@
 		step={6}
 		clickTo="translation/matthew-17-1-3"
 		layout={{ x: 637, y: 164, width: 161, height: 32 }}
-		font={{ v_align: 'middle', font_size: 20, bold: true, color: 'var(--text-level-3)' }}
+		font={{ align: 'left', v_align: 'middle', font_size: 20, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={13}
 	>
 		Matthew 17:1-3
@@ -315,7 +315,7 @@
 	<Fragment
 		step={6}
 		layout={{ x: 648, y: 182, width: 222, height: 34 }}
-		font={{ v_align: 'middle', font_size: 20, color: 'var(--text-level-3)' }}
+		font={{ align: 'left', v_align: 'middle', font_size: 20, color: 'var(--text-level-1)' }}
 		zIndex={10}
 	>
 		Jesus' transfiguration
@@ -325,7 +325,7 @@
 		step={6}
 		clickTo="translation/luke-24-50-52"
 		layout={{ x: 638, y: 208, width: 149, height: 32 }}
-		font={{ v_align: 'middle', font_size: 20, bold: true, color: 'var(--text-level-3)' }}
+		font={{ align: 'left', v_align: 'middle', font_size: 20, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={14}
 	>
 		Luke 24:50-52
@@ -334,7 +334,7 @@
 	<Fragment
 		step={6}
 		layout={{ x: 649, y: 231, width: 244, height: 32 }}
-		font={{ v_align: 'middle', color: 'var(--text-level-3)' }}
+		font={{ align: 'left', v_align: 'middle', font_size: 20, color: 'var(--text-level-1)' }}
 		zIndex={7}
 	>
 		Taken up into Heaven"

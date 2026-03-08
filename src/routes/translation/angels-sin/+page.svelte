@@ -37,21 +37,21 @@
 	<!-- Step 2: 2 Peter 2:4 -->
 	<Fragment
 		step={2}
-		layout={{ x: 41, y: 253, width: 828, height: 142 }}
-		font={{ v_align: 'middle', wrap: true }}
+		layout={{ x: 41, y: 253, width: 868, height: 142 }}
+		font={{ align: 'left', v_align: 'middle', wrap: true }}
 		line={{ width: 1 }}
 		zIndex={0}
 	>
 		<ScriptureBlock title="2 Peter 2:4">
-			For if God did not spare angels when they sinned, but cast them <br>into hell and committed them to pits of darkness, reserved for judgment;
+			For if God did not spare angels when they sinned, but cast them into hell and committed them to pits of darkness, reserved for judgment;
 		</ScriptureBlock>
 	</Fragment>
 
 	<!-- Step 3: Job 4:18 -->
 	<Fragment
 		step={3}
-		layout={{ x: 42, y: 394, width: 524, height: 109 }}
-		font={{ v_align: 'middle', wrap: true }}
+		layout={{ x: 41, y: 394, width: 450, height: 109 }}
+		font={{ align: 'left', v_align: 'middle', wrap: true }}
 		line={{ width: 1 }}
 		zIndex={1}
 	>
@@ -62,11 +62,11 @@
 
 	<!-- Step 4: Consider evidence box -->
 	<Fragment step={4}>
-		<Rect x={473} y={386} width={301} height={115} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} radius={10} zIndex={6} />
+		<Rect x={500} y={386} width={301} height={115} stroke={{ width: 2, color: 'var(--stroke-level-0)' }} radius={10} zIndex={6} />
 	</Fragment>
 	<Fragment
 		step={4}
-		layout={{ x: 484, y: 395, width: 280, height: 99 }}
+		layout={{ x: 510, y: 395, width: 280, height: 99 }}
 		font={{ v_align: 'middle', align: 'center', font_size: 23.3, wrap: true }}
 		zIndex={5}
 	>
