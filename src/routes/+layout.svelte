@@ -15,14 +15,14 @@
 	let { children } = $props();
 
 	// Enable smooth view transitions for drill navigation
-	onNavigate((navigation) => {
+	onNavigate((navEvent) => {
 		// Only apply view transition if browser supports it
 		if (!document.startViewTransition) return;
 
 		return new Promise((resolve) => {
 			document.startViewTransition(async () => {
 				resolve();
-				await navigation.complete;
+				await navEvent.complete;
 			});
 		});
 	});

@@ -3,7 +3,12 @@
  */
 
 /* ========== View Transitions ========== */
-/* Smooth cross-fade for drill navigation */
+/* Global softer cross-fade for drill navigation */
+:root {
+	--mbs-view-transition-duration: 420ms;
+	--mbs-view-transition-easing: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 @keyframes fade-in {
 	from { opacity: 0; }
 	to { opacity: 1; }
@@ -14,12 +19,34 @@
 	to { opacity: 0; }
 }
 
+@keyframes soft-fade-in {
+	from {
+		opacity: 0;
+		transform: scale(0.996);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes soft-fade-out {
+	from {
+		opacity: 1;
+		transform: scale(1);
+	}
+	to {
+		opacity: 0;
+		transform: scale(1.004);
+	}
+}
+
 ::view-transition-old(root) {
-	animation: 150ms cubic-bezier(0.4, 0, 0.2, 1) both fade-out;
+	animation: var(--mbs-view-transition-duration) var(--mbs-view-transition-easing) both soft-fade-out;
 }
 
 ::view-transition-new(root) {
-	animation: 150ms cubic-bezier(0.4, 0, 0.2, 1) both fade-in;
+	animation: var(--mbs-view-transition-duration) var(--mbs-view-transition-easing) both soft-fade-in;
 }
 
 /* Main presentation container - fills viewport with centered content */
