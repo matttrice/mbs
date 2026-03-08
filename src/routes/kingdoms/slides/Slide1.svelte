@@ -15,14 +15,14 @@
     const boxLayer = 1
     const textLayer = 2
 	const topLinksLayer = 99
-    const questionMark = { font_size: 30, bold: true, color: 'var(--text-bright)' }
+    const questionMark = { font_size: 30, bold: true, color: 'var(--text-cmd-law)' }
     const boxQuestion = { font_size: 24 }
     const boxAnswer = { font_size: 24, bold: true, italic: true }
 	const optionsBoxProps = {
-		layout: { x: 372, y: 212, width: 200, height: 100 },
-		fill: 'var(--text-bright)',
-		line: { width: 20, color: 'var(--stroke-level-0)' },
-		font: { v_align: 'middle' as const, wrap: true, align: 'center' as const, font_size: 26.7, bold: true, color: 'var(--bg-ghost)' },
+		layout: { x: 355, y: 135, width: 250, height: 200 },
+		fill: 'var(--color-highlight)',
+		line: { width: 50, color: 'var(--stroke-level-0)' },
+		font: { v_align: 'middle' as const, wrap: true, align: 'center' as const, font_size: 26.7, bold: true, color: 'var(--level-0)' },
 		zIndex: 100
 	}
 </script>
@@ -160,9 +160,9 @@
 	<Fragment
 		step={8}
 		layout={{ x: 300, y: 72, width: 170, height: 40 }}
-		font={{ v_align: 'middle', wrap: true, font_size: 10.0, italic: true, bold: true, color: 'var(--bg-level-3)' }}
+		font={{ v_align: 'middle', align: 'center', wrap: true, font_size: 10, italic: true, bold: true, color: 'var(--bg-level-3)' }}
 		zIndex={textLayer}
-        line={{ width:2, color: 'var(--bg-level-3)' }}
+        line={{ width: 1, color: 'var(--bg-level-3)' }}
 	>
 		Lacking moral categories; no law against sin; pre-fallen Adam & Eve, children, etc.
 	</Fragment>
@@ -286,7 +286,7 @@
 	<Fragment
 		step={14}
 		drillTo="kingdoms/2-samuel-12-21"
-		layout={{ x: 491, y: 211, width: 111, height: 20 }}
+		layout={{ x: 491, y: 215, width: 111, height: 20 }}
 		font={{ align: 'right', font_size: 11.7 }}
 		zIndex={55}
 	>
@@ -405,7 +405,7 @@
 	<Fragment
 		step={19}
 		drillTo="kingdoms/romans-3-23"
-		layout={{ x: 30, y: 240, width: 240, height: 18 }}
+		layout={{ x: 33, y: 240, width: 240, height: 18 }}
 		fill="var(--bg-cmd-law)"
 		font={{font_size: 12 }}
 		line={{ width: 2, color: 'var(--stroke-level-0)' }}
@@ -704,7 +704,6 @@
 		layout={{ x: 570, y: 355, width: 160, height: 49 }}
 		font={{ font_size: 12, wrap: true }}
 		fill="var(--bg-ghost)"
-        line={{width: 2, color: 'var(--bg-level-3)'}}
 		zIndex={textLayer}
 	>
 		Romans 6:1-11, Ephesians 2:1-5, Colossians 2:8-14, 3:1-4, Romans 8:10
@@ -810,7 +809,7 @@
 	<Fragment
 		step={32}
 		layout={{ x: 348, y: 410, width: 129, height: 61 }}
-		font={{ wrap: true, font_size: 15.0, align: 'center' }}
+		font={{ wrap: true, font_size: 15, align: 'center' }}
 		zIndex={textLayer}
 	>
 		Hear, Believe, Repent, Confess, Baptized
@@ -856,7 +855,7 @@
 	<Fragment
 		step={34}
 		layout={{ x: 753, y: 310, width: 146, height: 51 }}
-		font={{ wrap: true, font_name: 'Arial Black', font_size: 40.0, bold: true, color: 'var(--text-level-3)' }}
+		font={{ wrap: true, font_name: 'Arial Black', font_size: 40, bold: true, color: 'var(--text-level-3)' }}
 		zIndex={textLayer}
 	>
 		Saved
@@ -884,13 +883,13 @@
 	</Fragment>
 	
 	<!-- Blue arc connector -->
-	<Fragment step={35.1} animate="draw">
-		<Arc from={{ x: 528, y: 253 }} to={{ x: 370, y: 190 }} curve={-60} stroke={{ width: 5, color: 'var(--stroke-level-2)' }} arrow zIndex={51} />
+	<Fragment step={36} animate="draw">
+		<Arc from={{ x: 529, y: 251 }} to={{ x: 369, y: 187 }} curve={-60} shift={40} stroke={{ width: 3, color: 'var(--stroke-level-3)' }} arrow zIndex={51} />
 	</Fragment>
 
 	<!-- "Must become like children" box (after) -->
 	<Fragment
-		step={35.1}
+		step={36.1}
 		layout={{ x: 260, y: 130, width: 112, height: 51 }}
 		fill="var(--bg-level-3)"
 		font={{ wrap: true, align: 'center', font_size: 11, italic: true, color: 'var(--bg-ghost)' }}
@@ -899,9 +898,8 @@
 		"Must become like children' - not under the law"
 	</Fragment>
 
-	<!-- Step 36: Colossians 1:13-14 drill -->
 	<Fragment
-		step={36}
+		step={37}
 		drillTo="kingdoms/colossians-1-13"
 		layout={{ x: 800, y: 245, width: 121, height: 40 }}
 		font={{ wrap: true, align: 'right', font_size: 11.7 }}
@@ -910,9 +908,8 @@
 		Colossians 1:13-14<br/>1Peter 2:9-11<br/>Galatians 3:26-29
 	</Fragment>
 
-	<!-- Step 36: "?" for Christ King -->
 	<Fragment
-		step={36}
+		step={37}
 		layout={{ x: 550, y: 284, width: 22, height: 26 }}
 		font={questionMark}
 		zIndex={textLayer}
