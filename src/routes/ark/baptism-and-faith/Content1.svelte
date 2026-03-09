@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 	import { Arc } from '$lib/components/svg';
 	import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
 </script>
@@ -7,21 +8,15 @@
 <div class="slide-bg"></div>
 <ReferenceOverlay src="/export/08-The_Ark/Slide8.png" />
 
-<!-- Static: Title -->
+<!-- Static: Scripture (consolidated title + body) -->
 <Fragment
-	layout={{ x: 58, y: 11, width: 366, height: 36 }}
-	font={{ font_size: 26.7, bold: true, color: 'var(--text-level-0)', align: 'left' }}
->
-	Romans 6:3-7, 17-18, 22-23
-</Fragment>
-
-<!-- Static: Main scripture -->
-<Fragment
-	layout={{ x: 58, y: 39, width: 865, height: 178 }}
-	font={{ font_size: 20, color: 'var(--text-level-0)', v_align: 'middle', align: 'left', wrap: true }}
+	layout={{ x: 58, y: 11, width: 865, height: 206 }}
+	font={{ v_align: 'middle', align: 'left', wrap: true }}
 	line={{ width: 1 }}
 >
-	Or do you not know that all of us who have been baptized into Christ Jesus have been baptized into His death? 4 Therefore we have been buried with Him through baptism into death, so that as Christ was raised  from the dead through the glory of the Father, so we too might walk in newness of life. 5 For if we have become united with Him in the likeness of His death, certainly we shall also be in the likeness of His resurrection, 6 knowing this, that our old self was crucified with Him, in order that our body of sin might be done away with, so that we would no longer be slaves to sin; 7 for he who has died is freed from sin.
+	<ScriptureBlock title="Romans 6:3-7,17-18, 22-23">
+		Or do you not know that all of us who have been <strong>baptized into Christ Jesus</strong> have been baptized into <strong>His death</strong>?<sup> </sup><sup>4</sup><sup> </sup>Therefore we have been <strong>buried</strong> with Him through baptism into death, so that as Christ was raised  from the dead through the glory of the Father, so we too might walk in newness of life.<sup> </sup><sup>5</sup> For if we have become <strong>united with Him</strong> in the <strong>likeness of His</strong> <strong>death</strong>, certainly we shall also be in the likeness of His <strong>resurrection</strong>, <sup>6</sup> knowing this, that our old self was crucified with Him, in order that our body of sin might be done away with, so that we would no longer be slaves to sin; <sup>7 </sup>for <strong><u>he who has died is freed from sin</u></strong>.
+	</ScriptureBlock>
 </Fragment>
 
 <!-- Step 1: Baptism label (timing: click) -->
@@ -83,9 +78,11 @@
 <Fragment
 	step={3}
 	layout={{ x: 58, y: 228, width: 846, height: 81 }}
-	font={{ font_size: 20, italic: true, v_align: 'middle', align: 'left', wrap: true }}
+	font={{ italic: true, v_align: 'middle', align: 'left', wrap: true }}
 >
-	17...though you were slaves of sin, you became obedient from the heart to that form of teaching to which you were committed, 18 and having been freed from sin, you became slaves of righteousness…
+	<ScriptureBlock>
+		<sup>17</sup>...though you were slaves of sin, you became obedient from the heart to that form of teaching to which you were committed, <sup>18</sup> and having <strong>been freed from sin</strong>, you became <strong>slaves of righteousness</strong>...
+	</ScriptureBlock>
 </Fragment>
 
 <!-- Step 4: Freed of Sin = Slave of Righteousness (timing: click) -->
@@ -101,9 +98,11 @@
 <Fragment
 	step={5}
 	layout={{ x: 58, y: 314, width: 875, height: 81 }}
-	font={{ font_size: 20, italic: true, v_align: 'middle', align: 'left', wrap: true }}
+	font={{ italic: true, v_align: 'middle', align: 'left', wrap: true }}
 >
-	22 But now having been freed from sin and enslaved to God, you derive your benefit, resulting in sanctification, and the outcome, eternal life. 23 For the wages of sin is death, but the free gift of God is eternal life in Christ Jesus our Lord.
+	<ScriptureBlock>
+		<sup>22</sup><strong><u>But now</u></strong> having been <strong>freed from sin</strong> and <strong>enslaved to God</strong>, you derive <strong>your benefit</strong>, resulting in <strong>sanctification</strong>, and the <strong>outcome, eternal life</strong>. <sup>23</sup> For the wages of sin is death, but the <strong>free gift of God</strong> <strong>is</strong> <strong>eternal life</strong> in Christ Jesus our Lord.
+	</ScriptureBlock>
 </Fragment>
 
 <!-- Step 6: Arc arrow returning (timing: click) -->

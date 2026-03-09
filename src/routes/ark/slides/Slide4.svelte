@@ -17,7 +17,6 @@
 	<!-- Static: Underwater background image -->
 	<Fragment
 		layout={{ x: 0, y: 318, width: 960, height: 222 }}
-		line={{ width: 1 }}
 	>
 		<img src="/export/08-The_Ark/image5.jpeg" alt="Underwater" class="slide-image" />
 	</Fragment>
@@ -50,7 +49,6 @@
 		layout={{ x: 50, y: 299, width: 162, height: 40 }}
 		fill="var(--bg-level-3)"
 		font={{ font_size: 26.7, bold: true, color: 'var(--bg-ghost)', align: 'center', wrap: true }}
-		line={{ width: 1 }}
         zIndex={10}
 	>
 		Water Line
@@ -65,7 +63,6 @@
 		step={2.1}
 		layout={{ x: 80, y: 420, width: 233, height: 88 }}
 		font={{ font_size: 79.2, bold: true, align: 'center' }}
-		line={{ width: 4 }}
 	>
 		Death
 	</Fragment>
@@ -80,7 +77,6 @@
 		step={3.1}
 		layout={{ x: 87, y: 128, width: 158, height: 104 }}
 		font={{ font_size: 79.2, bold: true, color: 'var(--text-level-3)', align: 'left' }}
-		line={{ width: 1 }}
 	>
 		Life
 	</Fragment>
@@ -90,7 +86,6 @@
 		drillTo="ark/baptism-and-faith"
 		layout={{ x: 119, y: 56, width: 338, height: 30 }}
 		font={{ font_size: 26.7, align: 'left' }}
-		line={{ width: 1 }}
 	>
 		Romans 6:3-7, 17-18, 22-23
 	</Fragment>
@@ -99,7 +94,6 @@
 		step={4}
 		layout={{ x: 107, y: 98, width: 358, height: 40 }}
 		font={{ font_size: 26.7, bold: true, align: 'center', wrap: true }}
-		line={{ width: 1 }}
 	>
 		Old Self = Sin = Dead
 	</Fragment>
@@ -171,9 +165,9 @@
 		step={8}
 		drillTo="ark/ugly-black-box"
 		layout={{ x: 291, y: 148, width: 439, height: 36 }}
-		font={{ font_size: 23.3, align: 'center' }}
+		font={{ font_size: 23.3, align: 'center', v_align: 'middle', wrap: true }}
 	>
-		What does the Ark look like? - Isaiah 53
+		What does the Ark look like? <strong>Isaiah 53</strong>
 	</Fragment>
 
 	<!-- Step 9: = Church -->
@@ -192,7 +186,6 @@
 		step={9}
 		layout={{ x: 710, y: 206, width: 148, height: 40 }}
 		font={{ font_size: 26.7, bold: true }}
-		line={{ width: 1 }}
 	>
 		(His body)
 	</Fragment>
@@ -202,9 +195,8 @@
 		step={10}
 		drillTo="ark/revelation-20"
 		layout={{ x: 291, y: 188, width: 437, height: 36 }}
-		font={{ font_size: 23.3, align: 'center' }}
-		line={{ width: 1 }}
+		font={{ font_size: 23.3, align: 'center', v_align: 'middle', wrap: true }}
 	>
-		Importance of Baptism - Revelation 20:6
+		Importance of Baptism: <strong>Revelation 20:6</strong>
 	</Fragment>
 </Slide>

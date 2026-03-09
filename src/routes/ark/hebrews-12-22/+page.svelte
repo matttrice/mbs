@@ -1,32 +1,30 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <Slide>
 	<div class="slide-bg"></div>
 
-	<!-- Static: Title -->
+	<!-- Static: Scripture Hebrews (consolidated title + body) -->
 	<Fragment
-		layout={{ x: 95, y: 15, width: 399, height: 51 }}
-		font={{ font_size: 36.7, bold: true, color: 'var(--text-level-0)', align: 'left' }}
+		layout={{ x: 95, y: 15, width: 756, height: 342 }}
+		font={{ v_align: 'middle', align: 'left', wrap: true }}
 	>
-		Hebrews 12:2, 22-23
+		<ScriptureBlock title="Hebrews 12:2, 22-23" scale="lg">
+			fixing our eyes on Jesus, the author and perfecter of faith, who for the joy set before Him endured the cross, despising the shame, and has <strong>sat down</strong> at the right hand of the throne of God... <br><sup>22 </sup>But you have come to <strong>Mount Zion</strong> and to the city of the living God, the heavenly Jerusalem, and to myriads of angels, <sup>23</sup>to the general assembly and <strong>Church</strong> of the firstborn who are enrolled in heaven, and to God, the Judge of all, and to the spirits of the righteous made perfect,
+		</ScriptureBlock>
 	</Fragment>
 
-	<!-- Static: Scripture Hebrews -->
-	<Fragment
-		layout={{ x: 95, y: 58, width: 756, height: 299 }}
-		font={{ font_size: 26.7, color: 'var(--text-level-0)', v_align: 'middle', align: 'left', wrap: true }}
-	>
-		fixing our eyes on Jesus, the author and perfecter of faith, who for the joy set before Him endured the cross, despising the shame, and has sat down at the right hand of the throne of God... 22 But you have come to Mount Zion and to the city of the living God, the heavenly Jerusalem, and to myriads of angels, 23 to the general assembly and Church of the firstborn who are enrolled in heaven, and to God, the Judge of all, and to the spirits of the righteous made perfect,
-	</Fragment>
-
-	<!-- Static: Scripture Psalms -->
+	<!-- Static: Scripture Psalms (inline title extraction) -->
 	<Fragment
 		layout={{ x: 95, y: 354, width: 784, height: 152 }}
-		font={{ font_size: 26, align: 'left', wrap: true }}
+		font={{ align: 'left', wrap: true }}
+		line={{ width: 1 }}
 	>
-		Psalms 99:1-2 The LORD reigns, let the nations tremble; he sits enthroned between the cherubim, let the earth shake. 2 Great is the LORD in Zion; he is exalted over all the nations. (NIV)
+		<ScriptureBlock title="Psalms 99:1-2" version="NIV" scale="lg">
+			The LORD reigns, let the nations tremble; he <strong>sits enthroned</strong> between the cherubim, let the earth shake. <sup>2</sup>Great is the LORD in Zion; <strong>he is exalted over all the nations</strong>.
+		</ScriptureBlock>
 	</Fragment>
 </Slide>

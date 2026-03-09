@@ -1,8 +1,9 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
-	import { Arrow, Line, Rect } from '$lib/components/svg';
+	import { Arrow, Line } from '$lib/components/svg';
     import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
+    import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <Slide>
@@ -56,15 +57,14 @@
 		Treasured Possession: Exodus 19:5, Exodus 25:10 Malachi. 3:17, 1 Peter 2:9
 	</Fragment>
 
-	<!-- Step 4: Moses - Exodus 2:1-6 drillTo (timing: click) -->
 	<Fragment
 		step={4}
 		drillTo="ark/exodus-2-1"
 		returnHere
-		layout={{ x: 94, y: 131, width: 185, height: 21 }}
-		font={{ font_size: 16.7, italic: true, align: 'left'}}
+		layout={{ x: 98, y: 129, width: 185, height: 21 }}
+		font={{ font_size: 16.7, align: 'left'}}
 	>
-		(Moses - Exodus 2:1-6)
+		Moses: Exodus 2:1-6
 	</Fragment>
 
 	<!-- Step 5: *Pitch = Kopher (n) (timing: click) -->
@@ -117,7 +117,7 @@
 	<!-- Step 8: 2. Purge, make an atonement... (timing: click) -->
 	<Fragment
 		step={8}
-		layout={{ x: 498, y: 132, width: 456, height: 48 }}
+		layout={{ x: 498, y: 135, width: 456, height: 48 }}
 		font={{ font_size: 20, color: 'var(--text-level-3)', align: 'left', wrap: true }}
 	>
 		2. Purge, make an atonement, make propitiation, reconciliation, cover over with pitch
@@ -155,36 +155,31 @@
 	<!-- Step 11: Romans 3:24 scripture (timing: click) -->
 	<Fragment
 		step={11}
-		layout={{ x: 40, y: 250, width: 100, height: 20 }}
-		font={{ font_size: 25, align: 'left', bold: true}}
-	>
-		Romans 3:24
-	</Fragment>
-	<Fragment
-		step={11}
-		layout={{ x: 36, y: 260, width: 500, height: 224 }}
+		layout={{ x: 42, y: 250, width: 500, height: 230 }}
 		font={{ font_size: 20, align: 'left', wrap: true }}
 	>
-		…and all are justified freely by his grace through the redemption that came by Christ Jesus. <sup>25</sup> God presented Christ as a sacrifice of *atonement, through the shedding of his blood—to be received by faith. He did this to demonstrate his righteousness, because in his forbearance he had left the sins committed beforehand unpunished. <br/>(NIV)[*propitiation NASB, KJV = atone, appease]
+		<ScriptureBlock title="Romans 3:24-25">
+		…and all are justified freely by his grace through the redemption that came by Christ Jesus. <sup>25</sup> God presented Christ as a sacrifice of *atonement, through the shedding of his blood—to be received by faith. He did this to demonstrate his righteousness, because in his forbearance he had left the sins committed beforehand unpunished. <br/><strong>[*propitiation NASB, KJV = atone, appease]</strong>
+		</ScriptureBlock>
 	</Fragment>
 
 	<!-- Step 12: Red underlines and Atonement/kaphar labels (timing: click with arrows) -->
 	<Fragment step={12} animate="draw">
-		<Line from={{ x: 760, y: 157 }} to={{ x: 585, y: 157 }} stroke={{ width: 4, color: '#C00000' }} zIndex={2} />
+		<Line from={{ x: 760, y: 157 }} to={{ x: 585, y: 157 }} stroke={{ width: 2, color: 'var(--bg-blood)' }} zIndex={2} />
 	</Fragment>
 
 	<Fragment step={12} animate="wipe-down">
-		<Arrow from={{ x: 168, y: 179 }} to={{ x: 168, y: 331 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} />
+		<Arrow from={{ x: 262, y: 184 }} to={{ x: 168, y: 331 }} stroke={{ width: 3, color: 'var(--stroke-level-0)' }} />
 	</Fragment>
 
 	<Fragment step={12} animate="draw">
-		<Line from={{ x: 910, y: 127 }} to={{ x: 838, y: 127 }} stroke={{ width: 4, color: '#C00000' }} zIndex={2} />
+		<Line from={{ x: 910, y: 127 }} to={{ x: 838, y: 127 }} stroke={{ width: 2, color: 'var(--bg-blood)' }} zIndex={2} />
 	</Fragment>
 
 	<Fragment
 		step={12}
 		layout={{ x: 124, y: 144, width: 233, height: 46 }}
-		font={{ font_size: 30.8, bold: true, color: '#CC0000' }}
+		font={{ font_size: 30.8, bold: true, color: 'var(--bg-blood)' }}
 		line={{ width: 1 }}
 	>
 		Atonement  =
@@ -215,13 +210,13 @@
 
 	<!-- Step 13.1: Red underline (timing: after) -->
 	<Fragment step={13.1} animate="draw">
-		<Line from={{ x: 665, y: 90 }} to={{ x: 527, y: 90 }} stroke={{ width: 4, color: '#C00000' }} zIndex={2} />
+		<Line from={{ x: 665, y: 90 }} to={{ x: 527, y: 90 }} stroke={{ width: 2, color: 'var(--bg-blood)' }} zIndex={2} />
 	</Fragment>
 
 	<!-- Step 14: 1 John 2:2 (timing: click) -->
 	<Fragment
 		step={14}
-		layout={{ x: 521, y: 243, width: 416, height: 89 }}
+		layout={{ x: 521, y: 250, width: 416, height: 89 }}
 		font={{ font_size: 23, align: 'left', wrap: true }}
 		line={{ width: 1 }}
 	>
@@ -231,7 +226,7 @@
 	<!-- Step 15: 1 John 1:7 (timing: click) -->
 	<Fragment
 		step={15}
-		layout={{ x: 60, y: 478, width: 835, height: 52 }}
+		layout={{ x: 42, y: 478, width: 864, height: 52 }}
 		font={{ font_size: 23, v_align: 'middle', align: 'left', wrap: true }}
 		line={{ width: 1 }}
 	>

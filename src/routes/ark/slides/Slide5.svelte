@@ -36,7 +36,7 @@
 
 	<!-- Static: Water line image -->
 	<Fragment
-		layout={{ x: 49, y: 475, width: 862, height: 99 }}
+		layout={{ x: 42, y: 475, width: 864, height: 250 }}
 		zIndex={textLayer}
 	>
 		<img src="/export/08-The_Ark/image6.png" alt="WaterLine" class="slide-image" />

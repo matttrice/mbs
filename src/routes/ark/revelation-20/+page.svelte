@@ -1,26 +1,21 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 	import { Arrow, Line } from '$lib/components/svg';
 </script>
 
 <Slide>
 	<div class="slide-bg"></div>
 
-	<!-- Static: Title -->
+	<!-- Static: Scripture (consolidated title + body) -->
 	<Fragment
-		layout={{ x: 116, y: 48, width: 493, height: 42 }}
-		font={{ font_size: 36, bold: true, align: 'left' }}
+		layout={{ x: 116, y: 48, width: 735, height: 195 }}
+		font={{ v_align: 'middle', align: 'left', wrap: true }}
 	>
-		Revelation 20:6
-	</Fragment>
-
-	<!-- Static: Scripture -->
-	<Fragment
-		layout={{ x: 112, y: 82, width: 735, height: 153 }}
-		font={{ font_size: 30, v_align: 'middle', align: 'left', wrap: true }}
-	>
-		Blessed and holy is the one who has a part in the first resurrection; over these the second death has no power, but they will be priests of God and of Christ and will reign with Him for a thousand years.
+		<ScriptureBlock title="Revelation 20:6" scale="lg">
+			Blessed and holy is the one who has a part in the first resurrection; over these the second death has no power, but they will be priests of God and of Christ and will reign with Him for a thousand years.
+		</ScriptureBlock>
 	</Fragment>
 
 	<!-- Step 1: Question - Who is the first to be resurrected (timing: click) -->
@@ -53,7 +48,7 @@
 		step={3}
 		layout={{ x: 123, y: 340, width: 300, height:190 }}
 		fill="var(--bg-level-2)"
-		font={{ font_size: 26.7, align: 'left', wrap: true }}
+		font={{ font_size: 26.7, align: 'center', v_align: 'middle', wrap: true }}
 		line={{ width: 2, color: 'var(--stroke-level-0)' }}
 	>
 		What did Christ leave behind as a way for you to "have a part" in His death, burial, and resurrection?

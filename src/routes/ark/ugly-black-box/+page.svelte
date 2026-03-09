@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Slide from '$lib/components/Slide.svelte';
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 	import { Arrow, Rect } from '$lib/components/svg';
 </script>
 
@@ -11,7 +12,7 @@
 	<Fragment
 		layout={{ x: 139, y: 30, width: 681, height: 100 }}
 		fill="var(--bg-level-0)"
-		font={{ font_size: 39.2, bold: true, color: 'var(--text-light)' }}
+		font={{ font_size: 39, bold: true, color: 'var(--text-light)' }}
 	>
 		What does the Ark look like?
 	</Fragment>
@@ -19,102 +20,90 @@
 	<!-- Step 1: an ugly black box (timing: click) -->
 	<Fragment
 		step={1}
-		layout={{ x: 316, y: 127, width: 332, height: 51 }}
-		font={{ font_size: 35, align: 'center' }}
-		line={{ width: 4 }}
+		layout={{ x: 138, y: 129, width: 332, height: 51 }}
+		font={{ font_size: 35, align: 'left', v_align: 'middle' }}
 	>
-		an ugly black box…
+		An ugly black box…
 	</Fragment>
 
 	<!-- Step 2: What did Christ physically look like? (timing: click) -->
 	<Fragment
 		step={2}
-		layout={{ x: 247, y: 175, width: 466, height: 72 }}
-		font={{ font_size: 26.7, align: 'center' }}
-		line={{ width: 4 }}
+		layout={{ x: 138, y: 170, width: 586, height: 42 }}
+		font={{ font_size: 35, align: 'left', v_align: 'middle' }}
 	>
-		What did Christ physically look like?Isaiah 53:1-2
+		What did Christ physically look like?
 	</Fragment>
 
 	<!-- Step 3: Isaiah 53 scripture (timing: click) -->
 	<Fragment
 		step={3}
-		layout={{ x: 214, y: 244, width: 576, height: 176 }}
+		layout={{ x: 42, y: 217, width: 316, height: 306 }}
 		fill="var(--bg-ghost)"
-		font={{ font_size: 23.3, align: 'left', wrap: true }}
+		font={{ align: 'center', v_align: 'middle', wrap: true }}
 		line={{ width: 4, color: 'var(--stroke-level-0)' }}
 	>
-		Who has believed our message? And to whom has the arm of the LORD been revealed? 2 For He grew up before Him like a tender  shoot, And like a root out of parched ground; He has no {'{stately}'} form or majesty That we should look upon Him, Nor appearance that we should be attracted to Him.
+		<ScriptureBlock title="Isaiah 53:1-2" scale="md">
+			Who has believed our message? And to whom has the arm of the LORD been revealed? <sup>2</sup><sup> </sup>For He grew up before Him like a tender  shoot, And like a root out of parched ground; He has no {'{stately}'} form or majesty That we should look upon Him, Nor appearance that we should be attracted to Him.
+		</ScriptureBlock>
 	</Fragment>
 
-	<!-- Step 3.1: Arrow pointing to Common (timing: after) -->
-	<Fragment step={3.1} animate="wipe-down">
-		<Arrow from={{ x: 480, y: 245 }} to={{ x: 480, y: 287 }} stroke={{ width: 13, color: 'var(--stroke-level-0)' }} zIndex={1} />
+	<Fragment step={4} animate="wipe-up">
+		<Arrow from={{ x: 324, y: 393 }} to={{ x: 383, y: 255 }} stroke={{ width: 5, color: 'var(--stroke-level-0)' }} zIndex={1} />
 	</Fragment>
 
-	<!-- Step 3.2: Common, maybe even ugly (timing: after) -->
 	<Fragment
-		step={3.2}
-		layout={{ x: 287, y: 278, width: 386, height: 45 }}
-		font={{ font_size: 30.8, align: 'center' }}
-		line={{ width: 4 }}
+		step={4}
+		layout={{ x: 378, y: 212, width: 386, height: 45 }}
+		font={{ font_size: 30.8, align: 'left', v_align: 'middle' }}
 	>
 		Common, maybe even ugly.
 	</Fragment>
 
-	<!-- Step 4: What is the spiritual counterpart (timing: click) -->
 	<Fragment
-		step={4}
-		layout={{ x: 214, y: 316, width: 531, height: 40 }}
-		font={{ font_size: 26.7, align: 'center' }}
-		line={{ width: 4 }}
+		step={5}
+		layout={{ x: 383, y: 261, width: 531, height: 40 }}
+		font={{ font_size: 26.7, align: 'left', v_align: 'middle' }}
 	>
 		What is the spiritual counterpart of the Ark?
 	</Fragment>
 
-	<!-- Step 4: Ark = ? (timing: with) -->
-	<Fragment
-		step={4}
-		layout={{ x: 209, y: 351, width: 190, height: 61 }}
-		font={{ font_size: 44.2, bold: true, v_align: 'middle', align: 'center' }}
-		line={{ width: 1 }}
-	>
-		Ark  = ?
-	</Fragment>
-
-	<!-- Step 5: Jesus (timing: click) -->
 	<Fragment
 		step={5}
-		layout={{ x: 389, y: 351, width: 142, height: 62 }}
-		font={{ font_size: 44.2, bold: true, v_align: 'middle', align: 'center' }}
+		layout={{ x: 381, y: 291, width: 190, height: 61 }}
+		font={{ font_size: 44.2, bold: true, v_align: 'middle', align: 'left' }}
 		line={{ width: 1 }}
 	>
-		Jesus
+		<strong>Ark</strong> &nbsp; = ?
 	</Fragment>
 
-	<!-- Step 5: Cover ? mark (timing: with) -->
-	<Fragment step={5} animate="fade">
-		<Rect x={349} y={349} width={42} height={64} fill="var(--bg-ghost)" stroke={{ width: 1 }} zIndex={2} />
+	<Fragment
+		step={6}
+		layout={{ x: 510, y: 291, width: 162, height: 61 }}
+		font={{ font_size: 44.2, bold: true, v_align: 'middle', align: 'center' }}
+		fill="var(--bg-light)"
+		zIndex={1}
+	>
+		<strong>Jesus</strong>
 	</Fragment>
 
 	<!-- Step 6: Who is the Church? drillTo (timing: click) -->
 	<Fragment
-		step={6}
+		step={7}
 		drillTo="ark/1-corinthians-12"
-		layout={{ x: 354, y: 421, width: 252, height: 73 }}
-		font={{ font_size: 26.7, align: 'center' }}
-		line={{ width: 4 }}
+		returnHere
+		layout={{ x: 376, y: 350, width: 500, height: 60 }}
+		font={{ font_size: 27, align: 'center', v_align: 'middle', wrap: true }}
 	>
-		Who is the Church?1 Corinthians 12
+		Who is the Church? <strong>1 Corinthians 12</strong>
 	</Fragment>
 
-	<!-- Step 7: = Church (timing: click) -->
 	<Fragment
-		step={7}
-		layout={{ x: 544, y: 351, width: 211, height: 61 }}
-		font={{ font_size: 44.2, bold: true, v_align: 'middle', align: 'center' }}
+		step={8}
+		layout={{ x: 670, y: 291, width: 211, height: 61 }}
+		font={{ font_size: 44.2, bold: true, v_align: 'middle', align: 'center', wrap: true }}
 		line={{ width: 4 }}
 	>
-		=  Church
+		=  <strong style="color:var(--text-level-3)">Church</strong>
 	</Fragment>
 </Slide>
