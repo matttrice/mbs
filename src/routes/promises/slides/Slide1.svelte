@@ -28,7 +28,7 @@
 	<!-- ===== STATIC CONTENT (Always visible) ===== -->
 	<Fragment
 		layout={{ x: 321.6, y: 3.1, width: 316.8, height: 42 }}
-		font={{ font_size: 43.2, bold: true }}
+		font={{ font_size: 43.2, bold: true, align: 'center', v_align: 'middle' }}
 		zIndex={100}
 	>
 		The Promises
@@ -40,7 +40,7 @@
 	<Fragment
 		drillTo="promises/genesis-12-1"
 		layout={{ x: 59.9, y: 9, width: 259.2, height: 36 }}
-		font={{ font_size: 33.6, bold: true }}
+		font={{ font_size: 33.6, bold: true, align: 'center', v_align: 'middle' }}
 		zIndex={1}
 	>
 		Genesis 12:1-3
@@ -59,7 +59,7 @@
 	<Fragment
 		step={3}
 		layout={{ x: 112.8, y: 115.5, width: 180, height: 28.9 }}
-		font={{ font_size: 28.8, bold: true }}
+		font={{ font_size: 28.8, bold: true, align: 'center', v_align: 'middle' }}
 		zIndex={6}
 		animate="fly-right"
 	>
@@ -70,7 +70,7 @@
 	<Fragment
 		step={4}
 		layout={{ x: 112.8, y: 226.7, width: 194.4, height: 30 }}
-		font={{ font_size: 26.4, bold: true }}
+		font={{ font_size: 26.4, bold: true, align: 'center', v_align: 'middle' }}
 		zIndex={7}
 	>
 		Land of Canaan
@@ -80,7 +80,7 @@
 	<Fragment
 		step={5}
 		layout={{ x: 112.8, y: 369.3, width: 208.8, height: 28.9 }}
-		font={{ font_size: 26.4, bold: true }}
+		font={{ font_size: 26.4, bold: true, align: 'center', v_align: 'middle' }}
 		zIndex={8}
 	>
 		Families Blessed
@@ -91,7 +91,7 @@
 		step={6}
 		drillTo="promises/deuteronomy-7-6"
 		layout={{ x: 105.6, y: 145.5, width: 223.2, height: 34.9 }}
-		font={{ font_size: 24, align: 'left' }}
+		font={{ font_size: 24, align: 'center', v_align: 'middle' }}
 		zIndex={9}
 	>
 		Deuteronomy 7:6-8
@@ -101,7 +101,7 @@
 	<Fragment
 		step={7}
 		layout={{ x: 156, y: 175.4, width: 122.4, height: 43.9 }}
-		font={{ font_size: 33.6, bold: true }}
+		font={{ font_size: 33.6, bold: true, align: 'center', v_align: 'middle' }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1.3 }}
 		zIndex={10}
@@ -114,7 +114,7 @@
 		step={8}
 		drillTo="promises/genesis-13-14"
 		layout={{ x: 105.6, y: 249.3, width: 204.6, height: 36 }}
-		font={{ font_size: 24, align: 'left' }}
+		font={{ font_size: 24, align: 'center', v_align: 'middle' }}
 		zIndex={17}
 	>
 		Genesis 13:14-15
@@ -125,7 +125,7 @@
 		step={9}
 		drillTo="promises/forever-things"
 		layout={{ x: 354.7, y: 59.3, width: 252, height: 48.6 }}
-		font={{ font_size: 24, wrap: true, align: 'center' }}
+		font={{ font_size: 24, wrap: true, align: 'center', v_align: 'middle' }}
 		zIndex={14}
 	>
 		What kinds of things are forever?
@@ -135,7 +135,7 @@
 	<Fragment
 		step={10}
 		layout={{ x: 607.8, y: 54, width: 268.2, height: 50.5 }}
-		font={{ font_size: 52.8, bold: true, color: 'var(--bg-level-3)' }}
+		font={{ font_size: 52.8, bold: true, color: 'var(--bg-level-3)', align: 'center', v_align: 'middle' }}
 		zIndex={15}
 	>
 		Spiritual
@@ -150,7 +150,7 @@
 	<Fragment
 		step={12}
 		layout={{ x: 91.2, y: 54, width: 252, height: 60.5 }}
-		font={{ font_size: 52.8, bold: true }}
+		font={{ font_size: 52.8, bold: true, align: 'center', v_align: 'middle' }}
 		zIndex={16}
 	>
 		Physical
@@ -160,8 +160,8 @@
 	<Fragment
 		step={13}
 		drillTo="promises/1peter-2-9"
-		layout={{ x: 681.6, y: 148, width: 122.4, height: 30 }}
-		font={{ font_size: 24, align: 'left' }}
+		layout={{ x: 687.6, y: 148, width: 122.4, height: 30 }}
+		font={{ font_size: 24, align: 'center', v_align: 'middle' }}
 		zIndex={11}
 	>
 		1Peter 2:9
@@ -176,7 +176,7 @@
 	<Fragment
 		step={14.1}
 		layout={{ x: 679.8, y: 175.4, width: 138.6, height: 43.9 }}
-		font={{ font_size: 33.6, bold: true, color: 'var(--bg-level-3)' }}
+		font={{ font_size: 33.6, bold: true, color: 'var(--bg-level-3)', align: 'center', v_align: 'middle' }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1.3 }}
 		zIndex={12}
@@ -189,7 +189,7 @@
 	<Fragment
 		step={15}
 		layout={{ x: 629.4, y: 104.8, width: 235.8, height: 50.4 }}
-		font={{ font_size: 16.8, wrap: true, align: 'center' }}
+		font={{ font_size: 16.8, wrap: true, align: 'center', v_align: 'middle' }}
 		zIndex={48}
 	>
 		Chosen race, Royal Priesthood, Holy Nation
@@ -199,7 +199,7 @@
 	<Fragment
 		step={16}
 		layout={{ x: 146, y: 280.3, width: 142.4, height: 43.9 }}
-		font={{ font_size: 33.6, bold: true }}
+		font={{ font_size: 33.6, bold: true, align: 'center', v_align: 'middle' }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1.3 }}
 		zIndex={18}
@@ -222,7 +222,7 @@
 		step={18}
 		drillTo="promises/hebrews-11-8"
 		layout={{ x: 652.8, y: 249.9, width: 201.6, height: 34.9 }}
-		font={{ font_size: 24, align: 'left' }}
+		font={{ font_size: 24, align: 'center', v_align: 'middle' }}
 		zIndex={19}
 	>
 		Hebrews 11:8-16
@@ -237,7 +237,7 @@
 	<Fragment
 		step={19.1}
 		layout={{ x: 681.6, y: 280.3, width: 140.6, height: 43.9 }}
-		font={{ font_size: 33.6, bold: true, color: 'var(--bg-level-3)' }}
+		font={{ font_size: 33.6, bold: true, color: 'var(--bg-level-3)', align: 'center', v_align: 'middle' }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1.3 }}
 		zIndex={20}
@@ -249,7 +249,7 @@
 	<Fragment
 		step={21}
 		drillTo="promises/hebrews-3-14"
-		layout={{ x: 364.8, y: 138, width: 230.4, height: 60.3 }}
+		layout={{ x: 350, y: 138, width: 259, height: 60 }}
 		font={{ font_size: 19, bold: true, align: 'center' }}
 		zIndex={37}
 	>
@@ -259,23 +259,21 @@
 	<!-- Step 24: Joshua…Savior…Israel…Canaan -->
 	<Fragment
 		step={22}
-		layout={{ x: 380.7, y: 230, width: 211, height: 68.5 }}
+		layout={{ x: 380.7, y: 220, width: 211, height: 68.5 }}
 		font={{ font_size: 24, bold: true, wrap: true, align: 'center' }}
-		fill="var(--bg-ghost)"
 		zIndex={36}
 	>
-		Joshua…Savior…Israel…Canaan
+		Joshua… Savior… Israel… Canaan
 	</Fragment>
 
 	<!-- Step 25: Jesus…Savior…Church…Heaven (blue) -->
 	<Fragment
 		step={23}
-		layout={{ x: 380.7, y: 302.3, width: 211, height: 66 }}
+		layout={{ x: 380.7, y: 312.3, width: 211, height: 66 }}
 		font={{ font_size: 24, bold: true, color: 'var(--bg-level-3)', wrap: true, align: 'center' }}
-		fill="var(--bg-ghost)"
 		zIndex={51}
 	>
-		Jesus…Savior…Church…Heaven
+		Jesus… Savior… Church… Heaven
 	</Fragment>
 
 	<!-- Step 26: Luke 1:30-33 (hyperlink) -->
@@ -283,7 +281,7 @@
 		step={24}
 		drillTo="promises/luke-1-30"
 		layout={{ x: 674.4, y: 366, width: 158.4, height: 30 }}
-		font={{ font_size: 24, align: 'left' }}
+		font={{ font_size: 24, align: 'center', v_align: 'middle'}}
 		zIndex={13}
 	>
 		Luke 1:30-33
@@ -306,16 +304,20 @@
 		step={26}
 		drillTo="promises/galatians-3-16"
 		layout={{ x: 105.6, y: 396, width: 205.2, height: 30 }}
-		font={{ font_size: 24, align: 'left' }}
+		font={{ font_size: 24, align: 'center', v_align: 'middle'}}
 		zIndex={21}
 	>
 		Galatians 3:16-29
 	</Fragment>
 
-	<!-- Step 29: Abraham (boxed) -->
+	<!-- ===== FAMILY TREE: Abraham → Christ (horizontal layout) ===== -->
+	<!-- Layout: horizontal main row at y≈437 (centerline 450), boxes centered between the two Rect columns -->
+	<!-- zIndex: lines=2 (under boxes), boxes=5, Abraham=30 -->
+
+	<!-- Abraham (boxed) -->
 	<Fragment
 		step={27}
-		layout={{ x: 137.1, y: 428.4, width: 160.2, height: 44.1 }}
+		layout={{ x: 137, y: 428, width: 160, height: 44 }}
 		font={{ font_size: 33.6, bold: true }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1.3 }}
@@ -324,182 +326,169 @@
 		Abraham
 	</Fragment>
 
-	<!-- Step 30: Line 47 (connector from Abraham) -->
+	<!-- Line: Abraham → Isaac -->
 	<Fragment step={28} animate="draw">
-		<Line from={{ x: 271.2, y: 435.3 }} to={{ x: 327.7, y: 435.3 }} stroke={{ width: 4 }} zIndex={24} />
+		<Line from={{ x: 295, y: 447 }} to={{ x: 313, y: 447 }} stroke={{ width: 4 }} zIndex={2} />
 	</Fragment>
 
-	<!-- Step 31: Isaac (small boxed) -->
+	<!-- Isaac -->
 	<Fragment
-		step={29}
-		layout={{ x: 328.8, y: 421.5, width: 64.2, height: 27.2 }}
-		font={{ font_size: 19.2, align: 'left' }}
+		step={28}
+		layout={{ x: 311, y: 433, width: 50, height: 27 }}
+		font={{ font_size: 	19, align: 'center', v_align: 'middle' }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1 }}
-		zIndex={45}
+		zIndex={5}
 	>
 		Isaac
 	</Fragment>
 
-	<!-- Step 32: Line 51 (connector up to Esau) -->
-	<Fragment step={30} animate="draw">
-		<Line from={{ x: 379.2, y: 426 }} to={{ x: 402.1, y: 399.3 }} stroke={{ width: 4 }} zIndex={44} />
+	<!-- Line: Isaac → Esau (diagonal up-right branch) -->
+	<Fragment step={29} animate="draw">
+		<Line from={{ x: 357, y: 457 }} to={{ x: 375, y: 466 }} stroke={{ width: 4 }} zIndex={2} />
 	</Fragment>
 
-	<!-- Step 33: Esau (small boxed) -->
+	<!-- Esau (branch above Isaac) -->
 	<Fragment
-		step={31}
-		layout={{ x: 392.1, y: 375.3, width: 62.1, height: 27.2 }}
-		font={{ font_size: 19.2, align: 'left' }}
+		step={29}
+		layout={{ x: 373, y: 450, width: 59, height: 25 }}
+		font={{ font_size: 19, align: 'center', v_align: 'middle' }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1 }}
-		zIndex={27}
+		zIndex={5}
 	>
 		Esau
 	</Fragment>
 
-	<!-- Step 34: Line 52 (connector to Jacob) -->
-	<Fragment step={32} animate="draw">
-		<Line from={{ x: 386.4, y: 440 }} to={{ x: 422.4, y: 440 }} stroke={{ width: 4 }} zIndex={25} />
+	<Fragment step={30} animate="draw">
+		<Line from={{ x: 357, y: 437 }} to={{ x: 379, y: 421 }} stroke={{ width: 4 }} zIndex={2} />
 	</Fragment>
 
-	<!-- Step 35: Jacob (small boxed) -->
 	<Fragment
-		step={33}
-		layout={{ x: 422.4, y: 421.5, width: 69.6, height: 27.2 }}
-		font={{ font_size: 19.2, align: 'left' }}
+		step={30}
+		layout={{ x: 378, y: 405, width: 60, height: 27 }}
+		font={{ font_size: 19, align: 'center', v_align: 'middle' }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1 }}
-		zIndex={47}
+		zIndex={5}
 	>
 		Jacob
 	</Fragment>
-
-	<!-- Step 36: Line 53 (connector to 12 Sons) -->
-	<Fragment step={34} animate="draw">
-		<Line from={{ x: 486.6, y: 440 }} to={{ x: 536.8, y: 440 }} stroke={{ width: 4 }} zIndex={46} />
+	
+	<Fragment step={30.1} animate="draw">
+		<Line from={{ x: 428, y: 421 }} to={{ x: 685, y: 421 }} stroke={{ width: 4 }} zIndex={2} />
 	</Fragment>
 
-	<!-- Step 37: 12 Sons (Tribes) (small boxed) -->
 	<Fragment
-		step={35}
-		layout={{ x: 531.4, y: 422.3, width: 88.8, height: 46.5 }}
-		font={{ font_size: 19.2 }}
+		step={31}
+		layout={{ x: 449, y: 392, width: 82, height: 50 }}
+		font={{ font_size: 19, wrap: true, align: 'center', v_align: 'middle' }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1 }}
-		zIndex={31}
+		zIndex={5}
 	>
-		12 Sons<br />(Tribes)
+		12 Sons (Tribes)
 	</Fragment>
 
-	<!-- Step 38: Judah (small boxed) -->
+	<!-- Judah -->
 	<Fragment
-		step={36}
-		layout={{ x: 547, y: 398.8, width: 81.9, height: 27.2 }}
-		font={{ font_size: 19.2 }}
+		step={32}
+		layout={{ x: 542, y: 406, width: 60, height: 27 }}
+		font={{ font_size: 18, align: 'center', v_align: 'middle' }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1 }}
-		zIndex={29}
+		zIndex={5}
 	>
 		Judah
 	</Fragment>
 
-	<!-- Step 39: David (small boxed) -->
+	<!-- David -->
 	<Fragment
-		step={37}
-		layout={{ x: 564.2, y: 371.6, width: 75.2, height: 27.2 }}
-		font={{ font_size: 19.2 }}
+		step={33}
+		layout={{ x: 613, y: 406, width: 55, height: 27 }}
+		font={{ font_size: 18, align: 'center', v_align: 'middle' }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1 }}
-		zIndex={28}
+		zIndex={5}
 	>
 		David
 	</Fragment>
 
-	<!-- Step 40: Line 55 (connector to Christ) -->
-	<Fragment step={38} animate="draw">
-		<Line from={{ x: 638.4, y: 387 }} to={{ x: 677.9, y: 407.2 }} stroke={{ width: 4 }} zIndex={3} />
+	<Fragment step={34} animate="draw">
+		<Line from={{ x: 747, y: 438 }} to={{ x: 770, y: 464 }} stroke={{ width: 4 }} zIndex={2} />
 	</Fragment>
 
-	<!-- Step 41: "if you are Christ's, then you are Abraham's offspring" -->
 	<Fragment
-		step={39}
-		layout={{ x: 621.3, y: 449.1, width: 239.2, height: 50.4 }}
-		font={{ font_size: 17, wrap: true, align: 'center', bold: true }}
-		zIndex={50}
+		step={34}
+		layout={{ x: 683, y: 460, width: 220, height: 75 }}
+		font={{ font_size: 17, wrap: true, align: 'center', v_align: 'middle', bold: true }}
+		fill="var(--bg-ghost)"
+		line={{ color: 'var(--stroke-level-0)', width: 1 }}
+		zIndex={8}
 	>
 		"If you are Christ's, then you are Abraham's offspring"
 	</Fragment>
 
-	<!-- Step 42: Line 46 (connector down to Ishmael) -->
-	<Fragment step={40} animate="draw">
-		<Line from={{ x: 164.5, y: 472.5 }} to={{ x: 200.5, y: 487.7 }} stroke={{ width: 4 }} zIndex={23} />
+	<!-- ===== LOWER BRANCH: Abraham → Ishmael → Islam ===== -->
+
+	<!-- Line: Abraham → Ishmael (diagonal down from Abraham) -->
+	<Fragment step={35} animate="draw">
+		<Line from={{ x: 182.5, y: 468.5 }} to={{ x: 207.5, y: 493.7 }} stroke={{ width: 4 }} zIndex={2} />
 	</Fragment>
 
-	<!-- Step 43: Ishmael (small boxed) -->
+	<!-- Ishmael -->
 	<Fragment
-		step={41}
+		step={35}
 		layout={{ x: 201.4, y: 478.1, width: 85.5, height: 27.2 }}
-		font={{ font_size: 19.2, align: 'left' }}
+		font={{ font_size: 18, align: 'center', v_align: 'middle' }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1 }}
-		zIndex={41}
+		zIndex={5}
 	>
 		Ishmael
 	</Fragment>
 
-	<!-- Step 44: Line 48 (connector to Arabic Nations) -->
-	<Fragment step={42} animate="draw">
-		<Line from={{ x: 279.8, y: 495.6 }} to={{ x: 314.8, y: 495.6 }} stroke={{ width: 4 }} zIndex={40} />
+	<!-- Line: Ishmael → Arabic Nations -->
+	<Fragment step={35.1} animate="draw">
+		<Line from={{ x: 281.8, y: 495.6 }} to={{ x: 465, y: 493.6 }} stroke={{ width: 4 }} zIndex={2} />
 	</Fragment>
 
-	<!-- Step 45: Arabic Nations (small boxed) -->
+	<!-- Arabic Nations -->
 	<Fragment
-		step={43}
-		layout={{ x: 307.2, y: 480, width: 147.5, height: 27.2 }}
-		font={{ font_size: 19.2 }}
+		step={36}
+		layout={{ x: 313.2, y: 480, width: 127.5, height: 27.2 }}
+		font={{ font_size: 18, align: 'center', v_align: 'middle' }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1 }}
-		zIndex={39}
+		zIndex={5}
 	>
 		Arabic Nations
 	</Fragment>
 
-	<!-- Step 46: Line 49 (connector to Mohammed) -->
-	<Fragment step={44} animate="draw">
-		<Line from={{ x: 438.9, y: 495.6 }} to={{ x: 482.1, y: 495.6 }} stroke={{ width: 4 }} zIndex={0} />
-	</Fragment>
-
-	<!-- Step 47: Mohammed (small boxed) -->
+	<!-- Mohammed -->
 	<Fragment
-		step={45}
-		layout={{ x: 481.1, y: 480, width: 119.7, height: 27.2 }}
-		font={{ font_size: 19.2, align: 'left' }}
+		step={36.1}
+		layout={{ x: 461.1, y: 480, width: 119.7, height: 27.2 }}
+		font={{ font_size: 18, align: 'center', v_align: 'middle' }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1 }}
-		zIndex={42}
+		zIndex={5}
 	>
 		Mohammed
 	</Fragment>
 
-	<!-- Step 48: Line 50 (connector to Islam) -->
-	<Fragment step={46} animate="draw">
-		<Line from={{ x: 521.7, y: 503.9 }} to={{ x: 572, y: 519.3 }} stroke={{ width: 4 }} zIndex={38} />
+	<Fragment step={36.1} animate="draw">
+		<Line from={{ x: 518, y: 502 }} to={{ x: 518, y: 515 }} stroke={{ width: 4 }} zIndex={2} />
 	</Fragment>
 
-	<!-- Step 49: Islam (small boxed) -->
 	<Fragment
-		step={47}
-		layout={{ x: 572.9, y: 502.4, width: 75.9, height: 27.2 }}
-		font={{ font_size: 19.2 }}
+		step={36.2}
+		layout={{ x: 480, y: 511, width: 76, height: 28 }}
+		font={{ font_size: 18, align: 'center', v_align: 'middle' }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1 }}
-		zIndex={43}
+		zIndex={5}
 	>
 		Islam
 	</Fragment>
 </Slide>
-
-<style>
-	/* All shapes now use SVG components inside Fragment */
-</style>

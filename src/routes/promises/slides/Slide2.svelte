@@ -29,10 +29,9 @@
 
 	<!-- Step 1: Galatians 4:21-31 (hyperlink) -->
 	<Fragment
-		step={1}
 		drillTo="promises/galatians-4-21"
 		layout={{ x: 60.5, y: -1.4, width: 336.4, height: 55.3 }}
-		font={{ font_size: 38.4, bold: true }}
+		font={{ font_size: 38.4, bold: true, align: 'center', v_align: 'middle' }}
 		zIndex={2}
 	>
 		Galatians 4:21-31
@@ -52,7 +51,7 @@
 	<Fragment
 		step={4}
 		layout={{ x: 379.2, y: 100.7, width: 208.8, height: 54 }}
-		font={{ font_size: 43.2 }}
+		font={{ font_size: 43.2, align: 'center', v_align:'middle' }}
 		fill="var(--bg-light)"
 		line={{ color: 'var(--bg-level-0)', width: 2.3 }}
 		zIndex={22}
@@ -64,7 +63,7 @@
 	<Fragment
 		step={5}
 		layout={{ x: 180.9, y: 107.5, width: 170.2, height: 61.1 }}
-		font={{ font_size: 43.2, align: 'left' }}
+		font={{ font_size: 43.2, align: 'center', v_align: 'middle' }}
 		zIndex={4}
 	>
 		Ishmael
@@ -74,7 +73,7 @@
 	<Fragment
 		step={6}
 		layout={{ x: 624.9, y: 108.7, width: 121.7, height: 61.1 }}
-		font={{ font_size: 43.2, align: 'left', color: 'var(--bg-level-3)' }}
+		font={{ font_size: 43.2, align: 'center', v_align: 'middle', color: 'var(--bg-level-3)' }}
 		zIndex={3}
 	>
 		Isaac
@@ -84,7 +83,7 @@
 	<Fragment
 		step={7}
 		layout={{ x: 167.9, y: 44.7, width: 194.5, height: 61.1 }}
-		font={{ font_size: 43.2, bold: true }}
+		font={{ font_size: 43.2, bold: true, align: 'center', v_align: 'middle' }}
 		zIndex={16}
 	>
 		Physical
@@ -94,7 +93,7 @@
 	<Fragment
 		step={8}
 		layout={{ x: 589.2, y: 45.9, width: 192, height: 61.1 }}
-		font={{ font_size: 43.2, bold: true, color: 'var(--bg-level-3)' }}
+		font={{ font_size: 43.2, bold: true, align: 'center', v_align: 'middle', color: 'var(--bg-level-3)' }}
 		zIndex={17}
 	>
 		Spiritual
@@ -103,7 +102,7 @@
 	<!-- Step 9: Vertical stem from Abraham + Arrow to Hagar -->
 	<Fragment step={9} animate="wipe-down">
 		<!-- Vertical stem -->
-		<Line from={{ x: 460, y: 154 }} to={{ x: 460, y: 194 }} stroke={{ width: 15}} zIndex={21} />
+		<Line from={{ x: 460, y: 154 }} to={{ x: 460, y: 193.5 }} stroke={{ width: 15}} zIndex={21} />
 	</Fragment>
 	<Fragment step={9} animate="wipe-left">
 		<!-- Arrow to Hagar -->
@@ -114,7 +113,7 @@
 	<Fragment
 		step={9.1}
 		layout={{ x: 195.3, y: 154.3, width: 141.1, height: 61.1 }}
-		font={{ font_size: 43.2, bold: true, align: 'left' }}
+		font={{ font_size: 43.2, bold: true, align: 'center', v_align: 'middle' }}
 		zIndex={8}
 	>
 		Hagar
@@ -124,7 +123,7 @@
 	<Fragment
 		step={11}
 		layout={{ x: 178.5, y: 196.7, width: 174.8, height: 55.3 }}
-		font={{ font_size: 38.4, align: 'left' }}
+		font={{ font_size: 38.4, align: 'center', v_align: 'middle' }}
 		zIndex={18}
 	>
 		covenant
@@ -144,7 +143,7 @@
 	<Fragment
 		step={12.1}
 		layout={{ x: 616.5, y: 158.2, width: 138.7, height: 61.1 }}
-		font={{ font_size: 43.2, bold: true, align: 'left', color: 'var(--bg-level-3)' }}
+		font={{ font_size: 43.2, bold: true, align: 'center', v_align: 'middle', color: 'var(--bg-level-3)' }}
 		zIndex={5}
 	>
 		Sarah
@@ -154,7 +153,7 @@
 	<Fragment
 		step={14}
 		layout={{ x: 598.5, y: 196.7, width: 174.8, height: 55.3 }}
-		font={{ font_size: 38.4, align: 'left', color: 'var(--bg-level-3)' }}
+		font={{ font_size: 38.4, align: 'center', v_align: 'middle', color: 'var(--bg-level-3)' }}
 		zIndex={19}
 	>
 		covenant
@@ -169,7 +168,7 @@
 	<Fragment
 		step={15.1}
 		layout={{ x: 177.5, y: 282.2, width: 176.9, height: 55.3 }}
-		font={{ font_size: 38.4, bold: true, align: 'left' }}
+		font={{ font_size: 38.4, bold: true, align: 'center', v_align: 'middle' }}
 		zIndex={9}
 	>
 		Mt. Sinai
@@ -179,7 +178,7 @@
 	<Fragment
 		step={17}
 		layout={{ x: 132.8, y: 314.2, width: 276.9, height: 55.3 }}
-		font={{ font_size: 38.4, bold: true, italic: true, align: 'left' }}
+		font={{ font_size: 38.4, bold: true, italic: true, align: 'center', v_align: 'middle' }}
 		zIndex={10}
 	>
 		Mosaical Law
@@ -189,7 +188,7 @@
 	<Fragment
 		step={18}
 		layout={{ x: 116.4, y: 360, width: 302.1, height: 49.4 }}
-		font={{ font_size: 33.6, align: 'left' }}
+		font={{ font_size: 33.6, align: 'center', v_align: 'middle' }}
 		zIndex={11}
 	>
 		Present Jerusalem
@@ -199,7 +198,7 @@
 	<Fragment
 		step={19}
 		layout={{ x: 144.3, y: 394.7, width: 252, height: 49.4 }}
-		font={{ font_size: 33.6, align: 'left' }}
+		font={{ font_size: 33.6, align: 'center', v_align: 'middle' }}
 		zIndex={12}
 	>
 		Bondage to sin
@@ -209,7 +208,7 @@
 	<Fragment
 		step={20}
 		layout={{ x: 118.2, y: 438, width: 296.1, height: 49.4 }}
-		font={{ font_size: 33.6, align: 'left' }}
+		font={{ font_size: 33.6, align: 'center', v_align: 'middle' }}
 		zIndex={13}
 	>
 		Slaves to the LAW
@@ -220,7 +219,7 @@
 		step={21}
 		drillTo="promises/romans-8-2"
 		layout={{ x: 166.1, y: 471.5, width: 208.2, height: 43.6 }}
-		font={{ font_size: 28.8, bold: true, align: 'left' }}
+		font={{ font_size: 28.8, bold: true, align: 'center', v_align: 'middle' }}
 		zIndex={14}
 	>
 		Romans 8:2-3
@@ -235,7 +234,7 @@
 	<Fragment
 		step={22.1}
 		layout={{ x: 543.4, y: 278.5, width: 283.4, height: 97.9 }}
-		font={{ font_size: 38.4, italic: true, color: 'var(--bg-level-3)', wrap: true, align: 'center' }}
+		font={{ font_size: 38.4, italic: true, bold: true, color: 'var(--bg-level-3)', wrap: true, align: 'center', v_align: 'middle' }}
 		zIndex={6}
 	>
 		"Jerusalem above is free"
@@ -246,7 +245,7 @@
 		step={24}
 		drillTo="promises/hebrews-12-22"
 		layout={{ x: 551, y: 383, width: 284.7, height: 49.4 }}
-		font={{ font_size: 33.6, bold: true, align: 'left' }}
+		font={{ font_size: 33.6, bold: true, align: 'center', v_align: 'middle' }}
 		zIndex={7}
 	>
 		Hebrews 12:22-24
@@ -268,7 +267,7 @@
 	<Fragment
 		step={26}
 		layout={{ x: 503.3, y: 446.3, width: 362.9, height: 64.8 }}
-		font={{ font_size: 24, bold: true, wrap: true, align: 'center' }}
+		font={{ font_size: 24, bold: true, wrap: true, align: 'center', v_align: 'middle' }}
 		fill="var(--bg-ghost)"
 		line={{ color: 'var(--stroke-level-0)', width: 1 }}
 		zIndex={25}

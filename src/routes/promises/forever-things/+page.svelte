@@ -14,7 +14,7 @@
 
 	<!-- Title: 1 Corinthians 15:40-45 (drillable) -->
 	<Fragment
-		drillTo="promises/1corinthians-15-40"
+		clickTo="promises/1corinthians-15-40"
 		returnHere
 		layout={{ x: 280, y: -25, width: 400, height: 50 }}
 		font={{ font_size: 28, bold: true }}
