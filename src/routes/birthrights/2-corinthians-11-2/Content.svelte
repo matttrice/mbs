@@ -1,37 +1,33 @@
 <script lang="ts">
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 	import { Arrow, Ellipse, Rect } from '$lib/components/svg';
 </script>
 
 <div class="slide-bg scripture"></div>
 
-<!-- Title -->
+<!-- Static: 2 Corinthians 11:2-4 -->
 <Fragment
-	layout={{ x: 160, y: 0, width: 100, height: 44 }}
-	font={{ font_size: 36, bold: true }}
-	zIndex={2}
->
-	2 Corinthians 11:2-4
-</Fragment>
-
-<!-- Static scripture text -->
-<Fragment
-	layout={{ x: 40, y: 35, width: 880, height: 200 }}
-	font={{ font_size: 22, wrap: true }}
+	layout={{ x: 95, y: 10, width: 786, height: 219 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
 	zIndex={0}
 >
-	I am jealous for you with a godly jealousy. I promised you to one husband, to Christ, so that I might present you as a pure virgin to him. <sup>3</sup> But I am afraid that just as Eve was deceived by the serpent's cunning, your minds may somehow be led astray from your sincere and pure devotion to Christ. <sup>4</sup> For if someone comes to you and preaches a Jesus other than the Jesus we preached, or if you receive a different spirit from the one you received, or a different gospel from the one you accepted, you put up with it easily enough.
+	<ScriptureBlock title="2 Corinthians 11:2-4">
+		I am jealous for you with a godly jealousy. I promised you to one husband, <br>to Christ, so that I might present you as a pure virgin to him. <sup>3</sup>But I am afraid <br>that just as Eve was deceived by the serpent's cunning, your minds may <br>somehow be led astray from your sincere and pure devotion to Christ. <sup>4</sup>For if <br>someone comes to you and preaches a Jesus other than the Jesus we <br>preached, or if you receive a different spirit from the one you received, or <br>a different gospel from the one you accepted, you put up with it easily enough.
+	</ScriptureBlock>
 </Fragment>
 
-<!-- Step 1: Highlight box -->
+<!-- Step 1: Highlight overlay -->
 <Fragment
 	step={1}
-	layout={{ x: 40, y: 35, width: 880, height: 200 }}
-	font={{ font_size: 22, wrap: true }}
-	fill="var(--bg-light)"
+	layout={{ x: 95, y: 50, width: 786, height: 179 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
+	fill="var(--bg-ghost)"
 	zIndex={1}
 >
-	I am jealous for you with a godly jealousy. I promised you to <strong><u>one husband, to Christ</u></strong>, so that I might present you as a pure virgin to him. <sup>3</sup> But I am afraid that just <strong><u>as Eve was deceived by the serpent's cunning, your minds may somehow be led astray</u></strong> from your sincere and pure devotion to Christ. <sup>4</sup> For if someone comes to you and preaches <strong><u>a Jesus other than the Jesus we preached</u></strong>, or if you receive a different spirit from the one you received, or <strong><u>a different gospel</u></strong> from the one you accepted, you put up with it easily enough.
+	<ScriptureBlock>
+		I am jealous for you with a godly jealousy. I promised you to <strong><em><u>one husband, </u></em></strong><br><strong><em><u>to Christ</u></em></strong>, so that I might present you as a pure virgin to him. <sup>3</sup>But I am afraid <br>that <strong><em>just as Eve was <u>deceived</u> by the serpent's cunning, your minds may </em></strong><br><strong><em>somehow be led astray</em> </strong>from your sincere and pure devotion to Christ. <sup>4</sup>For if <br>someone comes to you and preaches <strong><em><u>a Jesus other than the Jesus we </u></em></strong><br><strong><em><u>preached</u></em></strong>, or if you receive a different spirit from the one you received,or <br><strong><em><u>a different gospel</u> </em></strong>from the one you accepted, you put up with it easily enough.
+	</ScriptureBlock>
 </Fragment>
 
 <!-- Step 2: How can multiple Jesus' exist? -->

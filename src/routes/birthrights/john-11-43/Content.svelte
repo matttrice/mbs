@@ -1,24 +1,29 @@
 <script lang="ts">
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <div class="slide-bg scripture"></div>
 
-<!-- Title -->
+<!-- Static scripture -->
 <Fragment
-	layout={{ x: 91, y: 8, width: 756, height: 44 }}
-	font={{ font_size: 36, bold: true }}
+	layout={{ x: 97, y: 9, width: 779, height: 162 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
 >
-	John 11:43
+	<ScriptureBlock title="John 11:43-44" scale="lg">
+		When he had said this, Jesus called in a loud voice, "Lazarus, come out!"  <sup>44</sup> The dead man came out, his hands and feet wrapped with strips of linen, and a cloth around his face. Jesus said to them, "Take off the grave clothes and let him go."
+	</ScriptureBlock>
 </Fragment>
 
-<!-- Step 1: Scripture text -->
+<!-- Step 1: Colossians 1:18 -->
 <Fragment
 	step={1}
-	layout={{ x: 91, y: 56, width: 762, height: 406 }}
-	font={{ font_size: 26.7, wrap: true }}
+	layout={{ x: 97, y: 215, width: 757, height: 135 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
 >
-	When he had said this, Jesus called in a loud voice, "Lazarus, come out!" 44The dead man came out, his hands and feet wrapped with strips of linen, and a cloth around his face. Jesus said to them, "Take off the grave clothes and let him go."
+	<ScriptureBlock title="Colossians 1:18" scale="lg">
+		And he is the head of the body, the church; he is the beginning and the firstborn from among the dead, so that in everything he might have the supremacy.
+	</ScriptureBlock>
 </Fragment>
 
 <!-- Step 2: Commentary box -->

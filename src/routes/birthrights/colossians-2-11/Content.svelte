@@ -1,22 +1,15 @@
 <script lang="ts">
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <div class="slide-bg scripture"></div>
 
-<!-- Title -->
 <Fragment
-	layout={{ x: 91, y: 8, width: 756, height: 44 }}
-	font={{ font_size: 36, bold: true }}
+	layout={{ x: 95, y: 20, width: 775, height: 333 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
 >
-	Colossians 2:11
-</Fragment>
-
-<!-- Step 1: Scripture text -->
-<Fragment
-	step={1}
-	layout={{ x: 91, y: 48, width: 762, height: 454 }}
-	font={{ font_size: 26.7, wrap: true }}
->
-	In him you were also circumcised, in the putting off of the sinful nature, not with a circumcision done by the hands of men but with the circumcision done by Christ, 12having been buried with him in baptism and raised with him through your faith in the power of God, who raised him from the dead.
+	<ScriptureBlock title="Colossians 2:11-14" scale="lg">
+		In him you were also circumcised, in the putting off of the sinful nature, not with a circumcision done by the hands of men but with the circumcision done by Christ, <sup>12</sup>having been buried with him in baptism and raised with him through your faith in the power of God, who raised him from the dead. <br> <sup>13</sup>When you were dead in your sins and in the uncircumcision of your sinful nature, God made you<br>alive with Christ. He forgave us all our sins, <sup>14</sup>having canceled the written code, with its regulations, that was against us and that stood opposed to us; he took it away, nailing it to the cross.
+	</ScriptureBlock>
 </Fragment>

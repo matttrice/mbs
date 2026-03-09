@@ -1,22 +1,35 @@
 <script lang="ts">
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <div class="slide-bg scripture"></div>
 
-<!-- Title -->
+<!-- Static scripture -->
 <Fragment
-	layout={{ x: 91, y: 8, width: 756, height: 44 }}
-	font={{ font_size: 36, bold: true }}
+	layout={{ x: 103, y: 15, width: 756, height: 138 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
 >
-	Hebrews 11:1
+	<ScriptureBlock title="Hebrews 11:1-2" scale="lg">
+		Now faith is being sure of what we hope for and certain of what we do not see. <sup>2</sup> This is what the ancients were <br>commended for.
+	</ScriptureBlock>
 </Fragment>
 
-<!-- Step 1: Scripture text -->
+<!-- Step 1: Highlighted overlay -->
 <Fragment
 	step={1}
-	layout={{ x: 91, y: 48, width: 762, height: 454 }}
-	font={{ font_size: 26.7, wrap: true }}
+	layout={{ x: 103, y: 60, width: 702, height: 93 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
+	fill="var(--bg-ghost)"
 >
-	Now faith is being sure of what we hope for and certain of what we do not see. 2This is what the ancients were commended for. 3By faith we understand that the universe was formed at God's command, so that what is seen was not made out of what was visible.
+	Now faith is being sure of what we hope for and <u>certain of what we do not see</u>. <sup>2</sup> This is what the ancients were <br>commended for.
+</Fragment>
+
+<!-- Step 1: Commentary (with previous) -->
+<Fragment
+	step={1}
+	layout={{ x: 139, y: 260, width: 710, height: 115 }}
+	font={{ font_size: 23.3, italic: true, color: 'var(--text-level-3)', wrap: true }}
+>
+	<em>Being certain of what is not seen means you are spiritually minded; a Jacob type of individual</em><br><em>[Noah, Abraham, Isaac, Jacob, Moses, etc.]</em><br>
 </Fragment>

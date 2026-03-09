@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
     import ReferenceOverlay from '$lib/components/ReferenceOverlay.svelte';
 	import { Arrow } from '$lib/components/svg';
 </script>
@@ -8,46 +9,46 @@
 
 <ReferenceOverlay src="/export/11-Birthrights/Slide8.png" />	
 
-<!-- Title -->
-<Fragment
-	layout={{ x: 80, y: 5, width: 200, height: 49 }}
-	font={{ font_size: 36, bold: true }}
->
-	Genesis 3:13
-</Fragment>
-
-<!-- Step 1: Genesis 3:13 verse -->
+<!-- Step 1: Genesis 3:13 -->
 <Fragment
 	step={1}
-	layout={{ x: 72, y: 49, width: 800, height: 66 }}
-	font={{ font_size: 26.7, wrap: true }}
+	layout={{ x: 72, y: 5, width: 800, height: 110 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
+	zIndex={7}
 >
-	Then the LORD God said to the woman, "What is this you have done?" The woman said, "The serpent deceived me, and I ate."
+	<ScriptureBlock title="Genesis 3:13">
+		Then the LORD God said to the woman, "What is this you have<br>done?" The woman said, "The serpent deceived me, and I ate."
+	</ScriptureBlock>
 </Fragment>
 
 <!-- Step 2: Genesis 3:14 verse -->
 <Fragment
 	step={2}
-	layout={{ x: 76, y: 127, width: 400, height: 200 }}
-	font={{ font_size: 26.7, wrap: true }}
+	layout={{ x: 76, y: 113, width: 781, height: 210 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
 >
-	<sup>14</sup> So the LORD God said to the serpent, "Because you have done this, "Cursed are you above all the livestock and all the wild animals! You will crawl on your belly and you will eat dust all the days of your life.
+	<ScriptureBlock>
+		<sup>14</sup> So the LORD God said to the serpent, "Because you have done this,<br>      "Cursed are you above all the livestock<br>       and all the wild animals!<br>       You will crawl on your belly<br>       and you will eat dust<br>       all the days of your life.
+	</ScriptureBlock>
 </Fragment>
 
 <!-- Step 3: Genesis 3:15 first part -->
 <Fragment
 	step={3}
-	layout={{ x: 74, y: 309, width: 554, height: 90 }}
-	font={{ font_size: 26.7, wrap: true }}
-	fill="var(--bg-light)"
+	layout={{ x: 72, y: 309, width: 538, height: 95 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
+	fill="var(--bg-ghost)"
+	zIndex={2}
 >
-	<sup>15</sup> And I will put enmity between you and the woman, and between your offspring and hers;
+	<ScriptureBlock>
+		<sup>15</sup> And I will put enmity<br>       between you and the woman,<br>       and between your offspring and hers;
+	</ScriptureBlock>
 </Fragment>
 
 <!-- Step 4: Genesis 3:15 second part -->
 <Fragment
 	step={4}
-	layout={{ x: 129, y: 430, width: 400, height: 66 }}
+	layout={{ x: 129, y: 397, width: 420, height: 66 }}
 	font={{ font_size: 26.7, wrap: true }}
 >
 	he will crush your head, and<br>you will strike his heel."
@@ -58,29 +59,34 @@
 	step={5}
 	layout={{ x: 69, y: 50, width: 800, height: 66 }}
 	font={{ font_size: 26.7, wrap: true }}
-	fill="var(--bg-light)"
+	fill="var(--bg-ghost)"
+	zIndex={5}
 >
-	Then the LORD God said to the woman, "What is this you have done?" The woman said, "The serpent deceived me, and I ate."
+	Then the LORD God said to the <strong>woman</strong>, "What is this you have<br>done?" The woman said, "The <strong>serpent</strong> deceived me, and I ate."
 </Fragment>
 
 <!-- Step 6: Overlay Genesis 3:15 -->
 <Fragment
 	step={6}
-	layout={{ x: 74, y: 309, width: 554, height: 90 }}
-	font={{ font_size: 26.7, wrap: true }}
-	fill="var(--bg-light)"
+	layout={{ x: 74, y: 309, width: 554, height: 101 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
+	fill="var(--bg-ghost)"
+	zIndex={6}
 >
-	<sup>15</sup> And I will put enmity between you and the woman, and between your offspring and hers;
+	<ScriptureBlock>
+		<sup>15</sup> And I <strong>will put enmity</strong><br>       between <strong>you</strong> and the <strong>woman</strong>,<br>       and between <strong>your offspring</strong> and <strong>hers;</strong>
+	</ScriptureBlock>
 </Fragment>
 
 <!-- Step 7: Highlight "crush your head" -->
 <Fragment
 	step={7}
 	layout={{ x: 129, y: 402, width: 418, height: 67 }}
-	font={{ font_size: 30.8, bold: true, color: 'var(--text-level-3)', v_align: 'middle' }}
-	fill="var(--bg-light)"
+	font={{ font_size: 30.8, bold: true, color: 'var(--text-level-3)', v_align: 'middle', wrap: true }}
+	fill="var(--bg-ghost)"
+	zIndex={4}
 >
-	he will crush your head, and<br>you will strike his heel."
+	<strong>he</strong> will crush <strong>your</strong> head, and<br><strong>you</strong> will strike <strong>his</strong> heel."
 </Fragment>
 
 <!-- Step 8: Who is the Woman? -->
@@ -179,6 +185,7 @@
 <Fragment
 	layout={{ x: 519, y: 189, width: 341, height: 114 }}
 	font={{ font_size: 26.7, bold: true, wrap: true }}
+	zIndex={12}
 >
-	Consider when the battle between seeds (doctrine) began…
+	<strong>Consider when the battle between seeds </strong><em>(doctrine)</em><strong> began...</strong>
 </Fragment>

@@ -1,29 +1,22 @@
 <script lang="ts">
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <div class="slide-bg scripture"></div>
 
-<!-- Title -->
 <Fragment
-	layout={{ x: 91, y: 8, width: 756, height: 44 }}
-	font={{ font_size: 36, bold: true }}
+	layout={{ x: 99, y: 8, width: 778, height: 302 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
 >
-	Acts 19:1
+	<ScriptureBlock title="Acts 19:1-5" scale="lg">
+		While Apollos was at Corinth, Paul took the road through the interior and arrived at Ephesus. There he found some disciples <sup>2</sup>and asked them, <strong>"Did you receive the Holy Spirit when you believed?" </strong><br>      They answered, "No, we have not even heard that there is a Holy Spirit."  <sup>3</sup>So Paul asked, "Then what baptism did you receive?" <br>      "John's baptism," they replied. <br> <sup>4</sup>Paul said, "John's baptism was a baptism of repentance. He told the people to believe in the one coming after him, that is, in Jesus." <sup>5</sup>On hearing this, they were<strong> baptized into the name</strong> of the Lord Jesus.
+	</ScriptureBlock>
 </Fragment>
 
-<!-- Step 1: Scripture text -->
+<!-- Commentary box -->
 <Fragment
 	step={1}
-	layout={{ x: 91, y: 48, width: 762, height: 454 }}
-	font={{ font_size: 21.3, wrap: true }}
->
-	While Apollos was at Corinth, Paul took the road through the interior and arrived at Ephesus. There he found some disciples 2and asked them, "Did you receive the Holy Spirit when you believed?" They answered, "No, we have not even heard that there is a Holy Spirit." 3So Paul asked, "Then what baptism did you receive?" "John's baptism," they replied. 4Paul said, "John's baptism was a baptism of repentance. He told the people to believe in the one coming after him, that is, in Jesus." 5On hearing this, they were baptized into the name of the Lord Jesus. 6When Paul placed his hands on them, the Holy Spirit came on them, and they spoke in tongues and prophesied. 7There were about twelve men in all.
-</Fragment>
-
-<!-- Step 2: Commentary box -->
-<Fragment
-	step={2}
 	layout={{ x: 91, y: 369, width: 469, height: 143 }}
 	font={{ font_size: 18.7, bold: true, align: 'center', wrap: true }}
 	line={{ color: 'var(--stroke-level-3)' }}

@@ -1,22 +1,43 @@
 <script lang="ts">
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <div class="slide-bg scripture"></div>
 
-<!-- Title -->
+<!-- Static scripture -->
 <Fragment
-	layout={{ x: 91, y: 8, width: 756, height: 44 }}
-	font={{ font_size: 36, bold: true }}
+	layout={{ x: 79, y: 10, width: 803, height: 252 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
 >
-	Acts 10:24
+	<ScriptureBlock title="Acts 10: 24-48">
+		Then Peter began to speak: "I now realize how true it is that God does not show favoritism <sup>35</sup>but accepts men from every nation who fear him and do what is right. <sup>36</sup>..........<br> <sup>44</sup>While Peter was still speaking these words, <strong>the Holy Spirit came on all who heard the message.</strong> <sup>45</sup><strong>The circumcised believers who had come with Peter were astonished that the gift of the Holy Spirit had been poured out even on the Gentiles.</strong> <sup>46</sup>For they heard them speaking in tongues and praising God.<br> Then Peter said, <sup>47</sup>"Can anyone keep these people from being baptized with water? <strong>They have received the Holy Spirit just as we have</strong>." <sup>48</sup>So he ordered that they be baptized in the name of Jesus Christ. Then they asked Peter to stay with them for a few days.<br>
+	</ScriptureBlock>
 </Fragment>
 
-<!-- Step 1: Scripture text -->
+<!-- Step 1: Acts 11:1-18 title -->
 <Fragment
 	step={1}
-	layout={{ x: 91, y: 48, width: 762, height: 454 }}
-	font={{ font_size: 23.3, wrap: true }}
+	layout={{ x: 84, y: 279, width: 173, height: 40 }}
+	font={{ bold: true, wrap: true }}
 >
-	The following day he arrived in Caesarea. Cornelius was expecting them and had called together his relatives and close friends. 25As Peter entered the house, Cornelius met him and fell at his feet in reverence. 26But Peter made him get up. "Stand up," he said, "I am only a man myself." 27Talking with him, Peter went inside and found a large gathering of people. 28He said to them: "You are well aware that it is against our law for a Jew to associate with a Gentile or visit him. But God has shown me that I should not call any man impure or unclean. 29So when I was sent for, I came without raising any objection. May I ask why you sent for me?" 30Cornelius answered: "Four days ago I was in my house praying at this hour, at three in the afternoon. Suddenly a man in shining clothes stood before me 31and said, 'Cornelius, God has heard your prayer and remembered your gifts to the poor. 32Send to Joppa for Simon who is called Peter. He is a guest in the home of Simon the tanner, who lives by the sea.'
+	<strong>Acts 11:1-18</strong>
+</Fragment>
+
+<!-- Step 1: Acts 11:2-4 -->
+<Fragment
+	step={1}
+	layout={{ x: 85, y: 314, width: 802, height: 93 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
+>
+	The apostles and the brothers throughout Judea heard that the Gentiles also had received the word of God. <sup>2</sup>So when Peter went up to Jerusalem, <strong>the circumcised believers criticized him</strong> <sup>3</sup>and said, "You went into the house of uncircumcised men and ate with them." <sup>4</sup>Peter began and explained everything to them precisely as it had happened.....
+</Fragment>
+
+<!-- Step 1: Acts 11:15-18 -->
+<Fragment
+	step={1}
+	layout={{ x: 82, y: 407, width: 818, height: 114 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
+>
+	<sup>15</sup>"As I began to speak, the Holy Spirit came on them as he had come on us at the beginning. <sup>16</sup>Then I remembered what the Lord had said: 'John baptized with water, but you will be baptized with the Holy Spirit.' <sup>17</sup>So if God gave them the same gift as he gave us, who believed in the Lord Jesus Christ, who was I to think that I could oppose God?" <sup>18</sup>When they heard this, they had no further objections and praised God, saying, "So then, <strong>God has granted even the Gentiles repentance unto life.</strong>"
 </Fragment>

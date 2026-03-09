@@ -1,22 +1,26 @@
 <script lang="ts">
 	import Fragment from '$lib/components/Fragment.svelte';
+	import ScriptureBlock from '$lib/components/ScriptureBlock.svelte';
 </script>
 
 <div class="slide-bg scripture"></div>
 
-<!-- Title -->
+<!-- Static scripture -->
 <Fragment
-	layout={{ x: 91, y: 8, width: 756, height: 44 }}
-	font={{ font_size: 36, bold: true }}
+	layout={{ x: 103, y: 42, width: 756, height: 462 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
 >
-	1 Corinthians 15:49
+	<ScriptureBlock title="1 Corinthians 15:45-49">
+		So it is written: <br>"The first man Adam became a living being"<br>the last Adam, a life-giving spirit. <br><sup>46</sup>The spiritual did not come first, but the <br>natural, and after that the spiritual. <br><sup>47</sup>The first man was of the dust of the earth,<br> the second man from heaven. <br><sup>48</sup>As was the earthly man, so are those who <br>are of the earth; and as is the man from heaven,<br>so also are those who are of heaven. <sup>49</sup>And <br>just as we have borne the likeness of the <br>earthly man, so shall we bear the likeness <br>of the man from heaven.
+	</ScriptureBlock>
 </Fragment>
 
-<!-- Step 1: Scripture text -->
+<!-- Step 1: Highlighted overlay -->
 <Fragment
 	step={1}
-	layout={{ x: 91, y: 48, width: 762, height: 454 }}
-	font={{ font_size: 23.3, wrap: true }}
+	layout={{ x: 120, y: 91, width: 529, height: 413 }}
+	font={{ align: 'left', v_align: 'middle', wrap: true }}
+	fill="var(--bg-ghost)"
 >
-	And just as we have borne the likeness of the earthly man, so shall we bear the likeness of the man from heaven. 50I declare to you, brothers, that flesh and blood cannot inherit the kingdom of God, nor does the perishable inherit the imperishable. 51Listen, I tell you a mystery: We will not all sleep, but we will all be changed— 52in a flash, in the twinkling of an eye, at the last trumpet. For the trumpet will sound, the dead will be raised imperishable, and we will be changed. 53For the perishable must clothe itself with the imperishable, and the mortal with immortality. 54When the perishable has been clothed with the imperishable, and the mortal with immortality, then the saying that is written will come true: "Death has been swallowed up in victory."
+	So it is written: <br>"<strong>The first man Adam became a living being"</strong><br><strong>the last Adam, a life-giving spirit.</strong> <br><sup>46</sup>The spiritual did not come first, but the <br>natural, and after that the spiritual. <br><sup>47</sup><strong>The first man was of the dust of the earth,</strong><br><strong> the second man from heaven.</strong> <br><sup>48</sup>As was the earthly man, so are those who <br>are of the earth; and as is the man from heaven,<br>so also are those who are of heaven. <sup>49</sup>And <br>just as we have borne the likeness of the <br>earthly man, so shall we bear the likeness <br>of the man from heaven.
 </Fragment>
