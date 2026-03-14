@@ -306,7 +306,7 @@
 		pointer-events: {dev ? 'auto' : 'none'};
 	"
 	data-shape-type={dev ? 'arc' : undefined}
-	data-coords={dev ? JSON.stringify({ from, to, curve, shift, ...(largeArc ? { largeArc, rx: effectiveRx, ry: effectiveRy } : {}) }) : undefined}
+	data-coords={dev ? JSON.stringify({ from, to, curve, shift, ...(largeArc ? { largeArc, rx: effectiveRx, ry: effectiveRy } : {}), ...(arrow ? { arrow, ...(headSize !== 3 ? { headSize } : {}) } : {}) }) : undefined}
 >
 	<svg
 		bind:this={svgEl}

@@ -27,7 +27,7 @@
 	type RectShape = { type: 'rect'; x: number; y: number; width: number; height: number; rotation: number };
 	type ArrowShape = { type: 'arrow'; from?: Point; to?: Point; fromBox?: Box; toBox?: Box; bow: number; flip: boolean };
 	type LineShape = { type: 'line'; from: Point; to: Point };
-	type ArcShape = { type: 'arc'; from: Point; to: Point; curve: number; shift: number; largeArc: boolean; rx: number; ry: number };
+	type ArcShape = { type: 'arc'; from: Point; to: Point; curve: number; shift: number; largeArc: boolean; rx: number; ry: number; arrow: boolean; headSize: number };
 	type EllipseShape = { type: 'ellipse'; cx: number; cy: number; rx: number; ry: number; rotation: number };
 	type CircleShape = { type: 'circle'; cx: number; cy: number; r: number };
 	type PathShape = { type: 'path'; d: string; x: number; y: number; width: number; height: number };
@@ -172,10 +172,11 @@
 			case 'line':
 				return `from={{ x: ${fmt(s.from.x)}, y: ${fmt(s.from.y)} }} to={{ x: ${fmt(s.to.x)}, y: ${fmt(s.to.y)} }}`;
 			case 'arc': {
+				const arrowPart = s.arrow ? (s.headSize !== 3 ? ` arrow headSize={${fmt(s.headSize)}}` : ' arrow') : '';
 				if (s.largeArc) {
-					return `from={{ x: ${fmt(s.from.x)}, y: ${fmt(s.from.y)} }} to={{ x: ${fmt(s.to.x)}, y: ${fmt(s.to.y)} }} curve={${fmt(s.curve)}} rx={${fmt(s.rx)}} ry={${fmt(s.ry)}} largeArc`;
+					return `from={{ x: ${fmt(s.from.x)}, y: ${fmt(s.from.y)} }} to={{ x: ${fmt(s.to.x)}, y: ${fmt(s.to.y)} }} curve={${fmt(s.curve)}} rx={${fmt(s.rx)}} ry={${fmt(s.ry)}} largeArc${arrowPart}`;
 				}
-				return `from={{ x: ${fmt(s.from.x)}, y: ${fmt(s.from.y)} }} to={{ x: ${fmt(s.to.x)}, y: ${fmt(s.to.y)} }} curve={${fmt(s.curve)}}${s.shift !== 0 ? ` shift={${fmt(s.shift)}}` : ''}`;
+				return `from={{ x: ${fmt(s.from.x)}, y: ${fmt(s.from.y)} }} to={{ x: ${fmt(s.to.x)}, y: ${fmt(s.to.y)} }} curve={${fmt(s.curve)}}${s.shift !== 0 ? ` shift={${fmt(s.shift)}}` : ''}${arrowPart}`;
 			}
 			case 'ellipse': {
 				const rot = s.rotation !== 0 ? ` rotation={${fmt(s.rotation)}}` : '';
@@ -339,7 +340,7 @@
 		} else if (type === 'line') {
 			return { type: 'line', from: coords.from as Point, to: coords.to as Point };
 		} else if (type === 'arc') {
-			return { type: 'arc', from: coords.from as Point, to: coords.to as Point, curve: coords.curve as number, shift: (coords.shift as number) ?? 0, largeArc: (coords.largeArc as boolean) ?? false, rx: (coords.rx as number) ?? 0, ry: (coords.ry as number) ?? 0 };
+			return { type: 'arc', from: coords.from as Point, to: coords.to as Point, curve: coords.curve as number, shift: (coords.shift as number) ?? 0, largeArc: (coords.largeArc as boolean) ?? false, rx: (coords.rx as number) ?? 0, ry: (coords.ry as number) ?? 0, arrow: (coords.arrow as boolean) ?? false, headSize: (coords.headSize as number) ?? 3 };
 		} else if (type === 'ellipse') {
 			return { type: 'ellipse', cx: coords.cx as number, cy: coords.cy as number, rx: coords.rx as number, ry: coords.ry as number, rotation: (coords.rotation as number) ?? 0 };
 		} else if (type === 'circle') {
@@ -386,7 +387,7 @@
 			case 'line':
 				return { type: 'line', from: { ...start }, to: { ...end } };
 			case 'arc':
-				return { type: 'arc', from: { ...start }, to: { ...end }, curve: 0, shift: 0, largeArc: false, rx: 0, ry: 0 };
+				return { type: 'arc', from: { ...start }, to: { ...end }, curve: 0, shift: 0, largeArc: false, rx: 0, ry: 0, arrow: true, headSize: 3 };
 			case 'ellipse':
 				return { type: 'ellipse', cx: x + width / 2, cy: y + height / 2, rx: width / 2, ry: height / 2, rotation: 0 };
 			case 'circle': {
@@ -476,7 +477,7 @@
 			if (newType === 'line') {
 				shape = { type: 'line', from: { ...from }, to: { ...to } };
 			} else if (newType === 'arc') {
-				shape = { type: 'arc', from: { ...from }, to: { ...to }, curve: 0, shift: 0, largeArc: false, rx: 0, ry: 0 };
+				shape = { type: 'arc', from: { ...from }, to: { ...to }, curve: 0, shift: 0, largeArc: false, rx: 0, ry: 0, arrow: true, headSize: 3 };
 			} else {
 				shape = { type: 'arrow', from: { ...from }, to: { ...to }, bow: 0, flip: false };
 			}
@@ -1421,12 +1422,21 @@
 				</div>
 			</div>
 			<div class="controls-row">
-				<div class="curve-controls">
+				<div class="curve-controls compact">
 					<span class="curve-label">hit</span>
 					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustHandleHitRadius(-1)} aria-label="Decrease handle hit radius">−</button>
 					<span class="curve-value">{handleHitRadius}</span>
 					<button class="nudge-btn nudge-btn-fine" onclick={() => adjustHandleHitRadius(1)} aria-label="Increase handle hit radius">+</button>
 				</div>
+				{#if shape.type === 'arc'}
+				<div class="curve-controls compact">
+					<button class="flip-btn" class:active={shape.arrow} onclick={() => { if (shape?.type === 'arc') shape = { ...shape, arrow: !shape.arrow }; }}>➤ arrow</button>
+					<span class="curve-label">head</span>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => { if (shape?.type === 'arc') shape = { ...shape, headSize: Math.max(1, shape.headSize - 1) }; }}>−</button>
+					<span class="curve-value">{shape.headSize}</span>
+					<button class="nudge-btn nudge-btn-fine" onclick={() => { if (shape?.type === 'arc') shape = { ...shape, headSize: shape.headSize + 1 }; }}>+</button>
+				</div>
+				{/if}
 			</div>
 			{/if}
 
@@ -1963,6 +1973,14 @@
 		display: flex;
 		align-items: center;
 		gap: 6px;
+	}
+
+	.curve-controls.compact {
+		gap: 2px;
+	}
+
+	.curve-controls.compact .curve-value {
+		min-width: 20px;
 	}
 
 	.curve-label {
