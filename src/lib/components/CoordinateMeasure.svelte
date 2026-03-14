@@ -252,19 +252,31 @@
 	onMount(() => {
 		if (!browser) return;
 
+		function exitMode() {
+			enabled = false;
+			measuring = false;
+			showPanel = false;
+			shape = null;
+			dragStart = null;
+			dragCurrent = null;
+			hoverTarget = null;
+			detectedShapes = [];
+			shapeIndex = 0;
+			activeEndpoint = 'both';
+			draggingSelectedShape = false;
+			dragTarget = null;
+			lastDragPos = null;
+			mouseDownPos = null;
+			applyStatus = null;
+		}
+
 		function handleKeydown(e: KeyboardEvent) {
 			const key = e.key.toLowerCase();
 			if (key === 'e' || key === 'd') {
 				const newMode = key === 'd' ? 'draw' : 'edit';
 				if (enabled && drawMode === newMode) {
 					// Same key again — toggle off
-					enabled = false;
-					measuring = false;
-					showPanel = false;
-					shape = null;
-					dragStart = null;
-					dragCurrent = null;
-					hoverTarget = null;
+					exitMode();
 				} else {
 					// Enable or switch mode
 					enabled = true;
@@ -725,6 +737,17 @@
 		}
 	}
 
+	function withRouteBase(routePath: string, filePath: string): string {
+		if (!filePath) return filePath;
+		if (!routePath) return filePath;
+
+		const base = routePath.split('/')[0] ?? '';
+		if (!base) return filePath;
+		if (filePath.startsWith(`${base}/`) || filePath === base) return filePath;
+
+		return `${base}/${filePath}`;
+	}
+
 	async function applyReplace(targetFile?: string) {
 		const find = originalCode;
 		const replace = outputCode;
@@ -744,7 +767,7 @@
 
 			if (data.ok) {
 				originalCode = outputCode;
-				applyStatus = { type: 'ok', message: `Applied to ${data.file}` };
+				applyStatus = { type: 'ok', message: `Applied to ${withRouteBase(routePath, data.file)}` };
 			} else if (data.ambiguous) {
 				applyStatus = { type: 'pick', message: 'Multiple matches', route: routePath, files: data.files };
 			} else if (data.notFound) {
@@ -774,7 +797,7 @@
 			const data = await res.json();
 
 			if (data.ok) {
-				applyStatus = { type: 'ok', message: `Inserted in ${data.file}` };
+				applyStatus = { type: 'ok', message: `Inserted in ${withRouteBase(routePath, data.file)}` };
 			} else if (data.ambiguous) {
 				applyStatus = { type: 'pick', message: 'Multiple files', route: routePath, files: data.files };
 			} else {
@@ -1021,8 +1044,12 @@
 	}
 
 	function closePanel() {
+		enabled = false;
+		measuring = false;
 		showPanel = false;
 		shape = null;
+		dragStart = null;
+		dragCurrent = null;
 		detectedShapes = [];
 		shapeIndex = 0;
 		activeEndpoint = 'both';
@@ -1030,6 +1057,8 @@
 		dragTarget = null;
 		hoverTarget = null;
 		lastDragPos = null;
+		mouseDownPos = null;
+		applyStatus = null;
 	}
 
 	// --- Canvas overlay helpers ---
@@ -1607,9 +1636,9 @@
 					<code class="output-code" onclick={(e) => { const text = e.currentTarget.textContent || ''; if (text !== '—') navigator.clipboard.writeText(text); }}>{originalCode !== outputCode ? outputCode : '—'}</code>
 				</div>
 
-				{#if dev && originalCode && originalCode !== outputCode}
+				{#if dev && originalCode}
 					<div class="apply-section">
-						<button class="apply-btn" onclick={() => applyReplace()}>Apply</button>
+						<button class="apply-btn" onclick={() => applyReplace()} disabled={originalCode === outputCode}>Apply</button>
 					</div>
 				{/if}
 			{:else}
@@ -2107,6 +2136,17 @@
 
 	.apply-btn:hover {
 		background: rgba(0, 200, 0, 0.4);
+	}
+
+	.apply-btn:disabled {
+		background: rgba(0, 120, 0, 0.12);
+		border-color: rgba(0, 204, 0, 0.45);
+		color: rgba(0, 255, 0, 0.45);
+		cursor: not-allowed;
+	}
+
+	.apply-btn:disabled:hover {
+		background: rgba(0, 120, 0, 0.12);
 	}
 
 	.insert-row {
