@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { browser } from '$app/environment';
+	import { browser, dev } from '$app/environment';
 	import { getArrow, getBoxToBoxArrow } from 'perfect-arrows';
 	import { CANVAS_WIDTH, CANVAS_HEIGHT } from '$lib/constants';
 
@@ -42,6 +42,7 @@
 	let originalCode = $state<string>(''); // snapshot of outputCode at initial detection (before nudging)
 	let activeEndpoint = $state<'from' | 'to' | 'both'>('both'); // for line/arrow/arc endpoint toggle
 	let panelCorner = $state<'br' | 'bl' | 'tl' | 'tr'>('br');
+	let applyStatus = $state<{ type: 'ok' | 'error' | 'pick'; message: string; files?: { file: string; count: number }[] } | null>(null);
 	let draggingSelectedShape = $state(false);
 	let dragTarget = $state<'shape' | 'from' | 'to' | null>(null);
 	let hoverTarget = $state<'shape' | 'from' | 'to' | null>(null);
@@ -638,6 +639,38 @@
 		}
 	}
 
+	async function applyReplace(targetFile?: string) {
+		const find = originalCode;
+		const replace = outputCode;
+		if (!find || !replace || find === replace) return;
+
+		const routePath = window.location.pathname.replace(/^\//, '');
+		const body: Record<string, string> = { routePath, find, replace };
+		if (targetFile) body.file = targetFile;
+
+		try {
+			const res = await fetch('/api/dev/replace', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(body)
+			});
+			const data = await res.json();
+
+			if (data.ok) {
+				originalCode = outputCode;
+				applyStatus = { type: 'ok', message: `Applied to ${data.file}` };
+			} else if (data.ambiguous) {
+				applyStatus = { type: 'pick', message: 'Multiple matches', files: data.files };
+			} else if (data.notFound) {
+				applyStatus = { type: 'error', message: data.error || 'No match found' };
+			} else {
+				applyStatus = { type: 'error', message: data.error || 'Unknown error' };
+			}
+		} catch (e) {
+			applyStatus = { type: 'error', message: 'Request failed' };
+		}
+	}
+
 	function alignCanvas(axis: 'h' | 'v', position: 'start' | 'center' | 'end') {
 		if (!shape) return;
 		const bb = shapeBoundingBox(shape);
@@ -818,6 +851,7 @@
 				shape = buildShape(detected.type, detected.coords);
 				originalCode = generateOutputCode(shape);
 				activeEndpoint = 'both';
+				applyStatus = null;
 				showPanel = true;
 			} else {
 				showPanel = false;
@@ -830,6 +864,7 @@
 			shapeIndex = 0;
 			activeEndpoint = 'both';
 			originalCode = generateOutputCode(shape);
+			applyStatus = null;
 			showPanel = true;
 		}
 
@@ -1165,7 +1200,7 @@
 				</span>
 				<div class="header-buttons">
 					{#if detectedShapes.length > 1}
-						<button class="cycle-btn" onclick={() => { shapeIndex = (shapeIndex + 1) % detectedShapes.length; const s = detectedShapes[shapeIndex]; shape = buildShape(s.type, s.coords); activeEndpoint = 'both'; originalCode = generateOutputCode(shape); }} aria-label="Cycle to next shape" title="Next shape (or Shift+click)">⇄</button>
+						<button class="cycle-btn" onclick={() => { shapeIndex = (shapeIndex + 1) % detectedShapes.length; const s = detectedShapes[shapeIndex]; shape = buildShape(s.type, s.coords); activeEndpoint = 'both'; originalCode = generateOutputCode(shape); applyStatus = null; }} aria-label="Cycle to next shape" title="Next shape (or Shift+click)">⇄</button>
 					{/if}
 					{#if !isDetected}
 						<!-- Type switcher for drag-to-measure -->
@@ -1399,6 +1434,27 @@
 				<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
 				<code class="output-code" onclick={(e) => { const text = e.currentTarget.textContent || ''; if (text !== '—') navigator.clipboard.writeText(text); }}>{originalCode !== outputCode ? outputCode : '—'}</code>
 			</div>
+
+			{#if dev && originalCode && originalCode !== outputCode}
+				<div class="apply-section">
+					<button class="apply-btn" onclick={() => applyReplace()}>Apply</button>
+				</div>
+			{/if}
+
+			{#if applyStatus}
+				<div class="apply-status apply-status-{applyStatus.type}">
+					{#if applyStatus.type === 'pick' && applyStatus.files}
+						<div>{applyStatus.message}:</div>
+						{#each applyStatus.files as f}
+							<button class="file-pick-btn" onclick={() => applyReplace(f.file)}>
+								{f.file} ({f.count} match{f.count > 1 ? 'es' : ''})
+							</button>
+						{/each}
+					{:else}
+						{applyStatus.message}
+					{/if}
+				</div>
+			{/if}
 
 			<div class="panel-footer">
 				{#if draggingSelectedShape && dragTarget}
@@ -1827,6 +1883,65 @@
 	.output-code:hover {
 		background: rgba(0, 255, 0, 0.1);
 		border-color: rgba(0, 255, 0, 0.5);
+	}
+
+	.apply-section {
+		padding: 4px 12px;
+	}
+
+	.apply-btn {
+		background: rgba(0, 200, 0, 0.2);
+		border: 1px solid #00cc00;
+		color: #00ff00;
+		font-family: monospace;
+		font-size: 11px;
+		padding: 4px 16px;
+		border-radius: 3px;
+		cursor: pointer;
+		width: 100%;
+		transition: background 0.2s;
+	}
+
+	.apply-btn:hover {
+		background: rgba(0, 200, 0, 0.4);
+	}
+
+	.apply-status {
+		padding: 4px 12px;
+		font-size: 10px;
+		font-family: monospace;
+	}
+
+	.apply-status-ok {
+		color: #00ff88;
+	}
+
+	.apply-status-error {
+		color: #ff4444;
+	}
+
+	.apply-status-pick {
+		color: #ffcc00;
+	}
+
+	.file-pick-btn {
+		display: block;
+		background: rgba(255, 204, 0, 0.1);
+		border: 1px solid #ffcc00;
+		color: #ffcc00;
+		font-family: monospace;
+		font-size: 10px;
+		padding: 3px 8px;
+		border-radius: 3px;
+		cursor: pointer;
+		margin: 3px 0;
+		width: 100%;
+		text-align: left;
+		transition: background 0.2s;
+	}
+
+	.file-pick-btn:hover {
+		background: rgba(255, 204, 0, 0.25);
 	}
 
 	.panel-footer {

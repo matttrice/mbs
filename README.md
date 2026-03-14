@@ -293,27 +293,20 @@ Navigation state is saved to `localStorage` under key `mbs-nav-state`. This pres
 
 The menu's Reset button clears this state.
 
-## Common Gotchas
+## CoordinateMeasure (Dev Tool)
 
-1. **Wrap slides in `<Slide>`** - Without the Slide wrapper, Fragments won't register their steps and maxStep won't be reported.
+A visual overlay for measuring and adjusting Fragment/SVG coordinates on the 960×540 canvas. Activated by pressing `m` during development.
 
-2. **Render all slides** - Use `visibility: hidden` not `display: none` for inactive slides. They need to mount to register their steps.
+**Features:**
+- **Shape detection**: Click any Fragment, Rect, Arrow, Line, Arc, Ellipse, Circle, Path, or Polygon to select it and see its current layout code
+- **Nudge controls**: Move shapes by ±1 or ±10 pixels, resize, rotate
+- **Canvas alignment**: Snap shapes to left/center/right or top/middle/bottom of the canvas
+- **Live output**: Shows ORIGINAL and ADJUSTED code — click either to copy
+- **Apply button** (dev only): Writes the adjusted code directly to the source `.svelte` file on disk. Automatically finds the correct file in the route directory. If multiple files match, shows a picker.
 
-3. **Drills use `<Slide>` too** - Wrap drill content in `<Slide>` without an `onMaxStep` callback. The Slide will auto-call `setMaxFragment()`.
+**Workflow:** Select shape → nudge/align to desired position → click **Apply** → file is updated, VS Code refreshes.
 
-4. **Fragment steps are 1-indexed** - Start with `step={1}`, not `step={0}`.
-
-5. **`drillTo` routes are relative** - Use `"life/ecclesiastes.3.19"` not `"/life/ecclesiastes.3.19"`.
-
-6. **Auto-return at end of drill** - When `next()` is called on the last fragment and there's a stack, it auto-returns to origin (not the immediate parent).
-
-7. **autoDrillAll affects ALL drills** - When disabled, arrow keys skip drills even at the last fragment. Users must click to drill.
-
-8. **Multi-level drills return to origin** - A 3-level drill chain (A → B → C) returns directly to A when C completes, not back through B.
-
-6. **Auto-return at end of drill** - When `next()` is called on the last step and there's a stack, it auto-returns to origin.
-
-## Theological Framework
+# Theological Framework
 
 Master Bible Study is built on foundational theological truths that shape all its conclusions. Understanding these foundations is essential for accurately using or adapting MBS content.
 
