@@ -45,6 +45,7 @@
 
 	let shape = $state<ShapeState | null>(null); // single source of truth
 	let originalCode = $state<string>(''); // snapshot of outputCode at initial detection (before nudging)
+	let editableAdjustedCode = $state(''); // editable mirror of outputCode — synced by $effect, manually overridable
 	let activeEndpoint = $state<'from' | 'to' | 'both'>('both'); // for line/arrow/arc endpoint toggle
 	let panelCorner = $state<'br' | 'bl' | 'tl' | 'tr'>('br');
 	let applyStatus = $state<{ type: 'ok' | 'error' | 'pick'; message: string; route?: string; files?: { file: string; count: number }[] } | null>(null);
@@ -192,6 +193,9 @@
 	}
 
 	let outputCode = $derived(generateOutputCode(shape));
+
+	// Sync editable textarea with button-driven shape changes; manual edits persist until next button click
+	$effect(() => { editableAdjustedCode = outputCode; });
 
 	// Derive current author step from navigation state (same logic as DebugOverlay)
 	let currentAuthorStep = $derived(
@@ -757,7 +761,7 @@
 
 	async function applyReplace(targetFile?: string) {
 		const find = originalCode;
-		const replace = outputCode;
+		const replace = editableAdjustedCode;
 		if (!find || !replace || find === replace) return;
 
 		const routePath = window.location.pathname.replace(/^\//, '');
@@ -773,7 +777,7 @@
 			const data = await res.json();
 
 			if (data.ok) {
-				originalCode = outputCode;
+				originalCode = editableAdjustedCode;
 				applyStatus = { type: 'ok', message: `Applied to ${withRouteBase(routePath, data.file)}` };
 			} else if (data.ambiguous) {
 				applyStatus = { type: 'pick', message: 'Multiple matches', route: routePath, files: data.files };
@@ -1639,13 +1643,12 @@
 				</div>
 				<div class="output-section">
 					<div class="output-label">ADJUSTED</div>
-					<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
-					<code class="output-code" onclick={(e) => { const text = e.currentTarget.textContent || ''; if (text !== '—') navigator.clipboard.writeText(text); }}>{originalCode !== outputCode ? outputCode : '—'}</code>
+					<textarea class="output-textarea" bind:value={editableAdjustedCode} spellcheck="false" rows="2"></textarea>
 				</div>
 
 				{#if dev && originalCode}
 					<div class="apply-section">
-						<button class="apply-btn" onclick={() => applyReplace()} disabled={originalCode === outputCode}>Apply</button>
+						<button class="apply-btn" onclick={() => applyReplace()} disabled={originalCode === editableAdjustedCode}>Apply</button>
 					</div>
 				{/if}
 			{:else}
@@ -2122,6 +2125,35 @@
 	.output-code:hover {
 		background: rgba(0, 255, 0, 0.1);
 		border-color: rgba(0, 255, 0, 0.5);
+	}
+
+	.output-textarea {
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+		background: rgba(0, 255, 0, 0.05);
+		color: #00ff00;
+		padding: 8px;
+		border-radius: 3px;
+		border: 1px solid rgba(0, 255, 0, 0.3);
+		font-family: monospace;
+		font-size: 11px;
+		line-height: 1.4;
+		resize: vertical;
+		min-height: 2.5em;
+		white-space: pre;
+		overflow-x: auto;
+	}
+
+	.output-textarea:hover {
+		background: rgba(0, 255, 0, 0.1);
+		border-color: rgba(0, 255, 0, 0.5);
+	}
+
+	.output-textarea:focus {
+		outline: none;
+		border-color: #80ff80;
+		background: rgba(0, 255, 0, 0.08);
 	}
 
 	.apply-section {
