@@ -272,6 +272,13 @@
 
 		function handleKeydown(e: KeyboardEvent) {
 			const key = e.key.toLowerCase();
+			if (key === 'escape' || key === 'q') {
+				if (enabled) {
+					e.stopPropagation();
+					exitMode();
+				}
+				return;
+			}
 			if (key === 'e' || key === 'd') {
 				const newMode = key === 'd' ? 'draw' : 'edit';
 				if (enabled && drawMode === newMode) {
@@ -286,8 +293,8 @@
 			}
 		}
 
-		window.addEventListener('keydown', handleKeydown);
-		return () => window.removeEventListener('keydown', handleKeydown);
+		window.addEventListener('keydown', handleKeydown, { capture: true });
+		return () => window.removeEventListener('keydown', handleKeydown, { capture: true });
 	});
 
 	function getCanvasElement(): HTMLElement | null {
