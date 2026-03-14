@@ -52,6 +52,7 @@
 	import { getCustomShowContext } from './CustomShowProvider.svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import { get } from 'svelte/store';
+	import { CANVAS_WIDTH, CANVAS_HEIGHT } from '$lib/constants';
 
 	/**
 	 * Wrapper component for slide content that auto-registers Fragment steps.
@@ -87,7 +88,7 @@
 		children: import('svelte').Snippet;
 	}
 
-	let { slideIndex, width = 960, height = 540, children }: Props = $props();
+	let { slideIndex, width = CANVAS_WIDTH, height = CANVAS_HEIGHT, children }: Props = $props();
 
 	// Check if we're inside a PresentationProvider or CustomShowProvider
 	const presentationContext = getPresentationContext();

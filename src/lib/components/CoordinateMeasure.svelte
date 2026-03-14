@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { getArrow, getBoxToBoxArrow } from 'perfect-arrows';
+	import { CANVAS_WIDTH, CANVAS_HEIGHT } from '$lib/constants';
 
 	/**
 	 * Dev tool for measuring coordinates on the 960×540 canvas.
@@ -240,8 +241,8 @@
 
 		const rect = canvas.getBoundingClientRect();
 		const scale = getScale(canvas);
-		const canvasWidth = 960;
-		const canvasHeight = 540;
+		const canvasWidth = CANVAS_WIDTH;
+		const canvasHeight = CANVAS_HEIGHT;
 		const scaledWidth = canvasWidth * scale;
 		const scaledHeight = canvasHeight * scale;
 		const canvasLeft = rect.left + (rect.width - scaledWidth) / 2;
@@ -637,6 +638,24 @@
 		}
 	}
 
+	function alignCanvas(axis: 'h' | 'v', position: 'start' | 'center' | 'end') {
+		if (!shape) return;
+		const bb = shapeBoundingBox(shape);
+		if (!bb) return;
+
+		if (axis === 'h') {
+			const targetX = position === 'start' ? 0
+				: position === 'center' ? (CANVAS_WIDTH - bb.width) / 2
+				: CANVAS_WIDTH - bb.width;
+			nudge(Math.round(targetX - bb.x), 0);
+		} else {
+			const targetY = position === 'start' ? 0
+				: position === 'center' ? (CANVAS_HEIGHT - bb.height) / 2
+				: CANVAS_HEIGHT - bb.height;
+			nudge(0, Math.round(targetY - bb.y));
+		}
+	}
+
 	function adjustSize(prop: 'width' | 'height', delta: number) {
 		if (!shape || (shape.type !== 'fragment' && shape.type !== 'rect')) return;
 		const newVal = Math.max(1, shape[prop] + delta);
@@ -855,8 +874,8 @@
 	/** Convert a canvas coordinate to viewport pixel coordinate */
 	function canvasToViewport(cx: number, cy: number): Point {
 		if (!canvasRect) return { x: 0, y: 0 };
-		const offsetX = canvasRect.left + (canvasRect.width - 960 * canvasScale) / 2;
-		const offsetY = canvasRect.top + (canvasRect.height - 540 * canvasScale) / 2;
+		const offsetX = canvasRect.left + (canvasRect.width - CANVAS_WIDTH * canvasScale) / 2;
+		const offsetY = canvasRect.top + (canvasRect.height - CANVAS_HEIGHT * canvasScale) / 2;
 		return { x: offsetX + cx * canvasScale, y: offsetY + cy * canvasScale };
 	}
 
@@ -1179,6 +1198,19 @@
 					<button class="nudge-btn" onclick={() => nudge(0, 10)} aria-label="Nudge down 10px">10↓</button>
 					<button class="nudge-btn nudge-btn-fine" onclick={() => nudge(1, 0)} aria-label="Nudge right 1px">→</button>
 					<button class="nudge-btn" onclick={() => nudge(10, 0)} aria-label="Nudge right 10px">10→</button>
+				</div>
+			</div>
+
+			<!-- Align controls (all shapes) -->
+			<div class="controls-row">
+				<div class="align-controls">
+					<span class="curve-label">align</span>
+					<button class="nudge-btn" onclick={() => alignCanvas('h', 'start')} aria-label="Align left">⇐</button>
+					<button class="nudge-btn" onclick={() => alignCanvas('h', 'center')} aria-label="Align center horizontal">⇔</button>
+					<button class="nudge-btn" onclick={() => alignCanvas('h', 'end')} aria-label="Align right">⇒</button>
+					<button class="nudge-btn" onclick={() => alignCanvas('v', 'start')} aria-label="Align top">⇑</button>
+					<button class="nudge-btn" onclick={() => alignCanvas('v', 'center')} aria-label="Align center vertical">⇕</button>
+					<button class="nudge-btn" onclick={() => alignCanvas('v', 'end')} aria-label="Align bottom">⇓</button>
 				</div>
 			</div>
 
@@ -1595,7 +1627,8 @@
 		gap: 8px;
 	}
 
-	.nudge-controls {
+	.nudge-controls,
+	.align-controls {
 		display: flex;
 		align-items: center;
 		gap: 4px;
