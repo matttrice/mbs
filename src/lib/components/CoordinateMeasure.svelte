@@ -3,14 +3,19 @@
 	import { browser, dev } from '$app/environment';
 	import { getArrow, getBoxToBoxArrow } from 'perfect-arrows';
 	import { CANVAS_WIDTH, CANVAS_HEIGHT } from '$lib/constants';
+	import {
+		currentFragment,
+		currentSlide,
+		currentPresentation,
+		getOriginalStep,
+		registryVersion
+	} from '$lib/stores/navigation';
 
 	/**
-	 * Dev tool for measuring coordinates on the 960×540 canvas.
-	 * Toggle with 'M' key, then:
-	 * - Click a shape to detect its coordinates (from data-coords attribute)
-	 * - Shift+click to cycle through overlapping shapes
-	 * - Drag to manually measure a region (defaults to Fragment, switchable)
-	 * Shows only the selected shape type's output and live preview.
+	 * Dev tool for editing and drawing shapes on the 960×540 canvas.
+	 * 'E' key — Edit mode: click to select, shift+click to cycle, drag to area-select
+	 * 'D' key — Draw mode: drag to draw a new shape for insertion
+	 * Same key toggles off, other key switches mode.
 	 */
 
 	// --- Discriminated union for shape state ---
@@ -42,7 +47,9 @@
 	let originalCode = $state<string>(''); // snapshot of outputCode at initial detection (before nudging)
 	let activeEndpoint = $state<'from' | 'to' | 'both'>('both'); // for line/arrow/arc endpoint toggle
 	let panelCorner = $state<'br' | 'bl' | 'tl' | 'tr'>('br');
-	let applyStatus = $state<{ type: 'ok' | 'error' | 'pick'; message: string; files?: { file: string; count: number }[] } | null>(null);
+	let applyStatus = $state<{ type: 'ok' | 'error' | 'pick'; message: string; route?: string; files?: { file: string; count: number }[] } | null>(null);
+	let insertStep = $state<number>(1);
+	let drawMode = $state<'edit' | 'draw'>('draw');
 	let draggingSelectedShape = $state(false);
 	let dragTarget = $state<'shape' | 'from' | 'to' | null>(null);
 	let hoverTarget = $state<'shape' | 'from' | 'to' | null>(null);
@@ -185,6 +192,44 @@
 
 	let outputCode = $derived(generateOutputCode(shape));
 
+	// Derive current author step from navigation state (same logic as DebugOverlay)
+	let currentAuthorStep = $derived(
+		$currentFragment > 0
+			? getOriginalStep($currentPresentation, $currentSlide, $currentFragment, $registryVersion)
+			: $currentFragment
+	);
+
+	// Generate a full insertable code block for new shapes
+	function generateInsertCode(s: ShapeState | null, step: number): string {
+		if (!s) return '';
+		const coords = generateOutputCode(s);
+		const isStatic = step === 0;
+		const fragOpen = isStatic ? '<Fragment' : `<Fragment step={${step}}`;
+		const fragDraw = isStatic ? '<Fragment' : `<Fragment step={${step}} animate="draw"`;
+		switch (s.type) {
+			case 'fragment':
+				return isStatic
+					? `<Fragment\n\t${coords}\n>\n\tTODO\n</Fragment>`
+					: `<Fragment\n\tstep={${step}}\n\t${coords}\n>\n\tTODO\n</Fragment>`;
+			case 'rect':
+				return `${fragOpen}>\n\t<Rect ${coords} zIndex={5} />\n</Fragment>`;
+			case 'arrow':
+				return `${fragDraw}>\n\t<Arrow ${coords} stroke={{ width: 3 }} zIndex={10} />\n</Fragment>`;
+			case 'line':
+				return `${fragDraw}>\n\t<Line ${coords} stroke={{ width: 3 }} zIndex={5} />\n</Fragment>`;
+			case 'arc':
+				return `${fragDraw}>\n\t<Arc ${coords} stroke={{ width: 3 }} zIndex={5} />\n</Fragment>`;
+			case 'ellipse':
+				return `${fragOpen}>\n\t<Ellipse ${coords} zIndex={5} />\n</Fragment>`;
+			case 'circle':
+				return `${fragOpen}>\n\t<Circle ${coords} zIndex={5} />\n</Fragment>`;
+			case 'path':
+				return `${fragOpen}>\n\t<Path ${coords} zIndex={5} />\n</Fragment>`;
+			case 'polygon':
+				return `${fragOpen}>\n\t<Polygon ${coords} zIndex={5} />\n</Fragment>`;
+		}
+	}
+
 	// --- Derived: component label ---
 	let shapeLabel = $derived.by(() => {
 		if (!shape) return '';
@@ -207,15 +252,22 @@
 		if (!browser) return;
 
 		function handleKeydown(e: KeyboardEvent) {
-			if (e.key.toLowerCase() === 'm') {
-				enabled = !enabled;
-				if (!enabled) {
+			const key = e.key.toLowerCase();
+			if (key === 'e' || key === 'd') {
+				const newMode = key === 'd' ? 'draw' : 'edit';
+				if (enabled && drawMode === newMode) {
+					// Same key again — toggle off
+					enabled = false;
 					measuring = false;
 					showPanel = false;
 					shape = null;
 					dragStart = null;
 					dragCurrent = null;
 					hoverTarget = null;
+				} else {
+					// Enable or switch mode
+					enabled = true;
+					drawMode = newMode;
 				}
 				return;
 			}
@@ -348,34 +400,67 @@
 		}
 	}
 
+	function parseShapeElement(el: Element): { type: string; coords: Record<string, unknown>; element: Element } | null {
+		const shapeType = el.getAttribute('data-shape-type');
+		const coordsStr = el.getAttribute('data-coords');
+		if (!shapeType || !coordsStr) return null;
+		try {
+			const coords = JSON.parse(coordsStr) as Record<string, unknown>;
+			if (shapeType === 'path' || shapeType === 'polygon') {
+				const rect = (el as HTMLElement).getBoundingClientRect();
+				const topLeft = toCanvasCoords(rect.left, rect.top);
+				const bottomRight = toCanvasCoords(rect.right, rect.bottom);
+				if (topLeft && bottomRight) {
+					coords.x = topLeft.x;
+					coords.y = topLeft.y;
+					coords.width = Math.max(0, bottomRight.x - topLeft.x);
+					coords.height = Math.max(0, bottomRight.y - topLeft.y);
+				}
+			}
+			return { type: shapeType, coords, element: el };
+		} catch { return null; }
+	}
+
 	function detectShapesAtPoint(clientX: number, clientY: number): Array<{ type: string; coords: Record<string, unknown>; element: Element }> {
 		const elements = document.elementsFromPoint(clientX, clientY);
 		const shapes: Array<{ type: string; coords: Record<string, unknown>; element: Element }> = [];
 		for (const el of elements) {
-			const shapeType = el.getAttribute('data-shape-type');
-			const coordsStr = el.getAttribute('data-coords');
-			if (shapeType && coordsStr) {
-				try {
-					const coords = JSON.parse(coordsStr) as Record<string, unknown>;
-					if (shapeType === 'path' || shapeType === 'polygon') {
-						const rect = (el as HTMLElement).getBoundingClientRect();
-						const topLeft = toCanvasCoords(rect.left, rect.top);
-						const bottomRight = toCanvasCoords(rect.right, rect.bottom);
-						if (topLeft && bottomRight) {
-							coords.x = topLeft.x;
-							coords.y = topLeft.y;
-							coords.width = Math.max(0, bottomRight.x - topLeft.x);
-							coords.height = Math.max(0, bottomRight.y - topLeft.y);
-						}
-					}
-					shapes.push({ type: shapeType, coords, element: el });
-				} catch { /* skip */ }
+			const parsed = parseShapeElement(el);
+			if (parsed) shapes.push(parsed);
+		}
+		return shapes;
+	}
+
+	function detectShapesInArea(startClient: Point, endClient: Point): Array<{ type: string; coords: Record<string, unknown>; element: Element }> {
+		const selLeft = Math.min(startClient.x, endClient.x);
+		const selRight = Math.max(startClient.x, endClient.x);
+		const selTop = Math.min(startClient.y, endClient.y);
+		const selBottom = Math.max(startClient.y, endClient.y);
+
+		const canvas = getCanvasElement();
+		if (!canvas) return [];
+
+		const elements = canvas.querySelectorAll('[data-shape-type]');
+		const shapes: Array<{ type: string; coords: Record<string, unknown>; element: Element }> = [];
+		const seen = new Set<Element>();
+
+		for (const el of elements) {
+			if (seen.has(el)) continue;
+			const rect = el.getBoundingClientRect();
+			// Check if element's bounding box overlaps the selection area
+			if (rect.right >= selLeft && rect.left <= selRight &&
+				rect.bottom >= selTop && rect.top <= selBottom) {
+				const parsed = parseShapeElement(el);
+				if (parsed) {
+					seen.add(el);
+					shapes.push(parsed);
+				}
 			}
 		}
 		return shapes;
 	}
 
-	// --- Switch shape type (for drag-to-measure) ---
+	// --- Switch shape type (draw mode) ---
 	function switchShapeType(newType: ShapeType) {
 		if (!shape || shape.type === newType) return;
 		// Convert current shape to new type, preserving geometry
@@ -660,11 +745,39 @@
 				originalCode = outputCode;
 				applyStatus = { type: 'ok', message: `Applied to ${data.file}` };
 			} else if (data.ambiguous) {
-				applyStatus = { type: 'pick', message: 'Multiple matches', files: data.files };
+				applyStatus = { type: 'pick', message: 'Multiple matches', route: routePath, files: data.files };
 			} else if (data.notFound) {
 				applyStatus = { type: 'error', message: data.error || 'No match found' };
 			} else {
 				applyStatus = { type: 'error', message: data.error || 'Unknown error' };
+			}
+		} catch (e) {
+			applyStatus = { type: 'error', message: 'Request failed' };
+		}
+	}
+
+	async function applyInsert(targetFile?: string) {
+		const code = insertCode;
+		if (!code) return;
+
+		const routePath = window.location.pathname.replace(/^\//, '');
+		const body: Record<string, unknown> = { mode: 'insert', routePath, code, step: insertStep };
+		if (targetFile) body.file = targetFile;
+
+		try {
+			const res = await fetch('/api/dev/replace', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(body)
+			});
+			const data = await res.json();
+
+			if (data.ok) {
+				applyStatus = { type: 'ok', message: `Inserted in ${data.file}` };
+			} else if (data.ambiguous) {
+				applyStatus = { type: 'pick', message: 'Multiple files', route: routePath, files: data.files };
+			} else {
+				applyStatus = { type: 'error', message: data.error || 'Insert failed' };
 			}
 		} catch (e) {
 			applyStatus = { type: 'error', message: 'Request failed' };
@@ -838,34 +951,64 @@
 		const distance = Math.sqrt(dx * dx + dy * dy);
 
 		if (distance < CLICK_THRESHOLD) {
-			// Click — detect shapes
-			const shapes = detectShapesAtPoint(e.clientX, e.clientY);
-			if (shapes.length > 0) {
-				detectedShapes = shapes;
-				if (e.shiftKey && detectedShapes.length > 1) {
-					shapeIndex = (shapeIndex + 1) % shapes.length;
+			if (drawMode === 'edit') {
+				// Edit mode click — detect and cycle shapes
+				const shapes = detectShapesAtPoint(e.clientX, e.clientY);
+				if (shapes.length > 0) {
+					detectedShapes = shapes;
+					if (e.shiftKey && detectedShapes.length > 1) {
+						shapeIndex = (shapeIndex + 1) % shapes.length;
+					} else {
+						shapeIndex = 0;
+					}
+					const detected = shapes[shapeIndex];
+					shape = buildShape(detected.type, detected.coords);
+					originalCode = generateOutputCode(shape);
+					activeEndpoint = 'both';
+					applyStatus = null;
+					showPanel = true;
 				} else {
-					shapeIndex = 0;
+					showPanel = false;
+					shape = null;
 				}
-				const detected = shapes[shapeIndex];
-				shape = buildShape(detected.type, detected.coords);
-				originalCode = generateOutputCode(shape);
-				activeEndpoint = 'both';
-				applyStatus = null;
-				showPanel = true;
 			} else {
+				// Draw mode click — no detection, dismiss panel
 				showPanel = false;
 				shape = null;
 			}
 		} else {
-			// Drag — manual measurement, default to fragment
-			shape = buildShapeFromDrag(dragStart, dragCurrent, 'fragment');
-			detectedShapes = [];
-			shapeIndex = 0;
-			activeEndpoint = 'both';
-			originalCode = generateOutputCode(shape);
-			applyStatus = null;
-			showPanel = true;
+			if (drawMode === 'edit') {
+				// Edit mode drag — area-select existing shapes
+				const areaShapes = detectShapesInArea(
+					{ x: mouseDownPos.clientX, y: mouseDownPos.clientY },
+					{ x: e.clientX, y: e.clientY }
+				);
+				if (areaShapes.length > 0) {
+					detectedShapes = areaShapes;
+					shapeIndex = 0;
+					const detected = areaShapes[0];
+					shape = buildShape(detected.type, detected.coords);
+					originalCode = generateOutputCode(shape);
+					activeEndpoint = 'both';
+					applyStatus = null;
+					showPanel = true;
+				} else {
+					detectedShapes = [];
+					shapeIndex = 0;
+					showPanel = false;
+					shape = null;
+				}
+			} else {
+				// Draw mode drag — line preview (arc) for insert
+				shape = buildShapeFromDrag(dragStart, dragCurrent, 'arc');
+				detectedShapes = [];
+				shapeIndex = 0;
+				activeEndpoint = 'both';
+				originalCode = generateOutputCode(shape);
+				insertStep = currentAuthorStep + 1;
+				applyStatus = null;
+				showPanel = true;
+			}
 		}
 
 		mouseDownPos = null;
@@ -920,19 +1063,28 @@
 		(showPanel && shape && canvasRect)
 	);
 
-	// Drag rectangle for live preview during drag (before shape is created)
-	let dragBox = $derived.by(() => {
+	// Drag preview for live drag (before shape is created)
+	let dragPreview = $derived.by(() => {
 		if (!measuring || !dragStart || !dragCurrent || !canvasRect) return null;
-		const x = Math.min(dragStart.x, dragCurrent.x);
-		const y = Math.min(dragStart.y, dragCurrent.y);
-		const w = Math.abs(dragCurrent.x - dragStart.x);
-		const h = Math.abs(dragCurrent.y - dragStart.y);
-		const vp = canvasToViewport(x, y);
-		return { x: vp.x, y: vp.y, width: w * canvasScale, height: h * canvasScale };
+		const vFrom = canvasToViewport(dragStart.x, dragStart.y);
+		const vTo = canvasToViewport(dragCurrent.x, dragCurrent.y);
+		if (drawMode === 'draw') {
+			return { mode: 'line' as const, x1: vFrom.x, y1: vFrom.y, x2: vTo.x, y2: vTo.y };
+		}
+		const x = Math.min(vFrom.x, vTo.x);
+		const y = Math.min(vFrom.y, vTo.y);
+		const w = Math.abs(vTo.x - vFrom.x);
+		const h = Math.abs(vTo.y - vFrom.y);
+		return { mode: 'rect' as const, x, y, width: w, height: h };
 	});
 
 	// Is the current shape from detection (vs manual drag)?
 	let isDetected = $derived(detectedShapes.length > 0);
+
+	// Insert mode: draw mode is always insert, edit mode is always edit
+	let isInsertMode = $derived(drawMode === 'draw');
+
+	let insertCode = $derived(isInsertMode ? generateInsertCode(shape, insertStep) : '');
 
 	// Get the endpoint color based on active endpoint
 	function endpointColor(which: 'from' | 'to'): string {
@@ -973,11 +1125,11 @@
 		onmousemove={handleMouseMove}
 		onmouseup={handleMouseUp}
 	>
-		<!-- Visual indicator that measure mode is active -->
+		<!-- Visual indicator that mode is active -->
 		<div class="measure-indicator">
 			<span class="indicator-dot"></span>
-			MEASURE MODE
-			<span class="hint">(CLICK, DRAG SELECTION, OR DRAG TO MEASURE)</span>
+			{drawMode === 'edit' ? 'EDIT' : 'DRAW'} MODE
+			<span class="hint">{drawMode === 'edit' ? '(click to select, shift+click to cycle, drag to area-select)' : '(drag to draw new shape)'}</span>
 		</div>
 
 		<!-- SVG overlay for shape preview -->
@@ -989,18 +1141,30 @@
 					</marker>
 				</defs>
 
-				{#if measuring && !draggingSelectedShape && dragBox}
-					<!-- Live drag preview (dashed green rect) -->
-					<rect
-						x={dragBox.x}
-						y={dragBox.y}
-						width={dragBox.width}
-						height={dragBox.height}
-						stroke="#00ff00"
-						stroke-width="2"
-						fill="rgba(0, 255, 0, 0.1)"
-						stroke-dasharray="5,5"
-					/>
+				{#if measuring && !draggingSelectedShape && dragPreview}
+					<!-- Live drag preview -->
+					{#if dragPreview.mode === 'line'}
+						<line
+							x1={dragPreview.x1}
+							y1={dragPreview.y1}
+							x2={dragPreview.x2}
+							y2={dragPreview.y2}
+							stroke="#00ff00"
+							stroke-width="2"
+							stroke-dasharray="5,5"
+						/>
+					{:else}
+						<rect
+							x={dragPreview.x}
+							y={dragPreview.y}
+							width={dragPreview.width}
+							height={dragPreview.height}
+							stroke="#00ff00"
+							stroke-width="2"
+							fill="rgba(0, 255, 0, 0.1)"
+							stroke-dasharray="5,5"
+						/>
+					{/if}
 				{:else if shape}
 					<!-- Shape-specific preview -->
 					{#if shape.type === 'arrow'}
@@ -1184,26 +1348,23 @@
 			<!-- Header -->
 			<div class="panel-header">
 				<span class="panel-title">
-					{#if isDetected}
-						<span class="shape-type">{shapeLabel}</span>
-						{#if detectedShapes.length > 1}
-							<span class="shape-count">({shapeIndex + 1}/{detectedShapes.length})</span>
-						{/if}
+					<span class="shape-type">{shapeLabel}</span>
+					{#if isDetected && detectedShapes.length > 1}
+						<span class="shape-count">({shapeIndex + 1}/{detectedShapes.length})</span>
+					{:else if measuring && !draggingSelectedShape && dragPreview}
+						<span class="shape-count">(drag)</span>
+					{:else if isInsertMode}
+						<span class="shape-count">(draw)</span>
 					{:else}
-						<span class="shape-type">{shapeLabel}</span>
-						{#if measuring && !draggingSelectedShape && dragBox}
-							<span class="shape-count">(drag)</span>
-						{:else}
-							<span class="shape-count">(selected)</span>
-						{/if}
+						<span class="shape-count">(edit)</span>
 					{/if}
 				</span>
 				<div class="header-buttons">
 					{#if detectedShapes.length > 1}
 						<button class="cycle-btn" onclick={() => { shapeIndex = (shapeIndex + 1) % detectedShapes.length; const s = detectedShapes[shapeIndex]; shape = buildShape(s.type, s.coords); activeEndpoint = 'both'; originalCode = generateOutputCode(shape); applyStatus = null; }} aria-label="Cycle to next shape" title="Next shape (or Shift+click)">⇄</button>
 					{/if}
-					{#if !isDetected}
-						<!-- Type switcher for drag-to-measure -->
+					{#if isInsertMode}
+						<!-- Type switcher for draw mode -->
 						<div class="type-switcher">
 							{#each ALL_SHAPE_TYPES as t}
 								<button
@@ -1424,21 +1585,45 @@
 			{/if}
 
 			<!-- Output sections -->
-			<div class="output-section">
-				<div class="output-label">ORIGINAL</div>
-				<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
-				<code class="output-code" onclick={(e) => { const text = e.currentTarget.textContent || ''; if (text !== '—') navigator.clipboard.writeText(text); }}>{originalCode || '—'}</code>
-			</div>
-			<div class="output-section">
-				<div class="output-label">ADJUSTED</div>
-				<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
-				<code class="output-code" onclick={(e) => { const text = e.currentTarget.textContent || ''; if (text !== '—') navigator.clipboard.writeText(text); }}>{originalCode !== outputCode ? outputCode : '—'}</code>
-			</div>
-
-			{#if dev && originalCode && originalCode !== outputCode}
-				<div class="apply-section">
-					<button class="apply-btn" onclick={() => applyReplace()}>Apply</button>
+			{#if !isInsertMode}
+				<div class="output-section">
+					<div class="output-label">ORIGINAL</div>
+					<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
+					<code class="output-code" onclick={(e) => { const text = e.currentTarget.textContent || ''; if (text !== '—') navigator.clipboard.writeText(text); }}>{originalCode || '—'}</code>
 				</div>
+				<div class="output-section">
+					<div class="output-label">ADJUSTED</div>
+					<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
+					<code class="output-code" onclick={(e) => { const text = e.currentTarget.textContent || ''; if (text !== '—') navigator.clipboard.writeText(text); }}>{originalCode !== outputCode ? outputCode : '—'}</code>
+				</div>
+
+				{#if dev && originalCode && originalCode !== outputCode}
+					<div class="apply-section">
+						<button class="apply-btn" onclick={() => applyReplace()}>Apply</button>
+					</div>
+				{/if}
+			{:else}
+				<div class="output-section">
+					<div class="output-label">INSERT CODE</div>
+					<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
+					<code class="output-code" onclick={(e) => { const text = e.currentTarget.textContent || ''; if (text !== '—') navigator.clipboard.writeText(text); }}>{insertCode || '—'}</code>
+				</div>
+
+				{#if dev && insertCode}
+					<div class="apply-section insert-row">
+						<label class="step-label">
+							<span class="step-text">{insertStep === 0 ? 'static' : 'step'}</span>
+							<input
+								type="number"
+								class="step-input"
+								bind:value={insertStep}
+								min={0}
+								step={1}
+							/>
+						</label>
+						<button class="apply-btn insert-btn" onclick={() => applyInsert()}>Insert</button>
+					</div>
+				{/if}
 			{/if}
 
 			{#if applyStatus}
@@ -1446,8 +1631,8 @@
 					{#if applyStatus.type === 'pick' && applyStatus.files}
 						<div>{applyStatus.message}:</div>
 						{#each applyStatus.files as f}
-							<button class="file-pick-btn" onclick={() => applyReplace(f.file)}>
-								{f.file} ({f.count} match{f.count > 1 ? 'es' : ''})
+							<button class="file-pick-btn" onclick={() => !isInsertMode ? applyReplace(f.file) : applyInsert(f.file)}>
+								{applyStatus.route}/{f.file} ({f.count} match{f.count > 1 ? 'es' : ''})
 							</button>
 						{/each}
 					{:else}
@@ -1904,6 +2089,48 @@
 
 	.apply-btn:hover {
 		background: rgba(0, 200, 0, 0.4);
+	}
+
+	.insert-row {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.insert-row .insert-btn {
+		width: auto;
+		flex: 1;
+	}
+
+	.step-label {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		color: #00ff00;
+		font-family: monospace;
+		font-size: 11px;
+	}
+
+	.step-text {
+		display: inline-block;
+		width: 38px;
+	}
+
+	.step-input {
+		width: 50px;
+		background: rgba(0, 0, 0, 0.5);
+		border: 1px solid #00ff00;
+		color: #00ff00;
+		font-family: monospace;
+		font-size: 11px;
+		padding: 3px 4px;
+		border-radius: 3px;
+		text-align: center;
+	}
+
+	.step-input:focus {
+		outline: none;
+		border-color: #80ff80;
 	}
 
 	.apply-status {
