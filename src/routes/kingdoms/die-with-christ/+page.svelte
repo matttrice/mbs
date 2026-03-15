@@ -6,6 +6,6 @@
 </script>
 
 <CustomShowProvider
-	name="romans-6-1-11"
+	name="kingdoms/die-with-christ"
 	slides={[Romans6Content, Colossians2Content, Romans8Content]}
 />

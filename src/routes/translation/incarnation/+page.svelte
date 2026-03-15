@@ -11,6 +11,6 @@
 </script>
 
 <CustomShowProvider
-	name="incarnation"
+	name="translation/incarnation"
 	slides={[Genesis3Content, Genesis18Content, ExodusContent, NumbersContent, Ezekiel1Content, Daniel10Content, Acts10Content, Acts22Content]}
 />

@@ -7,6 +7,6 @@
 </script>
 
 <CustomShowProvider
-	name="excarnation"
+	name="translation/excarnation"
 	slides={[Genesis5Content, Kings2Content, MatthewContent, LukeContent]}
 />

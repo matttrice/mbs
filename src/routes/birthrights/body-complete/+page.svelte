@@ -6,6 +6,6 @@
 </script>
 
 <CustomShowProvider
-	name="body-complete"
+	name="birthrights/body-complete"
 	slides={[Content1, Content2, Content3]}
 />

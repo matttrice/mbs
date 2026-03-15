@@ -5,6 +5,6 @@
 </script>
 
 <CustomShowProvider 
-	name="baptism-and-faith" 
+	name="ark/baptism-and-faith" 
 	slides={[BaptismAndFaithContent, Ephesians2Content]} 
 />

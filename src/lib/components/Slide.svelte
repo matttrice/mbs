@@ -195,17 +195,18 @@
 
 	// Also update when maxStep changes (for dynamic content or delayed registration)
 	$effect(() => {
-		if ($maxStep > 0) {
-			if (presentationContext && slideIndex !== undefined) {
-				// Update registration with new maxStep
+		if (presentationContext && slideIndex !== undefined) {
+			if ($maxStep > 0) {
 				presentationContext.registerSlide(slideIndex, $maxStep);
-			} else if (customShowContext && slideIndex !== undefined) {
-				// Update registration with CustomShowProvider
-				customShowContext.registerSlide(slideIndex, $maxStep);
-			} else {
-				// Standalone drillTo and return: set maxFragment directly
-				navigation.setMaxFragment($maxStep);
 			}
+		} else if (customShowContext && slideIndex !== undefined) {
+			if ($maxStep > 0) {
+				customShowContext.registerSlide(slideIndex, $maxStep);
+			}
+		} else {
+			// Standalone drill: always call, even with 0 steps.
+			// Needed for drill state restoration on refresh (static-only drill pages).
+			navigation.setMaxFragment($maxStep);
 		}
 	});
 

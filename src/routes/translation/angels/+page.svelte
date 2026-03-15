@@ -6,6 +6,6 @@
 </script>
 
 <CustomShowProvider
-	name="angels"
+	name="translation/angels"
 	slides={[Content1, Content2, Content3]}
 />

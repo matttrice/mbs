@@ -5,6 +5,6 @@
 </script>
 
 <CustomShowProvider
-	name="jeremiah-33-17-18"
+	name="priesthood/jeremiah-33-17-18"
 	slides={[Content1, Content2]}
 />

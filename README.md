@@ -1,323 +1,122 @@
-# MBS - Master Bible Study
+# MBS — Master Bible Study
 
-A SvelteKit-based presentation system replicating PowerPoint's **Custom Show** "drill and return" functionality. Navigate through multi-slide presentations with fragment-by-fragment reveals, drill into scripture references, and automatically return to your exact position.
+A SvelteKit presentation system that replicates PowerPoint's **Custom Show "drill and return"** pattern for the web. Build concept-driven presentations where each click progressively reveals content, drill into supporting scripture or detail slides, and automatically return to exactly where you left off.
 
 ## Quick Start
 
 ```bash
 npm install
-npm run dev
+npm run dev          # localhost:5173
+npm run check        # TypeScript
+npm run test:unit    # Unit tests
+npm run test:e2e     # Playwright tests
 ```
 
-Open [http://localhost:5173](http://localhost:5173)
+## How It Works
+
+MBS presentations are built around a simple cycle:
+
+1. **Reveal** — Click or press → to progressively reveal Fragments on a slide
+2. **Drill** — When a Fragment has a `drillTo`, navigation pushes the current position onto a stack and navigates to the target route
+3. **Return** — After the drill's last Fragment is passed, navigation pops the stack and returns to the origin slide at the exact fragment where the user left off
+
+This works at any depth: a drill can drill into another drill, and completing the deepest one returns directly to the original presentation. The `returnHere` prop optionally returns to the parent drill instead of the origin, enabling branching drill trees.
+
+### Core Building Blocks
+
+| Component | Role |
+|-----------|------|
+| `PresentationProvider` | Orchestrates a multi-slide deck, collects each slide's max step, initializes navigation |
+| `CustomShowProvider` | Aggregates multiple content components into a single drill sequence with unified navigation |
+| `Slide` | Context provider — child Fragments auto-register their steps |
+| `Fragment` | Visibility, positioning, animation, and drill behavior for every piece of content |
+| SVG components | `Arrow`, `Arc`, `Line`, `Rect`, `Circle`, `Ellipse`, `Path`, `Polygon` — self-positioning on the 960×540 canvas |
+
+All content is laid out on a **960×540 fixed canvas** that scales to fit the viewport.
 
 ## Project Structure
 
 ```
 src/
 ├── lib/
-│   ├── components/
-│   │   ├── Fragment.svelte      # Controls fragment visibility & drills
-│   │   └── Slide.svelte         # Wrapper that auto-registers maxStep
-│   ├── stores/
-│   │   └── navigation.ts        # Core navigation state machine
+│   ├── components/          # Fragment, Slide, providers, SVG shapes, CoordinateMeasure
+│   ├── stores/navigation.ts # State machine: slides, fragments, drill stack, localStorage
+│   ├── styles/              # Shared presentation & utility CSS
 │   └── types.ts
 ├── routes/
-│   ├── +layout.svelte           # Global keyboard handling
-│   ├── +page.svelte             # Main menu
-│   └── demo/                    # "Demo" presentation
-│       ├── +page.svelte         # Presentation controller
-│       ├── slides/              # Slide components
-│       │   ├── Slide1.svelte
-│       │   ├── Slide2.svelte
-│       │   └── Slide3.svelte
-│       ├── ecclesiastes.3.19/   # Drill route
-│       │   └── +page.svelte
-│       └── 1thessalonians.5.23/ # Drill route
-│           └── +page.svelte
+│   ├── +page.svelte         # Main menu
+│   ├── promises/            # Example: multi-slide presentation
+│   │   ├── +page.svelte     #   PresentationProvider + slide wrappers
+│   │   ├── slides/          #   Slide1.svelte, Slide2.svelte, …
+│   │   ├── genesis-12-1/    #   Drill route (single-slide or CustomShowProvider)
+│   │   └── hebrews-7-24/    #   Another drill route
+│   └── …                    # Other presentations follow the same pattern
 └── tests/
-    ├── navigation.test.ts       # 27 navigation store tests
-    └── fragment.test.ts         # 9 component tests
 ```
 
-## Creating Presentations
+## Adding a Presentation
 
-### 1. Multi-Slide Presentation
+### 1. Multi-Slide Deck
 
-Create a presentation page that collects maxStep from each slide:
+Create `routes/{name}/+page.svelte` with a `PresentationProvider`, import slide components from `./slides/`, and render each inside a `.slide-wrapper`. Slide components accept a `slideIndex` prop and wrap their content in `<Slide {slideIndex}>`. See [copilot-instructions.md](.github/copilot-instructions.md) for the full template.
 
-```svelte
-<!-- routes/lesson/+page.svelte -->
-<script lang="ts">
-  import { navigation, currentSlide } from '$lib/stores/navigation';
-  import { onMount } from 'svelte';
-  import Slide1 from './slides/Slide1.svelte';
-  import Slide2 from './slides/Slide2.svelte';
+### 2. Drill Routes
 
-  // Slides report their maxStep via callback
-  let slideMaxSteps = $state<number[]>([0, 0]);
-
-  // Update navigation when all slides have reported
-  function updateNavigation() {
-    if (slideMaxSteps.every(s => s > 0)) {
-      navigation.init('lesson', slideMaxSteps);
-    }
-  }
-
-  function handleSlide1MaxStep(maxStep: number) {
-    slideMaxSteps[0] = maxStep;
-    updateNavigation();
-  }
-
-  function handleSlide2MaxStep(maxStep: number) {
-    slideMaxSteps[1] = maxStep;
-    updateNavigation();
-  }
-
-  // Validate all slides registered properly
-  onMount(() => {
-    setTimeout(() => {
-      if (!slideMaxSteps.every(s => s > 0)) {
-        const missing = slideMaxSteps
-          .map((s, i) => s === 0 ? i + 1 : null)
-          .filter(Boolean);
-        throw new Error(`Slides ${missing.join(', ')} did not report maxStep. Wrap content in <Slide>.`);
-      }
-    }, 100);
-  });
-</script>
-
-<!-- Render all slides, show only active one -->
-<div class="slide-wrapper" class:active={$currentSlide === 0}>
-  <Slide1 onMaxStep={handleSlide1MaxStep} />
-</div>
-<div class="slide-wrapper" class:active={$currentSlide === 1}>
-  <Slide2 onMaxStep={handleSlide2MaxStep} />
-</div>
-
-<style>
-  .slide-wrapper { visibility: hidden; position: absolute; }
-  .slide-wrapper.active { visibility: visible; position: relative; }
-</style>
-```
-
-### 2. Slide Components
-
-Wrap slide content in the `Slide` component. Each `Fragment` automatically registers its step:
+A drill is a SvelteKit route containing `<Slide>` (no `slideIndex`). When the user advances past its last Fragment, navigation auto-returns to the origin.
 
 ```svelte
-<!-- routes/lesson/slides/Slide1.svelte -->
-<script lang="ts">
-  import Fragment from '$lib/components/Fragment.svelte';
-  import Slide from '$lib/components/Slide.svelte';
-
-  interface Props {
-    onMaxStep?: (maxStep: number) => void;
-  }
-  let { onMaxStep }: Props = $props();
-</script>
-
-<Slide {onMaxStep}>
-  <Fragment step={1}>
-    <h1>First thing revealed</h1>
-  </Fragment>
-
-  <Fragment step={2}>
-    <p>Second thing</p>
-  </Fragment>
-
-  <!-- Appears with step 2 (same integer = same click) -->
-  <Fragment step={2.1}>
-    <p>Also appears at step 2 (with 500ms delay)</p>
-  </Fragment>
-
-  <!-- Drillable - clicking navigates to the drill route -->
-  <Fragment step={4} drillTo="lesson/scripture-ref">
-    <span>Click to drill into scripture</span>
-  </Fragment>
-</Slide>
-```
-
-**How it works:** The `Slide` component creates a context. Each `Fragment` registers its `step` value with that context. The `Slide` tracks the highest step seen and reports it via `onMaxStep` callback.
-
-### 3. Drill Routes (Custom Shows)
-
-Drills are single-slide presentations. Wrap content in `<Slide>` without an `onMaxStep` callback — the Slide will auto-register maxFragment:
-
-```svelte
-<!-- routes/lesson/scripture-ref/+page.svelte -->
-<script lang="ts">
-  import Slide from '$lib/components/Slide.svelte';
-  import Fragment from '$lib/components/Fragment.svelte';
-</script>
-
 <Slide>
-  <Fragment step={1}>Verse 1</Fragment>
-  <Fragment step={2}>Verse 2</Fragment>
-  <Fragment step={3}>Verse 3</Fragment>
-  <Fragment step={4}>Key insight - press → to return</Fragment>
+  <Fragment step={1} layout={…} font={…}>Verse text</Fragment>
+  <Fragment step={2} layout={…} font={…}>Key insight</Fragment>
 </Slide>
 ```
 
-For **nested drills** (drill within drill), the last Fragment can include a `drillTo`:
+For multi-slide drills, use `CustomShowProvider` with co-located `Content1.svelte`, `Content2.svelte`, etc.
+
+### 3. Connecting Drills
+
+Add `drillTo` to any Fragment on the parent slide:
 
 ```svelte
-<!-- Drill that chains to another drill -->
-<script lang="ts">
-  import Slide from '$lib/components/Slide.svelte';
-  import Fragment from '$lib/components/Fragment.svelte';
-</script>
-
-<Slide>
-  <Fragment step={1}>First point</Fragment>
-  <Fragment step={2}>Second point</Fragment>
-  <!-- Last fragment with drillTo - auto-advances when → is pressed at step 3 -->
-  <Fragment step={3} drillTo="lesson/related-scripture">
-    <span>Related scripture →</span>
-  </Fragment>
-</Slide>
-```
-
-The `drillTo` prop on any Fragment automatically enables:
-- **Click navigation**: Clicking a visible drillTo fragment navigates to that route
-- **Auto-advance**: When at the last fragment and it has a `drillTo`, pressing → auto-navigates
-- **Return to origin**: When returning from nested drills, you go **directly back to the original presentation**, preserving the exact fragment position
-
-## Key Concepts
-
-### `<Slide>` Component
-
-The `<Slide>` component is the foundation for both presentations and drills:
-
-| Usage | Behavior |
-|-------|----------|
-| `<Slide onMaxStep={callback}>` | Multi-slide: reports maxStep to parent for `navigation.init()` |
-| `<Slide>` (no callback) | Single-slide drill: auto-registers with navigation. Can chain to other drills via `drillTo` on the last Fragment, returning to the original presentation when complete. |
-
-**Note:** You don't need to declare drillTo targets separately - just use `drillTo` on your Fragment components. They auto-register with the navigation store.
-
-### Drill Behavior (autoDrillAll)
- **autoDrillAll Setting**: MBS has an `autoDrillAll` toggle:
-   - `autoDrillAll=true` (default): Arrow keys execute drills automatically in animation sequence
-   - `autoDrillAll=false`: Arrow keys skip drills; user must click to drill
-   - This applies to ALL drillTo fragments, including ones at the last fragment
-
-The `autoDrillAll` setting controls whether arrow keys auto-execute drills:
-
-| Setting | Arrow Behavior | Click Behavior |
-|---------|---------------|----------------|
-| `autoDrillAll=true` (default) | Executes drills automatically | Always drills |
-| `autoDrillAll=false` | Skips all drills | Always drills |
-
-**Multi-level drills**: When drills chain (drill-01 → drill-02 → drill-03), completing the deepest drill returns **directly to the origin** presentation, not back through each level.
-
-**returnHere prop**: Use `returnHere` on a Fragment to return to the parent drill instead of origin:
-```svelte
-<Fragment step={2} drillTo="demo/nested" returnHere>
-  Returns to THIS drill after nested completes
+<Fragment step={3} drillTo="promises/genesis-12-1" layout={…} font={…}>
+  Genesis 12:1-3
 </Fragment>
 ```
 
-### `Slide` Auto-Registration
+Arrow keys execute drills automatically by default (`autoDrillAll`). Toggle this off in the menu to require explicit clicks.
 
-The `Slide` component uses Svelte context to collect step values from child `Fragment` components:
+## Converting from PowerPoint
 
-1. `Slide` creates a context with `registerStep()` function
-2. Each `Fragment` calls `registerStep(step)` when it mounts
-3. `Slide` tracks the max step seen
-4. **With callback**: Reports to parent → parent calls `navigation.init()`
-5. **Without callback**: Directly calls `navigation.setMaxFragment()`
+The [hsu-extractor](https://github.com/matttrice/hsu-extractor) parses `.pptx` files into JSON with pre-scaled 960×540 coordinates. The JSON is the single source of truth — use exact values for text, layout, and font properties. Conversion rules (timing → step mapping, color → CSS variable mapping, shape → SVG component mapping) are fully documented in [copilot-instructions.md](.github/copilot-instructions.md).
 
-### Fragment Props
-
-| Prop | Type | Description |
-|------|------|-------------|
-| `step` | `number` | Step number when content appears. Integer = click number, decimal = delay (e.g., 2.1 = step 2 with 500ms delay). Omit for static content. |
-| `drillTo` | `string` | Route to drill into on click (e.g., `"demo/ecclesiastes.3.19"`) |
-| `returnHere` | `boolean` | Return to this drill (not origin) after nested drill completes |
-| `layout` | `BoxLayout` | Absolute positioning: `{ x, y, width, height, rotation? }` |
-| `font` | `BoxFont` | Typography: `{ font_name?, font_size?, bold?, italic?, color?, alignment? }` |
-| `fill` | `string` | Background color (e.g., `"var(--bg-ghost)"`) |
-| `line` | `BoxLine` | Border: `{ color?, width? }` |
-| `zIndex` | `number` | Stacking order |
-| `animate` | `AnimationType` | Entrance animation: `'fade'`, `'fly-up'`, `'fly-down'`, `'fly-left'`, `'fly-right'`, `'scale'` |
-
-### Keyboard Controls
+## Keyboard Controls
 
 | Key | Action |
 |-----|--------|
-| `→` `Space` `PageDown` | Next fragment/slide |
-| `←` `PageUp` | Previous fragment/slide |
-| `Escape` | Return to menu |
-
-## Navigation Store API
-
-```typescript
-// Initialize multi-slide presentation (called by parent after collecting maxSteps)
-navigation.init('demo', [9, 15, 12]);
-
-// Navigation
-navigation.next();           // Advance fragment, slide, auto-drill, or auto-return
-navigation.prev();           // Go back
-navigation.goToSlide(1);     // Jump to slide (preserves fragment position)
-navigation.goToFragment(5);  // Jump to fragment in current slide
-
-// Drill operations (usually triggered automatically via Fragment drillTo)
-navigation.drillInto('demo/ecclesiastes.3.19');  // Push state, navigate
-navigation.returnFromDrill();                     // Pop all states, return to origin
-
-// State management
-navigation.clearPresentation('demo');  // Clear localStorage for presentation
-navigation.reset();                    // Reset everything
-```
-
-## Testing
-
-Unit tests and E2E tests cover all core navigation functionality:
-
-```bash
-npm run test:unit      # 114 unit tests
-npx playwright test    # 11 E2E tests
-```
-
-- **114 unit tests** covering navigation store and Fragment component
-- **11 E2E tests** covering drill navigation, multi-level drills, and autoDrillAll behavior
-- Tests are content-agnostic - they test mechanics, not specific presentations
-
-## State Persistence
-
-Navigation state is saved to `localStorage` under key `mbs-nav-state`. This preserves:
-- Current slide and fragment position
-- Per-slide fragment positions (so jumping between slides remembers where you were)
-- Drill stack (for nested drills)
-
-The menu's Reset button clears this state.
+| `→` `↓` `Space` | Next fragment / slide / drill |
+| `←` `↑` | Previous fragment / slide |
+| `Escape` `q` | Return to menu |
+| `e` | Edit mode (CoordinateMeasure) |
+| `d` | Draw mode (CoordinateMeasure) |
 
 ## CoordinateMeasure (Dev Tool)
 
-A visual overlay for measuring and adjusting Fragment/SVG coordinates on the 960×540 canvas. Activated by pressing `m` during development.
+A visual overlay for adjusting and drawing Fragment and SVG objects directly on the 960×540 canvas during local development.
 
-**Features:**
-- **Shape detection**: Click any Fragment, Rect, Arrow, Line, Arc, Ellipse, Circle, Path, or Polygon to select it and see its current layout code
-- **Nudge controls**: Move shapes by ±1 or ±10 pixels, resize, rotate
-- **Canvas alignment**: Snap shapes to left/center/right or top/middle/bottom of the canvas
-- **Live output**: Shows ORIGINAL and ADJUSTED code — click either to copy
-- **Apply button** (dev only): Writes the adjusted code directly to the source `.svelte` file on disk. Automatically finds the correct file in the route directory. If multiple files match, shows a picker.
+**Edit mode** (`e`) — Click any shape to select it. Nudge position, resize, rotate, or snap to canvas alignment guides. The panel shows original and adjusted code side by side.
 
-**Workflow:** Select shape → nudge/align to desired position → click **Apply** → file is updated, VS Code refreshes.
+**Draw mode** (`d`) — Drag on the canvas to sketch a new Fragment, Rect, Line, Arrow, Arc or Circle. Once inserted, manually add text and other properties not provided.
 
-# Theological Framework
+**Apply to filesystem** — Both modes include an **Apply** button that writes the change directly to the source `.svelte` file on disk via a local dev API. If multiple files in the route match, a picker appears. The browser hot-reloads automatically.
 
-Master Bible Study is built on foundational theological truths that shape all its conclusions. Understanding these foundations is essential for accurately using or adapting MBS content.
+## State Persistence
 
-See [THEOLOGY.md](THEOLOGY.md) for details on the foundational truths and how they inform MBS interpretations and conclusions.
+Navigation state persists to `localStorage` (key `mbs-nav-{route}`), preserving slide position, per-slide fragment positions, and the drill stack across refreshes. The menu Reset button clears this. Press Escape or q to exit any presentation.
+
+## Theological Framework
+
+Master Bible Study is built on foundational theological truths that shape all its conclusions. See [THEOLOGY.md](THEOLOGY.md) for details.
 
 ## License
 
-This project is licensed under the Creative Commons Attribution 4.0 International License (CC-BY 4.0).
-
-You are free to use, modify, and distribute this work with proper attribution to the original source.
-
-**How to attribute:** Include a link to this repository and reference the CC-BY 4.0 license. This allows anyone to compare your version with the original if modifications are made.
-
-See the [LICENSE](LICENSE) file for complete details.
+Creative Commons Attribution 4.0 International (CC-BY 4.0). Free to use, modify, and distribute with attribution. See [LICENSE](LICENSE) for details.

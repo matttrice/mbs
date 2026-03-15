@@ -5,6 +5,6 @@
 </script>
 
 <CustomShowProvider
-	name="ephesians-5-22-25"
+	name="priesthood/ephesians-5-22-25"
 	slides={[Content1, Content2]}
 />

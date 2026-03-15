@@ -976,6 +976,7 @@
     <Fragment
         step={39}
 		drillTo="birthrights/body-complete"
+		returnHere
 		autoDrill
         layout={{ x: 680, y: 47, width: 260, height: 20 }}
         font={{ font_size: 15, bold: true, wrap: true, align: 'center', v_align: 'middle' }}

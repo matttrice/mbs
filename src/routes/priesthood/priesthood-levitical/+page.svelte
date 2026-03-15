@@ -5,6 +5,6 @@
 </script>
 
 <CustomShowProvider
-	name="priesthood-levitical"
+	name="priesthood/priesthood-levitical"
 	slides={[Content1, Content2]}
 />

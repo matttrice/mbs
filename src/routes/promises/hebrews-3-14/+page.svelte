@@ -5,6 +5,6 @@
 </script>
 
 <CustomShowProvider
-	name="hebrews-3-14"
+	name="promises/hebrews-3-14"
 	slides={[Content1, Content2]}
 />

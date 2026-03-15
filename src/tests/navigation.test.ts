@@ -1314,3 +1314,152 @@ describe('Navigation Store - Per-Fragment autoDrill', () => {
 		expect(get(navigation).current.presentation).toBe('life/slide2-drill');
 	});
 });
+
+describe('Navigation Store - Standalone Drill Refresh Recovery', () => {
+	// Tests that standalone drill pages (Slide without slideIndex) can restore
+	// drill state on refresh by scanning localStorage for an entry whose
+	// current.presentation matches the URL pathname.
+
+	function seedDrillState(rootPresentation: string, drillPresentation: string) {
+		// Simulate the localStorage state that exists mid-drill
+		const drillState = {
+			current: { presentation: drillPresentation, slide: 0, fragment: 1 },
+			stack: [{ presentation: rootPresentation, slide: 0, fragment: 2 }],
+			slideFragments: [],
+			slideFragmentCounts: [3],
+			maxSlide: 0,
+			returnHere: false
+		};
+		localStorage.setItem(`mbs-nav-${rootPresentation}`, JSON.stringify(drillState));
+	}
+
+	it('restores drill state from URL when no presentation name passed', () => {
+		seedDrillState('test-fixture', 'test-fixture/drill-01');
+
+		// Simulate the browser URL matching the drill route
+		Object.defineProperty(window, 'location', {
+			value: { pathname: '/test-fixture/drill-01' },
+			writable: true,
+			configurable: true
+		});
+
+		// Call setMaxFragment WITHOUT a presentation name (like Slide standalone mode does)
+		navigation.setMaxFragment(2);
+
+		const state = get(navigation);
+		expect(state.current.presentation).toBe('test-fixture/drill-01');
+		expect(state.stack).toHaveLength(1);
+		expect(state.stack[0].presentation).toBe('test-fixture');
+		expect(state.stack[0].fragment).toBe(2);
+		expect(state.maxFragment).toBe(2);
+	});
+
+	it('does not restore when no matching localStorage entry exists', () => {
+		// No seeded state in localStorage
+		Object.defineProperty(window, 'location', {
+			value: { pathname: '/test-fixture/drill-01' },
+			writable: true,
+			configurable: true
+		});
+
+		navigation.setMaxFragment(5);
+
+		const state = get(navigation);
+		expect(state.stack).toHaveLength(0);
+		expect(state.current.presentation).toBe('');
+		expect(state.maxFragment).toBe(5);
+	});
+
+	it('does not restore when URL does not match persisted presentation', () => {
+		seedDrillState('test-fixture', 'test-fixture/drill-01');
+
+		// URL points to a different drill route
+		Object.defineProperty(window, 'location', {
+			value: { pathname: '/test-fixture/drill-02' },
+			writable: true,
+			configurable: true
+		});
+
+		navigation.setMaxFragment(3);
+
+		const state = get(navigation);
+		// Should NOT restore—URL mismatch
+		expect(state.stack).toHaveLength(0);
+		expect(state.maxFragment).toBe(3);
+	});
+
+	it('strips trailing slash from URL pathname', () => {
+		seedDrillState('test-fixture', 'test-fixture/drill-01');
+
+		Object.defineProperty(window, 'location', {
+			value: { pathname: '/test-fixture/drill-01/' },
+			writable: true,
+			configurable: true
+		});
+
+		navigation.setMaxFragment(2);
+
+		const state = get(navigation);
+		expect(state.current.presentation).toBe('test-fixture/drill-01');
+		expect(state.stack).toHaveLength(1);
+	});
+
+	it('restores returnHere flag from persisted state', () => {
+		const drillState = {
+			current: { presentation: 'life/nested-drill', slide: 0, fragment: 0 },
+			stack: [
+				{ presentation: 'life', slide: 0, fragment: 3 },
+				{ presentation: 'life/parent-drill', slide: 0, fragment: 1 }
+			],
+			slideFragments: [],
+			slideFragmentCounts: [2],
+			maxSlide: 0,
+			returnHere: true
+		};
+		localStorage.setItem('mbs-nav-life', JSON.stringify(drillState));
+
+		Object.defineProperty(window, 'location', {
+			value: { pathname: '/life/nested-drill' },
+			writable: true,
+			configurable: true
+		});
+
+		navigation.setMaxFragment(2);
+
+		const state = get(navigation);
+		expect(state.returnHere).toBe(true);
+		expect(state.stack).toHaveLength(2);
+		expect(state.current.presentation).toBe('life/nested-drill');
+	});
+
+	it('still works with explicit presentation name (CustomShowProvider path)', () => {
+		seedDrillState('test-fixture', 'test-fixture/drill-01');
+
+		// CustomShowProvider always passes presentation name explicitly
+		navigation.setMaxFragment(2, 'test-fixture/drill-01');
+
+		const state = get(navigation);
+		expect(state.current.presentation).toBe('test-fixture/drill-01');
+		expect(state.stack).toHaveLength(1);
+		expect(state.stack[0].presentation).toBe('test-fixture');
+	});
+
+	it('restores drill state when maxFragment is 0 (static-only drill page)', () => {
+		seedDrillState('test-fixture', 'test-fixture/drill-01');
+
+		Object.defineProperty(window, 'location', {
+			value: { pathname: '/test-fixture/drill-01' },
+			writable: true,
+			configurable: true
+		});
+
+		// Static-only drill page: Slide.svelte calls setMaxFragment(0)
+		navigation.setMaxFragment(0);
+
+		const state = get(navigation);
+		expect(state.current.presentation).toBe('test-fixture/drill-01');
+		expect(state.stack).toHaveLength(1);
+		expect(state.stack[0].presentation).toBe('test-fixture');
+		expect(state.maxFragment).toBe(0);
+	});
+});

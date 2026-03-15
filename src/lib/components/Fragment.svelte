@@ -302,9 +302,19 @@
 					? getEffectiveStep(getNormalizedStep(step, slideContext) ?? step)
 					: 0;
 				// Use slideIndex for slide-aware drill target registration (0 for drills)
-				const slideIdx = slideContext?.slideIndex ?? 0;
-				navigation.registerDrillTarget(slideIdx, effectiveNormalized, drillTo, returnHere, autoDrill);
-				registeredNormalizedStep = effectiveNormalized;
+				let slideIdx = slideContext?.slideIndex ?? 0;
+				let registrationStep = effectiveNormalized;
+				
+				// In CustomShowProvider: navigation sees the whole custom show as slide 0
+				// with a single global fragment counter. Translate local slide+step to
+				// global coordinates so navigation.next() lookups match.
+				if (customShowContext && slideContext?.slideIndex !== undefined) {
+					registrationStep = customShowContext.getSlideOffset(slideContext.slideIndex) + effectiveNormalized;
+					slideIdx = 0;
+				}
+				
+				navigation.registerDrillTarget(slideIdx, registrationStep, drillTo, returnHere, autoDrill);
+				registeredNormalizedStep = registrationStep;
 				registeredSlideIndex = slideIdx;
 				
 				// For static content (no step), check if we're at the current position
@@ -312,7 +322,7 @@
 				// visible at fragment 0 and should auto-drill on first click.
 				// The nav store gates on autoDrillAll || per-fragment autoDrill.
 				if (step === undefined) {
-					navigation.checkAutoDrillAtCurrentPosition(slideIdx, effectiveNormalized);
+					navigation.checkAutoDrillAtCurrentPosition(slideIdx, registrationStep);
 				}
 			}, 0);
 		}
@@ -322,7 +332,16 @@
 			if (step !== undefined) {
 				const normalized = getNormalizedStep(step, slideContext) ?? step;
 				const effectiveStep = getEffectiveStep(normalized);
-				hasAnimated = wasAlreadyRevealed(effectiveStep, slideContext?.slideIndex, visible());
+				// In CustomShowProvider: slideFragments only has index 0 (global).
+				// Translate local slide+step to global coordinates so the check
+				// compares against the correct stored position.
+				let checkSlideIndex = slideContext?.slideIndex;
+				let checkStep = effectiveStep;
+				if (customShowContext && slideContext?.slideIndex !== undefined) {
+					checkStep = customShowContext.getSlideOffset(slideContext.slideIndex) + effectiveStep;
+					checkSlideIndex = 0;
+				}
+				hasAnimated = wasAlreadyRevealed(checkStep, checkSlideIndex, visible());
 			} else {
 				// Static content (no step) - never animate
 				hasAnimated = true;

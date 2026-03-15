@@ -5,6 +5,6 @@
 </script>
 
 <CustomShowProvider
-	name="ezekiel-1-daniel-10"
+	name="translation/ezekiel-1-daniel-10"
 	slides={[Content1, Content2]}
 />

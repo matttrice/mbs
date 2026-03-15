@@ -48,6 +48,7 @@
 <Fragment
 	step={3}
 	drillTo="birthrights/genesis-2-7"
+	returnHere
 	layout={{ x: 333, y: 77, width: 136, height: 23 }}
 	font={{ font_size: 23.3, italic: true, v_align: 'middle' }}
 >
@@ -334,6 +335,7 @@
 <Fragment
 	step={18}
 	drillTo="birthrights/acts-10-24"
+	returnHere
 	layout={{ x: 554, y: 203, width: 90, height: 18 }}
 	font={{ font_size: 26.7, bold: true, italic: true, color: 'var(--text-level-3)', align: 'right', v_align: 'middle' }}
 >
@@ -344,6 +346,7 @@
 <Fragment
 	step={18.2}
 	drillTo="birthrights/acts-10-24"
+	returnHere
 	layout={{ x: 530, y: 222, width: 118, height: 29 }}
 	font={{ font_size: 23.3, italic: true }}
 >
@@ -370,6 +373,7 @@
 <Fragment
 	step={19.2}
 	drillTo="birthrights/ephesians-2-11"
+	returnHere
 	layout={{ x: 478, y: 282, width: 173, height: 28 }}
 	font={{ font_size: 23.3, italic: true, align: 'center' }}
 >

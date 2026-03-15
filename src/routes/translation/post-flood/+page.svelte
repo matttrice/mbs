@@ -5,6 +5,6 @@
 </script>
 
 <CustomShowProvider
-	name="post-flood"
+	name="translation/post-flood"
 	slides={[Content1, Content2]}
 />

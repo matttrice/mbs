@@ -6,6 +6,6 @@
 </script>
 
 <CustomShowProvider
-	name="greek-hebrew-soul-spirit"
+	name="life/greek-hebrew-soul-spirit"
 	slides={[Content1, Content2, Content3]}
 />

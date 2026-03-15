@@ -5,6 +5,6 @@
 </script>
 
 <CustomShowProvider
-	name="gates"
+	name="translation/gates"
 	slides={[Content1, Content2]}
 />

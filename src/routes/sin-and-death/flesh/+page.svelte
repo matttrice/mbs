@@ -5,6 +5,6 @@
 </script>
 
 <CustomShowProvider
-	name="flesh"
+	name="sin-and-death/flesh"
 	slides={[FleshContent, CorinthiansContent]}
 />

@@ -13,12 +13,12 @@ pptx → extractor.py → JSON → Slide components → navigation store → loc
 
 | Component | Purpose |
 |-----------|---------|
-| [navigation.ts](src/lib/stores/navigation.ts) | State machine managing slides, fragments, drill stack, and localStorage persistence |
-| [PresentationProvider.svelte](src/lib/components/PresentationProvider.svelte) | Orchestrates multi-slide presentations, collects slide maxSteps, calls `navigation.init()` |
-| [CustomShowProvider.svelte](src/lib/components/CustomShowProvider.svelte) | Aggregates multiple content components into a single custom show with unified navigation |
-| [Slide.svelte](src/lib/components/Slide.svelte) | Context provider that auto-registers Fragment steps with parent PresentationProvider or CustomShowProvider |
-| [Fragment.svelte](src/lib/components/Fragment.svelte) | Unified component for visibility, positioning, styling, drills, and animations |
-| [SVG Components](src/lib/components/svg/) | svg.js-powered shape components (Arrow, Line, Rect, Circle, Ellipse, Path, Polygon) |
+| [navigation.ts](../src/lib/stores/navigation.ts) | State machine managing slides, fragments, drill stack, and localStorage persistence |
+| [PresentationProvider.svelte](../src/lib/components/PresentationProvider.svelte) | Orchestrates multi-slide presentations, collects slide maxSteps, calls `navigation.init()` |
+| [CustomShowProvider.svelte](../src/lib/components/CustomShowProvider.svelte) | Aggregates multiple content components into a single custom show with unified navigation |
+| [Slide.svelte](../src/lib/components/Slide.svelte) | Context provider that auto-registers Fragment steps with parent PresentationProvider or CustomShowProvider |
+| [Fragment.svelte](../src/lib/components/Fragment.svelte) | Unified component for visibility, positioning, styling, drills, and animations |
+| [SVG Components](../src/lib/components/svg/) | svg.js-powered shape components (Arrow, Line, Rect, Circle, Ellipse, Path, Polygon) |
 
 ### Fixed Canvas System
 All presentations use a **960×540 pixel fixed canvas** (16:9 aspect ratio). The canvas scales to fit the viewport via CSS `transform: scale()`. All fragment layout coordinates are absolute pixel positions within this canvas.
@@ -533,15 +533,15 @@ For single-slide custom shows (linked slides that stand alone), use `<Slide>` wi
 
 ### Multi-Slide Custom Shows (CustomShowProvider)
 
-**Important Content pattern** A PowerPoint slide may have a hyperlink to a custom show. When a custom show contains multiple slides (e.g., json `custom_shows[id].slide_numbers` has >1 entries) use `CustomShowProvider` to import multiple content components representing each slide/topic in the custom show. You may also aggregate other routes, but those should expose content components plus route `+page.svelte` entry points.
+When a custom show contains multiple slides (e.g., json `custom_shows[id].slide_numbers` has >1 entries) use `CustomShowProvider` to import multiple content components representing each slide/topic in the custom show.
 
 **Single-slide custom shows**
-When `custom_shows[id].slide_numbers` has 1 **single slide** in the array do NOT use the CustomShowProvider/Content.svelte pattern, instead only a route/+page.svelte is needed with a <Slide> within the +page.svelte. Create the route with a single +page.svelte with the <Slide> and Fragments within and drillTo it. 
-In both cases, other slides can "drillTo" route and return to the origin slide when complete.  
+When `custom_shows[id].slide_numbers` has 1 **single slide** in the array do NOT use the CustomShowProvider/Content.svelte pattern—just create a route with `+page.svelte` containing `<Slide>` and Fragments directly.
+In both cases, other slides can "drillTo" the route and return to the origin slide when complete.  
 - **Flat structure**: Scripture routes live at the presentation level (e.g., `biblical-time/matthew-5`).
 
 **Key concepts:**
-- **Content components**: Slide content without `<Slide>` wrapper—just Fragment elements. For multi-slide custom shows, name these `Content1.svelte`, `Content2.svelte`, etc. For single reusable content routes, `Content.svelte` is acceptable.
+- **Content components**: Slide content without `<Slide>` wrapper—just Fragment elements. The `Content.svelte` pattern exists solely to keep Fragments out of `<Slide>` so they can be imported into a CustomShowProvider elsewhere. Only create `Content.svelte` when there is an actual consumer (another route's CustomShowProvider). For multi-slide custom shows co-located in one route, name these `Content1.svelte`, `Content2.svelte`, etc.
 - **CustomShowProvider**: Wraps each content component in `<Slide={[Content1,Content2]}>`, manages fragment offsets
 - **Auto-return**: When the last fragment of the last slide is reached, navigation returns to origin
 
@@ -559,8 +559,11 @@ In both cases, other slides can "drillTo" route and return to the origin slide w
 2. Find linked slides: `linked_slides["5"]`, `linked_slides["6"]`, etc.
 3. Find name for custom show by `custom_shows[id].name` (other slides link to it by hyperlink.type = "customshow", id = id, name = name)
 3. Create a route for the custom show with +page.svelte for the CustomShowProvider.
-4. For each linked slide, create its own route with Content.svelte which contains Fragments without a <Slide> wrapper. Also create a +page.svelte so the route can be directly accessed but Content can be imported to any CustomShowProvider, including this one.
-5. Aggregate all routes and Content to the custom show route, +page.svelte CustomShowProvider.
+4. **Co-located (default):** Create `Content1.svelte`, `Content2.svelte`, etc. in the custom show route folder. Each contains Fragments only (no `<Slide>` wrapper). The `+page.svelte` imports them into the CustomShowProvider.
+   **Cross-route (only when shared):** If a linked slide's content is also used by a different CustomShowProvider elsewhere, give it its own route with `Content.svelte` + `+page.svelte`. The `Content.svelte` can then be imported into multiple CustomShowProviders, while `+page.svelte` wraps it in `<Slide>` for standalone access. Do not preemptively split into separate routes—only do this when there is an actual second consumer.
+5. Aggregate all Content components into the custom show route's +page.svelte CustomShowProvider.
+6. **Set the `name` prop to the full route path** from the root presentation (e.g., `name="birthrights/body-complete"` not `name="body-complete"`). This must match the SvelteKit route path relative to `/routes/` because it is used as the persistence key for drill state recovery across page refreshes.
+
 The custom show can now be linked to from other slides using `drillTo="presentation/custom-show-route"`.
 
 **Legacy hyperlink-chain drills (no `custom_shows` present):**
@@ -574,7 +577,7 @@ DrillTo can mimick multi-slide show behavior by chaining each slide's last fragm
 
 ### returnHere Prop
 For multi-slide drills, when the deepest drill completes, navigation returns **directly to the origin** (the original presentation slide), not back through each intermediate drill, unless `returnHere={true}` is set on a fragment in the drill chain.
-**Use case**: When a drill has multiple branches and you want to return to the parent drill to continue, not all the way to the origin.
+**Use case**: When a drill has multiple branches and you want to return to the parent drill to continue, not all the way to the origin. This can be automatic with drillTo or optional with clickTo links.
 
 The `returnHere` prop changes return behavior for specific drill chains:
 | Prop | Return Behavior |
@@ -630,7 +633,7 @@ npm run test:e2e     # Run 19 end-to-end playwright tests
 2. Create `routes/{name}/slides/Slide1.svelte` etc.:
    - Accept `slideIndex` prop and pass it to `<Slide {slideIndex}>`
    - Use `<Fragment step={n} layout={...}>` for content
-3. Add menu entry in [routes/+page.svelte](src/routes/+page.svelte)
+3. Add menu entry in [routes/+page.svelte](../src/routes/+page.svelte)
 
 ### New Drill Route
 1. Create `routes/{presentation}/{reference}/+page.svelte`
@@ -931,8 +934,10 @@ Navigation state persists to `localStorage` key `mbs-nav-{route-name}`. The Rese
   - Arrow and Arc components should default to `"draw"` animation, not `"fade"`
 - Using zIndex on Fragment with svg Shapes which have their own zIndex
 - Nesting scripture routes under custom show folders (use flat structure at presentation level with CustomShowProvider)
-- Inconsistent content component naming in custom shows. Use `Content1.svelte`, `Content2.svelte`, etc. for multi-slide custom shows; use `Content.svelte` for single reusable content routes.
-- Presence of a Slide<number>.png in [mbs/static/export/](mbs/static/export/) does NOT mean the slide is a top level presentation slide. It could be a slide or linked slide - Follow the JSON structure to determine slide type.
+- Inconsistent content component naming in custom shows. Use `Content1.svelte`, `Content2.svelte`, etc. for multi-slide custom shows co-located in one route. Only use `Content.svelte` when the content is imported by another route's CustomShowProvider.
+- **Creating `Content.svelte` + `+page.svelte` when a plain `+page.svelte` with `<Slide>` would suffice.** The Content pattern exists solely so a CustomShowProvider in another route can import the Fragments. For single-slide drills with no external consumer, just use `+page.svelte` directly.
+- **Using only the folder name for CustomShowProvider `name` prop** instead of the full route path. The `name` must include the parent presentation prefix (e.g., `name="birthrights/body-complete"` not `name="body-complete"`). This is the persistence key used for drill state recovery across page refreshes.
+- Presence of a Slide<number>.png in [mbs/static/export/](../static/export/) does NOT mean the slide is a top level presentation slide. It could be a slide or linked slide - Follow the JSON structure to determine slide type.
 - Forgetting to add zIndex - include z-index on SVG components (Arrow, Line, Rect, Arc, Circle, Ellipse, Path, Polygon). Use Fragment `zIndex` for text/layout Fragments. Avoid relying only on DOM order for overlaps.
 - **Inventing or modifying text content** when converting from PowerPoint JSON—use ONLY the exact `text` values from the JSON; never add, remove, or paraphrase content
 - **Inventing or estimating layout coordinates**—always use the EXACT `layout` values (x, y, width, height) from the JSON; the coordinates define the actual slide layout and must not be guessed based on conceptual understanding. Do this is batches to ensure accuracy and consistency across all slide conversions.

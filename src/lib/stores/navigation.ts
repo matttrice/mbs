@@ -76,6 +76,27 @@ function createNavigationStore() {
 		return null;
 	}
 
+	// Find persisted drill state for a drill page by looking up the root presentation key.
+	// The storage key is always the first path segment (root presentation name).
+	function findPersistedDrillState(targetPresentation: string): Partial<NavigationContext> | null {
+		if (!browser) return null;
+		try {
+			const rootKey = targetPresentation.split('/')[0];
+			if (!rootKey) return null;
+			const stored = localStorage.getItem(getStorageKey(rootKey));
+			if (stored) {
+				const parsed = JSON.parse(stored);
+				if (parsed?.stack?.length && parsed?.current?.presentation === targetPresentation) {
+					console.log('[Navigation] Found persisted drill state in', getStorageKey(rootKey), ':', parsed);
+					return parsed;
+				}
+			}
+		} catch (e) {
+			console.warn('[Navigation] Failed to find persisted drill state:', e);
+		}
+		return null;
+	}
+
 	// Save state to localStorage (only the parts we need to persist)
 	// State is always stored under the root (origin) presentation's key
 	function persistState(ctx: NavigationContext) {
@@ -85,12 +106,13 @@ function createNavigationStore() {
 			: ctx.current.presentation;
 		if (!rootPresentation) return; // Don't persist empty/initial state
 		try {
-			const toPersist = {
+				const toPersist = {
 				current: ctx.current,
 				stack: ctx.stack,
 				slideFragments: ctx.slideFragments,
 				slideFragmentCounts: ctx.slideFragmentCounts,
-				maxSlide: ctx.maxSlide
+				maxSlide: ctx.maxSlide,
+				returnHere: ctx.returnHere
 			};
 			localStorage.setItem(getStorageKey(rootPresentation), JSON.stringify(toPersist));
 		} catch (e) {
@@ -229,15 +251,49 @@ function createNavigationStore() {
 		/**
 		 * Initialize a drill/custom show (single slide presentation)
 		 * @param maxFragment - total fragments in the drill
+		 * @param presentation - optional name to set as current.presentation
+		 *   (used by CustomShowProvider for direct URL navigation support)
 		 */
-		setMaxFragment(max: number) {
-			update((ctx) => ({
-				...ctx,
-				maxFragment: max,
-				maxSlide: 0,
-				slideFragmentCounts: [max]
-				// Note: drillTargets are registered by Fragment components, not cleared here
-			}));
+		setMaxFragment(max: number, presentation?: string) {
+			update((ctx) => {
+				// On page refresh during a drill, the in-memory store is fresh (empty stack).
+				// Try to restore the full state (including drill stack) from localStorage
+				// so that return navigation works after refresh.
+				// Derive presentation from explicit param or URL pathname.
+				if (ctx.stack.length === 0 && browser) {
+					const effectivePresentation = presentation
+						|| window.location.pathname.replace(/^\//, '').replace(/\/$/, '');
+					if (effectivePresentation) {
+						const persisted = findPersistedDrillState(effectivePresentation);
+						if (persisted) {
+							console.log('[Navigation] Restoring drill state after refresh for:', effectivePresentation);
+							return {
+								...ctx,
+								current: persisted.current!,
+								stack: persisted.stack!,
+								maxFragment: max,
+								maxSlide: 0,
+								slideFragmentCounts: [max],
+								slideFragments: persisted.slideFragments || [],
+								returnHere: persisted.returnHere ?? false
+							};
+						}
+					}
+				}
+
+				return {
+					...ctx,
+					maxFragment: max,
+					maxSlide: 0,
+					slideFragmentCounts: [max],
+					// Set presentation name if provided and not already set
+					// (drillInto already sets it; this covers direct navigation)
+					...(presentation && !ctx.current.presentation
+						? { current: { ...ctx.current, presentation } }
+						: {})
+					// Note: drillTargets are registered by Fragment components, not cleared here
+				};
+			});
 		},
 
 		/**
@@ -410,8 +466,9 @@ function createNavigationStore() {
 				const drillInfo = ctx.drillTargets[drillKey];
 				
 				// Auto-drill if: global autoDrillAll is enabled OR per-fragment autoDrill is true
+				// Skip if this is the same drill we just returned from (prevents infinite loop)
 				// If neither, arrow right at a drillTo fragment skips the drill
-				if (drillInfo && (ctx.autoDrillAll || drillInfo.autoDrill)) {
+				if (drillInfo && (ctx.autoDrillAll || drillInfo.autoDrill) && ctx.lastCompletedDrill !== drillInfo.target) {
 					// Last fragment has a drillTo - auto drill into it
 					const { target, returnHere } = drillInfo;
 					console.log('[Navigation] Auto-drilling to:', target, returnHere ? '(returnHere)' : '');

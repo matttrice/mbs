@@ -227,3 +227,92 @@ test.describe('autoDrillAll Behavior', () => {
 		await expect(page).toHaveURL('/test-fixture/drill-01');
 	});
 });
+
+test.describe('Standalone Drill Page Refresh Recovery', () => {
+	test('refreshing a standalone drill page preserves return navigation', async ({ page }) => {
+		// Navigate into a drill normally first
+		await resetFixture(page);
+		await pressArrowRight(page); // Step 1: First Fragment (pending drill set)
+		await pressArrowRight(page); // Execute drill to drill-01
+		await expect(page).toHaveURL('/test-fixture/drill-01');
+		await expect(page.getByText('Drill Level 1')).toBeVisible();
+
+		// Advance to step 1 inside drill-01
+		await pressArrowRight(page);
+		await expect(page.getByText('First level drill content')).toBeVisible();
+
+		// Refresh the page while inside the standalone drill
+		await page.reload();
+		await page.waitForTimeout(500);
+		await page.locator('body').focus();
+		await page.locator('body').click();
+
+		// After refresh, the drill state should be restored.
+		// Navigate through remaining content and return to origin.
+		await pressArrowRight(page); // Step 2: Go to Level 2
+		await expect(page.getByText('Go to Level 2')).toBeVisible();
+
+		// Next arrow should return to test-fixture (autoDrillAll-enabled would chain,
+		// but the drillTo step was already past — return happens at end)
+		await pressArrowRight(page); // Execute drill to drill-02 (autoDrillAll)
+		await expect(page).toHaveURL('/test-fixture/drill-02');
+
+		// Navigate through drill-02 chain
+		await pressArrowRight(page); // step 1
+		await pressArrowRight(page); // step 2 (Go to Level 3)
+		await pressArrowRight(page); // Execute drill to drill-03
+		await expect(page).toHaveURL('/test-fixture/drill-03');
+
+		await pressArrowRight(page); // step 1
+		await pressArrowRight(page); // Return to origin
+		await expect(page).toHaveURL('/test-fixture');
+		await expect(page.getByText('First Fragment')).toBeVisible();
+	});
+
+	test('refreshing standalone drill with seeded localStorage restores stack', async ({ page }) => {
+		// Seed localStorage directly (like the birthrights refresh tests)
+		await page.goto('/test-fixture/drill-01');
+		await page.evaluate(() => {
+			localStorage.clear();
+			localStorage.setItem('mbs-drillto', 'true');
+
+			const persistedState = {
+				current: { presentation: 'test-fixture/drill-01', slide: 0, fragment: 0 },
+				stack: [{ presentation: 'test-fixture', slide: 0, fragment: 1 }],
+				slideFragments: [],
+				slideFragmentCounts: [2],
+				maxSlide: 0,
+				returnHere: false
+			};
+			localStorage.setItem('mbs-nav-test-fixture', JSON.stringify(persistedState));
+		});
+
+		await page.reload();
+		await page.waitForTimeout(500);
+		await page.locator('body').focus();
+		await page.locator('body').click();
+
+		// Should be on drill-01 with restored stack
+		await expect(page).toHaveURL('/test-fixture/drill-01');
+		await expect(page.getByText('Drill Level 1')).toBeVisible();
+
+		// Navigate through drill-01 content
+		await pressArrowRight(page); // step 1
+		await expect(page.getByText('First level drill content')).toBeVisible();
+		await pressArrowRight(page); // step 2 (Go to Level 2)
+		await expect(page.getByText('Go to Level 2')).toBeVisible();
+
+		// End of drill-01 — should return to test-fixture origin
+		await pressArrowRight(page); // autoDrill into drill-02
+		await expect(page).toHaveURL('/test-fixture/drill-02');
+
+		// Navigate the chain back to origin
+		await pressArrowRight(page); // drill-02 step 1
+		await pressArrowRight(page); // drill-02 step 2
+		await pressArrowRight(page); // drill into drill-03
+		await expect(page).toHaveURL('/test-fixture/drill-03');
+		await pressArrowRight(page); // drill-03 step 1
+		await pressArrowRight(page); // return to origin
+		await expect(page).toHaveURL('/test-fixture');
+	});
+});

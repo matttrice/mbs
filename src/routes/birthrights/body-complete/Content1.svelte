@@ -26,7 +26,7 @@
 
 <!-- Static: Physical body image -->
 <Fragment
-	layout={{ x: 577, y: 107, width: 137, height: 375 }}
+	layout={{ x: 577, y: 107, width: 137, height: 395 }}
 >
 	<img src="/export/11-Birthrights/image6.png" alt="body" class="slide-image" />
 </Fragment>
@@ -43,7 +43,7 @@
 
 <!-- Static: Spiritual body image -->
 <Fragment
-	layout={{ x: 730, y: 28, width: 143, height: 375 }}
+	layout={{ x: 730, y: 28, width: 143, height: 405 }}
 >
 	<img src="/export/11-Birthrights/image6.png" alt="body" class="slide-image" />
 </Fragment>

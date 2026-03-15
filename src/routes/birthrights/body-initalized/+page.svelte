@@ -5,6 +5,6 @@
 </script>
 
 <CustomShowProvider
-	name="body-initalized"
+	name="birthrights/body-initalized"
 	slides={[Content1, Content2]}
 />

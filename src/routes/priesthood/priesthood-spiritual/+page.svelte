@@ -6,6 +6,6 @@
 </script>
 
 <CustomShowProvider
-	name="priesthood-spiritual"
+	name="priesthood/priesthood-spiritual"
 	slides={[Content1, Content2, Content3]}
 />

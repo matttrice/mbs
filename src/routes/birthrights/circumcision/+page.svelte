@@ -5,6 +5,6 @@
 </script>
 
 <CustomShowProvider 
-	name="circumcision" 
+	name="birthrights/circumcision" 
 	slides={[Content1, Content2]} 
 />

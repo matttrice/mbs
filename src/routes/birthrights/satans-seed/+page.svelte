@@ -7,6 +7,6 @@
 </script>
 
 <CustomShowProvider 
-	name="satans-seed" 
+	name="birthrights/satans-seed" 
 	slides={[Content1, Content2, Content3, Content4]} 
 />

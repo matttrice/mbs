@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test';
 import {
 	pressArrowRight,
-	pressArrowLeft
+	pressArrowLeft,
+	navigateUntilUrl
 } from './utils/test-helpers';
 
 /**
@@ -173,5 +174,162 @@ test.describe('CustomShowProvider - Drill Integration', () => {
 		await pressArrowRight(page);
 		await page.waitForTimeout(500);
 		await expect(page).toHaveURL('/');
+	});
+});
+
+// ============================================================================
+// Nested Custom Show with autoDrillAll
+// ============================================================================
+
+// Test fixture: test-custom-show-nested
+// SlideC (2 steps) + SlideD (3 steps, step 2 has drillTo with returnHere)
+// Fragment offsets: SlideC offset=0 (global 0-2), SlideD offset=3 (global 3-6)
+// drill-target has 1 step
+
+async function resetNestedCustomShowFixture(page: import('@playwright/test').Page) {
+	await page.goto('/test-custom-show-nested');
+
+	await page.evaluate(() => {
+		localStorage.clear();
+		// autoDrillAll defaults to true, ensure it's set
+		localStorage.setItem('mbs-drillto', 'true');
+	});
+	await page.reload();
+
+	await page.waitForTimeout(300);
+
+	await expect(page.getByText('Slide C Content')).toBeVisible({ timeout: 5000 });
+	await expect(page.locator('.fragment').first()).toBeAttached({ timeout: 5000 });
+	await expect(page.getByText('C Step 1: First item')).not.toBeVisible();
+
+	await page.locator('body').focus();
+	await page.locator('body').click();
+}
+
+test.describe('CustomShowProvider - Nested Drill with autoDrillAll', () => {
+	test.beforeEach(async ({ page }) => {
+		await resetNestedCustomShowFixture(page);
+	});
+
+	test('autoDrillAll triggers drill on non-first slide and returns correctly', async ({ page }) => {
+		// SlideC Step 1 (global fragment 1)
+		await pressArrowRight(page);
+		await expect(page.getByText('C Step 1: First item')).toBeVisible();
+
+		// SlideC Step 2 (global fragment 2)
+		await pressArrowRight(page);
+		await expect(page.getByText('C Step 2: Second item')).toBeVisible();
+
+		// Transition to SlideD (global fragment 3, local 0 → shows static)
+		await pressArrowRight(page);
+		await expect(page.getByText('Slide D Content')).toBeVisible();
+
+		// SlideD Step 1 (global fragment 4, local 1)
+		await pressArrowRight(page);
+		await expect(page.getByText('D Step 1: Info')).toBeVisible();
+
+		// SlideD Step 2 (global fragment 5, local 2) — drillTo fragment becomes visible
+		// autoDrillAll sets pending drill
+		await pressArrowRight(page);
+		await expect(page.getByText('D Step 2: Drill Link')).toBeVisible();
+		await expect(page).toHaveURL('/test-custom-show-nested');
+
+		// Next arrow executes pending drill → navigates to drill-target
+		await pressArrowRight(page);
+		await expect(page).toHaveURL(/drill-target/, { timeout: 5000 });
+		await expect(page.getByText('Drill Target Content')).toBeVisible({ timeout: 5000 });
+
+		// Navigate through drill-target's 1 step
+		await pressArrowRight(page);
+		await expect(page.getByText('Drill Step 1: Scripture text')).toBeVisible();
+
+		// Next arrow at end of drill → returns to custom show (returnHere)
+		await pressArrowRight(page);
+		await expect(page).toHaveURL('/test-custom-show-nested', { timeout: 5000 });
+		await expect(page.getByText('Slide D Content')).toBeVisible({ timeout: 5000 });
+
+		// SlideD Step 3 (global fragment 6, local 3) — after returning from drill
+		await pressArrowRight(page);
+		await expect(page.getByText('D Step 3: After drill')).toBeVisible();
+	});
+
+	test('manual drill click works on non-first slide', async ({ page }) => {
+		// Disable autoDrillAll for this test
+		await page.evaluate(() => {
+			localStorage.setItem('mbs-drillto', 'false');
+		});
+		await page.reload();
+		await page.waitForTimeout(300);
+		await expect(page.getByText('Slide C Content')).toBeVisible({ timeout: 5000 });
+		await expect(page.locator('.fragment').first()).toBeAttached({ timeout: 5000 });
+		await page.locator('body').focus();
+		await page.locator('body').click();
+
+		// Navigate to SlideD Step 2
+		await pressArrowRight(page); // C Step 1
+		await pressArrowRight(page); // C Step 2
+		await pressArrowRight(page); // Transition to SlideD
+		await pressArrowRight(page); // D Step 1
+		await pressArrowRight(page); // D Step 2 — drill link visible
+
+		await expect(page.getByText('D Step 2: Drill Link')).toBeVisible();
+
+		// Click the drill link manually
+		await page.getByText('D Step 2: Drill Link').click();
+		await expect(page).toHaveURL(/drill-target/, { timeout: 5000 });
+		await expect(page.getByText('Drill Target Content')).toBeVisible({ timeout: 5000 });
+
+		// Navigate through drill and return
+		await pressArrowRight(page); // Drill Step 1
+		await pressArrowRight(page); // End → return to custom show
+
+		await expect(page).toHaveURL('/test-custom-show-nested', { timeout: 5000 });
+		await expect(page.getByText('Slide D Content')).toBeVisible({ timeout: 5000 });
+	});
+
+	test('fragments do not re-animate after drill return', async ({ page }) => {
+		// Disable autoDrillAll — this test is about animation, not drill behavior
+		await page.evaluate(() => {
+			localStorage.setItem('mbs-drillto', 'false');
+		});
+		await page.reload();
+		await page.waitForTimeout(300);
+		await expect(page.getByText('Slide C Content')).toBeVisible({ timeout: 5000 });
+		await expect(page.locator('.fragment').first()).toBeAttached({ timeout: 5000 });
+		await page.locator('body').focus();
+		await page.locator('body').click();
+
+		// Navigate to SlideD Step 2 (the drill link)
+		await pressArrowRight(page); // C Step 1
+		await pressArrowRight(page); // C Step 2
+		await pressArrowRight(page); // Transition to SlideD
+		await pressArrowRight(page); // D Step 1
+		await pressArrowRight(page); // D Step 2 — drill link visible
+
+		await expect(page.getByText('D Step 2: Drill Link')).toBeVisible();
+
+		// Click the drill link to enter drill-target
+		await page.getByText('D Step 2: Drill Link').click();
+		await expect(page).toHaveURL(/drill-target/, { timeout: 5000 });
+
+		// Navigate through drill and return
+		await pressArrowRight(page); // Drill Step 1
+		await pressArrowRight(page); // End → return to custom show
+
+		await expect(page).toHaveURL('/test-custom-show-nested', { timeout: 5000 });
+		await expect(page.getByText('Slide D Content')).toBeVisible({ timeout: 5000 });
+
+		// Wait for animation-ready state to be set
+		await page.waitForTimeout(500);
+
+		// D Step 1 should have 'revealed' class, NOT any animate-* class
+		const dStep1 = page.locator('.fragment', { hasText: 'D Step 1: Info' });
+		await expect(dStep1).toHaveClass(/revealed/);
+		await expect(dStep1).not.toHaveClass(/animate-fade/);
+
+		// D Step 2 (the drill link) should also be revealed, not animating
+		const dStep2 = page.locator('.fragment', { hasText: 'D Step 2: Drill Link' });
+		await expect(dStep2).toHaveClass(/revealed/);
+		await expect(dStep2).not.toHaveClass(/animate-fade/);
 	});
 });

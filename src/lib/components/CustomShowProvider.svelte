@@ -57,13 +57,15 @@
 	 * **Usage:**
 	 * ```svelte
 	 * <CustomShowProvider 
-	 *   name="baptism-and-faith" 
+	 *   name="ark/baptism-and-faith" 
 	 *   slides={[SlideAContent, SlideBContent, SlideCContent]} 
 	 * />
 	 * ```
 	 */
 	interface Props {
-		/** Unique name for this custom show */
+		/** Full route path for this custom show 
+		 * (e.g., "birthrights/body-complete", not just "body-complete"). 
+		 * Used as the persistence key for drill state recovery across page refreshes. */
 		name: string;
 		/** Array of slide content components */
 		slides: Component[];
@@ -108,7 +110,7 @@
 		if (!initialized && slideRegistered.every(registered => registered)) {
 			initialized = true;
 			// Set the total maxFragment as the sum of all slides
-			navigation.setMaxFragment(totalMaxFragment);
+			navigation.setMaxFragment(totalMaxFragment, name);
 			console.log('[CustomShowProvider] Initialized:', name, 
 				'slides:', slideMaxSteps, 
 				'total fragments:', totalMaxFragment);
