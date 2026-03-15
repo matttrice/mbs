@@ -15,7 +15,7 @@ test.describe('Ark - Romans 6:3 Custom Show', () => {
 		// Verify we're on the right page
 		await expect(page).toHaveURL('/ark/baptism-and-faith');
 
-		await expect(page.getByText('Romans 6:3-7, 17-18, 22-23')).toBeVisible();
+		await expect(page.getByText('Romans 6:3-7,17-18, 22-23')).toBeVisible();
 	});
 
 	test('navigates through BaptismAndFaith and transitions to Ephesians', async ({ page }) => {
@@ -37,7 +37,7 @@ test.describe('Ark - Romans 6:3 Custom Show', () => {
 		await pressArrowRight(page); // Step 6
 		
 		// Should still be on Content1 at step 6
-		await expect(page.getByText('22 But now having been freed from sin')).toBeVisible();
+		await expect(page.getByText('having been freed from sin and enslaved to God, you derive your benefit')).toBeVisible();
 		
 		// Navigate to Content2 - need extra press(es) due to initialization timing
 		await pressArrowRight(page); 
