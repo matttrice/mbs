@@ -538,7 +538,7 @@
 		<Arc from={{ x: 436, y: 380 }} to={{ x: 806, y: 351 }} curve={-130} stroke={{ width: 3, color: 'var(--bg-level-3)' }} arrow zIndex={55} />
 	</Fragment>
 	<Fragment step={28.7} animate="draw">
-		<Arc from={{ x: 154, y: 366 }} to={{ x: 843, y: 355 }} curve={-232} shift={190} stroke={{ width: 3, color: 'var(--bg-level-3)' }} arrow zIndex={50} />
+		<Arc from={{ x: 154, y: 366 }} to={{ x: 843, y: 355 }} curve={-232} shift={-15} stroke={{ width: 3, color: 'var(--bg-level-3)' }} arrow zIndex={50} />
 	</Fragment>
 
 	<!-- Step 29: "What type of thinker is God?" callout -->

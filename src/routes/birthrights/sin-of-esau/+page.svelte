@@ -7,7 +7,7 @@
 <Slide>
 <!-- Static scripture -->
 <Fragment
-	layout={{ x: 106, y: 33, width: 763, height: 214 }}
+	layout={{ x: 42, y: 33, width: 864, height: 214 }}
 	font={{ align: 'left', v_align: 'middle', wrap: true }}
 >
 	<ScriptureBlock title="Romans 8:5-8">
@@ -18,7 +18,7 @@
 <!-- Step 1: Genesis 25:23 -->
 <Fragment
 	step={1}
-	layout={{ x: 106, y: 265, width: 758, height: 135 }}
+	layout={{ x: 42, y: 225, width: 864, height: 135 }}
 	font={{ align: 'left', v_align: 'middle', wrap: true }}
 >
 	<ScriptureBlock title="Genesis 25:23">
@@ -29,11 +29,12 @@
 <!-- Step 2: Commentary -->
 <Fragment
 	step={2}
-	layout={{ x: 155, y: 411, width: 682, height: 82 }}
+	layout={{ x: 139, y: 391, width: 682, height: 82 }}
 	font={{ font_size: 20, wrap: true, align: 'center' }}
 	fill="var(--bg-ghost)"
 >
-	Esau cared more for filling his stomach than keeping his inheritance and therefore serves as an example of the physically minded people of the world.
+	<strong>Esau</strong> cared more for filling his stomach than keeping his inheritance and <u>serves as an example</u> of the <strong>physically minded</strong> people of the world.<br>
+	What type people would <strong style="color:var(--stroke-level-3)">Jacob</strong> represent?
 </Fragment>
 
 </Slide>
