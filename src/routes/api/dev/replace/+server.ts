@@ -310,7 +310,12 @@ function findSvelteFiles(
 ): { files: string[] } | { error: true; response: Response } {
 	let files: string[];
 	try {
-		files = globSync('**/*.svelte', { cwd: routeDir }).map((f: string) => f.toString());
+		// Only search immediate directory and slides/ subdirectory.
+		// Avoid recursing into drill-route subdirectories (e.g., birthrights/satans-seed/)
+		// which causes false ambiguous matches when step numbers collide across routes.
+		files = globSync('{*.svelte,slides/*.svelte}', { cwd: routeDir }).map((f: string) =>
+			f.toString()
+		);
 	} catch {
 		return {
 			error: true,
